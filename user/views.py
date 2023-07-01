@@ -10,7 +10,7 @@ import re
 from django.template import loader
 
 from Summer_Backend.settings import SECRET_KEY, EMAIL_HOST_USER
-from User.models import User
+from user.models import User
 # Create your views here.
 def register(request):
     if request.method != 'POST':
