@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/sumer_backend.iml" filepath="$PROJECT_DIR$/.idea/sumer_backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/summer_backend.iml" filepath="$PROJECT_DIR$/.idea/summer_backend.iml" />
     </modules>
   </component>
 </project>
