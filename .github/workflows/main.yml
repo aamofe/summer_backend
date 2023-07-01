@@ -1,4 +1,4 @@
-name: Django_deploy
+name: summer
 
 on:
   push:
@@ -9,5 +9,10 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: pull and reload on Aliyun
-        run: sshpass -p ${{secrets.ESC_TOKEN}} ssh -o StrictHostKeyChecking=no root@${{secrets.ECS_IP}} "git pull --force; git checkout main;"
+      - name: setup
+        run: sudo apt install sshpass
+
+      - name: pull and reload
+        env:
+          DST: ${{secrets.DST_FOLDER}}
+        run: sshpass -p ${{secrets.PASSWORD}} ssh -o StrictHostKeyChecking=no ${{secrets.USER}}@${{secrets.IP}} "cd ${DST}; git config --global http.postBuffer 1048576000; git pull; uwsgi --reload uwsgi.pid; nginx -s reload"
