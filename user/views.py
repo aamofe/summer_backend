@@ -38,7 +38,7 @@ def register(request):
 def send_email(user_id,email,type):
     payload={"user_id":user_id,'email':email}
     token=jwt.encode(payload,SECRET_KEY)
-    url=os.path.join("http://127.0.0.1/api/user/activate/",token)#测试用
+    url=os.path.join("http://www.aamofe.top/api/user/activate/",token)#测试用
     data={'url':url}
     email_title=email_body=''
     if type=='activate':
@@ -64,17 +64,17 @@ def activate(request,token):
         if not email:
             title = '邮箱不正确'
             message = '邮箱不存在，信息有误，请重新注册'
-            url='http://127.0.0.1/api/user/register'
+            url='http://www.aamofe.top/api/user/register'
         else:
             user.isActive = True
             user.save()
             title = '注册成功'
             message = '欢迎注册'
-            url = 'http://127.0.0.1/'
+            url = 'http://www.aamofe.top/'
     except:
         title='激活失败'
         message='该邮箱已注册，请更换邮箱重新注册'
-        url = 'http://127.0.0.1/api/user/register'
+        url = 'http://www.aamofe.top/api/user/register'
     context['title']=title
     context['message']=message
     context['url']=url
