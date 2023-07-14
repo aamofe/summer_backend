@@ -82,8 +82,14 @@ def activate(request,token):
     return render(request, 'activate.html', context)
 def login(request):
     if request.method != 'POST':
+        email=request.POST.get('email')
+        password=request.POST.get('password')
+        if not User.objects.filter(email=email, password=password , activate=True).exists():
+            return JsonResponse({'errno': 1, 'msg': "用户不存在！"})
+        user=User.objects.get(email=email, password=password ,activate=True)
+
         return JsonResponse({'errno': 1, 'msg': "请求方式错误！"})
-    username=request.POST.get('username')
+    
 def logout(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方式错误！"})
