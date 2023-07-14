@@ -1,0 +1,18 @@
+name: summer
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: setup
+        run: sudo apt install sshpass
+
+      - name: pull and reload
+        env:
+          DST: ${{secrets.DST_FOLDER}}
+        run: sshpass -p ${{secrets.PASSWORD}} ssh -o StrictHostKeyChecking=no ${{secrets.USER}}@${{secrets.IP}} "cd ~/summer_backend/; git config --global http.postBuffer 1048576000; git pull; uwsgi --reload uwsgi.pid;sudo nginx -s reload"

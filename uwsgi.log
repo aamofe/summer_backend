@@ -1,0 +1,712 @@
+*** Starting uWSGI 2.0.21 (64bit) on [Sat Jul  1 23:58:18 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+writing pidfile to uwsgi.pid
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0xcb2eb0
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+failed to open python file /home/summer/summer_backend/summer_backend/wsgi.py
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 2229654)
+spawned uWSGI worker 1 (pid: 2229656, cores: 2)
+spawned uWSGI worker 2 (pid: 2229657, cores: 2)
+spawned uWSGI worker 3 (pid: 2229658, cores: 2)
+spawned uWSGI worker 4 (pid: 2229659, cores: 2)
+...gracefully killing workers...
+Gracefully killing worker 1 (pid: 2229656)...
+Gracefully killing worker 3 (pid: 2229658)...
+Gracefully killing worker 2 (pid: 2229657)...
+Gracefully killing worker 4 (pid: 2229659)...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/summer/summer_backend
+closing all non-uwsgi socket fds > 2 (max_fd = 1048576)...
+found fd 6 mapped to socket 0 (127.0.0.1:8000)
+running /home/summer/miniconda3/envs/django/bin/uwsgi
+[uWSGI] getting INI configuration from uwsgi.ini
+*** Starting uWSGI 2.0.21 (64bit) on [Sun Jul  2 09:40:58 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 inherited INET address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0x9d4820
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+failed to open python file /home/summer/summer_backend/summer_backend/wsgi.py
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 2229654)
+spawned uWSGI worker 1 (pid: 2376798, cores: 2)
+spawned uWSGI worker 2 (pid: 2376799, cores: 2)
+spawned uWSGI worker 3 (pid: 2376800, cores: 2)
+spawned uWSGI worker 4 (pid: 2376801, cores: 2)
+...gracefully killing workers...
+Gracefully killing worker 1 (pid: 2376798)...
+Gracefully killing worker 2 (pid: 2376799)...
+Gracefully killing worker 3 (pid: 2376800)...
+Gracefully killing worker 4 (pid: 2376801)...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/summer/summer_backend
+closing all non-uwsgi socket fds > 2 (max_fd = 1048576)...
+found fd 6 mapped to socket 0 (127.0.0.1:8000)
+running /home/summer/miniconda3/envs/django/bin/uwsgi
+[uWSGI] getting INI configuration from uwsgi.ini
+*** Starting uWSGI 2.0.21 (64bit) on [Sun Jul  2 09:54:51 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 inherited INET address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0x1b83820
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+failed to open python file /home/summer/summer_backend/summer_backend/wsgi.py
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 2229654)
+spawned uWSGI worker 1 (pid: 2380720, cores: 2)
+spawned uWSGI worker 2 (pid: 2380721, cores: 2)
+spawned uWSGI worker 3 (pid: 2380722, cores: 2)
+spawned uWSGI worker 4 (pid: 2380723, cores: 2)
+*** Starting uWSGI 2.0.21 (64bit) on [Sun Jul  2 10:00:14 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+writing pidfile to uwsgi.pid
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.21 (64bit) on [Sun Jul  2 10:16:22 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+writing pidfile to uwsgi.pid
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.21 (64bit) on [Sun Jul  2 10:45:36 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+writing pidfile to uwsgi.pid
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.21 (64bit) on [Sun Jul  2 10:51:02 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+writing pidfile to uwsgi.pid
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.21 (64bit) on [Sun Jul  2 11:03:23 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+writing pidfile to uwsgi.pid
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+...brutally killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/summer/summer_backend
+closing all non-uwsgi socket fds > 2 (max_fd = 1048576)...
+found fd 6 mapped to socket 0 (127.0.0.1:8000)
+running /home/summer/miniconda3/envs/django/bin/uwsgi
+[uWSGI] getting INI configuration from uwsgi.ini
+*** Starting uWSGI 2.0.21 (64bit) on [Sun Jul  2 11:07:07 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 inherited INET address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0x26e5820
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+failed to open python file /home/summer/summer_backend/summer_backend/wsgi.py
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 2229654)
+spawned uWSGI worker 1 (pid: 2402015, cores: 2)
+spawned uWSGI worker 2 (pid: 2402016, cores: 2)
+spawned uWSGI worker 3 (pid: 2402017, cores: 2)
+spawned uWSGI worker 4 (pid: 2402018, cores: 2)
+*** Starting uWSGI 2.0.21 (64bit) on [Sun Jul  2 11:07:19 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+writing pidfile to uwsgi.pid
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
+...brutally killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/summer/summer_backend
+closing all non-uwsgi socket fds > 2 (max_fd = 1048576)...
+found fd 6 mapped to socket 0 (127.0.0.1:8000)
+running /home/summer/miniconda3/envs/django/bin/uwsgi
+[uWSGI] getting INI configuration from uwsgi.ini
+*** Starting uWSGI 2.0.21 (64bit) on [Sun Jul  2 11:13:28 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 inherited INET address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0x1d6a820
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+failed to open python file /home/summer/summer_backend/summer_backend/wsgi.py
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 2229654)
+spawned uWSGI worker 1 (pid: 2403964, cores: 2)
+spawned uWSGI worker 2 (pid: 2403965, cores: 2)
+spawned uWSGI worker 3 (pid: 2403966, cores: 2)
+spawned uWSGI worker 4 (pid: 2403967, cores: 2)
+...brutally killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/summer/summer_backend
+closing all non-uwsgi socket fds > 2 (max_fd = 1048576)...
+found fd 6 mapped to socket 0 (127.0.0.1:8000)
+running /home/summer/miniconda3/envs/django/bin/uwsgi
+[uWSGI] getting INI configuration from uwsgi.ini
+*** Starting uWSGI 2.0.21 (64bit) on [Sun Jul  2 11:13:38 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 inherited INET address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0x18d1820
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+failed to open python file /home/summer/summer_backend/summer_backend/wsgi.py
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 2229654)
+spawned uWSGI worker 1 (pid: 2404062, cores: 2)
+spawned uWSGI worker 2 (pid: 2404063, cores: 2)
+spawned uWSGI worker 3 (pid: 2404064, cores: 2)
+spawned uWSGI worker 4 (pid: 2404065, cores: 2)
+...brutally killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/summer/summer_backend
+closing all non-uwsgi socket fds > 2 (max_fd = 1048576)...
+found fd 6 mapped to socket 0 (127.0.0.1:8000)
+running /home/summer/miniconda3/envs/django/bin/uwsgi
+[uWSGI] getting INI configuration from uwsgi.ini
+*** Starting uWSGI 2.0.21 (64bit) on [Sun Jul  2 11:13:44 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 inherited INET address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0x23dc820
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+failed to open python file /home/summer/summer_backend/summer_backend/wsgi.py
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 2229654)
+spawned uWSGI worker 1 (pid: 2404130, cores: 2)
+spawned uWSGI worker 2 (pid: 2404131, cores: 2)
+spawned uWSGI worker 3 (pid: 2404132, cores: 2)
+spawned uWSGI worker 4 (pid: 2404133, cores: 2)
+...brutally killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/summer/summer_backend
+closing all non-uwsgi socket fds > 2 (max_fd = 1048576)...
+found fd 6 mapped to socket 0 (127.0.0.1:8000)
+running /home/summer/miniconda3/envs/django/bin/uwsgi
+[uWSGI] getting INI configuration from uwsgi.ini
+*** Starting uWSGI 2.0.21 (64bit) on [Sun Jul  2 11:13:52 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 inherited INET address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0xfc6820
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+failed to open python file /home/summer/summer_backend/summer_backend/wsgi.py
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 2229654)
+spawned uWSGI worker 1 (pid: 2404229, cores: 2)
+spawned uWSGI worker 2 (pid: 2404230, cores: 2)
+spawned uWSGI worker 3 (pid: 2404231, cores: 2)
+spawned uWSGI worker 4 (pid: 2404232, cores: 2)
+...brutally killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/summer/summer_backend
+closing all non-uwsgi socket fds > 2 (max_fd = 1048576)...
+found fd 6 mapped to socket 0 (127.0.0.1:8000)
+running /home/summer/miniconda3/envs/django/bin/uwsgi
+[uWSGI] getting INI configuration from uwsgi.ini
+*** Starting uWSGI 2.0.21 (64bit) on [Sun Jul  2 11:13:58 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 inherited INET address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0xdc5820
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+failed to open python file /home/summer/summer_backend/summer_backend/wsgi.py
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 2229654)
+spawned uWSGI worker 1 (pid: 2404287, cores: 2)
+spawned uWSGI worker 2 (pid: 2404288, cores: 2)
+spawned uWSGI worker 3 (pid: 2404289, cores: 2)
+spawned uWSGI worker 4 (pid: 2404290, cores: 2)
+...brutally killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/summer/summer_backend
+closing all non-uwsgi socket fds > 2 (max_fd = 1048576)...
+found fd 6 mapped to socket 0 (127.0.0.1:8000)
+running /home/summer/miniconda3/envs/django/bin/uwsgi
+[uWSGI] getting INI configuration from uwsgi.ini
+*** Starting uWSGI 2.0.21 (64bit) on [Sun Jul  2 11:14:01 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 inherited INET address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0x10fd820
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+failed to open python file /home/summer/summer_backend/summer_backend/wsgi.py
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 2229654)
+spawned uWSGI worker 1 (pid: 2404335, cores: 2)
+spawned uWSGI worker 2 (pid: 2404336, cores: 2)
+spawned uWSGI worker 3 (pid: 2404337, cores: 2)
+spawned uWSGI worker 4 (pid: 2404338, cores: 2)
+...brutally killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/summer/summer_backend
+closing all non-uwsgi socket fds > 2 (max_fd = 1048576)...
+found fd 6 mapped to socket 0 (127.0.0.1:8000)
+running /home/summer/miniconda3/envs/django/bin/uwsgi
+[uWSGI] getting INI configuration from uwsgi.ini
+*** Starting uWSGI 2.0.21 (64bit) on [Sun Jul  2 11:16:11 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 inherited INET address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0x139d820
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+failed to open python file /home/summer/summer_backend/summer_backend/wsgi.py
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 2229654)
+spawned uWSGI worker 1 (pid: 2405244, cores: 2)
+spawned uWSGI worker 2 (pid: 2405245, cores: 2)
+spawned uWSGI worker 3 (pid: 2405246, cores: 2)
+spawned uWSGI worker 4 (pid: 2405247, cores: 2)
+DAMN ! worker 1 (pid: 2405244) died, killed by signal 9 :( trying respawn ...
+Respawned uWSGI worker 1 (new pid: 2405369)
+DAMN ! worker 3 (pid: 2405246) died, killed by signal 9 :( trying respawn ...
+Respawned uWSGI worker 3 (new pid: 2405483)
+DAMN ! worker 2 (pid: 2405245) died, killed by signal 9 :( trying respawn ...
+Respawned uWSGI worker 2 (new pid: 2405610)
+DAMN ! worker 4 (pid: 2405247) died, killed by signal 9 :( trying respawn ...
+Respawned uWSGI worker 4 (new pid: 2405670)
+*** Starting uWSGI 2.0.21 (64bit) on [Sun Jul  2 11:18:48 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+writing pidfile to uwsgi.pid
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0x1952ee0
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+failed to open python file /home/summer/summer_backend/summer_backend/wsgi.py
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 2406431)
+spawned uWSGI worker 1 (pid: 2406434, cores: 2)
+spawned uWSGI worker 2 (pid: 2406435, cores: 2)
+spawned uWSGI worker 3 (pid: 2406436, cores: 2)
+spawned uWSGI worker 4 (pid: 2406437, cores: 2)
+...gracefully killing workers...
+Gracefully killing worker 1 (pid: 2406434)...
+Gracefully killing worker 3 (pid: 2406436)...
+Gracefully killing worker 2 (pid: 2406435)...
+Gracefully killing worker 4 (pid: 2406437)...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/summer/summer_backend
+closing all non-uwsgi socket fds > 2 (max_fd = 1048576)...
+found fd 6 mapped to socket 0 (127.0.0.1:8000)
+running /home/summer/miniconda3/envs/django/bin/uwsgi
+[uWSGI] getting INI configuration from uwsgi.ini
+*** Starting uWSGI 2.0.21 (64bit) on [Sun Jul  2 11:20:13 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 inherited INET address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0x16fe850
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+failed to open python file /home/summer/summer_backend/summer_backend/wsgi.py
+unable to load app 0 (mountpoint='') (callable not found or import error)
+*** no app loaded. going in full dynamic mode ***
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 2406431)
+spawned uWSGI worker 1 (pid: 2407133, cores: 2)
+spawned uWSGI worker 2 (pid: 2407134, cores: 2)
+spawned uWSGI worker 3 (pid: 2407135, cores: 2)
+spawned uWSGI worker 4 (pid: 2407136, cores: 2)
