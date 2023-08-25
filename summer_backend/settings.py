@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'team',
     'document',
     'rest_framework',
+    'chat',
+    'channels'
 ]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
@@ -68,6 +70,14 @@ CACHES = {
             'CLIENT_CLASS': 'django_redis.client.DefaultClient',
         }
     }
+}
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            "hosts": [('127.0.0.1', 6379)],
+        },
+    },
 }
 # 跨域增加忽略
 CORS_ALLOW_CREDENTIALS = True
@@ -115,7 +125,7 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'summer_backend.wsgi.application'
-
+ASGI_APPLICATION = 'summer_backend.routing.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
