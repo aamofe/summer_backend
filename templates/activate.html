@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>{{title}}</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .box {
+        width: 800px;
+        height: 600px;
+        /* background-color: red; */
+        margin: 0 auto;
+        display: flex;
+        flex-direction: column;
+        background-color: #f3fbfb;
+      }
+      .box .logo {
+        height: 120px;
+        line-height: 120px;
+        background-position: center;
+        background-color: #f3fbfb;
+        background-image: url(../static/images/logo.png);
+        background-size: contain;
+        background-repeat: no-repeat;
+      }
+
+      .box .content {
+        height: 500px;
+        border-top: 2px solid #ebcc7c;
+        font-family: Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+        border-radius: 10px;
+        text-indent: 20px;
+        font-size: 16px;
+        line-height: 50px;
+      }
+
+      .box .footer {
+        flex: 1;
+        text-align: center;
+        font-size: 15px;
+        color: #999;
+        font-family: sans-serif;
+        /* margin-top: auto; */
+
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        padding: 20px;
+      }
+    </style>
+</head>
+<body>
+    <div class="box">
+          <div class="logo"></div>
+          <div class="content" id="app">
+            <p style="font-weight: 700; font-size: 25px">
+              {{ message }}
+            </p>
+            <p style="font-size: 16px">
+              <!-- 成功：点击下方链接进入xxx网站； 失败：请及时重新注册！  -->
+              {{text}}
+            </p>
+            <p style="font-size: 16px">
+                本页面将在
+                <span style="color: lightskyblue; font-size: 30px">{{countdown}}</span>
+                <span style="font-size: 20px; margin-left: 5px;">秒后自动跳转到xxx网站首页！</span>
+            </p>
+            <div class="return" style="text-align: center">
+              <button
+                style="
+                  font-size: 20px;
+                  width: 300px;
+                  height: 70px;
+                  margin-top: 50px;
+                  border: 2px solid #9bbc9c;
+                  background-color: #d5ead6;
+                  border-radius: 10px;
+                "
+              >
+                <a
+                  href="http://www.aamofe.top"
+                  style="text-decoration: none; color: #9fb6a0"
+                  >点击进入网站首页</a
+                >
+              </button>
+            </div>
+          </div>
+          <div class="footer">
+            <span>CopyRight&copy;Rolling Team 2023-Summer</span>
+          </div>
+        </div>
+</body>
+<script>
+    const app = {
+        data() {
+            return {
+                countdown: 9,
+            };
+        },
+        mounted() {
+            // 使用定时器更新倒计时和跳转
+            const timer = setInterval(() => {
+                this.countdown--; // 每秒减少1
+                if (this.countdown <= 0) {
+                    clearInterval(timer); // 清除定时器
+                    window.location.href = "http://www.aamofe.top"; // 跳转到首页
+                }
+            }, 1000);
+        },
+    };
+    Vue.createApp(app).mount("#app");
+</script>
+</html>

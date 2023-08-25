@@ -1,0 +1,130 @@
+<!--
+ * @Date: 2023-08-23 00:16:30
+ * @Author: Q9K
+ * @Description: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <title>{{title}}</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      display: flex;
+      flex-direction: column;
+      margin: 0 auto;
+      padding-left: 10px;
+      padding-right: 10px;
+      width: 500px;
+      height: 600px;
+      background-color: #f3fbfb;
+    }
+    .container .logo {
+      /* text-align: center; */
+      height: 80px;
+      line-height: 80px;
+      background-position: center;
+      background-color: #f3fbfb;
+      background-image: url(../static/images/logo.png);
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+    .container .content {
+      height: 500px;
+      /* background-color: aqua; */
+      border-top: 2px solid #ebcc7c;
+      /* background-color: #f6ebeb; */
+      font-family: Helvetica Neue, Helvetica, Arial, Lucida Grande, sans-serif;
+      border-radius: 10px;
+    }
+    .container .content p {
+      text-indent: 20px;
+      line-height: 40px;
+      font-size: 16px;
+    }
+    .container .content .welcome {
+      /* text-indent: 1em; */
+      font-weight: 700;
+      font-size: 28px;
+    }
+    .container .content .main {
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .container .content .register {
+      margin-top: 50px;
+      text-align: center;
+    }
+    .container .content .register button {
+      height: 80px;
+      width: 200px;
+      color: #9fb6a0;
+      font-size: 20px;
+      border: 2px solid #9bbc9c;
+      background-color: #d5ead6;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+    .container .footer {
+      flex: 1;
+      text-align: center;
+      font-size: 12px;
+      color: #999;
+      font-family: sans-serif;
+      /* margin-top: auto; */
+
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <div class="logo"></div>
+      <div class="content">
+        <br />
+        <p class="welcome">嗨，{{username}}</p>
+        <br />
+        <p class="main">欢迎注册xxx平台</p>
+        <p>你需要点击下面的链接以完成注册，该链接2分钟内有效！</p>
+        <p><strong>非本人操作请忽略！</strong></p>
+        <div class="register">
+          <button>
+            <a
+              href={{url}}
+              style="text-decoration: none; color: #9fb6a0; font-size: 20px"
+              >点击完成注册</a
+            >
+          </button>
+        </div>
+        <div style="border-top: 1px solid #ebcc7c; margin-top: 80px">
+          <p style="font-size: 16px; text-align: center">
+            若有疑问，请联系<a
+              href="mailto:aamofe@qq.com"
+              target="_blank"
+              style="text-decoration: none; color: #9bbc9c"
+              >aamofe@qq.com</a
+            >或<a
+              href="http://www.aamofe.top"
+              target="_blank"
+              style="text-decoration: none; color: #9bbc9c"
+              >访问我们的网站</a
+            >
+          </p>
+        </div>
+      </div>
+      <div class="footer">
+        <span>CopyRight&copy;Rolling Team 2023-Summer</span>
+      </div>
+    </div>
+  </body>
+</html>
