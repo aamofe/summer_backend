@@ -59,9 +59,9 @@ def get_invitation(request):
         payload = {"team_id": team_id}
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         if platform.system()=='linux':
-            invitation = "http://www.aamofe.top/api/user/accept/" + token+'/'
+            invitation = "http://www.aamofe.top/api/team/accept_invitation/" + token+'/'
         else :
-            invitation = "http://127.0.0.1/api/user/accept/" + token+'/'
+            invitation = "http://127.0.0.1/api/team/accept_invitation/" + token+'/'
         team.invitation = invitation
         team.save()
     return JsonResponse({'errno': 1, 'msg': "链接已生成", 'invatation': invitation})
@@ -143,6 +143,8 @@ def update_permisson(request, team_id):
     if not member_list.exists():
         return JsonResponse({'errno': 1, 'msg': "该用户不属于该团队"})
     medted = member_list[0]
+    if edited.id==editor.id:
+        return JsonResponse({'errno': 1, 'msg': "无法修改自身权限"})
     if medtor.role == 'MB' or (medtor.role == 'MG' and medted.role == 'CR'):
         return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
     if choice == medted.role:
