@@ -16,31 +16,43 @@ from user.authentication import validate_login
 # from .models import ChatMessage
 
 class TeamChatConsumer(AsyncWebsocketConsumer):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.room_group_name = None
     async def connect(self):
-        authorization_headers = self.scope.get('headers', [])
-        authorization_header = next((header for header in authorization_headers if header[0].decode('utf-8').lower() == 'authorization'), None)
-        if authorization_header:
-            token = authorization_header[1].decode('utf-8').replace('Bearer ', '')
-            try:
-                jwt_token = jwt.decode(token, settings.SECRET_KEY, options={'verify_signature': False})
-                self.user_id = jwt_token.get('id')
-                # 如果验证成功，则将用户加入到团队群聊
-                self.team_id = self.scope['url_route']['kwargs']['team_id']
-                self.room_group_name = f"chat_{self.team_id}"
-                await self.channel_layer.group_add(
-                    self.room_group_name,
-                    self.channel_name
-                )
-                await self.accept()
-            except ExpiredSignatureError:
-                # 处理过期的 Token，阻止连接和消息发送
-                await self.close()
-            except JWTError:
-                # 处理无效的 Token，阻止连接和消息发送
-                await self.close()
-        else:
-            # 处理没有 Authorization 头信息的情况，阻止连接和消息发送
-            await self.close()
+        self.user_id = 1
+        self.team_id = self.scope['url_route']['kwargs']['team_id']
+        self.room_group_name = f"chat_{self.team_id}"
+        # 将用户加入到团队群聊
+        await self.channel_layer.group_add(
+            self.room_group_name,
+            self.channel_name
+        )
+        await self.accept()
+        # authorization_headers = self.scope.get('headers', [])
+        # authorization_header = next((header for header in authorization_headers if header[0].decode('utf-8').lower() == 'authorization'), None)
+        # if authorization_header:
+        #     token = authorization_header[1].decode('utf-8').replace('Bearer ', '')
+        #     try:
+        #         jwt_token = jwt.decode(token, settings.SECRET_KEY, options={'verify_signature': False})
+        #         self.user_id = jwt_token.get('id')
+        #         # 如果验证成功，则将用户加入到团队群聊
+        #         self.team_id = self.scope['url_route']['kwargs']['team_id']
+        #         self.room_group_name = f"chat_{self.team_id}"
+        #         await self.channel_layer.group_add(
+        #             self.room_group_name,
+        #             self.channel_name
+        #         )
+        #         await self.accept()
+        #     except ExpiredSignatureError:
+        #         # 处理过期的 Token，阻止连接和消息发送
+        #         await self.close()
+        #     except JWTError:
+        #         # 处理无效的 Token，阻止连接和消息发送
+        #         await self.close()
+        # else:
+        #     # 处理没有 Authorization 头信息的情况，阻止连接和消息发送
+        #     await self.close()
 
     async def disconnect(self, close_code):
         # 将用户从团队群聊中移除
