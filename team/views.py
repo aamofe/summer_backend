@@ -20,11 +20,15 @@ from jose import JWTError
 from jwt import ExpiredSignatureError
 
 from summer_backend.settings import SECRET_KEY, EMAIL_HOST_USER
+from team.photo import generate_cover
 from user.authentication import validate_all, validate_login
 from user.cos_utils import get_cos_client, Label, Category, SubLabel
 from user.models import User
 from team.models import Team, Member, Project
 from django.utils import timezone
+
+from user.views import upload_cover_method
+
 
 # Create your views here.
 @validate_login
@@ -32,11 +36,63 @@ def create_team(request):
     if request.method == 'POST':
         user = request.user
         team_name = request.POST.get("team_name")
+        description=request.POST.get('description')
         team = Team.objects.create(name=team_name, user=user)
+        cover=request.FILES.get('cover')
+        if description:
+            team.description=description
+        if cover:
+            res, cover_url, content = upload_cover_method(cover, user.id, 'team_cover')
+        else:
+            path,cover=generate_cover(2,team_name,team.id)
+            res, cover_url, content = upload_cover_method(cover, user.id, 'team_cover/random')
+            os.remove(path)
+        if res == -2:
+            return JsonResponse({'errno': 1, 'msg': "图片格式不合法"})
+        elif res == 1:
+            return JsonResponse({'errno': 1, 'msg': content})
+        else:
+            team.cover_url = cover_url
+        team.save()
         member=Member.objects.create(role='CR',user=user,team=team)
         return JsonResponse({'errno': 0, 'msg': "创建团队成功"})
     else :
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+@validate_login
+def update_info(request,team_id):#修改团队描述 上传头像
+    if request.method == 'POST':
+        user = request.user
+        description = request.POST.get('description')
+        team_name=request.POST.get('team_name')
+        cover = request.FILES.get('cover')
+        team_list = Team.objects.filter(id=team_id)
+        if not team_list.exists():
+            return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
+        team = team_list[0]
+        if not team.user==user:
+            return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
+        if team_name:
+            team.name=team_name
+        if description:
+            team.description=description
+        if cover:
+            res, cover_url, content = upload_cover_method(cover, team.id, 'team_cover')
+            if res == -2:
+                return JsonResponse({'errno': 1, 'msg': "图片格式不合法"})
+            elif res == 1:
+                return JsonResponse({'errno': 1, 'msg': content})
+            else:
+                team.cover_url=cover_url
+        else:
+            if team_name and team.cover_url.contains('random'):
+                path, cover = generate_cover(2, team_name, team.id)
+                res, cover_url, content = upload_cover_method(cover, user.id, 'team_cover/random')
+                os.remove(path)
+                team.cover_url = cover_url
+        team.save()
+        return JsonResponse({'errno': 0, 'msg': "修改信息成功"})
+    else:
+        return JsonResponse({'errno': 1, 'msg': "请求方式错误！"})
 # 邀请好友
 @validate_login
 def get_invitation(request):
@@ -59,9 +115,9 @@ def get_invitation(request):
         payload = {"team_id": team_id}
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         if platform.system()=='linux':
-            invitation = "http://www.aamofe.top/api/user/accept/" + token+'/'
+            invitation = "http://www.aamofe.top/api/team/accept_invitation/" + token+'/'
         else :
-            invitation = "http://127.0.0.1/api/user/accept/" + token+'/'
+            invitation = "http://127.0.0.1/api/team/accept_invitation/" + token+'/'
         team.invitation = invitation
         team.save()
     return JsonResponse({'errno': 1, 'msg': "链接已生成", 'invatation': invitation})
@@ -143,6 +199,8 @@ def update_permisson(request, team_id):
     if not member_list.exists():
         return JsonResponse({'errno': 1, 'msg': "该用户不属于该团队"})
     medted = member_list[0]
+    if edited.id==editor.id:
+        return JsonResponse({'errno': 1, 'msg': "无法修改自身权限"})
     if medtor.role == 'MB' or (medtor.role == 'MG' and medted.role == 'CR'):
         return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
     if choice == medted.role:

@@ -1,14 +1,12 @@
 from django.db import models
-
 from user.models import User
-
-
 # Create your models here.
 class Team(models.Model):
     name=models.CharField(verbose_name="团队名称",max_length=10,default='未命名团队')
     user=models.ForeignKey(User,verbose_name="创建者",on_delete=models.CASCADE)
     description=models.CharField(verbose_name="团队描述", max_length=10, null=True)
     created_at = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
+    cover_url=models.URLField(verbose_name="团队封面")
     invitation=models.URLField(verbose_name='邀请链接',null=True)
     def to_dict(self):
         return {
@@ -31,7 +29,6 @@ class Member(models.Model):
     team=models.ForeignKey(Team,on_delete=models.PROTECT)
     def __str__(self):
         return f"{self.get_role_display()}"
-
 class Project(models.Model):
     name=models.CharField(verbose_name='项目名称',max_length=10)
     created_at=models.DateTimeField(verbose_name='项目创建时间',auto_created=True)
