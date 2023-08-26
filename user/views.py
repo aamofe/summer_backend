@@ -32,12 +32,15 @@ def register(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方式错误！"})
     username = request.POST.get('username')
+    nickname=request.POST.get('nickname')
     pswd1 = request.POST.get('password1')
     pswd2 = request.POST.get('password2')
     email = request.POST.get('email')
     avatar = request.FILES.get('avatar')
     pswd_pattern = r'^(?=.*\d)(?=.*[a-zA-Z])[a-zA-Z\d]{8,16}$'
     email_pattern = r'^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+    if nickname is None:
+        return JsonResponse({'errno': 1, 'msg': "昵称为空"})
     if not username or len(username) > 10:
         return JsonResponse({'errno': 1, 'msg': "用户名长度不合法！"})
     if not pswd2 == pswd1:

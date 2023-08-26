@@ -19,7 +19,7 @@ def validate_login(func):
         except JWTError:
             return JsonResponse({'errno': 401, 'msg': "用户未登录，请先登录"})
         try:
-            user = User.objects.get(id=jwt_token.get('id'))
+            user = User.objects.get(id=jwt_token.get('id'),isActive=True)
         except User.DoesNotExist:
             return JsonResponse({'errno': 401, 'msg': "用户不存在，请先注册"})
         request.user = user
