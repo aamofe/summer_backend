@@ -14,7 +14,7 @@ class Document(models.Model):
     modified_at=models.DateTimeField(verbose_name="最近修改时间",auto_now=True)
     team=models.ForeignKey(Team,verbose_name="所属团队",on_delete=models.PROTECT)
     user=models.ForeignKey(User,verbose_name="创建者",on_delete=models.PROTECT)
-    isLocked=models.BooleanField(verbose_name="是否上锁")
+    isLocked=models.BooleanField(verbose_name="是否上锁",default=False)
     def to_dict(self):
         return {
             'title':self.title,
