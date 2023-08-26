@@ -59,7 +59,7 @@ def register(request):
                 return JsonResponse({'errno': 1, 'msg': "注册时间间隔需大于5min"})
     user = User.objects.create(username=username, password=pswd1, email=email)
     if avatar:
-        res, avatar_url, content = upload_cover_method(avatar, user.id, '')
+        res, avatar_url, content = upload_cover_method(avatar, user.id, 'user_avatar')
         if res == -2:
             return JsonResponse({'errno': 1, 'msg': "图片格式不合法"})
         elif res == 1:
@@ -163,7 +163,7 @@ def update_info(request):
         if password:
             user.password = password
         if avatar:
-            res, avatar_url, content = upload_cover_method(avatar, user.id, 'avatar')
+            res, avatar_url, content = upload_cover_method(avatar, user.id, 'user_avatar')
             if res == -2:
                 return JsonResponse({'errno': 1, 'msg': "图片格式不合法"})
             elif res == 1:

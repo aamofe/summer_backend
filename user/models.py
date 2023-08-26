@@ -24,4 +24,8 @@ class User(models.Model):
             'avatar_url':self.avatar_url,
             'email':self.email,
         }
+class Message(models.Model):#群聊和文档的@
+    title=models.CharField(verbose_name='消息标题',max_length=20)
+    content=models.CharField(verbose_name="消息具体内容",max_length=100)
+    url=models.URLField(verbose_name="跳转链接")
 
