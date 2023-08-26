@@ -6,7 +6,7 @@ from user.models import User
 
 
 # Create your views here.
-#def upload_document():
+#def upload_document(request):
 
 def initial_chat(request,user_id):
     Team_ids= Member.objects.filter(user_id= user_id).values('team_id')

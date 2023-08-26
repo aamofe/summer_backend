@@ -13,7 +13,7 @@ from team.models import Member, Team
 
 class TeamChatConsumer(AsyncWebsocketConsumer):
     def __init__(self, *args, **kwargs):
-        super().__init__(args, kwargs)
+        super().__init__(*args, **kwargs)
         self.team = None
 
     async def connect(self):
@@ -231,10 +231,10 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def create_user_team_chat_status(self):
-        from django.db.models import Max
-
-        max_index = UserTeamChatStatus.objects.aggregate(Max('index'))['index__max'] or 0
-        UserTeamChatStatus.objects.get_or_create(user_id=self.user_id, team_id=self.team_id,index=max_index+1)
+        if not UserTeamChatStatus.objects.filter(user_id=self.user_id, team_id=self.team_id).exists():
+            from django.db.models import Max
+            max_index = UserTeamChatStatus.objects.aggregate(Max('index'))['index__max'] or 0
+            UserTeamChatStatus.objects.get_or_create(user_id=self.user_id, team_id=self.team_id,index=max_index+1)
 
 
     @database_sync_to_async
