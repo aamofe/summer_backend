@@ -31,7 +31,7 @@ from django.utils import timezone
 @validate_all
 def register(request):
     if request.method != 'POST':
-        return JsonResponse({'errno': 1, 'msg': "请求方式错误！"})
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
     username = request.POST.get('username')
     nickname=request.POST.get('nickname')
     pswd1 = request.POST.get('password1')
@@ -149,7 +149,7 @@ def login(request):
         user_info={'user_id': user.id,'current_team':user.current_team_id,'token':token}
         return JsonResponse({ 'user_info':user_info, 'errno': 0, 'msg': "登录成功"})
     else:
-        return JsonResponse({'errno': 1, 'msg': "请求方式错误！"})
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
 
 def checkout_team(request):
     if request.method == 'POST':
@@ -168,11 +168,11 @@ def checkout_team(request):
         team_info={'user_id': user.id,'current_team':user.team.id,}
         return JsonResponse({ 'data':team_info, 'errno': 0, 'msg': "登录成功"})
     else:
-        return JsonResponse({'errno': 1, 'msg': "请求方式错误！"})
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
 @validate_login
 def logout(request):
     if request.method != 'POST':
-        return JsonResponse({'errno': 1, 'msg': "请求方式错误！"})
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
     request.session.flush()
     return JsonResponse({'errno': 0, 'msg': "登出成功"})
 
@@ -198,7 +198,7 @@ def update_info(request):
         user.save()
         return JsonResponse({'errno': 0, 'msg': "修改信息成功"})
     else:
-        return JsonResponse({'errno': 1, 'msg': "请求方式错误！"})
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
 
 # 修改个人信息：nickname，密码
 def upload_cover_method(cover_file, cover_id, url):

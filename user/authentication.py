@@ -10,7 +10,7 @@ def validate_login(func):
     def valid_per(request, *args, **kwargs):
         token = request.META.get('HTTP_Authorization'.upper())
         if not token:
-            return redirect('http://www.aamofe.top/api/user/register/')
+            return JsonResponse({'errno': 401, 'msg': "请登录"})
         token = token.replace('Bearer ', '')
         try:
             jwt_token = jwt.decode(token, settings.SECRET_KEY, options={'verify_signature': False})

@@ -17,7 +17,7 @@ from user.models import User
 # Create your views here.
 def create_document(request,team_id):
     if request.method!='POST':
-        return JsonResponse({'errno': 1, 'msg': "请求方式错误！"})
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
     user=request.user
     title=request.POST.get("title")
     content=request.POST.get("content")
@@ -37,7 +37,7 @@ def create_document(request,team_id):
     return JsonResponse({'errno': 0, 'msg': "创建成功"})
 def share_document(request,team_id):
     if request.method!='POST':
-        return JsonResponse({'errno': 1, 'msg': "请求方式错误！"})
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
     document_id=request.POST.get('document_id')
     editable=request.POST.get('editable')
     try :
@@ -58,7 +58,7 @@ def share_document(request,team_id):
     return JsonResponse({'errno':0,'data':data})
 def save_document(request,team_id):
     if request.method!='POST':
-        return JsonResponse({'errno': 1, 'msg': "请求方式错误！"})
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
     document_id=request.POST.get('document_id')
     content=request.POST.get('content')
     try :
@@ -71,7 +71,7 @@ def save_document(request,team_id):
 @validate_all
 def view_document(request,token):
     if request.method!='GET':
-        return JsonResponse({'errno': 1, 'msg': "请求方式错误"})
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     if token.isdigit():
         document_id=token
         editable=True
@@ -105,7 +105,7 @@ def view_document(request,token):
 
 def change_lock(request,team_id):
     if request.method!='GET':
-        return JsonResponse({'errno': 1, 'msg': "请求方式错误"})
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user=request.user
     document_id=request.GET.get("document_id")
     if team_id is None:
