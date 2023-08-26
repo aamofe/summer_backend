@@ -14,11 +14,10 @@ def create_document(request,team_id):
     if request.method!='POST':
         return JsonResponse({'errno': 1, 'msg': "请求方式错误！"})
     user=request.user
-    data = json.loads(request.body)
     print("111")
     print("222")
-    title=data.get("title")
-    content=data.get("content")
+    title=request.POST.get("title")
+    content=request.POST.get("content")
     # title=request.POST.get('title')
     # content=request.POST.get('content')
     print("111",title)
