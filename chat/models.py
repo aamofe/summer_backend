@@ -22,4 +22,7 @@ class UserTeamChatStatus(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
     unread_count = models.PositiveIntegerField(default=0)
+    is_at = models.BooleanField(default=False)
+    is_at_all = models.BooleanField(default=False)
+    index = models.IntegerField(default=0)
 
