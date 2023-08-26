@@ -1,27 +1,39 @@
 import json
+import re
+
+from django.db.models import F
+from django.utils import timezone
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from asgiref.sync import sync_to_async
-
-from chat.models import ChatMessage
-
-
-# 假设您已经定义了此模型
-# from .models import ChatMessage
-
+from chat.models import ChatMessage, Notice, UserTeamChatStatus
+from user.models import User
+from team.models import Member
 class TeamChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         self.team_id = self.scope['url_route']['kwargs']['team_id']
+        self.user_id = self.scope['url_route']['kwargs']['user_id']
         self.room_group_name = f"chat_{self.team_id}"
-
         # 将用户加入到团队群聊
         await self.channel_layer.group_add(
             self.room_group_name,
             self.channel_name
         )
-
         await self.accept()
+        # 将用户和团队信息存储到信息状态表中
+        await self.create_user_team_chat_status()
+        ''''
+        latest_message = await self.get_latest_message()
+        unread_count = await self.get_unread_count()
 
+        await self.send(text_data=json.dumps({
+            'message': latest_message.message if latest_message else None,
+            'username': await self.get_username(latest_message.user_id) if latest_message else None,
+            'avatar_url': await self.get_avatar_url(latest_message.user_id) if latest_message else None,
+            'time': latest_message.timestamp.strftime('%Y-%m-%d %H:%M:%S') if latest_message else None,
+            'unread_count': unread_count
+        }))
+        '''''
     async def disconnect(self, close_code):
         # 将用户从团队群聊中移除
         await self.channel_layer.group_discard(
@@ -31,43 +43,177 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
 
     async def receive(self, text_data=None, bytes_data=None):
         text_data_json = json.loads(text_data)
-
+        if 'all' in text_data_json:
+            recent_messages = await self.get_recent_messages()
+            user_id = text_data_json['user_id']
+            for msg in recent_messages:
+                await self.send(text_data=json.dumps({
+                    'message': msg.message,
+                    'username': await self.get_username(msg.user_id),
+                    'avatar_url': await self.get_avatar_url(msg.user_id),
+                    'time': msg.timestamp.strftime('%Y-%m-%d %H:%M:%S')
+                }))
+            await self.mark_messages_as_read(user_id)
+        else:
         # 检查是否是搜索请求
-        if 'search' in text_data_json:
-            keyword = text_data_json['search']
-            search_results = await self.search_messages(keyword)
-            await self.send(text_data=json.dumps({
-                'search_results': search_results
-            }))
-            return
+            if 'status' in text_data_json:
+                user_id = text_data_json['user_id']
+                await self.send_chat_status(user_id)
+                return
+            if 'search' in text_data_json:####################################################还需要改动（增加）
+                keyword = text_data_json['search']
+                search_results = await self.search_messages(keyword)
+                await self.send(text_data=json.dumps({
+                    'search_results': search_results
+                }))
+                return
+            message = text_data_json['message']
+            user_id = text_data_json['user_id']
+            await self.save_message(message,user_id)
 
-        message = text_data_json['message']
-        await self.save_message(message)
-
-        # 将消息发送给团队群聊的所有成员
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                'type': 'chat_message',
-                'message': message
-            }
-        )
+            # 将消息发送给团队群聊的所有成员
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'chat_message',
+                    'message': message,
+                    'username': await self.get_username(user_id),
+                    'avatar_url': await self.get_avatar_url(user_id),
+                    'time': await self.get_time(),
+                }
+            )
+            await self.increment_unread_count_for_all_except(user_id)
+            await self.channel_layer.group_send(
+                self.room_group_name,
+                {
+                    'type': 'chat_status',
+                    'unread_count': await self.get_unread_count(self.user_id),
+                    'latest_message': message,
+                }
+            )
+            if '@所有人' in message:
+                await self.handle_mention_all(message)
+            else:
+                mentioned_users = set(re.findall(r'@(\w+)', message))
+                for user in mentioned_users:
+                    await self.handle_mention(user, message)
 
     async def chat_message(self, event):
         message = event['message']
-
+        username = event.get('username', '')
+        avatar_url = event.get('avatar_url', '')
+        time = event.get('time', '')
         # 发送消息给 WebSocket
         await self.send(text_data=json.dumps({
-            'message': message
+            'type': 'chat_message',
+            'message': message,
+            'username': username,
+            'avatar_url': avatar_url,
+            'time': time
         }))
 
+    async def chat_status(self, event):
+        unread_count = event['unread_count']
+        latest_message = event['latest_message']
+        await self.send(text_data=json.dumps({
+            'type': 'chat_status',
+            'unread_count': unread_count,
+            'latest_message': latest_message,
+        }))
     @database_sync_to_async
-    def save_message(self, message):
+    def save_message(self, message,user_id):
         # 假设你有一个名为ChatMessage的模型，用于存储消息
-        ChatMessage.objects.create(team_id=self.team_id, message=message)
-
+        ChatMessage.objects.create(team_id=self.team_id, message=message,user_id=user_id)
     @database_sync_to_async
     def search_messages(self, keyword):
         # 搜索包含关键字的消息
         messages = ChatMessage.objects.filter(team_id=self.team_id, message__icontains=keyword)
         return [msg.message for msg in messages]
+    @database_sync_to_async
+    def create_notice(self, user_id, message):
+        Notice.objects.create(user_id=user_id, message=message)
+    async def handle_mention(self, username, original_message):
+        user = await self.get_user(username)
+        if user:
+            notice_message = f"You were mentioned in a message: '{original_message}'"
+            await self.create_notice(user.id, notice_message)
+    async def handle_mention_all(self, original_message):
+        users = await self.get_users()
+        for user in users:
+            notice_message = f"You were mentioned in a message: '{original_message}'"
+            await self.create_notice(user.id, notice_message)
+    @database_sync_to_async
+    def get_user(self, username):
+        try:
+            return User.objects.get(username=username)
+        except User.DoesNotExist:
+            return None
+    @database_sync_to_async
+    def get_users(self):
+        try:
+            user_ids = Member.objects.filter(team_id=self.team_id).values_list('user_id', flat=True)
+            users = User.objects.filter(id__in=user_ids)
+            return list(users)
+        except User.DoesNotExist:
+            return None
+    @database_sync_to_async
+    def get_username(self, user_id):
+        try:
+            return User.objects.get(id=user_id).username
+        except User.DoesNotExist:
+            return None
+    @database_sync_to_async
+    def get_avatar_url(self, user_id):
+        try:
+            return User.objects.get(id=user_id).avatar_url
+        except User.DoesNotExist:
+            return None
+    @sync_to_async
+    def get_time(self):
+        return timezone.now().strftime('%Y-%m-%d %H:%M:%S')
+
+    @database_sync_to_async
+    def increment_unread_count_for_all_except(self, user_id):
+        user_ids = Member.objects.filter(team_id=self.team_id).exclude(user_id=user_id).values_list('user_id',
+                                                                                                    flat=True)
+        print(user_ids)
+        UserTeamChatStatus.objects.filter(user_id__in=user_ids, team_id=self.team_id).update(
+            unread_count=F('unread_count') + 1)
+        print('unread_count', UserTeamChatStatus.objects.filter(user_id__in=user_ids, team_id=self.team_id).update(
+            unread_count=F('unread_count') + 1))
+
+    async def send_chat_status(self, user_id):
+        unread_count = await self.get_unread_count(user_id)
+        latest_message = await self.get_latest_message()
+        await self.send(text_data=json.dumps({
+            'type': 'chat_status',
+            'unread_count': unread_count,
+            'latest_message': latest_message.message if latest_message else None,
+
+        }))
+
+    @database_sync_to_async
+    def get_recent_messages(self):
+        return list(ChatMessage.objects.filter(team_id=self.team_id).order_by('-timestamp'))
+
+    @database_sync_to_async
+    def get_latest_message(self):
+        return ChatMessage.objects.filter(team_id=self.team_id).order_by('-timestamp').first()
+
+    @database_sync_to_async
+    def get_unread_count(self, user_id):
+        status = UserTeamChatStatus.objects.filter(user_id=user_id, team_id=self.team_id).first()
+        return status.unread_count if status else 0
+
+    @database_sync_to_async
+    def mark_messages_as_read(self, user_id):
+        status, created = UserTeamChatStatus.objects.get_or_create(user_id=user_id, team_id=self.team_id)
+        status.unread_count = 0
+        status.save()
+
+    @database_sync_to_async
+    def create_user_team_chat_status(self):
+        UserTeamChatStatus.objects.get_or_create(user_id=self.user_id, team_id=self.team_id)
+
+
+
