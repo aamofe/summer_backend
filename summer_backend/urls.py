@@ -21,5 +21,6 @@ urlpatterns = [
     path('api/user/', include('user.urls')),
     path('api/document/', include('document.urls')),
     path('api/team/', include('team.urls')),
+    path('api/chat/', include('chat.urls')),
 
 ]

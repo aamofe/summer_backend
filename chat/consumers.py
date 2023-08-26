@@ -1,15 +1,21 @@
 import json
 import re
 
-from django.db.models import F
+from django.db.models import F, Max
 from django.utils import timezone
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from asgiref.sync import sync_to_async
 from chat.models import ChatMessage, Notice, UserTeamChatStatus
 from user.models import User
-from team.models import Member
+from team.models import Member, Team
+
+
 class TeamChatConsumer(AsyncWebsocketConsumer):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.team = None
+
     async def connect(self):
         self.team_id = self.scope['url_route']['kwargs']['team_id']
         self.user_id = self.scope['url_route']['kwargs']['user_id']
@@ -83,12 +89,15 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 }
             )
             await self.increment_unread_count_for_all_except(user_id)
+
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'chat_status',
                     'unread_count': await self.get_unread_count(self.user_id),
                     'latest_message': message,
+                    'team_name': await self.get_team_name(self.team_id),
+                    'cover_url': await self.get_cover_url(self.team_id),
                 }
             )
             if '@所有人' in message:
@@ -115,15 +124,24 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     async def chat_status(self, event):
         unread_count = event['unread_count']
         latest_message = event['latest_message']
+        team_name = event['team_name']
+        cover_url = event['cover_url']
         await self.send(text_data=json.dumps({
             'type': 'chat_status',
             'unread_count': unread_count,
             'latest_message': latest_message,
+            'team_name': team_name,
+            'cover_url': cover_url,
         }))
     @database_sync_to_async
     def save_message(self, message,user_id):
         # 假设你有一个名为ChatMessage的模型，用于存储消息
         ChatMessage.objects.create(team_id=self.team_id, message=message,user_id=user_id)
+
+        max_index_for_user = UserTeamChatStatus.objects.filter(user_id=user_id).aggregate(Max('index'))['index__max'] or 0
+        user_team_chat_status = UserTeamChatStatus.objects.get(user_id=user_id, team_id=self.team_id)
+        user_team_chat_status.index = max_index_for_user + 1
+        user_team_chat_status.save()
     @database_sync_to_async
     def search_messages(self, keyword):
         # 搜索包含关键字的消息
@@ -213,7 +231,22 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def create_user_team_chat_status(self):
-        UserTeamChatStatus.objects.get_or_create(user_id=self.user_id, team_id=self.team_id)
+        if not UserTeamChatStatus.objects.filter(user_id=self.user_id, team_id=self.team_id).exists():
+            from django.db.models import Max
+            max_index = UserTeamChatStatus.objects.aggregate(Max('index'))['index__max'] or 0
+            UserTeamChatStatus.objects.get_or_create(user_id=self.user_id, team_id=self.team_id,index=max_index+1)
 
 
+    @database_sync_to_async
+    def get_team_name(self, team_id):
+        try:
+            return Team.objects.get(id=team_id).name
+        except Team.DoesNotExist:
+            return None
 
+    @database_sync_to_async
+    def get_cover_url(self, team_id):
+        try:
+            return Team.objects.get(id=team_id).cover_url
+        except Team.DoesNotExist:
+            return None
