@@ -20,6 +20,7 @@ from jwt import ExpiredSignatureError
 
 from summer_backend import settings
 from summer_backend.settings import SECRET_KEY, EMAIL_HOST_USER
+from team.models import Member, Team
 from user.authentication import validate_all, validate_login
 from user.cos_utils import get_cos_client, Label, Category, SubLabel
 from user.models import User
@@ -122,6 +123,8 @@ def activate(request, token):
             title = '激活成功'
             message = '欢迎登录'
             url = 'http://www.aamofe.top/'
+            team=Team.objects.create(name="个人空间",user=user)
+            user.current_team_id=team.id
     except:
         title = '激活失败'
         message = '该邮箱已注册，请更换邮箱重新注册'
@@ -143,10 +146,29 @@ def login(request):
         payload = {'exp': datetime.utcnow() + timedelta(days=5), 'id': user.id}
         encode = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
         token = str(encode)
-        return JsonResponse({'token': token, 'user_id': user.id, 'errno': 0, 'msg': "登录成功"})
+        user_info={'user_id': user.id,'current_team':user.current_team_id,'token':token}
+        return JsonResponse({ 'user_info':user_info, 'errno': 0, 'msg': "登录成功"})
     else:
         return JsonResponse({'errno': 1, 'msg': "请求方式错误！"})
 
+def checkout_team(request):
+    if request.method == 'POST':
+        user=request.user
+        team_id=request.POST.get('team_id')
+        team_list = Team.objects.filter(id=team_id)
+        if not team_list.exists():
+            return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
+        team = team_list[0]
+        member_list = Member.objects.filter(user=user, team=team)
+        if not member_list.exists():
+            return JsonResponse({'errno': 1, 'msg': "当前用户不属于该团队"})
+        member = member_list[0]
+        user.current_team_id=team.id
+        user.save()
+        team_info={'user_id': user.id,'current_team':user.team.id,}
+        return JsonResponse({ 'data':team_info, 'errno': 0, 'msg': "登录成功"})
+    else:
+        return JsonResponse({'errno': 1, 'msg': "请求方式错误！"})
 @validate_login
 def logout(request):
     if request.method != 'POST':
@@ -317,7 +339,6 @@ def show_info(request, id):
             user = User.objects.get(id=id, isActive=True)
         except User.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "查看对象不存在"})
-    data = []
-    data.append(user.to_dict())
-    return JsonResponse({'errno': 0, 'msg': "查看信息成功", 'data': data})
+    user_info = user.to_dict()
+    return JsonResponse({'errno': 0, 'msg': "查看信息成功", 'user_info': user_info})
 

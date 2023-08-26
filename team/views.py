@@ -57,7 +57,7 @@ def create_team(request):
 
 
 @validate_login
-def update_info(request, team_id):  # 修改团队描述 上传头像
+def update_team(request, team_id):  # 修改团队描述 上传头像
     if request.method == 'POST':
         user = request.user
         description = request.POST.get('description')
@@ -84,7 +84,7 @@ def update_info(request, team_id):  # 修改团队描述 上传头像
         team.save()
         return JsonResponse({'errno': 0, 'msg': "修改信息成功"})
     else:
-        return JsonResponse({'errno': 1, 'msg': "请求方式错误！"})
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
 
 
 # 邀请好友
@@ -115,15 +115,8 @@ def get_invitation(request):
         team.invitation = invitation
         team.save()
     return JsonResponse({'errno': 1, 'msg': "链接已生成", 'invatation': invitation})
-
-
 @validate_all
-def open_invitation(request, token):
-    title = ''
-    content = ''
-    user_id = ''
-    team_id = ''
-    # 下面是用户的信息
+def redi(request):
     token1 = request.META.get('HTTP_Authorization'.upper())
     if not token1:
         return redirect('http://www.aamofe.top/')
@@ -143,6 +136,18 @@ def open_invitation(request, token):
     except JWTError:
         title = '用户身份错误'
         content = '请重新登录'
+    return JsonResponse({'title':title,"user_id":user.id,"content":content})
+
+@validate_all
+def open_invitation(request, token):
+    title = ''
+    content = ''
+    user_id = ''
+    team_id = ''
+    # 下面是用户的信息
+    print(request.META)
+    print(111)
+    pprint.pprint(request.META)
     # 下面是team_id的信息
     payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
     team_id = payload.get('team_id')
@@ -180,39 +185,53 @@ def accept_invitation(request):
 # 获取所有团队
 
 @validate_login
-def get_teams(request):
+def all_teams(request):
+    print(1)
     if request.method != 'GET':
+        print(2)
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    print(3)
     user = request.user
     member_list = Member.objects.filter(user=user)
-    data = []
+    print(4)
+    teams = []
     for member in member_list:
         team_info = member.team.to_dict()
         team_info['role'] = member.role
-        data.append(team_info)
-    return JsonResponse({'errno': 0, 'msg': "获取团队", 'data': data})
+        teams.append(team_info)
+    return JsonResponse({'errno': 0, 'msg': "获取团队", 'teams': teams})
 
 
 @validate_login
-def get_members(request):
+def all_members(request):
     if request.method != 'GET':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
     team_id = request.GET.get("team_id")
-    team_list = Team.objects.filter(id=team_id)
-    if not team_list.exists():
-        return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
-    team = team_list[0]
+    try:
+        team=Team.objects.get(id=team_id)
+    except Team.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "团队不存在"})
     member_list = Member.objects.filter(user=user, team=team)
     if not member_list.exists():
         return JsonResponse({'errno': 1, 'msg': "当前用户不属于该团队"})
-    member_list = Member.objects.filter(team=team)
-    data = []
+    members = []
+    member_list = Member.objects.filter(team=team,role="CR")
     for member in member_list:
         user_info = member.user.to_dict()
         user_info['role'] = member.role
-        data.append(user_info)
-    return JsonResponse({'errno': 0, 'msg': "获取成员", 'data': data})
+        members.append(user_info)
+    member_list = Member.objects.filter(team=team,role="MG")
+    for member in member_list:
+        user_info = member.user.to_dict()
+        user_info['role'] = member.role
+        members.append(user_info)
+    member_list = Member.objects.filter(team=team,role="MB")
+    for member in member_list:
+        user_info = member.user.to_dict()
+        user_info['role'] = member.role
+        members.append(user_info)
+    return JsonResponse({'errno': 0, 'msg': "获取成员", 'members': members})
 
 
 @validate_login
@@ -255,7 +274,7 @@ def update_permisson(request, team_id):
 
 
 @validate_login
-def create(request, team_id):
+def create_project(request, team_id):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
@@ -267,11 +286,11 @@ def create(request, team_id):
         return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
     team = team_list[0]
     project = Project.objects.create(name=project_name, team=team)
-    return JsonResponse({'errno': 1, 'msg': "团队创建成功"})
+    return JsonResponse({'errno': 1, 'msg': "项目创建成功"})
 
 
 @validate_login
-def update(request, project_id):
+def update_project(request, project_id):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     try:
@@ -288,7 +307,7 @@ def update(request, project_id):
 
 
 @validate_login
-def rename(request, project_id):
+def rename_project(request, project_id):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     try:
@@ -303,3 +322,6 @@ def rename(request, project_id):
     project.name = new_name
     project.save()
     return JsonResponse({'errno': 0, 'msg': "项目删除成功"})
+
+
+# def quit_team(request,team_id):

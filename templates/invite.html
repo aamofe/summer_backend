@@ -18,6 +18,8 @@
     </o:OfficeDocumentSettings>
 </xml>
 <![endif]--><!--[if !mso]> -->
+<script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+
   <link href="https://fonts.googleapis.com/css2?family=Monoton&display=swap" rel="stylesheet"><!--<![endif]-->
   <style type="text/css">
 .rollover:hover .rollover-first {
@@ -196,6 +198,13 @@ span.MsoHyperlinkFollowed {
   </div>
  </body>
  <script>
+    try{
+      const res = axios.get('http://www.aamofe.top/team/redi/',{
+        headers:{
+          'Authorization': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2OTM1MTAxMTMsImlkIjoxfQ.dRHbq2B3xKqymT_DsMU7KmcGet39kak75o5KoEtiG34'
+        }
+      }) 
+    }
     document.addEventListener("DOMContentLoaded", function () {
       // 获取按钮元素
       const joinButton = document.getElementById("joinButton");
@@ -207,7 +216,7 @@ span.MsoHyperlinkFollowed {
           const response = await fetch("http://www.aamofe.top/team/accept_invitation", {
             method: "POST",
             headers: {
-              {#"Content-Type": "application/json",#}
+              {"Content-Type": "application/json",}
             },
               body: {
                   'user_id':{{user_id}},

@@ -6,6 +6,7 @@ from django.db import models
 # Create your models here.
 from django.db import models
 
+
 # Create your models here.
 class User(models.Model):
     username=models.CharField(verbose_name="真实姓名",max_length=10)
@@ -16,6 +17,7 @@ class User(models.Model):
     avatar_url = models.URLField(verbose_name="头像路径",default="https://summer-1315620690.cos.ap-beijing.myqcloud.com/avatar/default.png")
     created_at=models.DateTimeField(verbose_name='注册时间',auto_now_add=True)
     isActive=models.BooleanField(verbose_name='是否有效账户',max_length=10,default=False)
+    current_team_id=models.IntegerField(verbose_name="当前团队id")
     def to_dict(self):
         return {
             'id':self.id,

@@ -12,5 +12,5 @@ urlpatterns = [
     path('logout/',views.logout),
     path('update_info/',views.update_info),
     path('show_info/<int:id>/', views.show_info),
-
+    path('checkout_team/',views.checkout_team)
 ]

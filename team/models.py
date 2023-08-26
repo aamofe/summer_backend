@@ -6,7 +6,7 @@ class Team(models.Model):
     user=models.ForeignKey(User,verbose_name="创建者",on_delete=models.CASCADE)
     description=models.CharField(verbose_name="团队描述", max_length=10, null=True)
     created_at = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
-    cover_url=models.URLField(verbose_name="团队封面")
+    cover_url=models.URLField(verbose_name="团队封面",default="https://summer-1315620690.cos.ap-beijing.myqcloud.com/team_cover/default.png")
     invitation=models.URLField(verbose_name='邀请链接',null=True)
     def to_dict(self):
         return {
