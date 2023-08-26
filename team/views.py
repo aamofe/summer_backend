@@ -124,25 +124,25 @@ def open_invitation(request, token):
     user_id = ''
     team_id = ''
     # 下面是用户的信息
-    token1 = request.META.get('HTTP_Authorization'.upper())
-    if not token1:
-        return redirect('http://www.aamofe.top/api/user/register/')
-    payload = jwt.decode(token1, SECRET_KEY, algorithms=['HS256'])
-    token1 = token1.replace('Bearer ', '')
-    try:
-        jwt_token = jwt.decode(token1, settings.SECRET_KEY, options={'verify_signature': False})
-        try:
-            user = User.objects.get(id=jwt_token.get('id'), isActive=True)
-            user_id = user.id
-        except User.DoesNotExist:
-            title = '用户不存在'
-            content = '请先注册'
-    except ExpiredSignatureError:
-        title = '登录已过期'
-        content = '请重新登录'
-    except JWTError:
-        title = '用户身份错误'
-        content = '请重新登录'
+    # token1 = request.META.get('HTTP_Authorization'.upper())
+    # if not token1:
+    #     return redirect('http://www.aamofe.top/')
+    # payload = jwt.decode(token1, SECRET_KEY, algorithms=['HS256'])
+    # token1 = token1.replace('Bearer ', '')
+    # try:
+    #     jwt_token = jwt.decode(token1, settings.SECRET_KEY, options={'verify_signature': False})
+    #     try:
+    #         user = User.objects.get(id=jwt_token.get('id'), isActive=True)
+    #         user_id = user.id
+    #     except User.DoesNotExist:
+    #         title = '用户不存在'
+    #         content = '请先注册'
+    # except ExpiredSignatureError:
+    #     title = '登录已过期'
+    #     content = '请重新登录'
+    # except JWTError:
+    #     title = '用户身份错误'
+    #     content = '请重新登录'
     # 下面是team_id的信息
     payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
     team_id = payload.get('team_id')
@@ -156,13 +156,18 @@ def open_invitation(request, token):
         title = "邀请你加入团队 " + team.name
         content = '点击下方链接'
     context = {'title': title, 'content': content, "team_id": team_id, 'user_id': user_id}
-    return render(request, "activate.html", context)
+    return render(request, "invite.html", context)
 
 
 @validate_all
 def accept_invitation(request):
+
     team_id = request.POST.get('team_id')
     user_id = request.POST.get('user_id')
+    if team is None:
+        team=3
+    if user_id is None:
+        user_id=3
     team = Team.objects.get(id=team_id)
     user = User.objects.get(id=user_id)
     member = Member.objects.filter(user=user, team=team)
