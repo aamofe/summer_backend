@@ -1,12 +1,49 @@
+import datetime
+
+from django.db.models import Max
 from django.http import JsonResponse
 
 from chat.models import UserTeamChatStatus, ChatMessage
 from team.models import Team, Member
+from user.cos_utils import get_cos_client
 from user.models import User
+import uuid
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
 
 
-# Create your views here.
-#def upload_document(request):
+def save_message(message,team_id,user_id):
+    # 假设你有一个名为ChatMessage的模型，用于存储消息
+    ChatMessage.objects.create(team_id=team_id, message=message, user_id=user_id)
+    max_index_for_user = UserTeamChatStatus.objects.filter(user_id=user_id).aggregate(Max('index'))['index__max'] or 0
+    user_team_chat_status = UserTeamChatStatus.objects.get(user_id=user_id, team_id=team_id)
+    user_team_chat_status.index = max_index_for_user + 1
+    user_team_chat_status.save()
+
+
+def upload_image(request, team_id, user_id):
+    avatar = request.FILES.get('avatar')
+    if not avatar:
+        print("no avatar")
+    current_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    formatted_string = f"team_id: {team_id}, user_id: {user_id}, time: {current_time}"
+    print(formatted_string)
+    avatar_url, content = upload_cover_method(avatar,formatted_string,'chat_avatar')
+    channel_layer = get_channel_layer()
+    async_to_sync(channel_layer.group_send)(
+        f"chat_{team_id}",
+        {
+            'type': 'new_file_uploaded',
+            'file_url': avatar_url,
+            'file_type': 'image',
+        }
+    )
+    save_message(avatar_url,team_id,user_id)
+
+    return JsonResponse({'errno': 0, 'msg': '上传成功', 'url': avatar_url})
+
+
+
 
 def initial_chat(request,user_id):
     Team_ids= Member.objects.filter(user_id= user_id).values('team_id')
@@ -19,11 +56,12 @@ def initial_chat(request,user_id):
         lastMessage={
             'content':last_message.message,
             'username':User.objects.get(id=last_message.user_id).username,
-            'timestamp':last_message.timestamp,
+            'timestamp':last_message.timestamp.strftime('%Y/%m/%d/%H:%M'),
         }
         users=[]
         for member in members:
             users.append({
+                '_id':member.user_id,
                 'username':User.objects.get(id=member.user_id).username,
                 'avatar':User.objects.get(id=member.user_id).avatar_url,
             })
@@ -38,5 +76,40 @@ def initial_chat(request,user_id):
         }
         rooms.append(room_data)
     return JsonResponse({'rooms':rooms})
+
+
+
+def upload_cover_method(cover_file, cover_id, url):
+    client, bucket_name, bucket_region = get_cos_client()
+    if cover_id == '' or cover_id == 0:
+        cover_id = str(uuid.uuid4())
+    file_name = cover_file.name
+    file_extension = file_name.split('.')[-1]  # 获取文件后缀
+    if file_extension == 'jpg':
+        ContentType = "image/jpg"
+    elif file_extension == 'jpeg':
+        ContentType = "image/jpeg"
+    elif file_extension == 'png':
+        ContentType = "image/png"
+    else:
+        return -2, None, None
+    cover_key = f"{url}/{cover_id}.{file_extension}"
+    response_cover = client.put_object(
+        Bucket=bucket_name,
+        Body=cover_file,
+        Key=cover_key,
+        StorageClass='STANDARD',
+        ContentType=ContentType
+    )
+    if 'url' in response_cover:
+        cover_url = response_cover['url']
+    else:
+        cover_url = f'https://{bucket_name}.cos.{bucket_region}.myqcloud.com/{cover_key}'
+    response_submit = client.get_object_sensitive_content_recognition(
+        Bucket=bucket_name,
+        BizType='aa3bbd2417d7fa61b38470534735ff20',
+        Key=cover_key,
+    )
+    return cover_url, None
 
 

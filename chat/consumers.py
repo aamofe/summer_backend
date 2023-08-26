@@ -61,7 +61,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 }))
             await self.mark_messages_as_read(user_id)
         else:
-        # 检查是否是搜索请求
+            # 检查是否是搜索请求
             if 'status' in text_data_json:
                 user_id = text_data_json['user_id']
                 await self.send_chat_status(user_id)
@@ -119,6 +119,13 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
             'username': username,
             'avatar_url': avatar_url,
             'time': time
+        }))
+
+    async def new_file_uploaded(self, event):
+        # Handle the logic for the new_file_uploaded event
+        await self.send(text_data=json.dumps({
+            'file_url': event['file_url'],
+            'file_type': event['file_type'],
         }))
 
     async def chat_status(self, event):
