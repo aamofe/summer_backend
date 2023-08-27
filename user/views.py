@@ -61,7 +61,7 @@ def register(request):
             now_time = timezone.now()
             if (now_time - user.created_at).seconds <= 300:
                 return JsonResponse({'errno': 1, 'msg': "注册时间间隔需大于5min"})
-    user = User.objects.create(username=username, password=pswd1, email=email)
+    user = User.objects.create(username=username, password=pswd1, email=email,current_team_id=0)
     if avatar:
         res, avatar_url, content = upload_cover_method(avatar, user.id, 'user_avatar')
         if res == -2:
@@ -148,6 +148,11 @@ def login(request):
         encode = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
         token = str(encode)
         user_info={'user_id': user.id,'current_team':user.current_team_id,'token':token}
+        if user.current_team_id==0:
+            team=Team.objects.create(user=user,name="个人空间")
+            member=Member.objects.create(user=user,role="CR",team=team)
+            user.current_team_id=team.id
+            user.save()
         return JsonResponse({ 'user_info':user_info, 'errno': 0, 'msg': "登录成功"})
     else:
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})

@@ -378,6 +378,7 @@ def get_current_team(request):
             team = Team.objects.get(user=user,name="个人空间")
         except Team.DoesNotExist:
             team=Team.objects.create(user=user,name="个人空间")
+            member=Member.objects.create(user=user,role="CR",team=team)
         user.current_team_id=team.id
         user.save()
     team_list=team.to_dict()
