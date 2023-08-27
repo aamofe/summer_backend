@@ -31,7 +31,7 @@ from django.utils import timezone
 @validate_all
 def register(request):
     if request.method != 'POST':
-        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     username = request.POST.get('username')
     nickname=request.POST.get('nickname')
     pswd1 = request.POST.get('password1')
@@ -55,7 +55,7 @@ def register(request):
     user_count = user_list.count()
     if user_count >= 1:  # 只保留最后一个，其他全都删掉
         user_list.exclude(pk=user.pk).delete()
-        if user.isActive:
+        if user.is_active:
             return JsonResponse({'errno': 1, 'msg': "该用户已注册"})
         else:
             now_time = timezone.now()
@@ -118,7 +118,7 @@ def activate(request, token):
             title = '邮箱不正确'
             message = '邮箱不存在，信息有误，请重新注册'
         else:
-            user.isActive = True
+            user.is_active = True
             user.save()
             title = '激活成功'
             message = '欢迎登录'
@@ -140,21 +140,22 @@ def login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-        if not User.objects.filter(email=email, password=password, isActive=True).exists():
+        try:
+            user = User.objects.get(email=email, password=password, is_active=True)
+        except User.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "用户不存在！"})
-        user = User.objects.get(email=email, password=password, isActive=True)
         payload = {'exp': datetime.utcnow() + timedelta(days=5), 'id': user.id}
         encode = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
         token = str(encode)
         user_info={'user_id': user.id,'current_team':user.current_team_id,'token':token}
         return JsonResponse({ 'user_info':user_info, 'errno': 0, 'msg': "登录成功"})
     else:
-        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
 
 @validate_login
 def logout(request):
     if request.method != 'POST':
-        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     request.session.flush()
     return JsonResponse({'errno': 0, 'msg': "登出成功"})
 
@@ -180,7 +181,7 @@ def update_info(request):
         user.save()
         return JsonResponse({'errno': 0, 'msg': "修改信息成功"})
     else:
-        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
 
 # 修改个人信息：nickname，密码
 def upload_cover_method(cover_file, cover_id, url):
@@ -306,11 +307,12 @@ def show_info(request, id):
         is_login = False
     else :
         is_login=True
+    print("is_login : ",is_login)
     if id==0 and not is_login:
         return JsonResponse({'errno': 1, 'msg': "未登录"})
     if id!=0:
         try:
-            user = User.objects.get(id=id, isActive=True)
+            user = User.objects.get(id=id, is_active=True)
         except User.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "查看对象不存在"})
     print('isLogin :',is_login)

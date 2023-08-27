@@ -8,7 +8,7 @@ class Team(models.Model):
     created_at = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
     cover_url=models.URLField(verbose_name="团队封面",default="https://summer-1315620690.cos.ap-beijing.myqcloud.com/team_cover/default.png")
     invitation=models.URLField(verbose_name='邀请链接',null=True)
-    is_deleted=models.BooleanField(verbose_name="是否删除",default=False)
+    # is_deleted=models.BooleanField(verbose_name="是否删除",default=False)
     def to_dict(self):
         return {
             'id': self.id,

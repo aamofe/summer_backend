@@ -13,5 +13,5 @@ urlpatterns = [
     path('update_info/',views.update_info),
     path('show_info/<int:id>/', views.show_info),
     
-    path('personal_info/',views.personal_info)
+    # path('personal_info/',views.personal_info)
 ]
