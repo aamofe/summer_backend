@@ -18,6 +18,7 @@ from datetime import datetime, timedelta
 from django.template import loader
 from jose import JWTError
 from jwt import ExpiredSignatureError
+from document.models import Document, Prototype
 
 from summer_backend import settings
 from summer_backend.settings import SECRET_KEY, EMAIL_HOST_USER
@@ -498,3 +499,17 @@ def recover_all_project(request,team_id):
         p.is_deleted=False
         p.save()
     return JsonResponse({'errno': 0, 'msg': "一键恢复成功"})
+@validate_login
+def get_one_project(request):
+    if request.method != 'GET':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user=request.user
+    project_id=request.GET.get('project_id')
+    try:
+        project=Project.objects.get(id=project_id)
+    except Project.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "项目不存在"})
+    project_=project.to_dict()
+    project_['document_num']=Document.objects.filter(project=project).count()
+    project_['prototype_num']=Prototype.objects.filter(project=project).count()
+    return JsonResponse({'errno': 0, 'project':project_,'msg': "单个项目信息"})
