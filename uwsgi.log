@@ -272,3 +272,12 @@ spawned uWSGI worker 4 (pid: 390427, cores: 2)
 1
 [pid: 390423|app: 0|req: 2/13] 219.239.227.141 () {40 vars in 747 bytes} [Mon Aug 28 01:55:46 2023] GET /api/document/view_document/3/ => generated 237 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
 [pid: 390425|app: 0|req: 5/14] 219.239.227.141 () {44 vars in 854 bytes} [Mon Aug 28 01:55:46 2023] POST /api/document/change_lock/ => generated 254 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+[pid: 390427|app: 0|req: 8/15] 220.196.160.51 () {42 vars in 845 bytes} [Mon Aug 28 02:02:10 2023] GET /api/document/view_document/3/ => generated 237 bytes in 22 msecs (HTTP/1.1 200) 7 headers in 221 bytes (1 switches on core 1)
+1
+[pid: 390427|app: 0|req: 9/16] 219.239.227.141 () {40 vars in 747 bytes} [Mon Aug 28 02:02:46 2023] GET /api/document/view_document/3/ => generated 237 bytes in 21 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 390425|app: 0|req: 6/17] 219.239.227.141 () {44 vars in 854 bytes} [Mon Aug 28 02:02:46 2023] POST /api/document/change_lock/ => generated 254 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 390427|app: 0|req: 10/18] 219.239.227.141 () {44 vars in 854 bytes} [Mon Aug 28 02:02:47 2023] POST /api/document/change_lock/ => generated 254 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+1
+[pid: 390425|app: 0|req: 7/19] 219.239.227.141 () {40 vars in 747 bytes} [Mon Aug 28 02:02:57 2023] GET /api/document/view_document/3/ => generated 237 bytes in 20 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 390427|app: 0|req: 11/20] 219.239.227.141 () {44 vars in 854 bytes} [Mon Aug 28 02:02:57 2023] POST /api/document/change_lock/ => generated 254 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
