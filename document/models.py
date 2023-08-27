@@ -19,6 +19,7 @@ class Document(models.Model):
     is_deleted=models.BooleanField(verbose_name="是否被删除",default=False)
     def to_dict(self):
         return {
+            'id':self.id,
             'title':self.title,
             'content':self.content,
             'creator':self.user.id,
@@ -39,6 +40,7 @@ class Prototype(models.Model):
     is_deleted=models.BooleanField(verbose_name="是否已删除",default=False)
     def to_dict(self):
         return {
+            'id':self.id,
             'title':self.title,
             'content':self.content,
             'created_at':self.created_at,
