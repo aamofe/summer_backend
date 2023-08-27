@@ -59,6 +59,13 @@ def initial_chat(request,user_id):
                 'username': '',
                 'timestamp': '',
             }
+
+        elif last_message.message == '':
+            lastMessage = {
+                'content': '新文件请查看',
+                'username': User.objects.get(id=last_message.user_id).username,
+                'timestamp': last_message.timestamp.strftime('%Y/%m/%d/%H:%M'),
+            }
         else:
             lastMessage={
                 'content':last_message.message,

@@ -28,7 +28,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         )
         await self.accept()
         # 将用户和团队信息存储到信息状态表中
-        await self.index_up()
+        await self.index_up(self.user_id, self.team_id)
         ''''
         latest_message = await self.get_latest_message()
         unread_count = await self.get_unread_count()
@@ -62,6 +62,8 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                     'message': msg.message,
                     'user_id': str(msg.user_id),
                     'username': await self.get_username(msg.user_id),
+                    'files': msg.files,
+                    'replyMessage': msg.reply_message,
                     'avatar_url': await self.get_avatar_url(msg.user_id),
                     'time': msg.timestamp.strftime('%Y-%m-%d %H:%M:%S')
                 }
@@ -85,16 +87,20 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                     'search_results': search_results
                 }))
                 return
-            message = text_data_json['message']
             user_id = text_data_json['user_id']
-            await self.save_message(message,user_id)
-
+            message = text_data_json.get('message', '')  # 如果'message'不存在，返回空字符串
+            files = text_data_json.get('files', [])  # 如果'files'不存在，返回空列表
+            replyMessage = text_data_json.get('replyMessage', {})  # 如果'reply_message'不存在，返回空字典
+            await self.save_message(message,user_id,files,replyMessage)
+            await self.index_up(user_id,self.team_id)
             # 将消息发送给团队群聊的所有成员
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'chat_message',
                     'message': message,
+                    'files': files,
+                    'replyMessage': replyMessage,
                     'username': await self.get_username(user_id),
                     'avatar_url': await self.get_avatar_url(user_id),
                     'time': await self.get_time(),
@@ -127,12 +133,17 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         username = event.get('username', '')
         avatar_url = event.get('avatar_url', '')
         time = event.get('time', '')
+        files = event.get('files', [])  # 获取files字段，如果没有则默认为空列表
+        replyMessage = event.get('replyMessage', None)  #
+        print(replyMessage)
         # 发送消息给 WebSocket
         await self.send(text_data=json.dumps({
             'type': 'chat_message',
             'team_id': self.team_id,
             'user_id': self.user_id,
             'message': message,
+            'files': files,
+            'replyMessage': replyMessage,
             'username': username,
             'avatar_url': avatar_url,
             'time': time
@@ -150,18 +161,20 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         latest_message = event['latest_message']
         username = event.get('username', '')
         time = event.get('time', '')
+        index = event.get('index', '')
         await self.send(text_data=json.dumps({
             'type': 'chat_status',
             'team_id': self.team_id,
             'username': username,
+            'index': index,
             'time': time,
             'unread_count': unread_count,
             'latest_message': latest_message,
         }))
     @database_sync_to_async
-    def save_message(self, message,user_id):
+    def save_message(self, message,user_id,files,reply_message):
         # 假设你有一个名为ChatMessage的模型，用于存储消息
-        ChatMessage.objects.create(team_id=self.team_id, message=message,user_id=user_id)
+        ChatMessage.objects.create(team_id=self.team_id, message=message,user_id=user_id,files=files,reply_message=reply_message)
 
         max_index_for_user = UserTeamChatStatus.objects.filter(user_id=user_id).aggregate(Max('index'))['index__max'] or 0
         user_team_chat_status = UserTeamChatStatus.objects.get(user_id=user_id, team_id=self.team_id)
@@ -216,10 +229,27 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         return timezone.now().strftime('%Y-%m-%d %H:%M:%S')
 
     @database_sync_to_async
+    def index_up(self, user_id, team_id):
+        from django.db.models import Max
+        # 获取最大index值
+        max_index = UserTeamChatStatus.objects.aggregate(Max('index'))['index__max'] or 0
+
+        # 使用get_or_create获取或创建对象
+        user_team_chat_status, created = UserTeamChatStatus.objects.get_or_create(user_id=user_id, team_id=team_id)
+
+        # 设置index为最大值加1
+        user_team_chat_status.index = max_index + 1
+        user_team_chat_status.save()
+
+    @database_sync_to_async
     def increment_unread_count_in_db(self, user_id):
         user_ids = Member.objects.filter(team_id=self.team_id).values_list('user_id',flat=True)
-        UserTeamChatStatus.objects.filter(user_id__in=user_ids, team_id=self.team_id).update(
+        for uid in user_ids:
+            self.index_up(uid, self.team_id)
+        new_user_ids = user_ids.exclude(user_id=user_id)
+        UserTeamChatStatus.objects.filter(user_id__in=new_user_ids, team_id=self.team_id).update(
             unread_count=F('unread_count') + 1)
+
         return user_ids
 
     @database_sync_to_async
@@ -227,13 +257,18 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         return list(user_ids_query)
     # This method can be used to send messages using channel_layer
     def return_message(self, message):
-        return message.message if message else None
+        result= message.message if message.message else "新文件请查看"
+        print(result)
+        return result
     @database_sync_to_async
     def return_username(self, message):
         return User.objects.get(id = message.user_id).username if message else None
     @database_sync_to_async
     def return_time(self, message):
         return message.timestamp.strftime('%Y-%m-%d %H:%M:%S') if message else None
+    @database_sync_to_async
+    def get_index(self, user_id):
+        return UserTeamChatStatus.objects.get(user_id=user_id, team_id=self.team_id).index
     async def notify_users_of_unread_count(self, user_ids):
         user_ids_list = await self.get_user_ids(user_ids)
         for uid in user_ids_list:
@@ -242,6 +277,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
             await self.channel_layer.send(channel_name, {
                 'type': 'chat_status',
                 'unread_count': unread_count,
+                'index': await self.get_index(uid),
                 'username': await self.return_username(await self.get_latest_message()),
                 'time': await self.return_time(await self.get_latest_message()),
                 'latest_message': self.return_message(await self.get_latest_message()),
@@ -293,12 +329,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         status.unread_count = 0
         status.save()
 
-    @database_sync_to_async
-    def index_up(self):
-        if not UserTeamChatStatus.objects.filter(user_id=self.user_id, team_id=self.team_id).exists():
-            from django.db.models import Max
-            max_index = UserTeamChatStatus.objects.aggregate(Max('index'))['index__max'] or 0
-            UserTeamChatStatus.objects.get_or_create(user_id=self.user_id, team_id=self.team_id,index=max_index+1)
+
 
 
     @database_sync_to_async
@@ -319,4 +350,5 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     def save_user_channel(self):
         UserChatChannel.objects.update_or_create(user_id=self.user_id,team_id=self.team_id ,defaults={'channel_name': self.channel_name})
 
-#class NoticeConsumer:
+#class ChatAtConsumer:
+

@@ -8,7 +8,7 @@ from chat import consumers
 
 websocket_urlpatterns = [
     path('<int:team_id>/chat/<int:user_id>', consumers.TeamChatConsumer.as_asgi()),
-    #path('<int:user_id>/notice/', consumers.NoticeConsumer.as_asgi()),
+    #path('<int:team_id>/notice/<int:user_id>', consumers.ChatAtConsumer.as_asgi()),
    # path('<int:team_id>/chat/<int:member_id>/', consumers.PrivateChatConsumer.as_asgi()),
 ]
 

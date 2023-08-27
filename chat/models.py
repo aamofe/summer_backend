@@ -6,7 +6,9 @@ from user.models import User
 
 # Create your models here.
 class ChatMessage(models.Model):
-    message = models.TextField()
+    message = models.TextField(default=None)
+    reply_message = models.TextField(default=None)
+    files = models.TextField(default=None)
     team_id = models.IntegerField()
     user_id = models.IntegerField(default=0)
     timestamp = models.DateTimeField(auto_now_add=True)
