@@ -199,7 +199,7 @@ def all_teams(request):
     teams = []
     for member in member_list:
         team_info = member.team.to_dict()
-        team_info['role'] = member.role
+        team_info['role'] = member.get_role_display()
         teams.append(team_info)
     teams.append({'team_num':member_list.count()})
     return JsonResponse({'errno': 0, 'msg': "获取团队", 'teams': teams})
@@ -211,6 +211,8 @@ def all_members(request):
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
     team_id = request.GET.get("team_id")
+    if not team_id:
+        return JsonResponse({'errno': 1, 'msg': "请输入团队id"})
     try:
         team=Team.objects.get(id=team_id)
     except Team.DoesNotExist:
@@ -222,17 +224,20 @@ def all_members(request):
     member_list = Member.objects.filter(team=team,role="CR")
     for member in member_list:
         user_info = member.user.to_dict()
-        user_info['role'] = member.role
+        user_info['role'] = member.get_role_display()
+        user_info['op']=''
         members.append(user_info)
     member_list = Member.objects.filter(team=team,role="MG")
     for member in member_list:
         user_info = member.user.to_dict()
-        user_info['role'] = member.role
+        user_info['role'] = member.get_role_display()
+        user_info['op']=''
         members.append(user_info)
     member_list = Member.objects.filter(team=team,role="MB")
     for member in member_list:
         user_info = member.user.to_dict()
-        user_info['role'] = member.role
+        user_info['role'] = member.get_role_display()
+        user_info['op']=''
         members.append(user_info)
     return JsonResponse({'errno': 0, 'msg': "获取成员", 'members': members})
 
@@ -370,7 +375,7 @@ def get_current_team(request):
     member_list=Member.objects.filter(team=team)
     team_list['member_num']=member_list.count()
     member=Member.objects.filter(user=user,team=team)[0]
-    team_list['role']=member.role
+    team_list['role']=member.get_role_display()
     # pprint.pprint(team_list)
     return JsonResponse({'errno': 0,'team':team_list, 'msg': "请求成功"})
 @validate_login
@@ -410,5 +415,5 @@ def get_one_team(request):
     member_list=Member.objects.filter(team=team)
     team_list['member_num']=member_list.count()
     member=Member.objects.filter(user=user,team=team)[0]
-    team_list['role']=member.role
+    team_list['role']=member.get_role_display()
     return JsonResponse({'errno': 0,'team':team_list, 'msg': "请求成功"})
