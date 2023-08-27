@@ -38,7 +38,7 @@ def create_document(request,project_id):
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     document=Document.objects.create(title=title,content=content,project=project,user=user)
-    return JsonResponse({'errno': 0, 'msg': "创建成功"})
+    return JsonResponse({'errno': 0,"document":document.to_dict(), 'msg': "创建成功"})
 def share_document(request):
     if request.method!='POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
@@ -185,7 +185,7 @@ def create_prototype(request,project_id):
     if content:
         prototype.conten=content
     prototype.save()
-    return JsonResponse({'errno':0,'msg':'原型创建成功'})
+    return JsonResponse({'errno':0,"prototype":prototype.to_dict(),'msg':'原型创建成功'})
 @validate_login
 def save_prototype(request):
     if request.method!='POST':
