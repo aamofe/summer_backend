@@ -73,6 +73,9 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 'messages': messages_array
             }))
             await self.mark_messages_as_read(user_id)
+
+        elif 'clean' in text_data_json:
+            await self.mark_messages_as_read(self.user_id)
         else:
             # 检查是否是搜索请求
             if 'status' in text_data_json:

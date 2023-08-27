@@ -81,7 +81,7 @@ def initial_chat(request,user_id):
             unread_count = user_team_chat_status.unread_count
             index=user_team_chat_status.index
         except UserTeamChatStatus.DoesNotExist:
-            UserTeamChatStatus.objects.create(user_id=user_id, team_id=team_id, unread_count=0, index=1000)
+            UserTeamChatStatus.objects.create(user_id=user_id, team_id=team_id, unread_count=0, index=0)
 
 
         room_data={
