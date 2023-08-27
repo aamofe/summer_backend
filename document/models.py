@@ -25,3 +25,8 @@ class Document(models.Model):
             'modified_at':self.modified_at,
             'is_locked':self.is_locked
         }
+
+
+class Prototype(models.Model):
+    title=models.CharField(verbose_name='标题',max_length=20)
+    content=models.TextField(verbose_name='')
