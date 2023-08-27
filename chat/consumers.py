@@ -130,6 +130,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         # 发送消息给 WebSocket
         await self.send(text_data=json.dumps({
             'type': 'chat_message',
+            'team_id': self.team_id,
             'message': message,
             'username': username,
             'avatar_url': avatar_url,
@@ -150,10 +151,9 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         cover_url = event['cover_url']
         await self.send(text_data=json.dumps({
             'type': 'chat_status',
+            'team_id': self.team_id,
             'unread_count': unread_count,
             'latest_message': latest_message,
-            'team_name': team_name,
-            'cover_url': cover_url,
         }))
     @database_sync_to_async
     def save_message(self, message,user_id):
@@ -230,7 +230,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     async def notify_users_of_unread_count(self, user_ids):
         user_ids_list = await self.get_user_ids(user_ids)
         for uid in user_ids_list:
-            channel_name = await self.get_channel_name_for_user(uid)
+            channel_name = await self.get_channel_name_for_user(uid, self.team_id)
             unread_count = await self.get_unread_count(uid)
             await self.channel_layer.send(channel_name, {
                 'type': 'chat_status',
@@ -245,6 +245,10 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         user_ids = await self.increment_unread_count_in_db(user_id)
         await self.notify_users_of_unread_count(user_ids)
 
+    @database_sync_to_async
+    def get_channel_name_for_user(self, user_id, team_id):
+        print(user_id, self.team_id)
+        return UserChatChannel.objects.get(user_id=user_id, team_id=team_id).channel_name
 
     async def send_chat_status(self, user_id):
         unread_count = await self.get_unread_count(user_id)
@@ -256,10 +260,6 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
 
         }))
 
-    @database_sync_to_async
-    def get_channel_name_for_user(self, user_id):
-        print(user_id, self.team_id)
-        return UserChatChannel.objects.get(user_id=user_id).channel_name
 
     @database_sync_to_async
     def get_recent_messages(self):
@@ -308,6 +308,6 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def save_user_channel(self):
-        UserChatChannel.objects.update_or_create(user_id=self.user_id, defaults={'channel_name': self.channel_name})
+        UserChatChannel.objects.update_or_create(user_id=self.user_id,team_id=self.team_id ,defaults={'channel_name': self.channel_name})
 
 #class NoticeConsumer:

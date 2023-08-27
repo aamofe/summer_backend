@@ -29,6 +29,7 @@ class UserTeamChatStatus(models.Model):
 
 class UserChatChannel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
     channel_name = models.CharField(max_length=255, unique=True)
 
 
