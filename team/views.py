@@ -293,16 +293,17 @@ def create_project(request, team_id):
     if not team_list.exists():
         return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
     team = team_list[0]
-    project = Project.objects.create(name=project_name, team=team)
+    project = Project.objects.create(name=project_name, team=team,user=user)
     return JsonResponse({'errno': 1, 'msg': "项目创建成功"})
 
 
 @validate_login
-def update_project(request, project_id):
+def update_project(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    project_id=request.GET.get('project_id')
     try:
-        project = Project.objects.filter(id=project_id)[0]
+        project = Project.objects.get(id=project_id)
     except Project.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     user = request.user
@@ -311,42 +312,46 @@ def update_project(request, project_id):
         return JsonResponse({'errno': 1, 'msg': "当前用户不属于该团队"})
     project.is_deleted ^= True
     project.save()
-    return JsonResponse({'errno': 0, 'msg': "项目删除成功"})
+    if project.is_deleted:
+        return JsonResponse({'errno': 0, 'msg': "项目删除成功"})
+    else:
+        return JsonResponse({'errno': 0, 'msg': "项目恢复成功"})
 
 
 @validate_login
-def rename_project(request, project_id):
+def rename_project(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    project_id=request.POST.get('project_id')
     try:
-        project = Project.objects.filter(id=project_id)[0]
+        project = Project.objects.get(id=project_id)
     except Project.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     user = request.user
-    new_name = request.POST.get("new_name")
+    new_name = request.POST.get("name")
     member_list = Member.objects.filter(user=user, team=project.team)
     if not member_list.exists():
         return JsonResponse({'errno': 1, 'msg': "当前用户不属于该团队"})
     project.name = new_name
     project.save()
-    return JsonResponse({'errno': 0, 'msg': "项目删除成功"})
-
+    return JsonResponse({'errno': 0, 'msg': "项目重命名成功"})
+@validate_login
 def checkout_team(request):
     if request.method == 'POST':
         user=request.user
         team_id=request.POST.get('team_id')
-        team_list = Team.objects.filter(id=team_id)
-        if not team_list.exists():
+        try:
+            team = Team.objects.get(id=team_id)
+        except Team.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
-        team = team_list[0]
-        member_list = Member.objects.filter(user=user, team=team)
-        if not member_list.exists():
-            return JsonResponse({'errno': 1, 'msg': "当前用户不属于该团队"})
-        member = member_list[0]
+        try:
+            member = Member.objects.get(user=user, team=team)
+        except Member.DoesNotExist:
+           return JsonResponse({'errno': 1, 'msg': "当前用户不属于该团队"})
         user.current_team_id=team.id
         user.save()
-        team_info={'user_id': user.id,'current_team':user.team.id,}
-        return JsonResponse({ 'data':team_info, 'errno': 0, 'msg': "登录成功"})
+        team_info={'user_id': user.id,'current_team':user.current_team_id,}
+        return JsonResponse({ 'current_team':team_info, 'errno': 0, 'msg': "登录成功"})
     else:
         return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
 def quit_team(request,team_id):

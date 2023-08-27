@@ -29,4 +29,18 @@ class Document(models.Model):
 
 class Prototype(models.Model):
     title=models.CharField(verbose_name='标题',max_length=20)
-    content=models.TextField(verbose_name='')
+    content=models.TextField(verbose_name='',default="")
+    created_at = models.DateTimeField(verbose_name="创建时间", auto_now_add=True)
+    modified_at = models.DateTimeField(verbose_name="最近修改时间", auto_now=True)
+    team=models.ForeignKey(Team,verbose_name='原型所属团队',on_delete=models.PROTECT)
+    user=models.ForeignKey(User,verbose_name="创建者",on_delete=models.PROTECT)
+    is_deleted=models.BooleanField(verbose_name="是否已删除",default=False)
+    def to_dict(self):
+        return {
+            'title':self.title,
+            'content':self.content,
+            'created_at':self.created_at,
+            'modified_at':self.modified_at,
+            'team_name':self.team.name,
+            'creator':self.user.nickname,
+        }
