@@ -1,6 +1,6 @@
 from django.db import models
 
-from team.models import Team
+from team.models import Team, Project
 from user.models import User
 
 
@@ -12,7 +12,8 @@ class Document(models.Model):
     url_editable=models.URLField(verbose_name="可编辑链接",null=True)
     created_at=models.DateTimeField(verbose_name="创建时间",auto_now_add=True)
     modified_at=models.DateTimeField(verbose_name="最近修改时间",auto_now=True)
-    team=models.ForeignKey(Team,verbose_name="所属团队",on_delete=models.PROTECT)
+    # team=models.ForeignKey(Team,verbose_name="所属团队",on_delete=models.PROTECT)
+    project=models.ForeignKey(Project,verbose_name="所属项目",on_delete=models.PROTECT)
     user=models.ForeignKey(User,verbose_name="创建者",on_delete=models.PROTECT)
     is_locked=models.IntegerField(verbose_name="文件锁",default=False)
     is_deleted=models.BooleanField(verbose_name="是否被删除",default=False)
@@ -32,7 +33,8 @@ class Prototype(models.Model):
     content=models.TextField(verbose_name='',default="")
     created_at = models.DateTimeField(verbose_name="创建时间", auto_now_add=True)
     modified_at = models.DateTimeField(verbose_name="最近修改时间", auto_now=True)
-    team=models.ForeignKey(Team,verbose_name='原型所属团队',on_delete=models.PROTECT)
+    # team=models.ForeignKey(Team,verbose_name='原型所属团队',on_delete=models.PROTECT)
+    project = models.ForeignKey(Project, verbose_name="所属项目", on_delete=models.PROTECT)
     user=models.ForeignKey(User,verbose_name="创建者",on_delete=models.PROTECT)
     is_deleted=models.BooleanField(verbose_name="是否已删除",default=False)
     def to_dict(self):

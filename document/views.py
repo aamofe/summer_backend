@@ -8,14 +8,14 @@ from django.contrib.auth.models import AnonymousUser
 from document.models import Document, Prototype
 from summer_backend import settings
 from summer_backend.settings import SECRET_KEY
-from team.models import Team, Member
+from team.models import Team, Member, Project
 from user.authentication import validate_login, validate_all
 from user.models import User
 
 
 @validate_login
 # Create your views here.
-def create_document(request,team_id):
+def create_document(request,project_id):
     if request.method!='POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
     user=request.user
@@ -25,15 +25,20 @@ def create_document(request,team_id):
         return JsonResponse({'errno': 1, 'msg': "内容为空"})
     if title is None:
         return JsonResponse({'errno': 1, 'msg': "标题为空"})
-    team_list = Team.objects.filter(id=team_id)
-    if not team_list.exists():
-        return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
-    team = team_list[0]
+    # try:
+    #     team=Team.objects.get(id=user.current_team_id)
+    # except Team.DoesNotExist:
+    #     return JsonResponse({'errno': 1, 'msg': "当前团队不存在"})
     try:
-        member=Member.objects.filter(team=team,user=user)
-    except Member.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-    document=Document.objects.create(title=title,content=content,team=team,user=user)
+        project=Project.objects.get(id=project_id)
+    except Project.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "项目不存在"})
+    # try:
+    #     member=Member.objects.filter(team=team,user=user)
+    #
+    # except Member.DoesNotExist:
+    #     return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
+    document=Document.objects.create(title=title,content=content,project=project,user=user)
     return JsonResponse({'errno': 0, 'msg': "创建成功"})
 def share_document(request):
     if request.method!='POST':
@@ -136,18 +141,22 @@ def change_lock(request):
     document.save()
     return JsonResponse({'errno': 0, 'document':document.to_dict(),'msg': "文档上锁状态修改成功"})
 @validate_login
-def create_prototype(request,team_id):
+def create_prototype(request,project_id):
     if request.method!='POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user=request.user
-    try :
-        team=Team.objects.get(id=team_id,is_deleted=False)
-    except Team.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "团队不存在"})
+    # try :
+    #     team=Team.objects.get(id=team_id,is_deleted=False)
+    # except Team.DoesNotExist:
+    #     return JsonResponse({'errno': 1, 'msg': "团队不存在"})
+    try:
+        project=Project.objects.get(id=project_id)
+    except Project.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     title=request.POST.get('title')
     content=request.POST.get('content')
     if title:
-        prototype=Prototype.objects.create(title=title,team=team,user=user)
+        prototype=Prototype.objects.create(title=title,project=project,user=user)
     else:
         return JsonResponse({'errno': 1, 'msg': "请输入标题"})
     if content:
@@ -165,7 +174,7 @@ def save_prototype(request):
     except Prototype.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "原型不存在"})
     try:
-        member=Member.objects.get(user=user,team=prototype.team)
+        member=Member.objects.get(user=user,team=prototype.project.team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     content = request.POST.get('content')
@@ -192,22 +201,84 @@ def view_prototype(request):
     except Prototype.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "原型不存在"})
     try:
-        member=Member.objects.get(user=user,team=prototype.team)
+        member=Member.objects.get(user=user,team=prototype.project.team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     return JsonResponse({'errno': 0,'prototype':prototype.to_dict(), 'msg': "获取原型成功"})
-#当前团队所有原型
-def all_prototype(request,team_id):
+#当前项目所有原型
+def all_prototype(request,project_id):
     if request.method!='GET':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user=request.user
     try:
-        team=Team.objects.get(id=team_id)
-    except Team.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "团队不存在"})
-    prototype_list=Prototype.objects.filter(team=team)
+        project = Project.objects.get(id=project_id)
+    except Project.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "项目不存在"})
+    prototype_list=Prototype.objects.filter(project=project)
     prototype=[]
     for p in prototype_list:
         prototype.append(p.to_dict())
     prototype.append({'prototype_num':prototype_list.count()})
     return JsonResponse({'errno': 0,'prototype':prototype, 'msg': "获取原型成功"})
+
+@validate_login
+def all_deleted_document(request, project_id):  # 包括 原型和协作文档
+    if request.method != 'GET':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user = request.user
+    try:
+        project = Project.objects.get(id=project_id)
+    except Project.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "项目不存在"})
+    document_list=Document.objects.filter(project=project,is_deleted=True)
+    prototype_list=Prototype.objects.filter(project=project,is_deleted=True)
+    documents=[]
+    projects=[]
+    for d in document_list:
+        documents.append(d.to_dict())
+    for p in prototype_list:
+        projects.append(p.to_dict())
+    return JsonResponse({'errno': 0, 'msg': "获取回收站项目成功", 'documents':documents,'projects':documents})
+
+@validate_login
+def recover_one_document(request):
+    if request.method != 'POST':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user = request.user
+    prototype_id=request.POST.get('prototype_id')
+    document_id=request.POST.get('document_id')
+    if prototype_id:
+        try:
+            prototype=Prototype.objects.get(id=prototype_id,is_deleted=True)
+        except Prototype.DoesNotExist:
+            return JsonResponse({'errno': 1, 'msg': "原型不存在"})
+        prototype.is_deleted=False
+        prototype.save()
+    if document_id:
+        try:
+            document=Prototype.objects.get(id=document_id,is_deleted=True)
+        except Document.DoesNotExist:
+            return JsonResponse({'errno': 1, 'msg': "文档不存在"})
+        document.is_deleted=False
+        document.save()
+    return JsonResponse({'errno': 0, 'msg': "恢复单个文档成功"})
+
+@validate_login
+def recover_all_document(request):
+    if request.method != 'POST':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user = request.user
+    project_id=request.POST.get('project_id')
+    try:
+        project = Project.objects.get(id=project_id)
+    except Project.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "项目不存在"})
+    document_list=Document.objects.filter(project=project,is_deleted=True)
+    prototype_list=Prototype.objects.filter(project=project,is_deleted=True)
+    for d in document_list:
+        d.is_deleted=False
+        d.save()
+    for p in prototype_list:
+        p.is_deleted=False
+        p.save()
+    return JsonResponse({'errno': 0, 'msg': "一键恢复成功"})

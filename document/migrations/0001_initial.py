@@ -38,6 +38,7 @@ class Migration(migrations.Migration):
                 ('created_at', models.DateTimeField(auto_now_add=True, verbose_name='创建时间')),
                 ('modified_at', models.DateTimeField(auto_now=True, verbose_name='最近修改时间')),
                 ('is_locked', models.IntegerField(default=False, verbose_name='文件锁')),
+                ('is_locked', models.IntegerField(default=False, verbose_name='文件锁')),
                 ('is_deleted', models.BooleanField(default=False, verbose_name='是否被删除')),
                 ('team', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='team.team', verbose_name='所属团队')),
                 ('user', models.ForeignKey(on_delete=django.db.models.deletion.PROTECT, to='user.user', verbose_name='创建者')),
