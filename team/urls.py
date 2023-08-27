@@ -21,5 +21,9 @@ urlpatterns = [
     path('update_project/',views.update_project),
     path('rename_project/',views.rename_project),
     path('all_projects/',views.all_projects),
-    path('get_one_team/',views.get_one_team)
+    path('get_one_team/',views.get_one_team),
+    path('quit_team/',views.quit_team),
+    path('all_deleted_project/',views.all_deleted_project),
+    path('recover_one_project/',views.recover_one_project),
+    path('recover_all_project/',views.recover_all_project)
 ]
