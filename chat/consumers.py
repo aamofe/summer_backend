@@ -53,14 +53,24 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         if 'all' in text_data_json:
             recent_messages = await self.get_recent_messages()
             user_id = text_data_json['user_id']
+            # 创建一个空数组来存放所有消息
+            messages_array = []
+
+            # 遍历每条消息并将其添加到消息数组中
             for msg in recent_messages:
-                await self.send(text_data=json.dumps({
+                message_data = {
                     'message': msg.message,
                     'user_id': str(msg.user_id),
                     'username': await self.get_username(msg.user_id),
                     'avatar_url': await self.get_avatar_url(msg.user_id),
                     'time': msg.timestamp.strftime('%Y-%m-%d %H:%M:%S')
-                }))
+                }
+                messages_array.append(message_data)
+
+            # 一次性发送整个消息数组
+            await self.send(text_data=json.dumps({
+                'messages': messages_array
+            }))
             await self.mark_messages_as_read(user_id)
         else:
             # 检查是否是搜索请求
