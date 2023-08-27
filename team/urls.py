@@ -17,9 +17,9 @@ urlpatterns = [
     path('all_members/', views.all_members, name='get_members'),
     path('update_permisson/<str:team_id>/',views.update_permisson),
     # path('redi/',views.redi)
-    path('create_project/',views.create_project),
+    path('create_project/<int:team_id>/',views.create_project),
     path('update_project/',views.update_project),
     path('rename_project/',views.rename_project),
     path('all_projects/',views.all_projects),
-    path('get_one_team/',views.get_one_team),
+    path('get_one_team/',views.get_one_team)
 ]
