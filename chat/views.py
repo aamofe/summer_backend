@@ -72,13 +72,13 @@ def initial_chat(request,user_id):
                 'username':User.objects.get(id=last_message.user_id).username,
                 'timestamp':last_message.timestamp.strftime('%Y/%m/%d/%H:%M'),
             }
-            users=[]
-        for member in members:
-            users.append({
-                '_id':str(member.user_id),
-                'username':User.objects.get(id=member.user_id).username,
-                'avatar':User.objects.get(id=member.user_id).avatar_url,
-            })
+            users = []
+            for member in members:
+                users.append({
+                    '_id':str(member.user_id),
+                    'username':User.objects.get(id=member.user_id).username,
+                    'avatar':User.objects.get(id=member.user_id).avatar_url,
+                })
         try:
             user_team_chat_status = UserTeamChatStatus.objects.get(user_id=user_id, team_id=team_id)
             unread_count = user_team_chat_status.unread_count
@@ -86,8 +86,6 @@ def initial_chat(request,user_id):
         except UserTeamChatStatus.DoesNotExist:
             unread_count = 0
             index=1000000
-
-
 
         room_data={
             'roomId':str(team_id),
@@ -115,8 +113,15 @@ def upload_cover_method(cover_file, cover_id, url):
         ContentType = "image/jpeg"
     elif file_extension == 'png':
         ContentType = "image/png"
-    else:
-        return -2, None, None
+    elif file_extension == 'pdf':
+        ContentType = "application/pdf"
+    elif file_extension == 'md':
+        ContentType = "text/markdown"
+    elif file_extension == 'mp3':
+        ContentType = "audio/mp3"
+    elif file_extension == 'mp4':
+        ContentType = "video/mp4"
+    else:return -2
     cover_key = f"{url}/{cover_id}.{file_extension}"
     response_cover = client.put_object(
         Bucket=bucket_name,
