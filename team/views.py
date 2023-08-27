@@ -181,23 +181,41 @@ def accept_invitation(request):
         return JsonResponse({'errno': 0, 'msg': "您已加入该团队"})
     member = Member.objects.create(user=user, team=team)
     return JsonResponse({'errno': 0, 'msg': "加入成功"})
-
-
+@validate_login
+# def all_teams(request):
+#     if request.method != 'GET':
+#         print(2)
+#         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+#     print(3)
+    
+#     # user = request.user
+#     user_id=request.GET.get("user_id")
+#     print('user_id : ',user_id)
+#     try:
+#         user=User.objects.get(id=user_id)
+#     except User.DoesNotExist:
+#         return JsonResponse({'errno': 1, 'msg': "用户id不存在"})
+#     member_list = Member.objects.filter(user=user)
+#     print(4)
+#     teams = []
+#     for member in member_list:
+#         team_info = member.team.to_dict()
+#         team_info['role'] = member.role
+#         teams.append(team_info)
+#     # pprint.pprint(teams)
+#     return JsonResponse({'errno': 0, 'msg': "获取团队", 'teams': teams})
 # 获取所有团队
-
-# @validate_login
+@validate_login
 def all_teams(request):
     print(1)
     if request.method != 'GET':
         print(2)
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     print(3)
-    
-    # user = request.user
-    user_id=request.GET.get("user_id")
-    print('user_id : ',user_id)
+    user = request.user
+    print('user_id : ',user.id)
     try:
-        user=User.objects.get(id=user_id)
+        user=User.objects.get(id=user.id,isActive=True)
     except User.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户id不存在"})
     member_list = Member.objects.filter(user=user)
@@ -207,7 +225,7 @@ def all_teams(request):
         team_info = member.team.to_dict()
         team_info['role'] = member.role
         teams.append(team_info)
-    # pprint.pprint(teams)
+    pprint.pprint(teams)
     return JsonResponse({'errno': 0, 'msg': "获取团队", 'teams': teams})
 
 

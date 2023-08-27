@@ -76,21 +76,32 @@ def view_document(request,token):
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     if token.isdigit():
         document_id=token
-        editable=True
-        print(3)
+        try:
+            document=Document.objects.get(id=document_id,is_deleted=False)
+        except Document.DoesNotExist:
+            return JsonResponse({'errno': 1, 'msg': "文档不存在"})
+        team_id=document.team.id
+        try :
+            team=Team.objects.get(id=team_id,is_deleted=False)
+        except Team.DoesNotExist:
+            return JsonResponse({'errno': 1, 'msg': "团队不存在"})
+        user=request.user
+        if isinstance(user, AnonymousUser):
+            editable=False
+        else:
+            try:
+                member=Member.objects.get(user=user,team=team)
+                editable=True
+            except Member.DoesNotExist:
+                editable=False
     else:
         payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
         document_id=payload.get('document_id')
+        try:
+            document=Document.objects.get(id=document_id,is_deleted=False)
+        except Document.DoesNotExist:
+            return JsonResponse({'errno': 1, 'msg': "文档不存在"})
         editable=payload.get('editable')
-        print(4)
-    try:
-        document=Document.objects.get(id=document_id,is_deleted=False)
-    except Document.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "文档不存在"})
-    if editable:
-        user=request.user
-        if isinstance(user, AnonymousUser):
-            return JsonResponse({'errno': 1, 'msg': "请登录喔亲"})
     dict=document.to_dict()
     dict['editable']=editable
     return JsonResponse({'errno': 0, 'msg': "查看成功",'document':dict})
