@@ -365,6 +365,12 @@ def get_current_team(request):
         user.save()
     team_list=team.to_dict()
     team_list['team_num']= Member.objects.filter(user=user).count()
+    project_list=Project.objects.filter(team=team)
+    team_list['project_num']=project_list.count()
+    member_list=Member.objects.filter(team=team)
+    team_list['member_num']=member_list.count()
+    member=Member.objects.filter(user=user,team=team)[0]
+    team_list['role']=member.role
     # pprint.pprint(team_list)
     return JsonResponse({'errno': 0,'team':team_list, 'msg': "请求成功"})
 @validate_login
@@ -399,4 +405,10 @@ def get_one_team(request):
         return JsonResponse({'errno': 1, 'msg': "用户不属于当前团队"})
     team_list=team.to_dict()
     team_list['team_num']= Member.objects.filter(user=user).count()
+    project_list=Project.objects.filter(team=team)
+    team_list['project_num']=project_list.count()
+    member_list=Member.objects.filter(team=team)
+    team_list['member_num']=member_list.count()
+    member=Member.objects.filter(user=user,team=team)[0]
+    team_list['role']=member.role
     return JsonResponse({'errno': 0,'team':team_list, 'msg': "请求成功"})

@@ -35,7 +35,7 @@ def create_document(request,team_id):
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     document=Document.objects.create(title=title,content=content,team=team,user=user)
     return JsonResponse({'errno': 0, 'msg': "创建成功"})
-def share_document(request,team_id):
+def share_document(request):
     if request.method!='POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
     document_id=request.POST.get('document_id')
@@ -44,28 +44,37 @@ def share_document(request,team_id):
         document=Document.objects.get(id=document_id)
     except Document.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "文档不存在"})
-    if not isinstance(editable, bool):
+    print("editable : ",editable)
+    try:
+        editable = int(editable)  # 将字符串转换为整数
+    except (ValueError, TypeError):
+        return JsonResponse({'errno': 1, 'msg': "编辑权限错误"})
+    if editable != 1 and editable != 0:
         return JsonResponse({'errno': 1, 'msg': "编辑权限错误"})
     if not document.url:
         payload = {"document_id":document_id,"editable":True}
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        document.url_editable=token
+        document.url_editable="http://www.aamoef.top/api/document/view_document/"+token+'/'
         payload = {"document_id":document_id,"editable":False}
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        document.url=token
+        document.url="http://www.aamoef.top/api/document/view_document/"+token+'/'
         document.save()
     data=[document.url_editable if editable else document.url]
     return JsonResponse({'errno':0,'data':data})
-def save_document(request,team_id):
+def save_document(request):
     if request.method!='POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
     document_id=request.POST.get('document_id')
     content=request.POST.get('content')
+    title=request.POST.get('title')
     try :
         document=Document.objects.get(id=document_id)
     except Document.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "文档不存在"})
-    document.content=content
+    if title:
+        document.title=title
+    if content:
+        document.content=content
     document.save()
     return JsonResponse({'errno': 0, 'msg': "文档内容已保存"})
 @validate_all
