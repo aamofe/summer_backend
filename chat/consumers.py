@@ -28,7 +28,6 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         )
         await self.accept()
         # 将用户和团队信息存储到信息状态表中
-        await self.index_up(self.user_id, self.team_id)
         ''''
         latest_message = await self.get_latest_message()
         unread_count = await self.get_unread_count()
@@ -297,9 +296,9 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def get_channel_name_for_user(self, user_id, team_id):
         print(user_id, self.team_id)
-        name = UserChatChannel.objects.get(user_id=user_id, team_id=team_id).channel_name
-        if name:
-            return name
+        if UserChatChannel.objects.filter(user_id=user_id,team_id=team_id).exists():
+            channel = UserChatChannel.objects.get(user_id=user_id,team_id=team_id)
+            return channel.channel_name
         else:
             return None
 
@@ -401,9 +400,9 @@ class NotificationConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def get_channel_name_for_user(self, user_id):
-        name = UserNoticeChannel.objects.get(user_id=user_id).channel_name
-        if name:
-            return name
+        if UserNoticeChannel.objects.filter(user_id=user_id).exists():
+            channel = UserNoticeChannel.objects.get(user_id=user_id)
+            return channel.channel_name
         else:
             return None
     async def chat_notice(self, event):
