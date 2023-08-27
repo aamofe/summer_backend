@@ -63,10 +63,10 @@ def update_team(request, team_id):  # 修改团队描述 上传头像
         description = request.POST.get('description')
         team_name = request.POST.get('team_name')
         cover = request.FILES.get('cover')
-        team_list = Team.objects.filter(id=team_id)
-        if not team_list.exists():
+        try:
+            team=Team.objects.get(id=team_id)
+        except Team.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
-        team = team_list[0]
         if not team.user == user:
             return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
         if team_name:
@@ -84,7 +84,7 @@ def update_team(request, team_id):  # 修改团队描述 上传头像
         team.save()
         return JsonResponse({'errno': 0, 'msg': "修改信息成功"})
     else:
-        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
 
 
 # 邀请好友
@@ -94,14 +94,14 @@ def get_invitation(request):
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
     team_id = request.GET.get("team_id")
-    team_list = Team.objects.filter(id=team_id)
-    if not team_list.exists():
+    try:
+        team=Team.objects.get(id=team_id)
+    except Team.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
-    team = team_list[0]
-    member_list = Member.objects.filter(user=user, team=team)
-    if not member_list.exists():
-        return JsonResponse({'errno': 1, 'msg': "当前用户不属于该团队"})
-    member = member_list[0]
+    try:
+        member=Member.objects.get(team=team,user=user)
+    except Member.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     if member.role == 'MB':
         return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
     invitation = team.invitation
@@ -115,29 +115,29 @@ def get_invitation(request):
         team.invitation = invitation
         team.save()
     return JsonResponse({'errno': 1, 'msg': "链接已生成", 'invatation': invitation})
-@validate_all
-def redi(request):
-    token1 = request.META.get('HTTP_Authorization'.upper())
-    if not token1:
-        return redirect('http://www.aamofe.top/')
-    payload = jwt.decode(token1, SECRET_KEY, algorithms=['HS256'])
-    token1 = token1.replace('Bearer ', '')
-    try:
-        jwt_token = jwt.decode(token1, settings.SECRET_KEY, options={'verify_signature': False})
-        try:
-            user = User.objects.get(id=jwt_token.get('id'), isActive=True)
-            user_id = user.id
-        except User.DoesNotExist:
-            title = '用户不存在'
-            content = '请先注册'
-    except ExpiredSignatureError:
-        title = '登录已过期'
-        content = '请重新登录'
-    except JWTError:
-        title = '用户身份错误'
-        content = '请重新登录'
-    request.user=user
-    return JsonResponse({'title':title,"user_id":user.id,"content":content})
+# @validate_all
+# def redi(request):
+#     token1 = request.META.get('HTTP_Authorization'.upper())
+#     if not token1:
+#         return redirect('http://www.aamofe.top/')
+#     payload = jwt.decode(token1, SECRET_KEY, algorithms=['HS256'])
+#     token1 = token1.replace('Bearer ', '')
+#     try:
+#         jwt_token = jwt.decode(token1, settings.SECRET_KEY, options={'verify_signature': False})
+#         try:
+#             user = User.objects.get(id=jwt_token.get('id'), is_active=True)
+#             user_id = user.id
+#         except User.DoesNotExist:
+#             title = '用户不存在'
+#             content = '请先注册'
+#     except ExpiredSignatureError:
+#         title = '登录已过期'
+#         content = '请重新登录'
+#     except JWTError:
+#         title = '用户身份错误'
+#         content = '请重新登录'
+#     request.user=user
+#     return JsonResponse({'title':title,"user_id":user.id,"content":content})
 
 @validate_all
 def open_invitation(request, token):
@@ -175,12 +175,13 @@ def accept_invitation(request):
     if user_id is None:
         user_id=3
     team = Team.objects.get(id=team_id)
-    user = User.objects.get(id=user_id)
-    member = Member.objects.filter(user=user, team=team)
-    if member.exists():
+    user = User.objects.get(id=user_id,is_active=True)
+    try:
+        member=Member.objects.get(team=team,user=user)
         return JsonResponse({'errno': 0, 'msg': "您已加入该团队"})
-    member = Member.objects.create(user=user, team=team)
-    return JsonResponse({'errno': 0, 'msg': "加入成功"})
+    except Member.DoesNotExist:
+        member = Member.objects.create(user=user, team=team)
+        return JsonResponse({'errno': 0, 'msg': "加入成功"})
 @validate_login
 def all_teams(request):
     print(1)
@@ -191,11 +192,11 @@ def all_teams(request):
     user = request.user
     # print('user_id : ',user.id)
     try:
-        user=User.objects.get(id=user.id,isActive=True)
+        user=User.objects.get(id=user.id,is_active=True)
     except User.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户id不存在"})
     member_list = Member.objects.filter(user=user)
-    print(4)
+    # print(4)
     teams = []
     for member in member_list:
         team_info = member.team.to_dict()
@@ -216,9 +217,10 @@ def all_members(request):
     try:
         team=Team.objects.get(id=team_id)
     except Team.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "团队不存在"})
-    member_list = Member.objects.filter(user=user, team=team)
-    if not member_list.exists():
+        return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
+    try:
+        member=Member.objects.get(team=team,user=user)
+    except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "当前用户不属于该团队"})
     members = []
     member_list = Member.objects.filter(team=team,role="CR")
@@ -249,22 +251,22 @@ def update_permisson(request, team_id):
     choice = request.POST.get('choice')  # MG MB DE
     user_id = request.POST.get('user_id')
     editor = request.user
-    team_list = Team.objects.filter(id=team_id)
-    if not team_list.exists():
-        return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
-    team = team_list[0]
-    member_list = Member.objects.filter(user=editor, team=team)
-    if not member_list.exists():
-        return JsonResponse({'errno': 1, 'msg': "当前用户不属于该团队"})
-    medtor = member_list[0]
     try:
-        edited = User.objects.filter(id=user_id)[0]
+        team=Team.objects.get(id=team_id)
+    except Team.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
+    try:
+        medtor=Member.objects.get(team=team,user=editor)
+    except Member.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
+    try:
+        edited = User.objects.get(id=user_id)
     except User.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "该用户不存在"})
-    member_list = Member.objects.filter(user=edited, team=team)
-    if not member_list.exists():
-        return JsonResponse({'errno': 1, 'msg': "该用户不属于该团队"})
-    medted = member_list[0]
+    try:
+        medted=Member.objects.get(team=team,user=edited)
+    except Member.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     if edited.id == editor.id:
         return JsonResponse({'errno': 1, 'msg': "无法修改自身权限"})
     if medtor.role == 'MB' or (medtor.role == 'MG' and medted.role == 'CR'):
@@ -303,13 +305,14 @@ def update_project(request):
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     project_id=request.GET.get('project_id')
     try:
-        project = Project.objects.get(id=project_id)
+        project = Project.objects.get(id=project_id,is_deleted=False)
     except Project.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     user = request.user
-    member_list = Member.objects.filter(user=user, team=project.team)
-    if not member_list.exists():
-        return JsonResponse({'errno': 1, 'msg': "当前用户不属于该团队"})
+    try:
+        member=Member.objects.get(team=project.team,user=user)
+    except Member.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     project.is_deleted ^= True
     project.save()
     if project.is_deleted:
@@ -324,14 +327,15 @@ def rename_project(request):
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     project_id=request.POST.get('project_id')
     try:
-        project = Project.objects.get(id=project_id)
+        project = Project.objects.get(id=project_id,is_deleted=False)
     except Project.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     user = request.user
     new_name = request.POST.get("name")
-    member_list = Member.objects.filter(user=user, team=project.team)
-    if not member_list.exists():
-        return JsonResponse({'errno': 1, 'msg': "当前用户不属于该团队"})
+    try:
+        member=Member.objects.get(team=project.team,user=user)
+    except Member.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     project.name = new_name
     project.save()
     return JsonResponse({'errno': 0, 'msg': "项目重命名成功"})
@@ -353,8 +357,8 @@ def checkout_team(request):
         team_info={'user_id': user.id,'current_team':user.current_team_id,}
         return JsonResponse({ 'current_team':team_info, 'errno': 0, 'msg': "登录成功"})
     else:
-        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
-def quit_team(request,team_id):
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+def quit_team(request,):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     
@@ -408,7 +412,7 @@ def get_one_team(request):
     try:
         team=Team.objects.get(id=team_id)
     except Team.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "团队不存在"})
+        return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
     try:
         member=Member.objects.get(user=user,team=team)
     except Member.DoesNotExist:
@@ -422,3 +426,9 @@ def get_one_team(request):
     member=Member.objects.filter(user=user,team=team)[0]
     team_list['role']=member.get_role_display()
     return JsonResponse({'errno': 0,'team':team_list, 'msg': "请求成功"})
+@validate_login
+def all_deleted_project(request,team_id):
+    if request.method != 'GET':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user=request.user
+    team_id=request.GET.get('team_id')

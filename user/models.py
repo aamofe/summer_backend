@@ -16,7 +16,7 @@ class User(models.Model):
     password=models.CharField(verbose_name="账户密码",max_length=16)
     avatar_url = models.URLField(verbose_name="头像路径",default="https://summer-1315620690.cos.ap-beijing.myqcloud.com/avatar/default.png")
     created_at=models.DateTimeField(verbose_name='注册时间',auto_now_add=True)
-    isActive=models.BooleanField(verbose_name='是否有效账户',max_length=10,default=False)
+    is_active=models.BooleanField(verbose_name='是否有效账户',max_length=10,default=False)
     current_team_id=models.IntegerField(verbose_name="当前团队id")
     def to_dict(self):
         return {
