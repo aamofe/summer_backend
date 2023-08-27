@@ -91,7 +91,7 @@ def view_document(request,token):
             return JsonResponse({'errno': 1, 'msg': "文档不存在"})
         team_id=document.team.id
         try :
-            team=Team.objects.get(id=team_id,is_deleted=False)
+            team=Team.objects.get(id=team_id)
         except Team.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "团队不存在"})
         user=request.user
@@ -173,7 +173,7 @@ def save_prototype(request):
     if title:
         prototype.title=title
     if content:
-        prototype.conten=content
+        prototype.content=content
     else:
         return JsonResponse({'errno': 1, 'msg': "请上传修改内容"})
     prototype.save()

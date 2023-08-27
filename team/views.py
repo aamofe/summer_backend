@@ -372,7 +372,7 @@ def get_current_team(request):
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user=request.user
     try :
-        team=Team.objects.get(id=user.current_team_id,is_deleted=False)
+        team=Team.objects.get(id=user.current_team_id)
     except Team.DoesNotExist:
         try:
             team = Team.objects.get(user=user,name="个人空间")
