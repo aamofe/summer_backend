@@ -435,10 +435,11 @@ def get_one_team(request):
 
 #退出团队
 @validate_login
-def quit_team(request,team_id):
+def quit_team(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user=request.user
+    team_id=request.POST.get("team_id")
     try:
         team=Team.objects.get(id=team_id)
     except Team.DoesNotExist:
@@ -447,7 +448,7 @@ def quit_team(request,team_id):
         member=Member.objects.get(user=user,team=team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于当前团队"})
-    if member.role=='CR':
+    if member.role=='CR' and team.name!='个人空间':
         member_list=Member.objects.get(team=team)
         member_list.delete()
         team.delete()
@@ -488,10 +489,11 @@ def recover_one_project(request):
     project.save()
     return JsonResponse({'errno': 0, 'msg': "恢复文档成功"})
 @validate_login
-def recover_all_project(request,team_id):
+def recover_all_project(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user=request.user
+    team_id=request.POST.get('team_id')
     try:
         team=Team.objects.get(id=team_id)
     except Team.DoesNotExist:

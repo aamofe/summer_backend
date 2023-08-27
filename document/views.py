@@ -245,10 +245,11 @@ def all_prototype(request,project_id):
     return JsonResponse({'errno': 0,'prototype':prototype, 'msg': "获取原型成功"})
 
 @validate_login
-def all_deleted_document(request, project_id):  # 包括 原型和协作文档
+def all_deleted_document(request):  # 包括 原型和协作文档
     if request.method != 'GET':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
+    project_id=request.GET.get('project_id')
     try:
         project = Project.objects.get(id=project_id)
     except Project.DoesNotExist:
