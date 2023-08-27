@@ -100,6 +100,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                     'type': 'chat_message',
                     'message': message,
                     'files': files,
+                    'user_id': user_id,
                     'replyMessage': replyMessage,
                     'username': await self.get_username(user_id),
                     'avatar_url': await self.get_avatar_url(user_id),
@@ -129,6 +130,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                     await self.handle_mention(user, message)
 
     async def chat_message(self, event):
+        user_id = event['user_id']
         message = event['message']
         username = event.get('username', '')
         avatar_url = event.get('avatar_url', '')
@@ -140,7 +142,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({
             'type': 'chat_message',
             'team_id': self.team_id,
-            'user_id': self.user_id,
+            'user_id': user_id,
             'message': message,
             'files': files,
             'replyMessage': replyMessage,
@@ -232,7 +234,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     def index_up(self, user_id, team_id):
         from django.db.models import Max
         # 获取最大index值
-        max_index = UserTeamChatStatus.objects.aggregate(Max('index'))['index__max'] or 0
+        max_index = UserTeamChatStatus.objects.filter(user_id=user_id).aggregate(Max('index'))['index__max'] or 0
 
         # 使用get_or_create获取或创建对象
         user_team_chat_status, created = UserTeamChatStatus.objects.get_or_create(user_id=user_id, team_id=team_id)
