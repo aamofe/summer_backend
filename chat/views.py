@@ -52,25 +52,42 @@ def initial_chat(request,user_id):
     for team_dict in Team_ids:
         team_id = team_dict['team_id']
         members = Member.objects.filter(team_id=team_id)
-        last_message=ChatMessage.objects.filter(team_id=team_id).order_by('-timestamp').first()
-        lastMessage={
-            'content':last_message.message,
-            'username':User.objects.get(id=last_message.user_id).username,
-            'timestamp':last_message.timestamp.strftime('%Y/%m/%d/%H:%M'),
-        }
-        users=[]
+        last_message = ChatMessage.objects.filter(team_id=team_id).order_by('-timestamp').first()
+        if not last_message:
+            lastMessage = {
+                'content': '',
+                'username': '',
+                'timestamp': '',
+            }
+        else:
+            lastMessage={
+                'content':last_message.message,
+                'username':User.objects.get(id=last_message.user_id).username,
+                'timestamp':last_message.timestamp.strftime('%Y/%m/%d/%H:%M'),
+            }
+            users=[]
         for member in members:
             users.append({
                 '_id':str(member.user_id),
                 'username':User.objects.get(id=member.user_id).username,
                 'avatar':User.objects.get(id=member.user_id).avatar_url,
             })
+        try:
+            user_team_chat_status = UserTeamChatStatus.objects.get(user_id=user_id, team_id=team_id)
+            unread_count = user_team_chat_status.unread_count
+            index=user_team_chat_status.index
+        except UserTeamChatStatus.DoesNotExist:
+            unread_count = 0
+            index=1000000
+
+
+
         room_data={
             'roomId':str(team_id),
             'roomName':Team.objects.get(id=team_id).name,
-            'unreadCount':UserTeamChatStatus.objects.get(user_id=user_id,team_id=team_id).unread_count,
+            'unreadCount':unread_count,
             'avatar':Team.objects.get(id=team_id).cover_url,
-            'index':UserTeamChatStatus.objects.get(user_id=user_id,team_id=team_id).index,
+            'index':index,
             'lastMessage':lastMessage,
             'users':users,
         }
