@@ -5,7 +5,7 @@ from django.utils import timezone
 from jose import ExpiredSignatureError, JWTError
 import jwt
 from django.contrib.auth.models import AnonymousUser
-from document.models import Document
+from document.models import Document, Prototype
 from summer_backend import settings
 from summer_backend.settings import SECRET_KEY
 from team.models import Team, Member
@@ -151,3 +151,79 @@ def change_lock(request):
     document.is_locked^=1
     document.save()
     return JsonResponse({'errno': 0, 'document':document.to_dict(),'msg': "文档上锁状态修改成功"})
+@validate_login
+def create_prototype(request,team_id):
+    if request.method!='POST':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user=request.user
+    try :
+        team=Team.objects.get(id=team_id,is_deleted=False)
+    except Team.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "团队不存在"})
+    title=request.POST.get('title')
+    content=request.POST.get('content')
+    if title:
+        prototype=Prototype.objects.create(title=title,team=team,user=user)
+    else:
+        return JsonResponse({'errno': 1, 'msg': "请输入标题"})
+    if content:
+        prototype.conten=content
+    prototype.save()
+    return JsonResponse({'errno':0,'msg':'原型创建成功'})
+@validate_login
+def save_prototype(request):
+    if request.method!='POST':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user=request.user
+    prototype_id=request.POST.get('prototype_id')
+    try :
+        prototype=Prototype.objects.get(id=prototype_id,is_deleted=False)
+    except Prototype.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "原型不存在"})
+    try:
+        member=Member.objects.get(user=user,team=prototype.team)
+    except Member.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
+    content = request.POST.get('content')
+    title = request.POST.get('title')
+    if title:
+        prototype.title=title
+    if content:
+        prototype.conten=content
+    else:
+        return JsonResponse({'errno': 1, 'msg': "请上传修改内容"})
+    prototype.save()
+    return JsonResponse({'errno': 0, 'msg': "原型保存成功"})
+
+#获取单个原型
+@validate_login
+def view_prototype(request):
+    if request.method!='GET':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user=request.user
+    prototype_id=request.GET.get('prototype_id')
+    print("111 ",prototype_id)
+    try:
+        prototype=Prototype.objects.get(id=prototype_id)
+    except Prototype.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "原型不存在"})
+    try:
+        member=Member.objects.get(user=user,team=prototype.team)
+    except Member.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
+    return JsonResponse({'errno': 0,'prototype':prototype.to_dict(), 'msg': "获取原型成功"})
+#当前团队所有原型
+def all_prototype(request,team_id):
+    if request.method!='GET':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user=request.user
+    try:
+        team=Team.objects.get(id=team_id)
+    except Team.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "团队不存在"})
+    prototype_list=Prototype.objects.filter(team=team)
+    prototype=[]
+    for p in prototype_list:
+        prototype.append(p.to_dict())
+    prototype.append({'prototype_num':prototype_list.count()})
+    return JsonResponse({'errno': 0,'prototype':prototype, 'msg': "获取原型成功"})

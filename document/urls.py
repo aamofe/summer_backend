@@ -11,5 +11,8 @@ urlpatterns = [
     path('share_document/',views.share_document),
     path('change_lock/',views.change_lock),
     path('save_document/',views.save_document),
-    # path('get_lock/<int:team_id>/',views.get_lock)
+    path('create_prototype/<int:team_id>/',views.create_prototype),
+    path('save_prototype/',views.save_prototype),
+    path('view_prototype/',views.view_prototype),
+    path('all_prototype/<int:team_id>/',views.all_prototype)
 ]

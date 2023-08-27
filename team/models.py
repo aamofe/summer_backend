@@ -32,10 +32,10 @@ class Member(models.Model):
         return f"{self.get_role_display()}"
 class Project(models.Model):
     name=models.CharField(verbose_name='项目名称',max_length=10)
-    created_at=models.DateTimeField(verbose_name='项目创建时间',auto_created=True)
+    created_at=models.DateTimeField(verbose_name='项目创建时间',auto_now_add=True)
     team=models.ForeignKey(Team,verbose_name="所属团队",on_delete=models.PROTECT)
     is_deleted = models.BooleanField(verbose_name='是否已删除', default=False)
-    
+    user=models.ForeignKey(User,verbose_name="创建者",on_delete=models.PROTECT)
     def to_dict(self):
         return{
             'name':self.name,
