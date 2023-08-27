@@ -275,6 +275,8 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         user_ids_list = await self.get_user_ids(user_ids)
         for uid in user_ids_list:
             channel_name = await self.get_channel_name_for_user(uid, self.team_id)
+            if not channel_name:
+                continue
             unread_count = await self.get_unread_count(uid)
             await self.channel_layer.send(channel_name, {
                 'type': 'chat_status',
@@ -295,7 +297,11 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def get_channel_name_for_user(self, user_id, team_id):
         print(user_id, self.team_id)
-        return UserChatChannel.objects.get(user_id=user_id, team_id=team_id).channel_name
+        name = UserChatChannel.objects.get(user_id=user_id, team_id=team_id).channel_name
+        if name:
+            return name
+        else:
+            return None
 
     async def send_chat_status(self, user_id):
         unread_count = await self.get_unread_count(user_id)
@@ -355,12 +361,13 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         self.user_id = self.scope['url_route']['kwargs']['user_id']
         # 你可以在这里加入某个group，例如基于聊天室的名字
         await self.channel_layer.group_add("notification_group", self.channel_name)
+        await self.save_user_notice_channel()
         await self.accept()
 
     async def disconnect(self, close_code):
         # 退出group
         await self.channel_layer.group_discard("notification_group", self.channel_name)
-        await self.save_user_notice_channel()
+
 
     async def receive(self, text_data=None, bytes_data=None):
         data = json.loads(text_data)
@@ -371,13 +378,41 @@ class NotificationConsumer(AsyncWebsocketConsumer):
                     "type": "chat_notice",
                     "url": data['url'],
                     "roomID": data['roomID']
-
                 })
-        #    elif data['range'] == 'individual':
+                await self.upload_notice(data['url'], data['roomID'])
+            elif data['range'] == 'individual':
+                # 发送消息给指定用户
+                user_id = data['user_id']  # 假设传来的数据里有目标用户的ID
+                channel_name = await self.get_channel_name_for_user(user_id)
+                if channel_name:
+                # 用channel_name发送消息给指定用户
+                    await self.channel_layer.send(channel_name, {
+                        "type": "chat_notice",
+                        "url": data['url'],
+                        "roomID": data['roomID']
+                    })
+                await self.upload_notice(data['url'], data['roomID'])
 
-       # elif data['type'] == 'file':
+
+        # elif data['type'] == 'file':
 
 
+
+
+    @database_sync_to_async
+    def get_channel_name_for_user(self, user_id):
+        name = UserNoticeChannel.objects.get(user_id=user_id).channel_name
+        if name:
+            return name
+        else:
+            return None
+    async def chat_notice(self, event):
+        # 实际发送消息给WebSocket客户端
+        await self.send(text_data=json.dumps({
+            'type': 'chat_notice',
+            'url': event["url"],
+            'roomID': event["roomID"]
+        }))
 
     async def send_notification(self, event):
         # 实际发送消息给WebSocket客户端
@@ -390,7 +425,10 @@ class NotificationConsumer(AsyncWebsocketConsumer):
     def save_user_notice_channel(self):
         UserNoticeChannel.objects.update_or_create(user_id=self.user_id, defaults={'channel_name': self.channel_name})
 
-
+    @database_sync_to_async
+    def upload_notice(self, url, roomID):
+        Notice.objects.create(receiver_id=self.user_id, notice_type='chat_mention', url=url,
+                              associated_resource_id=roomID)
 
 
 

@@ -22,7 +22,8 @@ class Notice(models.Model):
     ]
     receiver = models.ForeignKey(User, on_delete=models.CASCADE)
     notice_type = models.CharField(max_length=50, choices=TYPE_CHOICES)
-    content = models.TextField()
+    content = models.TextField(default=None, blank=True, null=True)
+    url = models.CharField(max_length=255, blank=True, null=True)
     associated_resource_id = models.IntegerField()
     position_info = models.TextField(blank=True, null=True)  # 可以存储JSON格式的位置信息
     is_read = models.BooleanField(default=False)
