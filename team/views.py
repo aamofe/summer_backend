@@ -34,6 +34,7 @@ from user.views import upload_cover_method
 # Create your views here.
 @validate_login
 def create_team(request):
+    print("1111 ctrat+tam")
     if request.method == 'POST':
         user = request.user
         team_name = request.POST.get("team_name")
@@ -166,17 +167,18 @@ def open_invitation(request, token):
     return render(request, "invite.html", context)
 
 
-@validate_all
+@validate_login
 def accept_invitation(request):
-
+    if request.method=="POST":
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     team_id = request.POST.get('team_id')
-    user_id = request.POST.get('user_id')
-    # if team is None:
-    #     team=3
-    if user_id is None:
-        user_id=3
-    team = Team.objects.get(id=team_id)
-    user = User.objects.get(id=user_id,is_active=True)
+    # user_id = request.POST.get('user_id')
+    try:
+        team = Team.objects.get(id=team_id)
+    except Team.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "团队不存在"})
+    user=request.user
+    # user = User.objects.get(id=user_id,is_active=True)
     try:
         member=Member.objects.get(team=team,user=user)
         return JsonResponse({'errno': 0, 'msg': "您已加入该团队"})

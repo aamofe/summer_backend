@@ -11,7 +11,7 @@ urlpatterns = [
     path('checkout_team/',views.checkout_team),
     path('get_current_team/',views.get_current_team),
     path('get_invitation/', views.get_invitation, name='get_invitation'),
-    path('open_invitation/<str:token>/',views.open_invitation,name='open_invitation'),
+    # path('open_invitation/<str:token>/',views.open_invitation,name='open_invitation'),
     path('accept_invitation/', views.accept_invitation, name='accept_invitation'),
     path('all_teams/', views.all_teams, name='get_teams'),
     path('all_members/', views.all_members, name='get_members'),

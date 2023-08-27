@@ -43,6 +43,6 @@ class Prototype(models.Model):
             'content':self.content,
             'created_at':self.created_at,
             'modified_at':self.modified_at,
-            'team_name':self.team.name,
+            'project_name':self.project.name,
             'creator':self.user.nickname,
         }
