@@ -226,18 +226,21 @@ def all_members(request):
         user_info = member.user.to_dict()
         user_info['role'] = member.get_role_display()
         user_info['op']=''
+        user_info['role_string']=member.role
         members.append(user_info)
     member_list = Member.objects.filter(team=team,role="MG")
     for member in member_list:
         user_info = member.user.to_dict()
         user_info['role'] = member.get_role_display()
         user_info['op']=''
+        user_info['role_string']=member.role
         members.append(user_info)
     member_list = Member.objects.filter(team=team,role="MB")
     for member in member_list:
         user_info = member.user.to_dict()
         user_info['role'] = member.get_role_display()
         user_info['op']=''
+        user_info['role_string']=member.role
         members.append(user_info)
     return JsonResponse({'errno': 0, 'msg': "获取成员", 'members': members})
 
@@ -381,6 +384,7 @@ def get_current_team(request):
     team_list['member_num']=member_list.count()
     member=Member.objects.filter(user=user,team=team)[0]
     team_list['role']=member.get_role_display()
+    team_list['role_string']=member.role
     # pprint.pprint(team_list)
     return JsonResponse({'errno': 0,'team':team_list, 'msg': "请求成功"})
 @validate_login

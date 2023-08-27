@@ -114,41 +114,25 @@ def view_document(request,token):
     dict=document.to_dict()
     dict['editable']=editable
     return JsonResponse({'errno': 0, 'msg': "查看成功",'document':dict})
-@validate_login
-def get_lock(request,team_id):
-    if request.method!='GET':
-        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
-    user=request.user
-    document_id=request.GET.get("document_id")
-    if team_id is None:
-        return JsonResponse({'errno': 1, 'msg': "团队id不能为空"})
-    team_list = Team.objects.filter(id=team_id)
-    if not team_list.exists():
-        return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
-    team = team_list[0]
-    try:
-        member=Member.objects.filter(team=team,user=user)
-    except Member.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-    try :
-         document=Document.objects.get(id=document_id)
-    except Document.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "文档不存在"})
-    document.save()
-    return JsonResponse({'errno': 0, 'document':document.to_dict(),'msg': "文档上锁状态修改成功"})
 
 @validate_all
 def change_lock(request):
-
     if request.method!='POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     document_id=request.POST.get("document_id")
-    print("ddd11111 :" ,document_id)
+    type=request.POST.get('type')# + -
     try :
         document=Document.objects.get(id=document_id)
     except Document.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "文档不存在"})
-    document.is_locked^=1
+    if type=='+':
+        document.is_locked+=1
+    elif type=='-':
+        if document.is_locked==0:
+            return JsonResponse({'errno': 1, 'msg': "锁为0，不可再减"})
+        document.is_locked-=1
+    else:
+        return JsonResponse({'errno': 1, 'msg': "操作符号错误"})
     document.save()
     return JsonResponse({'errno': 0, 'document':document.to_dict(),'msg': "文档上锁状态修改成功"})
 @validate_login
