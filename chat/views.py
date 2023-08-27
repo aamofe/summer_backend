@@ -61,12 +61,12 @@ def initial_chat(request,user_id):
         users=[]
         for member in members:
             users.append({
-                '_id':member.user_id,
+                '_id':str(member.user_id),
                 'username':User.objects.get(id=member.user_id).username,
                 'avatar':User.objects.get(id=member.user_id).avatar_url,
             })
         room_data={
-            'roomId':team_id,
+            'roomId':str(team_id),
             'roomName':Team.objects.get(id=team_id).name,
             'unreadCount':UserTeamChatStatus.objects.get(user_id=user_id,team_id=team_id).unread_count,
             'avatar':Team.objects.get(id=team_id).cover_url,

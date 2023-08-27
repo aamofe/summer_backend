@@ -26,3 +26,9 @@ class UserTeamChatStatus(models.Model):
     is_at_all = models.BooleanField(default=False)
     index = models.IntegerField(default=0)
 
+
+class UserChatChannel(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    channel_name = models.CharField(max_length=255, unique=True)
+
+

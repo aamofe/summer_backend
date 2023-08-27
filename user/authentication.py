@@ -24,7 +24,6 @@ def validate_login(func):
             return JsonResponse({'errno': 401, 'msg': "用户不存在，请先注册"})
         request.user = user
         return func(request, *args, **kwargs)
-
     return valid_per
 
 

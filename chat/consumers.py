@@ -6,7 +6,7 @@ from django.utils import timezone
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from asgiref.sync import sync_to_async
-from chat.models import ChatMessage, Notice, UserTeamChatStatus
+from chat.models import ChatMessage, Notice, UserTeamChatStatus, UserChatChannel
 from user.models import User
 from team.models import Member, Team
 
@@ -20,6 +20,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         self.team_id = self.scope['url_route']['kwargs']['team_id']
         self.user_id = self.scope['url_route']['kwargs']['user_id']
         self.room_group_name = f"chat_{self.team_id}"
+        await self.save_user_channel()
         # 将用户加入到团队群聊
         await self.channel_layer.group_add(
             self.room_group_name,
@@ -55,6 +56,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
             for msg in recent_messages:
                 await self.send(text_data=json.dumps({
                     'message': msg.message,
+                    'user_id': str(msg.user_id),
                     'username': await self.get_username(msg.user_id),
                     'avatar_url': await self.get_avatar_url(msg.user_id),
                     'time': msg.timestamp.strftime('%Y-%m-%d %H:%M:%S')
@@ -88,8 +90,10 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                     'time': await self.get_time(),
                 }
             )
-            await self.increment_unread_count_for_all_except(user_id)
+            await self.increment_and_notify(user_id)
 
+
+            '''''''''
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
@@ -100,6 +104,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                     'cover_url': await self.get_cover_url(self.team_id),
                 }
             )
+            '''''''''
             if '@所有人' in message:
                 await self.handle_mention_all(message)
             else:
@@ -198,12 +203,37 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         return timezone.now().strftime('%Y-%m-%d %H:%M:%S')
 
     @database_sync_to_async
-    def increment_unread_count_for_all_except(self, user_id):
+    def increment_unread_count_in_db(self, user_id):
         user_ids = Member.objects.filter(team_id=self.team_id).exclude(user_id=user_id).values_list('user_id',
                                                                                                     flat=True)
-        print(user_ids)
         UserTeamChatStatus.objects.filter(user_id__in=user_ids, team_id=self.team_id).update(
             unread_count=F('unread_count') + 1)
+        return user_ids
+
+    @database_sync_to_async
+    def get_user_ids(self, user_ids_query):
+        return list(user_ids_query)
+    # This method can be used to send messages using channel_layer
+    def return_message(self, message):
+        return message.message if message else None
+
+    async def notify_users_of_unread_count(self, user_ids):
+        user_ids_list = await self.get_user_ids(user_ids)
+        for uid in user_ids_list:
+            channel_name = await self.get_channel_name_for_user(uid)
+            unread_count = await self.get_unread_count(uid)
+            await self.channel_layer.send(channel_name, {
+                'type': 'chat_status',
+                'unread_count': unread_count,
+                'latest_message': self.return_message(await self.get_latest_message()),
+                'team_name': await self.get_team_name(self.team_id),
+                'cover_url': await self.get_cover_url(self.team_id),
+            })
+
+    # Now, when you want to increment and notify
+    async def increment_and_notify(self, user_id):
+        user_ids = await self.increment_unread_count_in_db(user_id)
+        await self.notify_users_of_unread_count(user_ids)
 
 
     async def send_chat_status(self, user_id):
@@ -217,12 +247,21 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         }))
 
     @database_sync_to_async
+    def get_channel_name_for_user(self, user_id):
+        print(user_id, self.team_id)
+        return UserChatChannel.objects.get(user_id=user_id).channel_name
+
+    @database_sync_to_async
     def get_recent_messages(self):
-        return list(ChatMessage.objects.filter(team_id=self.team_id).order_by('-timestamp'))
+        return list(ChatMessage.objects.filter(team_id=self.team_id).order_by('timestamp'))
 
     @database_sync_to_async
     def get_latest_message(self):
-        return ChatMessage.objects.filter(team_id=self.team_id).order_by('-timestamp').first()
+        message = ChatMessage.objects.filter(team_id=self.team_id).order_by('-timestamp').first()
+        if message:
+            return message
+        else:
+            return None
 
     @database_sync_to_async
     def get_unread_count(self, user_id):
@@ -257,70 +296,8 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         except Team.DoesNotExist:
             return None
 
-
-class ChatConsumer(AsyncWebsocketConsumer):
-    async def connect(self):
-        self.team_id = self.scope['url_route']['kwargs']['team_id']
-        self.room_group_name = f"chat_{self.team_id}"
-
-        # 将用户加入到团队群聊
-        await self.channel_layer.group_add(
-            self.room_group_name,
-            self.channel_name
-        )
-
-        await self.accept()
-
-    async def disconnect(self, close_code):
-        # 将用户从团队群聊中移除
-        await self.channel_layer.group_discard(
-            self.room_group_name,
-            self.channel_name
-        )
-
-    async def receive(self, text_data=None, bytes_data=None):
-        text_data_json = json.loads(text_data)
-
-        # 检查是否是搜索请求
-        if 'search' in text_data_json:
-            keyword = text_data_json['search']
-            search_results = await self.search_messages(keyword)
-            await self.send(text_data=json.dumps({
-                'search_results': search_results
-            }))
-            return
-
-        message = text_data_json['message']
-        await self.save_message(message)
-
-        # 将消息发送给团队群聊的所有成员
-        await self.channel_layer.group_send(
-            self.room_group_name,
-            {
-                'type': 'chat_message',
-                'message': message
-            }
-        )
-
-    async def chat_message(self, event):
-        message = event['message']
-
-        # 发送消息给 WebSocket
-        await self.send(text_data=json.dumps({
-            'message': message
-        }))
-
     @database_sync_to_async
-    def save_message(self, message):
-        # 假设你有一个名为ChatMessage的模型，用于存储消息
-        ChatMessage.objects.create(team_id=self.team_id, message=message)
-
-    @database_sync_to_async
-    def search_messages(self, keyword):
-        # 搜索包含关键字的消息
-        messages = ChatMessage.objects.filter(team_id=self.team_id, message__icontains=keyword)
-        return [msg.message for msg in messages]
-
-
+    def save_user_channel(self):
+        UserChatChannel.objects.update_or_create(user_id=self.user_id, defaults={'channel_name': self.channel_name})
 
 #class NoticeConsumer:
