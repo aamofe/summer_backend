@@ -72,13 +72,13 @@ def initial_chat(request,user_id):
                 'username':User.objects.get(id=last_message.user_id).username,
                 'timestamp':last_message.timestamp.strftime('%Y/%m/%d/%H:%M'),
             }
-            users = []
-            for member in members:
-                users.append({
-                    '_id':str(member.user_id),
-                    'username':User.objects.get(id=member.user_id).username,
-                    'avatar':User.objects.get(id=member.user_id).avatar_url,
-                })
+        users = []
+        for member in members:
+            users.append({
+                '_id':str(member.user_id),
+                'username':User.objects.get(id=member.user_id).username,
+                'avatar':User.objects.get(id=member.user_id).avatar_url,
+            })
         try:
             user_team_chat_status = UserTeamChatStatus.objects.get(user_id=user_id, team_id=team_id)
             unread_count = user_team_chat_status.unread_count

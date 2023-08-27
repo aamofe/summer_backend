@@ -6,7 +6,7 @@ from django.utils import timezone
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from asgiref.sync import sync_to_async
-from chat.models import ChatMessage, Notice, UserTeamChatStatus, UserChatChannel
+from chat.models import ChatMessage, Notice, UserTeamChatStatus, UserChatChannel, UserNoticeChannel
 from user.models import User
 from team.models import Member, Team
 
@@ -20,7 +20,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         self.team_id = self.scope['url_route']['kwargs']['team_id']
         self.user_id = self.scope['url_route']['kwargs']['user_id']
         self.room_group_name = f"chat_{self.team_id}"
-        await self.save_user_channel()
+        await self.save_user_chat_channel()
         # 将用户加入到团队群聊
         await self.channel_layer.group_add(
             self.room_group_name,
@@ -332,8 +332,6 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         status.save()
 
 
-
-
     @database_sync_to_async
     def get_team_name(self, team_id):
         try:
@@ -349,8 +347,52 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
             return None
 
     @database_sync_to_async
-    def save_user_channel(self):
+    def save_user_chat_channel(self):
         UserChatChannel.objects.update_or_create(user_id=self.user_id,team_id=self.team_id ,defaults={'channel_name': self.channel_name})
 
-#class ChatAtConsumer:
+class NotificationConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        self.user_id = self.scope['url_route']['kwargs']['user_id']
+        # 你可以在这里加入某个group，例如基于聊天室的名字
+        await self.channel_layer.group_add("notification_group", self.channel_name)
+        await self.accept()
+
+    async def disconnect(self, close_code):
+        # 退出group
+        await self.channel_layer.group_discard("notification_group", self.channel_name)
+        await self.save_user_notice_channel()
+
+    async def receive(self, text_data=None, bytes_data=None):
+        data = json.loads(text_data)
+        if data['type'] == 'chat':
+            if data['range'] == 'all':
+                # 广播消息给所有人
+                await self.channel_layer.group_send("notification_group", {
+                    "type": "chat_notice",
+                    "url": data['url'],
+                    "roomID": data['roomID']
+
+                })
+        #    elif data['range'] == 'individual':
+
+       # elif data['type'] == 'file':
+
+
+
+    async def send_notification(self, event):
+        # 实际发送消息给WebSocket客户端
+        await self.send(text_data=json.dumps({
+            'message': event["message"]
+        }))
+
+
+    @database_sync_to_async
+    def save_user_notice_channel(self):
+        UserNoticeChannel.objects.update_or_create(user_id=self.user_id, defaults={'channel_name': self.channel_name})
+
+
+
+
+
+
 

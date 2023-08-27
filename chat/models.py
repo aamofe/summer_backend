@@ -15,10 +15,18 @@ class ChatMessage(models.Model):
 
 
 class Notice(models.Model):
-    user_id = models.IntegerField()
-    message = models.TextField()
-    timestamp = models.DateTimeField(auto_now_add=True)
+    TYPE_CHOICES = [
+        ('chat_mention', 'Chat Mention'),
+        ('document_mention', 'Document Mention'),
+        # 其他通知类型可以继续在这里添加
+    ]
+    receiver = models.ForeignKey(User, on_delete=models.CASCADE)
+    notice_type = models.CharField(max_length=50, choices=TYPE_CHOICES)
+    content = models.TextField()
+    associated_resource_id = models.IntegerField()
+    position_info = models.TextField(blank=True, null=True)  # 可以存储JSON格式的位置信息
     is_read = models.BooleanField(default=False)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
 class UserTeamChatStatus(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
@@ -32,6 +40,11 @@ class UserTeamChatStatus(models.Model):
 class UserChatChannel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    channel_name = models.CharField(max_length=255, unique=True)
+
+
+class UserNoticeChannel(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     channel_name = models.CharField(max_length=255, unique=True)
 
 
