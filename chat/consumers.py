@@ -131,6 +131,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({
             'type': 'chat_message',
             'team_id': self.team_id,
+            'user_id': self.user_id,
             'message': message,
             'username': username,
             'avatar_url': avatar_url,
