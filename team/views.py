@@ -189,7 +189,7 @@ def all_teams(request):
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     print(3)
     user = request.user
-    print('user_id : ',user.id)
+    # print('user_id : ',user.id)
     try:
         user=User.objects.get(id=user.id,isActive=True)
     except User.DoesNotExist:
@@ -350,6 +350,7 @@ def quit_team(request,team_id):
     
 @validate_login
 def get_current_team(request):
+    # print("get_current_team : begin")
     if request.method != 'GET':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user=request.user
@@ -360,10 +361,11 @@ def get_current_team(request):
             team = Team.objects.get(user=user,name="个人空间")
         except Team.DoesNotExist:
             team=Team.objects.create(user=user,name="个人空间")
-        user. current_team_id=team.id
+        user.current_team_id=team.id
         user.save()
     team_list=team.to_dict()
     team_list['team_num']= Member.objects.filter(user=user).count()
+    # pprint.pprint(team_list)
     return JsonResponse({'errno': 0,'team':team_list, 'msg': "请求成功"})
 @validate_login
 def all_projects(request):
@@ -381,3 +383,20 @@ def all_projects(request):
     for p in projects:
         project_list.append(p.to_dict())
     return JsonResponse({'errno': 0, 'msg': "获取团队所有项目成功",'projects':project_list})
+@validate_login
+def get_one_team(request):
+    if request.method != 'GET':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user=request.user
+    team_id=request.GET.get('team_id')
+    try:
+        team=Team.objects.get(id=team_id)
+    except Team.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "团队不存在"})
+    try:
+        member=Member.objects.get(user=user,team=team)
+    except Member.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "用户不属于当前团队"})
+    team_list=team.to_dict()
+    team_list['team_num']= Member.objects.filter(user=user).count()
+    return JsonResponse({'errno': 0,'team':team_list, 'msg': "请求成功"})

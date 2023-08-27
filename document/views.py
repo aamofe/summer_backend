@@ -129,12 +129,14 @@ def get_lock(request,team_id):
     return JsonResponse({'errno': 0, 'document':document.to_dict(),'msg': "文档上锁状态修改成功"})
 
 @validate_all
-def change_lock(request,team_id):
+def change_lock(request):
+
     if request.method!='POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     document_id=request.POST.get("document_id")
+    print("ddd11111 :" ,document_id)
     try :
-         document=Document.objects.get(id=document_id)
+        document=Document.objects.get(id=document_id)
     except Document.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "文档不存在"})
     document.is_locked^=1

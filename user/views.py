@@ -323,5 +323,5 @@ def personal_info(request):
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user=request.user
     user_info = user.to_dict()
-    pprint.pprint(user_info)
+    # pprint.pprint(user_info)
     return JsonResponse({'errno': 0, 'msg': "查看信息成功", 'user_info': user_info})
