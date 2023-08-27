@@ -128,22 +128,11 @@ def get_lock(request,team_id):
     document.save()
     return JsonResponse({'errno': 0, 'document':document.to_dict(),'msg': "文档上锁状态修改成功"})
 
-@validate_login
+@validate_all
 def change_lock(request,team_id):
     if request.method!='POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
-    user=request.user
     document_id=request.POST.get("document_id")
-    if team_id is None:
-        return JsonResponse({'errno': 1, 'msg': "团队id不能为空"})
-    team_list = Team.objects.filter(id=team_id)
-    if not team_list.exists():
-        return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
-    team = team_list[0]
-    try:
-        member=Member.objects.filter(team=team,user=user)
-    except Member.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     try :
          document=Document.objects.get(id=document_id)
     except Document.DoesNotExist:
