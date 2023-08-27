@@ -20,6 +20,6 @@ urlpatterns = [
     path('create_project/',views.create_project),
     path('update_project/',views.update_project),
     path('rename_project/',views.rename_project),
-    path('get_all_project/',views.get_all_project)
+    path('all_projects/',views.all_projects)
 
 ]

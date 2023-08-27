@@ -383,15 +383,11 @@ def get_current_team(request):
         return JsonResponse({'errno': 1, 'msg': "用户不存在"})
     return JsonResponse({'errno': 0,'team_id':user.current_team_id, 'msg': "请求成功"})
     user=request.user
-@validate_all
-def get_all_project(request):
+@validate_login
+def all_projects(request):
     if request.method != 'GET':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
-    user_id=request.GET.get('user_id')
-    try:    
-        user=User.objects.get(id=user_id)
-    except:
-        return JsonResponse({'errno': 1, 'msg': "用户不存在"})
+    user=request.user
     try:
         team=Team.objects.get(id=user.current_team_id)
     except Team.DoesNotExist:
