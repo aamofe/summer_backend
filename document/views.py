@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from django.utils import timezone
 from jose import ExpiredSignatureError, JWTError
 import jwt
-
+from django.contrib.auth.models import AnonymousUser
 from document.models import Document
 from summer_backend import settings
 from summer_backend.settings import SECRET_KEY
@@ -70,41 +70,55 @@ def save_document(request,team_id):
     return JsonResponse({'errno': 0, 'msg': "文档内容已保存"})
 @validate_all
 def view_document(request,token):
+    print(1)
     if request.method!='GET':
+        print(2)
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     if token.isdigit():
         document_id=token
         editable=True
+        print(3)
     else:
         payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
         document_id=payload.get('document_id')
         editable=payload.get('editable')
+        print(4)
     try:
         document=Document.objects.get(id=document_id,is_deleted=False)
     except Document.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "文档不存在"})
     if editable:
-        token = request.META.get('HTTP_Authorization'.upper())
-        if not token:
-            return redirect('http://www.aamofe.top/api/user/register/')
-        token = token.replace('Bearer ', '')
-        try:
-            jwt_token = jwt.decode(token, settings.SECRET_KEY, options={'verify_signature': False})
-        except ExpiredSignatureError:
-            return JsonResponse({'errno': 401, 'msg': "登录已过期，请重新登录"})
-        except JWTError:
-            return JsonResponse({'errno': 401, 'msg': "用户未登录，请先登录"})
-        try:
-            user = User.objects.get(id=jwt_token.get('id'),isActive=True)
-        except User.DoesNotExist:
-            return JsonResponse({'errno': 401, 'msg': "用户不存在，请先注册"})
+        user=request.user
+        if isinstance(user, AnonymousUser):
+            return JsonResponse({'errno': 1, 'msg': "请登录喔亲"})
     dict=document.to_dict()
     dict['editable']=editable
     return JsonResponse({'errno': 0, 'msg': "查看成功",'document':dict})
-
-
-def change_lock(request,team_id):
+@validate_login
+def get_lock(request,team_id):
     if request.method!='GET':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user=request.user
+    document_id=request.GET.get("document_id")
+    if team_id is None:
+        return JsonResponse({'errno': 1, 'msg': "团队id不能为空"})
+    team_list = Team.objects.filter(id=team_id)
+    if not team_list.exists():
+        return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
+    team = team_list[0]
+    try:
+        member=Member.objects.filter(team=team,user=user)
+    except Member.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
+    try :
+         document=Document.objects.get(id=document_id)
+    except Document.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "文档不存在"})
+    document.save()
+    return JsonResponse({'errno': 0, 'document':document.to_dict(),'msg': "文档上锁状态修改成功"})
+@validate_login
+def change_lock(request,team_id):
+    if request.method!='POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user=request.user
     document_id=request.GET.get("document_id")
@@ -124,6 +138,4 @@ def change_lock(request,team_id):
         return JsonResponse({'errno': 1, 'msg': "文档不存在"})
     document.is_locked^=1
     document.save()
-    data=[]
-    data.append(document.to_dict())
-    return JsonResponse({'errno': 0, 'data':data,'msg': "文档上锁状态修改成功"})
+    return JsonResponse({'errno': 0, 'document':document.to_dict(),'msg': "文档上锁状态修改成功"})

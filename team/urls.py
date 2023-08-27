@@ -8,6 +8,8 @@ from .views import *
 urlpatterns = [
     path('create_team/', views.create_team, name='create_team'),
     path('update_team/',views.update_team),
+    path('checkout_team/',views.checkout_team),
+    path('get_current_team/',views.get_current_team),
     path('get_invitation/', views.get_invitation, name='get_invitation'),
     path('open_invitation/<str:token>/',views.open_invitation,name='open_invitation'),
     path('accept_invitation/', views.accept_invitation, name='accept_invitation'),
@@ -17,5 +19,7 @@ urlpatterns = [
     # path('redi/',views.redi)
     path('create_project/',views.create_project),
     path('update_project/',views.update_project),
-    path('rename_project/',views.rename_project)
+    path('rename_project/',views.rename_project),
+    path('get_all_project/',views.get_all_project)
+
 ]

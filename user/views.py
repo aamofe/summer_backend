@@ -7,7 +7,7 @@ import pprint
 import time
 import uuid
 import platform
-
+from django.contrib.auth.models import AnonymousUser
 import jwt
 from django.core.mail import EmailMessage
 from django.http import JsonResponse
@@ -151,24 +151,6 @@ def login(request):
     else:
         return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
 
-def checkout_team(request):
-    if request.method == 'POST':
-        user=request.user
-        team_id=request.POST.get('team_id')
-        team_list = Team.objects.filter(id=team_id)
-        if not team_list.exists():
-            return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
-        team = team_list[0]
-        member_list = Member.objects.filter(user=user, team=team)
-        if not member_list.exists():
-            return JsonResponse({'errno': 1, 'msg': "当前用户不属于该团队"})
-        member = member_list[0]
-        user.current_team_id=team.id
-        user.save()
-        team_info={'user_id': user.id,'current_team':user.team.id,}
-        return JsonResponse({ 'data':team_info, 'errno': 0, 'msg': "登录成功"})
-    else:
-        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
 @validate_login
 def logout(request):
     if request.method != 'POST':
@@ -319,26 +301,27 @@ def call_back(request):
 def show_info(request, id):
     if request.method != 'GET':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
-    if id == 0:  # 查看自己的
-        token = request.META.get('HTTP_Authorization'.upper())
-        if not token:
-            return redirect('http://www.aamofe.top/api/user/login/')
-        token = token.replace('Bearer ', '')
-        try:
-            jwt_token = jwt.decode(token, settings.SECRET_KEY, options={'verify_signature': False})
-        except ExpiredSignatureError:
-            return JsonResponse({'errno': 1, 'msg': "登录已过期，请重新登录"})
-        except JWTError:
-            return JsonResponse({'errno': 1, 'msg': "用户未登录，请先登录"})
-        try:
-            user = User.objects.get(id=jwt_token.get('id'))
-        except User.DoesNotExist:
-            return JsonResponse({'errno': 1, 'msg': "用户不存在，请先注册"})
-    else:  # 查看别人的
+    user=request.user
+    if isinstance(user, AnonymousUser):
+        is_login = False
+    else :
+        is_login=True
+    if id==0 and not is_login:
+        return JsonResponse({'errno': 1, 'msg': "未登录"})
+    if id!=0:
         try:
             user = User.objects.get(id=id, isActive=True)
         except User.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "查看对象不存在"})
+    print('isLogin :',is_login)
     user_info = user.to_dict()
+    pprint.pprint(user_info)
     return JsonResponse({'errno': 0, 'msg': "查看信息成功", 'user_info': user_info})
-
+@validate_login
+def personal_info(request):
+    if request.method != 'GET':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user=request.user
+    user_info = user.to_dict()
+    pprint.pprint(user_info)
+    return JsonResponse({'errno': 0, 'msg': "查看信息成功", 'user_info': user_info})

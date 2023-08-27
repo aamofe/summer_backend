@@ -34,3 +34,9 @@ class Project(models.Model):
     created_at=models.DateTimeField(verbose_name='项目创建时间',auto_created=True)
     team=models.ForeignKey(Team,verbose_name="所属团队",on_delete=models.PROTECT)
     is_deleted = models.BooleanField(verbose_name='是否已删除', default=False)
+    
+    def to_dict(self):
+        return{
+            'name':self.name,
+            'id':self.id,
+        }
