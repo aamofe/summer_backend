@@ -3,7 +3,7 @@ import datetime
 from django.db.models import Max
 from django.http import JsonResponse
 
-from chat.models import UserTeamChatStatus, ChatMessage
+from chat.models import UserTeamChatStatus, ChatMessage, Notice
 from team.models import Team, Member
 from user.cos_utils import get_cos_client
 from user.models import User
@@ -141,4 +141,58 @@ def upload_cover_method(cover_file, cover_id, url):
     )
     return cover_url, None
 
+
+def get_user_messages(request, user_id):
+    if request.method == "GET":
+        user = User.objects.get(id=user_id)
+        notices = Notice.objects.filter(receiver=user).order_by('-timestamp')
+        data = [{"id": notice.id, "type": notice.notice_type, "url": notice.url, "is_read": notice.is_read} for notice in notices]
+        return JsonResponse(data, safe=False)
+    return JsonResponse({"error": "Method not allowed"}, status=405)
+
+def get_unread_messages(request, user_id):
+    if request.method == "GET":
+        user = User.objects.get(id=user_id)
+        unread_notices = Notice.objects.filter(receiver=user, is_read=False).order_by('-timestamp')
+        data = [{"id": notice.id, "type": notice.notice_type, "url": notice.url} for notice in unread_notices]
+        return JsonResponse(data, safe=False)
+    return JsonResponse({"error": "Method not allowed"}, status=405)
+
+def make_notice_read(request, notice_id):
+    if request.method == "POST":
+        notice = Notice.objects.get(id=notice_id)
+        if not notice.is_read:
+            notice.is_read = True
+            notice.save()
+        return JsonResponse({"message": "All messages marked as read"})
+    return JsonResponse({"error": "Method not allowed"}, status=405)
+
+def make_notice_unread(request, notice_id):
+    if request.method == "POST":
+        notice = Notice.objects.get(id=notice_id)
+        if notice.is_read:
+            notice.is_read = False
+            notice.save()
+        return JsonResponse({"message": "All messages marked as unread"})
+    return JsonResponse({"error": "Method not allowed"}, status=405)
+
+def mark_all_as_read(request, user_id):
+    if request.method == "PUT":
+        user = User.objects.get(id=user_id)
+        Notice.objects.filter(receiver=user, is_read=False).update(is_read=True)
+        return JsonResponse({"message": "All messages marked as read"})
+    return JsonResponse({"error": "Method not allowed"}, status=405)
+
+def delete_notice(request, notice_id):
+    if request.method == "DELETE":
+        Notice.objects.get(id=notice_id).delete()
+        return JsonResponse({"message": "Notice deleted successfully"})
+    return JsonResponse({"error": "Method not allowed"}, status=405)
+
+def delete_all_read(request, user_id):
+    if request.method == "DELETE":
+        user = User.objects.get(id=user_id)
+        Notice.objects.filter(receiver=user, is_read=True).delete()
+        return JsonResponse({"message": "All read messages deleted"})
+    return JsonResponse({"error": "Method not allowed"}, status=405)
 

@@ -107,7 +107,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 }
             )
             await self.increment_and_notify(user_id)
-
+            await self.mark_messages_as_read(user_id)
 
             '''''''''
             await self.channel_layer.group_send(
@@ -233,7 +233,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     def index_up(self, user_id, team_id):
         from django.db.models import Max
         # 获取最大index值
-        max_index = UserTeamChatStatus.objects.filter(user_id=user_id).aggregate(Max('index'))['index__max'] or 0
+        max_index = UserTeamChatStatus.objects.filter(user_id=user_id,team_id=team_id).aggregate(Max('index'))['index__max'] or 0
 
         # 使用get_or_create获取或创建对象
         user_team_chat_status, created = UserTeamChatStatus.objects.get_or_create(user_id=user_id, team_id=team_id)
@@ -245,12 +245,9 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def increment_unread_count_in_db(self, user_id):
         user_ids = Member.objects.filter(team_id=self.team_id).values_list('user_id',flat=True)
-        for uid in user_ids:
-            self.index_up(uid, self.team_id)
         new_user_ids = user_ids.exclude(user_id=user_id)
         UserTeamChatStatus.objects.filter(user_id__in=new_user_ids, team_id=self.team_id).update(
             unread_count=F('unread_count') + 1)
-
         return user_ids
 
     @database_sync_to_async
@@ -332,7 +329,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def mark_messages_as_read(self, user_id):
-        status, created = UserTeamChatStatus.objects.get_or_create(user_id=user_id, team_id=self.team_id)
+        status = UserTeamChatStatus.objects.get(user_id=user_id, team_id=self.team_id)
         status.unread_count = 0
         status.save()
 
