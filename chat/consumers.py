@@ -28,7 +28,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         )
         await self.accept()
         # 将用户和团队信息存储到信息状态表中
-        await self.create_user_team_chat_status()
+        await self.index_up()
         ''''
         latest_message = await self.get_latest_message()
         unread_count = await self.get_unread_count()
@@ -148,11 +148,13 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     async def chat_status(self, event):
         unread_count = event['unread_count']
         latest_message = event['latest_message']
-        team_name = event['team_name']
-        cover_url = event['cover_url']
+        username = event.get('username', '')
+        time = event.get('time', '')
         await self.send(text_data=json.dumps({
             'type': 'chat_status',
             'team_id': self.team_id,
+            'username': username,
+            'time': time,
             'unread_count': unread_count,
             'latest_message': latest_message,
         }))
@@ -215,8 +217,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def increment_unread_count_in_db(self, user_id):
-        user_ids = Member.objects.filter(team_id=self.team_id).exclude(user_id=user_id).values_list('user_id',
-                                                                                                    flat=True)
+        user_ids = Member.objects.filter(team_id=self.team_id).values_list('user_id',flat=True)
         UserTeamChatStatus.objects.filter(user_id__in=user_ids, team_id=self.team_id).update(
             unread_count=F('unread_count') + 1)
         return user_ids
@@ -227,7 +228,12 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     # This method can be used to send messages using channel_layer
     def return_message(self, message):
         return message.message if message else None
-
+    @database_sync_to_async
+    def return_username(self, message):
+        return User.objects.get(id = message.user_id).username if message else None
+    @database_sync_to_async
+    def return_time(self, message):
+        return message.timestamp.strftime('%Y-%m-%d %H:%M:%S') if message else None
     async def notify_users_of_unread_count(self, user_ids):
         user_ids_list = await self.get_user_ids(user_ids)
         for uid in user_ids_list:
@@ -236,6 +242,8 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
             await self.channel_layer.send(channel_name, {
                 'type': 'chat_status',
                 'unread_count': unread_count,
+                'username': await self.return_username(await self.get_latest_message()),
+                'time': await self.return_time(await self.get_latest_message()),
                 'latest_message': self.return_message(await self.get_latest_message()),
                 'team_name': await self.get_team_name(self.team_id),
                 'cover_url': await self.get_cover_url(self.team_id),
@@ -286,7 +294,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         status.save()
 
     @database_sync_to_async
-    def create_user_team_chat_status(self):
+    def index_up(self):
         if not UserTeamChatStatus.objects.filter(user_id=self.user_id, team_id=self.team_id).exists():
             from django.db.models import Max
             max_index = UserTeamChatStatus.objects.aggregate(Max('index'))['index__max'] or 0
