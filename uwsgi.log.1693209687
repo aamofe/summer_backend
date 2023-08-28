@@ -1,0 +1,584 @@
+1
+[pid: 182020|app: 0|req: 127/331] 219.239.227.188 () {48 vars in 938 bytes} [Mon Aug 28 15:44:07 2023] GET /api/document/view_document/29/ => generated 251 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 128/332] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 15:44:07 2023] OPTIONS /api/team/all_members/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 129/333] 219.239.227.188 () {48 vars in 920 bytes} [Mon Aug 28 15:44:07 2023] GET /api/team/all_members/ => generated 296 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 100/334] 219.239.227.188 () {50 vars in 905 bytes} [Mon Aug 28 15:44:07 2023] POST /api/document/change_lock/ => generated 263 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 130/335] 219.239.227.188 () {50 vars in 905 bytes} [Mon Aug 28 15:44:22 2023] POST /api/document/change_lock/ => generated 263 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 131/336] 219.239.227.188 () {52 vars in 890 bytes} [Mon Aug 28 15:44:26 2023] OPTIONS /api/document/view_document/2 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 101/337] 219.239.227.188 () {48 vars in 934 bytes} [Mon Aug 28 15:44:26 2023] GET /api/document/view_document/2 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 132/338] 219.239.227.188 () {52 vars in 892 bytes} [Mon Aug 28 15:44:26 2023] OPTIONS /api/document/view_document/2/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+1
+[pid: 182020|app: 0|req: 133/339] 219.239.227.188 () {48 vars in 936 bytes} [Mon Aug 28 15:44:26 2023] GET /api/document/view_document/2/ => generated 245 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 134/340] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 15:44:26 2023] OPTIONS /api/team/all_members/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 53/341] 219.239.227.188 () {48 vars in 920 bytes} [Mon Aug 28 15:44:26 2023] GET /api/team/all_members/ => generated 296 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 135/342] 219.239.227.188 () {50 vars in 905 bytes} [Mon Aug 28 15:44:26 2023] POST /api/document/change_lock/ => generated 263 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 54/343] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 15:44:33 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 102/344] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:44:33 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 103/345] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 15:44:33 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 136/346] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 15:44:33 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 54/347] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 15:44:33 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 137/348] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:44:33 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 105/349] 219.239.227.188 () {48 vars in 918 bytes} [Mon Aug 28 15:44:33 2023] GET /api/user/show_info/0 => generated 0 bytes in 13 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 139/350] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 15:44:33 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+1
+3
+[pid: 182018|app: 0|req: 105/351] 219.239.227.188 () {48 vars in 916 bytes} [Mon Aug 28 15:44:33 2023] GET /api/team/all_teams/ => generated 963 bytes in 54 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+is_login :  True
+[pid: 182014|app: 0|req: 56/352] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 15:44:33 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 81 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 56/353] 219.239.227.188 () {48 vars in 922 bytes} [Mon Aug 28 15:44:33 2023] GET /api/team/all_projects/ => generated 145 bytes in 85 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 56/354] 219.239.227.188 () {48 vars in 920 bytes} [Mon Aug 28 15:44:33 2023] GET /api/user/show_info/0/ => generated 247 bytes in 57 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 56/355] 219.239.227.188 () {48 vars in 922 bytes} [Mon Aug 28 15:44:33 2023] GET /api/team/all_projects/ => generated 145 bytes in 87 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 139/356] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 15:44:33 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 101 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+[pid: 182016|app: 0|req: 57/357] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:44:47 2023] GET /api/team/all_teams/ => generated 501 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 140/358] 219.239.227.188 () {50 vars in 905 bytes} [Mon Aug 28 15:45:18 2023] POST /api/document/change_lock/ => generated 263 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 106/359] 219.239.227.188 () {52 vars in 890 bytes} [Mon Aug 28 15:45:22 2023] OPTIONS /api/document/view_document/2 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 58/360] 219.239.227.188 () {48 vars in 934 bytes} [Mon Aug 28 15:45:22 2023] GET /api/document/view_document/2 => generated 0 bytes in 8 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 107/361] 219.239.227.188 () {52 vars in 892 bytes} [Mon Aug 28 15:45:22 2023] OPTIONS /api/document/view_document/2/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+1
+[pid: 182014|app: 0|req: 57/362] 219.239.227.188 () {48 vars in 936 bytes} [Mon Aug 28 15:45:22 2023] GET /api/document/view_document/2/ => generated 245 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 59/363] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 15:45:22 2023] OPTIONS /api/team/all_members/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 108/364] 219.239.227.188 () {48 vars in 920 bytes} [Mon Aug 28 15:45:22 2023] GET /api/team/all_members/ => generated 296 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 58/365] 219.239.227.188 () {50 vars in 905 bytes} [Mon Aug 28 15:45:22 2023] POST /api/document/change_lock/ => generated 263 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+[pid: 182018|app: 0|req: 109/366] 219.239.227.141 () {44 vars in 913 bytes} [Mon Aug 28 15:45:39 2023] GET /api/document/view_document/2/ => generated 245 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 141/367] 219.239.227.141 () {44 vars in 897 bytes} [Mon Aug 28 15:45:39 2023] GET /api/team/all_members/ => generated 316 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 59/368] 219.239.227.141 () {46 vars in 883 bytes} [Mon Aug 28 15:45:39 2023] POST /api/document/change_lock/ => generated 263 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+1
+[pid: 182020|app: 0|req: 142/369] 219.239.227.141 () {44 vars in 872 bytes} [Mon Aug 28 15:45:39 2023] GET /api/document/view_document/30/ => generated 250 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 143/370] 219.239.227.141 () {44 vars in 854 bytes} [Mon Aug 28 15:45:39 2023] GET /api/team/all_members/ => generated 316 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 110/371] 219.239.227.141 () {46 vars in 840 bytes} [Mon Aug 28 15:45:40 2023] POST /api/document/change_lock/ => generated 263 bytes in 32 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 144/372] 219.239.227.188 () {52 vars in 891 bytes} [Mon Aug 28 15:45:57 2023] OPTIONS /api/document/share_document/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+editable :  1
+[pid: 182014|app: 0|req: 60/373] 219.239.227.188 () {52 vars in 1049 bytes} [Mon Aug 28 15:45:57 2023] POST /api/document/share_document/ => generated 184 bytes in 18 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+[pid: 182014|app: 0|req: 61/374] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:46:17 2023] GET /api/team/all_teams/ => generated 501 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 111/375] 219.239.227.188 () {48 vars in 1091 bytes} [Mon Aug 28 15:46:28 2023] OPTIONS /api/document/view_document/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkb2N1bWVudF9pZCI6IjMiLCJlZGl0YWJsZSI6dHJ1ZX0.EoThvtMIuZSTAeO5D48j99zpesy6FgAYPa99EGHwFBU => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 145/376] 219.239.227.188 () {44 vars in 1135 bytes} [Mon Aug 28 15:46:28 2023] GET /api/document/view_document/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkb2N1bWVudF9pZCI6IjMiLCJlZGl0YWJsZSI6dHJ1ZX0.EoThvtMIuZSTAeO5D48j99zpesy6FgAYPa99EGHwFBU => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 349 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 146/377] 219.239.227.188 () {48 vars in 1093 bytes} [Mon Aug 28 15:46:28 2023] OPTIONS /api/document/view_document/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkb2N1bWVudF9pZCI6IjMiLCJlZGl0YWJsZSI6dHJ1ZX0.EoThvtMIuZSTAeO5D48j99zpesy6FgAYPa99EGHwFBU/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+1
+[pid: 182016|app: 0|req: 60/378] 219.239.227.188 () {44 vars in 1137 bytes} [Mon Aug 28 15:46:28 2023] GET /api/document/view_document/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkb2N1bWVudF9pZCI6IjMiLCJlZGl0YWJsZSI6dHJ1ZX0.EoThvtMIuZSTAeO5D48j99zpesy6FgAYPa99EGHwFBU/ => generated 245 bytes in 21 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 112/379] 219.239.227.188 () {44 vars in 867 bytes} [Mon Aug 28 15:46:28 2023] GET /api/team/all_members/ => generated 296 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 113/380] 219.239.227.188 () {46 vars in 852 bytes} [Mon Aug 28 15:46:28 2023] POST /api/document/change_lock/ => generated 263 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+1
+[pid: 182018|app: 0|req: 114/381] 219.239.227.141 () {44 vars in 913 bytes} [Mon Aug 28 15:47:07 2023] GET /api/document/view_document/2/ => generated 245 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 115/382] 219.239.227.141 () {44 vars in 897 bytes} [Mon Aug 28 15:47:08 2023] GET /api/team/all_members/ => generated 316 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 147/383] 219.239.227.141 () {46 vars in 883 bytes} [Mon Aug 28 15:47:08 2023] POST /api/document/change_lock/ => generated 263 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+[pid: 182020|app: 0|req: 149/384] 219.239.227.141 () {44 vars in 926 bytes} [Mon Aug 28 15:47:21 2023] GET /api/team/get_current_team/?user_id=5 => generated 268 bytes in 51 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+is_login :  True
+[pid: 182014|app: 0|req: 63/385] 219.239.227.141 () {44 vars in 897 bytes} [Mon Aug 28 15:47:21 2023] GET /api/user/show_info/0/ => generated 267 bytes in 39 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 149/386] 219.239.227.141 () {44 vars in 899 bytes} [Mon Aug 28 15:47:21 2023] GET /api/team/all_projects/ => generated 99 bytes in 45 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 63/387] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:47:21 2023] GET /api/team/all_teams/ => generated 501 bytes in 46 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 61/388] 219.239.227.141 () {44 vars in 899 bytes} [Mon Aug 28 15:47:21 2023] GET /api/team/all_projects/ => generated 99 bytes in 20 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 150/389] 219.239.227.141 () {44 vars in 926 bytes} [Mon Aug 28 15:47:21 2023] GET /api/team/get_current_team/?user_id=5 => generated 268 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 64/390] 219.239.227.141 () {46 vars in 883 bytes} [Mon Aug 28 15:47:24 2023] POST /api/document/change_lock/ => generated 263 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 151/391] 219.239.227.141 () {46 vars in 883 bytes} [Mon Aug 28 15:47:24 2023] POST /api/document/change_lock/ => generated 263 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 152/392] 219.239.227.188 () {52 vars in 890 bytes} [Mon Aug 28 15:47:35 2023] OPTIONS /api/document/view_document/2 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 153/393] 219.239.227.188 () {48 vars in 934 bytes} [Mon Aug 28 15:47:35 2023] GET /api/document/view_document/2 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 116/394] 219.239.227.188 () {52 vars in 892 bytes} [Mon Aug 28 15:47:35 2023] OPTIONS /api/document/view_document/2/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+1
+[pid: 182014|app: 0|req: 65/395] 219.239.227.188 () {48 vars in 936 bytes} [Mon Aug 28 15:47:36 2023] GET /api/document/view_document/2/ => generated 245 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 154/396] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 15:47:36 2023] OPTIONS /api/team/all_members/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 66/397] 219.239.227.188 () {48 vars in 920 bytes} [Mon Aug 28 15:47:36 2023] GET /api/team/all_members/ => generated 296 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 155/398] 219.239.227.188 () {50 vars in 905 bytes} [Mon Aug 28 15:47:36 2023] POST /api/document/change_lock/ => generated 263 bytes in 37 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+[pid: 182014|app: 0|req: 67/399] 219.239.227.188 () {44 vars in 1137 bytes} [Mon Aug 28 15:47:36 2023] GET /api/document/view_document/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkb2N1bWVudF9pZCI6IjMiLCJlZGl0YWJsZSI6dHJ1ZX0.EoThvtMIuZSTAeO5D48j99zpesy6FgAYPa99EGHwFBU/ => generated 245 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 156/400] 219.239.227.188 () {44 vars in 867 bytes} [Mon Aug 28 15:47:36 2023] GET /api/team/all_members/ => generated 296 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 117/401] 219.239.227.188 () {46 vars in 852 bytes} [Mon Aug 28 15:47:36 2023] POST /api/document/change_lock/ => generated 263 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 118/402] 219.239.227.141 () {46 vars in 935 bytes} [Mon Aug 28 15:47:37 2023] POST /api/user/login/ => generated 59 bytes in 18 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 68/403] 219.239.227.141 () {46 vars in 935 bytes} [Mon Aug 28 15:48:01 2023] POST /api/user/login/ => generated 223 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+1
+3
+[pid: 182016|app: 0|req: 62/404] 219.239.227.141 () {44 vars in 899 bytes} [Mon Aug 28 15:48:03 2023] GET /api/team/all_projects/ => generated 126 bytes in 36 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 182018|app: 0|req: 120/405] 219.239.227.141 () {44 vars in 897 bytes} [Mon Aug 28 15:48:03 2023] GET /api/user/show_info/0/ => generated 267 bytes in 37 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 120/406] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:48:03 2023] GET /api/team/all_teams/ => generated 507 bytes in 65 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 70/407] 219.239.227.141 () {44 vars in 926 bytes} [Mon Aug 28 15:48:03 2023] GET /api/team/get_current_team/?user_id=4 => generated 268 bytes in 65 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 70/408] 219.239.227.141 () {44 vars in 899 bytes} [Mon Aug 28 15:48:03 2023] GET /api/team/all_projects/ => generated 126 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 121/409] 219.239.227.141 () {44 vars in 926 bytes} [Mon Aug 28 15:48:03 2023] GET /api/team/get_current_team/?user_id=4 => generated 268 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 123/410] 219.239.227.141 () {44 vars in 899 bytes} [Mon Aug 28 15:48:06 2023] GET /api/team/all_projects/ => generated 99 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+1
+3
+[pid: 182016|app: 0|req: 63/411] 219.239.227.141 () {44 vars in 926 bytes} [Mon Aug 28 15:48:06 2023] GET /api/team/get_current_team/?user_id=5 => generated 268 bytes in 37 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 123/412] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:48:06 2023] GET /api/team/all_teams/ => generated 501 bytes in 39 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 157/413] 219.239.227.141 () {44 vars in 899 bytes} [Mon Aug 28 15:48:06 2023] GET /api/team/all_projects/ => generated 99 bytes in 20 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 158/414] 219.239.227.141 () {44 vars in 926 bytes} [Mon Aug 28 15:48:06 2023] GET /api/team/get_current_team/?user_id=5 => generated 268 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+is_login :  True
+[pid: 182020|app: 0|req: 159/415] 219.239.227.141 () {44 vars in 897 bytes} [Mon Aug 28 15:48:06 2023] GET /api/user/show_info/0/ => generated 267 bytes in 17 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 160/416] 219.239.227.141 () {46 vars in 883 bytes} [Mon Aug 28 15:48:11 2023] POST /api/document/change_lock/ => generated 263 bytes in 34 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 161/417] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 15:48:17 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 124/418] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:48:17 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 162/419] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 15:48:17 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 125/420] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:48:17 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 71/421] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 15:48:17 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 64/422] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 15:48:17 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 65/423] 219.239.227.188 () {48 vars in 918 bytes} [Mon Aug 28 15:48:17 2023] GET /api/user/show_info/0 => generated 0 bytes in 11 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 67/424] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 15:48:17 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+1
+3
+[pid: 182020|app: 0|req: 164/425] 219.239.227.188 () {48 vars in 922 bytes} [Mon Aug 28 15:48:17 2023] GET /api/team/all_projects/ => generated 145 bytes in 44 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 127/426] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 15:48:17 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 72 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 127/427] 219.239.227.188 () {48 vars in 922 bytes} [Mon Aug 28 15:48:17 2023] GET /api/team/all_projects/ => generated 145 bytes in 61 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 68/428] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 15:48:17 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 57 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 182016|app: 0|req: 68/429] 219.239.227.188 () {48 vars in 920 bytes} [Mon Aug 28 15:48:17 2023] GET /api/user/show_info/0/ => generated 247 bytes in 32 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 164/430] 219.239.227.188 () {48 vars in 916 bytes} [Mon Aug 28 15:48:17 2023] GET /api/team/all_teams/ => generated 963 bytes in 86 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 165/431] 219.239.227.188 () {50 vars in 905 bytes} [Mon Aug 28 15:48:19 2023] POST /api/document/change_lock/ => generated 263 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 72/432] 219.239.227.188 () {50 vars in 905 bytes} [Mon Aug 28 15:48:19 2023] POST /api/document/change_lock/ => generated 263 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 73/433] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 15:48:23 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 166/434] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:48:23 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 69/435] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 15:48:23 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 70/436] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 15:48:23 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 168/437] 219.239.227.188 () {52 vars in 911 bytes} [Mon Aug 28 15:48:23 2023] OPTIONS /api/team/get_one_project/?project_id=17 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 129/438] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 15:48:23 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 4 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 71/439] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 15:48:23 2023] OPTIONS /api/document/all_prototype/17/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 169/440] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 15:48:23 2023] OPTIONS /api/document/all_documents/17/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 170/441] 219.239.227.188 () {48 vars in 918 bytes} [Mon Aug 28 15:48:23 2023] GET /api/user/show_info/0 => generated 0 bytes in 19 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 130/442] 219.239.227.188 () {48 vars in 922 bytes} [Mon Aug 28 15:48:23 2023] GET /api/team/all_projects/ => generated 145 bytes in 35 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+[pid: 182018|app: 0|req: 130/443] 219.239.227.188 () {48 vars in 955 bytes} [Mon Aug 28 15:48:23 2023] GET /api/team/get_one_project/?project_id=17 => generated 157 bytes in 62 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 75/444] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 15:48:23 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 69 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 171/446] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 15:48:23 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 5 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 75/446] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 15:48:23 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 97 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 73/447] 219.239.227.188 () {48 vars in 938 bytes} [Mon Aug 28 15:48:23 2023] GET /api/document/all_prototype/17/ => generated 2020 bytes in 55 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 73/448] 219.239.227.188 () {48 vars in 938 bytes} [Mon Aug 28 15:48:23 2023] GET /api/document/all_documents/17/ => generated 269 bytes in 53 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 172/449] 219.239.227.188 () {48 vars in 916 bytes} [Mon Aug 28 15:48:23 2023] GET /api/team/all_teams/ => generated 963 bytes in 109 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 182020|app: 0|req: 172/450] 219.239.227.188 () {48 vars in 920 bytes} [Mon Aug 28 15:48:23 2023] GET /api/user/show_info/0/ => generated 247 bytes in 16 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 131/451] 219.239.227.141 () {46 vars in 935 bytes} [Mon Aug 28 15:48:31 2023] POST /api/user/login/ => generated 59 bytes in 17 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 76/452] 219.239.227.188 () {46 vars in 852 bytes} [Mon Aug 28 15:48:35 2023] POST /api/document/change_lock/ => generated 263 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 132/453] 219.239.227.188 () {46 vars in 852 bytes} [Mon Aug 28 15:48:35 2023] POST /api/document/change_lock/ => generated 263 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 173/454] 219.239.227.141 () {46 vars in 935 bytes} [Mon Aug 28 15:48:43 2023] POST /api/user/login/ => generated 224 bytes in 20 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 174/455] 219.239.227.141 () {48 vars in 883 bytes} [Mon Aug 28 15:48:47 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 175/456] 219.239.227.141 () {48 vars in 883 bytes} [Mon Aug 28 15:48:47 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 134/457] 219.239.227.141 () {44 vars in 899 bytes} [Mon Aug 28 15:48:47 2023] GET /api/team/all_projects/ => generated 560 bytes in 34 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 182018|app: 0|req: 134/458] 219.239.227.141 () {44 vars in 897 bytes} [Mon Aug 28 15:48:47 2023] GET /api/user/show_info/0/ => generated 267 bytes in 38 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+1
+3
+[pid: 182016|app: 0|req: 75/459] 219.239.227.141 () {44 vars in 926 bytes} [Mon Aug 28 15:48:47 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 50 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 75/460] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:48:47 2023] GET /api/team/all_teams/ => generated 666 bytes in 79 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 176/461] 219.239.227.141 () {44 vars in 899 bytes} [Mon Aug 28 15:48:47 2023] GET /api/team/all_projects/ => generated 560 bytes in 37 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 135/462] 219.239.227.141 () {44 vars in 926 bytes} [Mon Aug 28 15:48:47 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+[pid: 182020|app: 0|req: 177/463] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:48:49 2023] GET /api/team/all_teams/ => generated 666 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+[pid: 182018|app: 0|req: 136/464] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:48:55 2023] GET /api/team/all_teams/ => generated 507 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 178/465] 219.239.227.188 () {50 vars in 957 bytes} [Mon Aug 28 15:49:23 2023] POST /api/user/login/ => generated 224 bytes in 19 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 137/466] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 15:49:24 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 77/467] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:49:24 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 78/468] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:49:24 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 138/469] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 15:49:24 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 179/470] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:49:24 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 139/471] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:49:24 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 180/472] 219.239.227.188 () {48 vars in 917 bytes} [Mon Aug 28 15:49:24 2023] GET /api/user/show_info/0 => generated 0 bytes in 20 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 0)
+1
+3
+[pid: 182018|app: 0|req: 140/473] 219.239.227.188 () {48 vars in 921 bytes} [Mon Aug 28 15:49:24 2023] GET /api/team/all_projects/ => generated 560 bytes in 36 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 181/475] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 15:49:24 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 80/476] 219.239.227.188 () {48 vars in 921 bytes} [Mon Aug 28 15:49:24 2023] GET /api/team/all_projects/ => generated 560 bytes in 59 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 77/476] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:49:24 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 68 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 80/477] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:49:24 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 56 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 77/478] 219.239.227.188 () {48 vars in 915 bytes} [Mon Aug 28 15:49:24 2023] GET /api/team/all_teams/ => generated 666 bytes in 75 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 182018|app: 0|req: 141/479] 219.239.227.188 () {48 vars in 919 bytes} [Mon Aug 28 15:49:24 2023] GET /api/user/show_info/0/ => generated 267 bytes in 16 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 81/481] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:50:57 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 142/481] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 15:50:57 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 78/482] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 15:50:57 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 183/484] 219.239.227.188 () {52 vars in 911 bytes} [Mon Aug 28 15:50:57 2023] OPTIONS /api/team/get_one_project/?project_id=19 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 183/484] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:50:57 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 82/485] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:50:57 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 83/486] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 15:50:57 2023] OPTIONS /api/document/all_documents/19/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 185/487] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 15:50:57 2023] OPTIONS /api/document/all_prototype/19/ => generated 0 bytes in 2 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 80/488] 219.239.227.188 () {48 vars in 917 bytes} [Mon Aug 28 15:50:57 2023] GET /api/user/show_info/0 => generated 0 bytes in 21 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 0)
+1
+3
+[pid: 182020|app: 0|req: 186/490] 219.239.227.188 () {48 vars in 954 bytes} [Mon Aug 28 15:50:57 2023] GET /api/team/get_one_project/?project_id=19 => generated 137 bytes in 53 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 186/490] 219.239.227.188 () {48 vars in 921 bytes} [Mon Aug 28 15:50:57 2023] GET /api/team/all_projects/ => generated 560 bytes in 60 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 85/491] 219.239.227.188 () {48 vars in 937 bytes} [Mon Aug 28 15:50:57 2023] GET /api/document/all_prototype/19/ => generated 96 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 85/492] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:50:57 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 58 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 81/493] 219.239.227.188 () {48 vars in 915 bytes} [Mon Aug 28 15:50:57 2023] GET /api/team/all_teams/ => generated 666 bytes in 77 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 144/494] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 15:50:57 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 9 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 144/495] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:50:57 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 80 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 81/496] 219.239.227.188 () {48 vars in 937 bytes} [Mon Aug 28 15:50:57 2023] GET /api/document/all_documents/19/ => generated 268 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 182014|app: 0|req: 86/497] 219.239.227.188 () {48 vars in 919 bytes} [Mon Aug 28 15:50:57 2023] GET /api/user/show_info/0/ => generated 267 bytes in 17 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+1
+[pid: 182018|app: 0|req: 145/498] 219.239.227.141 () {44 vars in 872 bytes} [Mon Aug 28 15:51:03 2023] GET /api/document/view_document/30/ => generated 250 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 87/499] 219.239.227.141 () {44 vars in 854 bytes} [Mon Aug 28 15:51:03 2023] GET /api/team/all_members/ => generated 316 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 88/500] 219.239.227.141 () {46 vars in 840 bytes} [Mon Aug 28 15:51:03 2023] POST /api/document/change_lock/ => generated 263 bytes in 35 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+1
+[pid: 182018|app: 0|req: 146/501] 219.239.227.141 () {44 vars in 913 bytes} [Mon Aug 28 15:51:26 2023] GET /api/document/view_document/2/ => generated 245 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 147/502] 219.239.227.141 () {44 vars in 897 bytes} [Mon Aug 28 15:51:27 2023] GET /api/team/all_members/ => generated 316 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 82/503] 219.239.227.141 () {46 vars in 883 bytes} [Mon Aug 28 15:51:27 2023] POST /api/document/change_lock/ => generated 263 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 148/504] 219.239.227.188 () {52 vars in 890 bytes} [Mon Aug 28 15:51:38 2023] OPTIONS /api/document/view_document/2 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 89/505] 219.239.227.188 () {48 vars in 933 bytes} [Mon Aug 28 15:51:38 2023] GET /api/document/view_document/2 => generated 0 bytes in 8 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 149/506] 219.239.227.188 () {52 vars in 892 bytes} [Mon Aug 28 15:51:38 2023] OPTIONS /api/document/view_document/2/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+1
+[pid: 182014|app: 0|req: 90/507] 219.239.227.188 () {48 vars in 935 bytes} [Mon Aug 28 15:51:38 2023] GET /api/document/view_document/2/ => generated 245 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 187/508] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 15:51:38 2023] OPTIONS /api/team/all_members/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 150/509] 219.239.227.188 () {48 vars in 919 bytes} [Mon Aug 28 15:51:38 2023] GET /api/team/all_members/ => generated 316 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 188/510] 219.239.227.188 () {50 vars in 905 bytes} [Mon Aug 28 15:51:38 2023] POST /api/document/change_lock/ => generated 263 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+1
+3
+[pid: 182020|app: 0|req: 189/511] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:55:39 2023] GET /api/team/all_teams/ => generated 507 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+[pid: 182020|app: 0|req: 190/512] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:55:39 2023] GET /api/team/all_teams/ => generated 666 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 151/513] 220.196.160.101 () {42 vars in 829 bytes} [Mon Aug 28 15:55:40 2023] GET /api/document/all_prototype/19/ => generated 96 bytes in 18 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 191/514] 59.83.208.107 () {42 vars in 825 bytes} [Mon Aug 28 15:55:44 2023] GET /api/document/view_document/30 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 3 headers in 131 bytes (1 switches on core 0)
+1
+[pid: 182020|app: 0|req: 192/515] 180.101.244.16 () {42 vars in 857 bytes} [Mon Aug 28 15:55:44 2023] GET /api/document/view_document/30/ => generated 251 bytes in 23 msecs (HTTP/1.1 200) 7 headers in 221 bytes (1 switches on core 1)
+1
+3
+[pid: 182018|app: 0|req: 152/516] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:55:55 2023] GET /api/team/all_teams/ => generated 666 bytes in 35 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+[pid: 182018|app: 0|req: 153/517] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:56:10 2023] GET /api/team/all_teams/ => generated 507 bytes in 40 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+1
+3
+[pid: 182016|app: 0|req: 83/518] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:56:10 2023] GET /api/team/all_teams/ => generated 666 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+[pid: 182020|app: 0|req: 193/519] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:56:33 2023] GET /api/team/all_teams/ => generated 507 bytes in 36 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+[pid: 182020|app: 0|req: 194/520] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:56:33 2023] GET /api/team/all_teams/ => generated 666 bytes in 42 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+1
+3
+[pid: 182020|app: 0|req: 195/521] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:57:01 2023] GET /api/team/all_teams/ => generated 507 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+[pid: 182020|app: 0|req: 196/522] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:57:01 2023] GET /api/team/all_teams/ => generated 666 bytes in 32 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 197/523] 219.239.227.188 () {48 vars in 867 bytes} [Mon Aug 28 15:57:01 2023] OPTIONS /api/document/view_document/2 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 198/524] 219.239.227.188 () {44 vars in 795 bytes} [Mon Aug 28 15:57:01 2023] GET /api/document/view_document/2 => generated 0 bytes in 7 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 199/525] 219.239.227.188 () {48 vars in 869 bytes} [Mon Aug 28 15:57:01 2023] OPTIONS /api/document/view_document/2/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+1
+[pid: 182020|app: 0|req: 200/526] 219.239.227.188 () {44 vars in 797 bytes} [Mon Aug 28 15:57:01 2023] GET /api/document/view_document/2/ => generated 245 bytes in 22 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 84/527] 219.239.227.188 () {48 vars in 853 bytes} [Mon Aug 28 15:57:01 2023] OPTIONS /api/team/all_members/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 201/528] 219.239.227.188 () {44 vars in 781 bytes} [Mon Aug 28 15:57:01 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 202/529] 219.239.227.188 () {46 vars in 882 bytes} [Mon Aug 28 15:57:01 2023] POST /api/document/change_lock/ => generated 263 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+1
+3
+[pid: 182018|app: 0|req: 154/530] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:57:24 2023] GET /api/team/all_teams/ => generated 507 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+[pid: 182018|app: 0|req: 155/531] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:57:24 2023] GET /api/team/all_teams/ => generated 666 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+1
+3
+[pid: 182018|app: 0|req: 156/532] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:57:34 2023] GET /api/team/all_teams/ => generated 507 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+[pid: 182020|app: 0|req: 203/533] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:57:34 2023] GET /api/team/all_teams/ => generated 666 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 157/534] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 15:57:35 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 91/535] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:57:35 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 204/536] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:57:35 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 2 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 205/537] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 15:57:35 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 206/538] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:57:35 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 85/539] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:57:35 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 207/540] 219.239.227.188 () {48 vars in 917 bytes} [Mon Aug 28 15:57:35 2023] GET /api/user/show_info/0 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 208/541] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 15:57:35 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+1
+3
+[pid: 182018|app: 0|req: 159/542] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:57:35 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 82 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 93/543] 219.239.227.188 () {48 vars in 921 bytes} [Mon Aug 28 15:57:35 2023] GET /api/team/all_projects/ => generated 560 bytes in 59 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 87/544] 219.239.227.188 () {48 vars in 921 bytes} [Mon Aug 28 15:57:35 2023] GET /api/team/all_projects/ => generated 560 bytes in 62 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 182014|app: 0|req: 93/545] 219.239.227.188 () {48 vars in 919 bytes} [Mon Aug 28 15:57:35 2023] GET /api/user/show_info/0/ => generated 267 bytes in 35 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 87/547] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:57:35 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 82 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 159/547] 219.239.227.188 () {48 vars in 915 bytes} [Mon Aug 28 15:57:35 2023] GET /api/team/all_teams/ => generated 666 bytes in 75 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 209/548] 219.239.227.188 () {50 vars in 905 bytes} [Mon Aug 28 15:57:39 2023] POST /api/document/change_lock/ => generated 263 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 210/549] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:57:43 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 160/550] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 15:57:43 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 94/551] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:57:43 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 211/552] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 15:57:43 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 212/553] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:57:43 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 95/554] 219.239.227.188 () {52 vars in 911 bytes} [Mon Aug 28 15:57:43 2023] OPTIONS /api/team/get_one_project/?project_id=19 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 96/555] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 15:57:43 2023] OPTIONS /api/document/all_prototype/19/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 213/556] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 15:57:43 2023] OPTIONS /api/document/all_documents/19/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 215/557] 219.239.227.188 () {48 vars in 917 bytes} [Mon Aug 28 15:57:43 2023] GET /api/user/show_info/0 => generated 0 bytes in 29 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 89/558] 219.239.227.188 () {48 vars in 954 bytes} [Mon Aug 28 15:57:43 2023] GET /api/team/get_one_project/?project_id=19 => generated 137 bytes in 54 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+[pid: 182016|app: 0|req: 89/559] 219.239.227.188 () {48 vars in 921 bytes} [Mon Aug 28 15:57:43 2023] GET /api/team/all_projects/ => generated 560 bytes in 61 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 90/561] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 15:57:43 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 162/561] 219.239.227.188 () {48 vars in 937 bytes} [Mon Aug 28 15:57:43 2023] GET /api/document/all_documents/19/ => generated 268 bytes in 46 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 216/562] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:57:43 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 92 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 97/563] 219.239.227.188 () {48 vars in 915 bytes} [Mon Aug 28 15:57:43 2023] GET /api/team/all_teams/ => generated 666 bytes in 97 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 162/564] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:57:43 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 112 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 216/565] 219.239.227.188 () {48 vars in 937 bytes} [Mon Aug 28 15:57:43 2023] GET /api/document/all_prototype/19/ => generated 96 bytes in 41 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+is_login :  True
+[pid: 182016|app: 0|req: 91/566] 219.239.227.188 () {48 vars in 919 bytes} [Mon Aug 28 15:57:43 2023] GET /api/user/show_info/0/ => generated 267 bytes in 22 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 217/567] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:58:00 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 92/568] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 15:58:00 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 98/569] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:58:00 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 163/570] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 15:58:00 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 99/571] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:58:00 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 218/572] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:58:00 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 165/573] 219.239.227.188 () {48 vars in 917 bytes} [Mon Aug 28 15:58:00 2023] GET /api/user/show_info/0 => generated 0 bytes in 29 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 101/574] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:58:00 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 39 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 219/575] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 15:58:00 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 94/576] 219.239.227.188 () {48 vars in 921 bytes} [Mon Aug 28 15:58:00 2023] GET /api/team/all_projects/ => generated 560 bytes in 53 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+[pid: 182018|app: 0|req: 165/577] 219.239.227.188 () {48 vars in 921 bytes} [Mon Aug 28 15:58:00 2023] GET /api/team/all_projects/ => generated 560 bytes in 71 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 101/578] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:58:00 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 83 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 182016|app: 0|req: 94/579] 219.239.227.188 () {48 vars in 915 bytes} [Mon Aug 28 15:58:00 2023] GET /api/team/all_teams/ => generated 666 bytes in 89 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 166/580] 219.239.227.188 () {48 vars in 919 bytes} [Mon Aug 28 15:58:00 2023] GET /api/user/show_info/0/ => generated 267 bytes in 20 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 102/581] 129.211.166.163 () {42 vars in 829 bytes} [Mon Aug 28 15:58:08 2023] GET /api/document/all_documents/19/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 167/582] 219.239.227.188 () {52 vars in 889 bytes} [Mon Aug 28 15:58:23 2023] OPTIONS /api/team/create_project/19/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 168/583] 219.239.227.188 () {52 vars in 1046 bytes} [Mon Aug 28 15:58:23 2023] POST /api/team/create_project/19/ => generated 59 bytes in 35 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 220/584] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:58:27 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 95/585] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 15:58:27 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 169/586] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:58:27 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 96/587] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 15:58:27 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 97/588] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:58:27 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 221/589] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:58:27 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 223/590] 219.239.227.188 () {48 vars in 917 bytes} [Mon Aug 28 15:58:27 2023] GET /api/user/show_info/0 => generated 0 bytes in 37 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 223/591] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:58:27 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 59 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+[pid: 182016|app: 0|req: 99/592] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 15:58:27 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 104/593] 219.239.227.188 () {48 vars in 921 bytes} [Mon Aug 28 15:58:27 2023] GET /api/team/all_projects/ => generated 608 bytes in 66 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 170/594] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:58:27 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 61 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 99/595] 219.239.227.188 () {48 vars in 921 bytes} [Mon Aug 28 15:58:27 2023] GET /api/team/all_projects/ => generated 608 bytes in 68 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 104/596] 219.239.227.188 () {48 vars in 915 bytes} [Mon Aug 28 15:58:27 2023] GET /api/team/all_teams/ => generated 666 bytes in 79 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 182020|app: 0|req: 224/597] 219.239.227.188 () {48 vars in 919 bytes} [Mon Aug 28 15:58:28 2023] GET /api/user/show_info/0/ => generated 267 bytes in 21 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 171/598] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:58:35 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 101/599] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 15:58:35 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 101/600] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:58:35 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 105/601] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 15:58:35 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 225/602] 219.239.227.188 () {52 vars in 911 bytes} [Mon Aug 28 15:58:35 2023] OPTIONS /api/team/get_one_project/?project_id=39 => generated 0 bytes in 3 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 226/603] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:58:35 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 107/604] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 15:58:35 2023] OPTIONS /api/document/all_prototype/39/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 102/605] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 15:58:35 2023] OPTIONS /api/document/all_documents/39/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 108/606] 219.239.227.188 () {48 vars in 921 bytes} [Mon Aug 28 15:58:35 2023] GET /api/team/all_projects/ => generated 608 bytes in 34 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 227/607] 219.239.227.188 () {48 vars in 917 bytes} [Mon Aug 28 15:58:35 2023] GET /api/user/show_info/0 => generated 0 bytes in 30 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 0)
+1
+3
+[pid: 182016|app: 0|req: 104/608] 219.239.227.188 () {48 vars in 954 bytes} [Mon Aug 28 15:58:35 2023] GET /api/team/get_one_project/?project_id=39 => generated 157 bytes in 71 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 228/610] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 15:58:35 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 109/611] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:58:35 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 78 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 109/611] 219.239.227.188 () {48 vars in 937 bytes} [Mon Aug 28 15:58:35 2023] GET /api/document/all_prototype/39/ => generated 96 bytes in 54 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 173/612] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:58:35 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 104 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 104/613] 219.239.227.188 () {48 vars in 937 bytes} [Mon Aug 28 15:58:35 2023] GET /api/document/all_documents/39/ => generated 95 bytes in 45 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 173/614] 219.239.227.188 () {48 vars in 915 bytes} [Mon Aug 28 15:58:35 2023] GET /api/team/all_teams/ => generated 666 bytes in 111 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 182020|app: 0|req: 229/615] 219.239.227.188 () {48 vars in 919 bytes} [Mon Aug 28 15:58:35 2023] GET /api/user/show_info/0/ => generated 267 bytes in 17 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+[pid: 182020|app: 0|req: 230/616] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:58:49 2023] GET /api/team/all_teams/ => generated 507 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+1
+3
+[pid: 182016|app: 0|req: 105/617] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 15:58:49 2023] GET /api/team/all_teams/ => generated 666 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 110/618] 219.239.227.188 () {52 vars in 889 bytes} [Mon Aug 28 15:58:54 2023] OPTIONS /api/team/create_project/39/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 174/619] 219.239.227.188 () {52 vars in 1046 bytes} [Mon Aug 28 15:58:54 2023] POST /api/team/create_project/39/ => generated 59 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 175/620] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:58:58 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 176/621] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 15:58:58 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 231/622] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:58:58 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 177/623] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 15:58:58 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 232/624] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:58:58 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 179/625] 219.239.227.188 () {52 vars in 911 bytes} [Mon Aug 28 15:58:58 2023] OPTIONS /api/team/get_one_project/?project_id=39 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 179/626] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 15:58:58 2023] OPTIONS /api/document/all_prototype/39/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 111/627] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 15:58:58 2023] OPTIONS /api/document/all_documents/39/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+1
+3
+[pid: 182014|app: 0|req: 112/628] 219.239.227.188 () {48 vars in 917 bytes} [Mon Aug 28 15:58:58 2023] GET /api/user/show_info/0 => generated 0 bytes in 30 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 107/629] 219.239.227.188 () {48 vars in 915 bytes} [Mon Aug 28 15:58:58 2023] GET /api/team/all_teams/ => generated 666 bytes in 45 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 107/630] 219.239.227.188 () {48 vars in 921 bytes} [Mon Aug 28 15:58:58 2023] GET /api/team/all_projects/ => generated 608 bytes in 69 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 114/631] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 15:58:58 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 181/632] 219.239.227.188 () {48 vars in 954 bytes} [Mon Aug 28 15:58:58 2023] GET /api/team/get_one_project/?project_id=39 => generated 157 bytes in 80 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 234/633] 219.239.227.188 () {48 vars in 937 bytes} [Mon Aug 28 15:58:58 2023] GET /api/document/all_prototype/39/ => generated 96 bytes in 47 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 234/634] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:58:58 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 99 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 181/635] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:58:58 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 96 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 115/636] 219.239.227.188 () {48 vars in 937 bytes} [Mon Aug 28 15:58:58 2023] GET /api/document/all_documents/39/ => generated 95 bytes in 44 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+is_login :  True
+[pid: 182014|app: 0|req: 115/637] 219.239.227.188 () {48 vars in 919 bytes} [Mon Aug 28 15:58:58 2023] GET /api/user/show_info/0/ => generated 267 bytes in 21 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 236/638] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:59:04 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 2 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 236/639] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 15:59:04 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 2 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 108/640] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:59:04 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 237/641] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 15:59:04 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 238/642] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:59:04 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 109/643] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 15:59:04 2023] OPTIONS /api/document/all_prototype/39/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 182/644] 219.239.227.188 () {52 vars in 911 bytes} [Mon Aug 28 15:59:04 2023] OPTIONS /api/team/get_one_project/?project_id=39 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 239/645] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 15:59:04 2023] OPTIONS /api/document/all_documents/39/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 240/646] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:59:04 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 36 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 184/647] 219.239.227.188 () {48 vars in 917 bytes} [Mon Aug 28 15:59:04 2023] GET /api/user/show_info/0 => generated 0 bytes in 40 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 1)
+1
+3
+[pid: 182016|app: 0|req: 111/648] 219.239.227.188 () {48 vars in 937 bytes} [Mon Aug 28 15:59:04 2023] GET /api/document/all_prototype/39/ => generated 96 bytes in 65 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 117/649] 219.239.227.188 () {48 vars in 921 bytes} [Mon Aug 28 15:59:04 2023] GET /api/team/all_projects/ => generated 608 bytes in 72 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 242/650] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 15:59:04 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 3 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 117/651] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:59:04 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 91 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 242/652] 219.239.227.188 () {48 vars in 954 bytes} [Mon Aug 28 15:59:04 2023] GET /api/team/get_one_project/?project_id=39 => generated 157 bytes in 40 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 111/653] 219.239.227.188 () {48 vars in 937 bytes} [Mon Aug 28 15:59:04 2023] GET /api/document/all_documents/39/ => generated 95 bytes in 44 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 185/654] 219.239.227.188 () {48 vars in 915 bytes} [Mon Aug 28 15:59:04 2023] GET /api/team/all_teams/ => generated 666 bytes in 109 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 182018|app: 0|req: 185/655] 219.239.227.188 () {48 vars in 919 bytes} [Mon Aug 28 15:59:04 2023] GET /api/user/show_info/0/ => generated 267 bytes in 16 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 118/656] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:59:12 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 243/657] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 15:59:12 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 244/658] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 15:59:12 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 186/659] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 15:59:12 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 112/660] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 15:59:12 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 119/661] 219.239.227.188 () {52 vars in 911 bytes} [Mon Aug 28 15:59:12 2023] OPTIONS /api/team/get_one_project/?project_id=39 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 187/662] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 15:59:12 2023] OPTIONS /api/document/all_prototype/39/ => generated 0 bytes in 4 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 188/663] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 15:59:12 2023] OPTIONS /api/document/all_documents/39/ => generated 0 bytes in 6 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 190/664] 219.239.227.188 () {48 vars in 917 bytes} [Mon Aug 28 15:59:12 2023] GET /api/user/show_info/0 => generated 0 bytes in 27 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 246/665] 219.239.227.188 () {48 vars in 954 bytes} [Mon Aug 28 15:59:12 2023] GET /api/team/get_one_project/?project_id=39 => generated 157 bytes in 52 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 246/666] 219.239.227.188 () {48 vars in 921 bytes} [Mon Aug 28 15:59:12 2023] GET /api/team/all_projects/ => generated 608 bytes in 60 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 121/667] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 15:59:12 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+1
+3
+[pid: 182016|app: 0|req: 114/668] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:59:12 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 88 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 191/669] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 15:59:12 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 82 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 122/670] 219.239.227.188 () {48 vars in 937 bytes} [Mon Aug 28 15:59:12 2023] GET /api/document/all_documents/39/ => generated 95 bytes in 50 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 191/671] 219.239.227.188 () {48 vars in 937 bytes} [Mon Aug 28 15:59:12 2023] GET /api/document/all_prototype/39/ => generated 96 bytes in 40 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 114/672] 219.239.227.188 () {48 vars in 915 bytes} [Mon Aug 28 15:59:12 2023] GET /api/team/all_teams/ => generated 666 bytes in 105 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+is_login :  True
+[pid: 182014|app: 0|req: 122/673] 219.239.227.188 () {48 vars in 919 bytes} [Mon Aug 28 15:59:12 2023] GET /api/user/show_info/0/ => generated 267 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 192/674] 219.239.227.188 () {52 vars in 889 bytes} [Mon Aug 28 15:59:31 2023] OPTIONS /api/team/create_project/39/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 123/675] 219.239.227.188 () {52 vars in 1046 bytes} [Mon Aug 28 15:59:31 2023] POST /api/team/create_project/39/ => generated 59 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 124/676] 219.239.227.188 () {52 vars in 899 bytes} [Mon Aug 28 15:59:54 2023] OPTIONS /api/document/create_document/39/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 115/677] 219.239.227.188 () {52 vars in 1056 bytes} [Mon Aug 28 15:59:54 2023] POST /api/document/create_document/39/ => generated 236 bytes in 34 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 247/678] 219.239.227.188 () {52 vars in 899 bytes} [Mon Aug 28 15:59:56 2023] OPTIONS /api/document/create_document/39/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 125/679] 219.239.227.188 () {52 vars in 1056 bytes} [Mon Aug 28 15:59:56 2023] POST /api/document/create_document/39/ => generated 236 bytes in 47 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+[pid: 182020|app: 0|req: 248/680] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 16:00:04 2023] GET /api/team/all_teams/ => generated 666 bytes in 32 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+1
+3
+[pid: 182014|app: 0|req: 126/681] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 16:00:05 2023] GET /api/team/all_teams/ => generated 666 bytes in 32 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 249/682] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 16:00:07 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 116/683] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 16:00:07 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 128/684] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 16:00:07 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 128/685] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 16:00:07 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 2 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 118/686] 219.239.227.188 () {52 vars in 905 bytes} [Mon Aug 28 16:00:07 2023] OPTIONS /api/team/get_current_team/?user_id=3 => generated 0 bytes in 2 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 118/687] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 16:00:07 2023] OPTIONS /api/document/all_prototype/39/ => generated 0 bytes in 5 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 194/688] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 16:00:07 2023] OPTIONS /api/document/all_documents/39/ => generated 0 bytes in 7 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 194/689] 219.239.227.188 () {52 vars in 911 bytes} [Mon Aug 28 16:00:07 2023] OPTIONS /api/team/get_one_project/?project_id=39 => generated 0 bytes in 7 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 129/690] 219.239.227.188 () {48 vars in 917 bytes} [Mon Aug 28 16:00:07 2023] GET /api/user/show_info/0 => generated 0 bytes in 9 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 251/691] 219.239.227.188 () {48 vars in 921 bytes} [Mon Aug 28 16:00:07 2023] GET /api/team/all_projects/ => generated 608 bytes in 45 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 196/692] 219.239.227.188 () {48 vars in 937 bytes} [Mon Aug 28 16:00:07 2023] GET /api/document/all_prototype/39/ => generated 96 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 196/693] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 16:00:07 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 58 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+1
+3
+[pid: 182014|app: 0|req: 130/694] 219.239.227.188 () {48 vars in 954 bytes} [Mon Aug 28 16:00:07 2023] GET /api/team/get_one_project/?project_id=39 => generated 157 bytes in 53 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 120/695] 219.239.227.188 () {48 vars in 937 bytes} [Mon Aug 28 16:00:07 2023] GET /api/document/all_documents/39/ => generated 441 bytes in 93 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182020|app: 0|req: 251/696] 219.239.227.188 () {48 vars in 948 bytes} [Mon Aug 28 16:00:07 2023] GET /api/team/get_current_team/?user_id=3 => generated 280 bytes in 119 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 131/697] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 16:00:07 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 120/698] 219.239.227.188 () {48 vars in 915 bytes} [Mon Aug 28 16:00:07 2023] GET /api/team/all_teams/ => generated 666 bytes in 105 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+is_login :  True
+[pid: 182014|app: 0|req: 132/699] 219.239.227.188 () {48 vars in 919 bytes} [Mon Aug 28 16:00:07 2023] GET /api/user/show_info/0/ => generated 267 bytes in 17 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 197/700] 219.239.227.188 () {50 vars in 957 bytes} [Mon Aug 28 16:00:53 2023] POST /api/user/login/ => generated 226 bytes in 18 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 198/701] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 16:00:55 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 252/702] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 16:00:55 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 121/703] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 16:00:55 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 199/704] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 16:00:55 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182016|app: 0|req: 122/705] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 16:00:55 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 182014|app: 0|req: 134/706] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 16:00:55 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 3 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+1
+3
+[pid: 182020|app: 0|req: 254/707] 219.239.227.188 () {48 vars in 918 bytes} [Mon Aug 28 16:00:55 2023] GET /api/user/show_info/0 => generated 0 bytes in 36 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 1)
+[pid: 182016|app: 0|req: 123/708] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 16:00:55 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 135/709] 219.239.227.188 () {48 vars in 916 bytes} [Mon Aug 28 16:00:55 2023] GET /api/team/all_teams/ => generated 963 bytes in 68 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182018|app: 0|req: 201/710] 219.239.227.188 () {48 vars in 922 bytes} [Mon Aug 28 16:00:55 2023] GET /api/team/all_projects/ => generated 145 bytes in 64 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 182020|app: 0|req: 254/711] 219.239.227.188 () {48 vars in 922 bytes} [Mon Aug 28 16:00:55 2023] GET /api/team/all_projects/ => generated 145 bytes in 76 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182014|app: 0|req: 135/712] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 16:00:55 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 81 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 182018|app: 0|req: 201/713] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 16:00:55 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 73 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 182018|app: 0|req: 202/714] 219.239.227.188 () {48 vars in 920 bytes} [Mon Aug 28 16:00:55 2023] GET /api/user/show_info/0/ => generated 247 bytes in 19 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+SIGINT/SIGTERM received...killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+goodbye to uWSGI.
+*** Starting uWSGI 2.0.21 (64bit) on [Mon Aug 28 16:01:03 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+writing pidfile to uwsgi.pid
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0x1f52ef0
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+WSGI app 0 (mountpoint='') ready in 2 seconds on interpreter 0x1f52ef0 pid: 198525 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 198525)
+spawned uWSGI worker 1 (pid: 198542, cores: 2)
+spawned uWSGI worker 2 (pid: 198544, cores: 2)
+spawned uWSGI worker 3 (pid: 198546, cores: 2)
+spawned uWSGI worker 4 (pid: 198548, cores: 2)
+[pid: 198548|app: 0|req: 1/1] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 16:01:09 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 3 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 198548|app: 0|req: 2/2] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 16:01:09 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198542|app: 0|req: 1/3] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 16:01:09 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 4 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 198542|app: 0|req: 2/4] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 16:01:09 2023] OPTIONS /api/document/all_prototype/17/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198546|app: 0|req: 2/5] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 16:01:09 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 3 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198546|app: 0|req: 2/6] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 16:01:09 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 4 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 198544|app: 0|req: 1/7] 219.239.227.188 () {52 vars in 911 bytes} [Mon Aug 28 16:01:09 2023] OPTIONS /api/team/get_one_project/?project_id=17 => generated 0 bytes in 4 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 198544|app: 0|req: 2/8] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 16:01:10 2023] OPTIONS /api/document/all_documents/17/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 4/9] 219.239.227.188 () {48 vars in 918 bytes} [Mon Aug 28 16:01:10 2023] GET /api/user/show_info/0 => generated 0 bytes in 271 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 0)
+1
+3
+[pid: 198546|app: 0|req: 4/10] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 16:01:10 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 366 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198542|app: 0|req: 4/11] 219.239.227.188 () {48 vars in 922 bytes} [Mon Aug 28 16:01:10 2023] GET /api/team/all_projects/ => generated 145 bytes in 366 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198542|app: 0|req: 4/12] 219.239.227.188 () {48 vars in 916 bytes} [Mon Aug 28 16:01:10 2023] GET /api/team/all_teams/ => generated 963 bytes in 366 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 4/13] 219.239.227.188 () {48 vars in 955 bytes} [Mon Aug 28 16:01:10 2023] GET /api/team/get_one_project/?project_id=17 => generated 157 bytes in 371 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198546|app: 0|req: 4/14] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 16:01:10 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 372 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198546|app: 0|req: 5/15] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 16:01:10 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 5/16] 219.239.227.188 () {48 vars in 938 bytes} [Mon Aug 28 16:01:10 2023] GET /api/document/all_documents/17/ => generated 269 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 198548|app: 0|req: 4/17] 219.239.227.188 () {48 vars in 920 bytes} [Mon Aug 28 16:01:10 2023] GET /api/user/show_info/0/ => generated 247 bytes in 81 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198548|app: 0|req: 4/18] 219.239.227.188 () {48 vars in 938 bytes} [Mon Aug 28 16:01:10 2023] GET /api/document/all_prototype/17/ => generated 2020 bytes in 191 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 0)
+[pid: 198548|app: 0|req: 5/19] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 16:01:15 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 6/20] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 16:01:15 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198546|app: 0|req: 6/21] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 16:01:15 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198548|app: 0|req: 6/22] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 16:01:15 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 198546|app: 0|req: 7/23] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 16:01:15 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 198548|app: 0|req: 7/24] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 16:01:15 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 198542|app: 0|req: 5/25] 219.239.227.188 () {48 vars in 922 bytes} [Mon Aug 28 16:01:15 2023] GET /api/team/all_projects/ => generated 145 bytes in 43 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198544|app: 0|req: 7/26] 219.239.227.188 () {48 vars in 922 bytes} [Mon Aug 28 16:01:15 2023] GET /api/team/all_projects/ => generated 145 bytes in 64 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198546|app: 0|req: 9/27] 219.239.227.188 () {48 vars in 918 bytes} [Mon Aug 28 16:01:15 2023] GET /api/user/show_info/0 => generated 0 bytes in 61 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 1)
+[pid: 198548|app: 0|req: 9/28] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 16:01:15 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 76 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+1
+3
+[pid: 198546|app: 0|req: 9/29] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 16:01:15 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 85 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198548|app: 0|req: 10/30] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 16:01:16 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198548|app: 0|req: 11/31] 219.239.227.188 () {48 vars in 916 bytes} [Mon Aug 28 16:01:15 2023] GET /api/team/all_teams/ => generated 963 bytes in 137 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 198548|app: 0|req: 11/32] 219.239.227.188 () {48 vars in 920 bytes} [Mon Aug 28 16:01:16 2023] GET /api/user/show_info/0/ => generated 247 bytes in 18 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+1
+3
+[pid: 198544|app: 0|req: 8/33] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 16:01:16 2023] GET /api/team/all_teams/ => generated 666 bytes in 32 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198546|app: 0|req: 10/34] 219.239.227.188 () {52 vars in 889 bytes} [Mon Aug 28 16:01:24 2023] OPTIONS /api/team/create_project/40/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 9/35] 219.239.227.188 () {52 vars in 1047 bytes} [Mon Aug 28 16:01:24 2023] POST /api/team/create_project/40/ => generated 59 bytes in 33 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+1
+[pid: 198544|app: 0|req: 10/36] 59.83.208.103 () {42 vars in 825 bytes} [Mon Aug 28 16:01:26 2023] GET /api/document/view_document/1/ => generated 245 bytes in 23 msecs (HTTP/1.1 200) 7 headers in 221 bytes (1 switches on core 1)
+Mon Aug 28 16:01:27 2023 - logsize: 100083, triggering rotation to /home/summer/summer_backend/uwsgi.log.1693209687...

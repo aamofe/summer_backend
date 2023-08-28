@@ -417,7 +417,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         # 实际发送消息给WebSocket客户端
         await self.send(text_data=json.dumps({
             'type': 'chat_notice',
-            'url': event["url"],
+            'url': '/chat',
             'roomID': event["roomID"]
         }))
 
