@@ -39,6 +39,10 @@ def create_team(request):
         user = request.user
         team_name = request.POST.get("team_name")
         description = request.POST.get('description')
+        if not team_name:
+            team_name="未命名团队"
+        elif team_name=='个人空间':
+            return JsonResponse({'errno':1,'msg':"团队名称不能为个人空间"})
         team = Team.objects.create(name=team_name, user=user)
         cover = request.FILES.get('cover')
         if description:
@@ -103,9 +107,12 @@ def get_invitation(request):
     try:
         member=Member.objects.get(team=team,user=user)
     except Member.DoesNotExist:
+        print("team_user : ",team.user.id,"当前用户 ： ",user.id)
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     if member.role == 'MB':
         return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
+    if team.name=='个人空间':
+        return JsonResponse({'errno': 1, 'msg': "个人空间不可邀请好友"})
     invitation = team.invitation
     if not invitation:
         payload = {"team_id": team_id}
@@ -116,7 +123,7 @@ def get_invitation(request):
         #     invitation = "http://127.0.0.1/api/team/accept_invitation/" + token+'/'
         team.invitation = invitation
         team.save()
-    return JsonResponse({'errno': 1, 'msg': "链接已生成", 'invatation': invitation})
+    return JsonResponse({'errno': 0, 'msg': "链接已生成", 'invatation': invitation})
 
 @validate_login
 def accept_invitation(request,token):
@@ -164,7 +171,7 @@ def all_members(request):
     if request.method != 'GET':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
-    team_id = request.GET.get("team_id")
+    team_id = user.current_team_id
     if not team_id:
         return JsonResponse({'errno': 1, 'msg': "请输入团队id"})
     try:
@@ -252,7 +259,7 @@ def create_project(request, team_id):
         return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
     team = team_list[0]
     project = Project.objects.create(name=project_name, team=team,user=user)
-    return JsonResponse({'errno': 1, 'msg': "项目创建成功"})
+    return JsonResponse({'errno': 0, 'msg': "项目创建成功"})
 
 
 @validate_login
