@@ -378,7 +378,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
                     "url": data['url'],
                     "roomID": data['roomID']
                 })
-                await self.upload_notice(data['url'], data['roomID'])
+                await self.upload_chat_notice(data['url'], data['roomID'])
             elif data['range'] == 'individual':
                 # 发送消息给指定用户
                 user_id = data['user_id']  # 假设传来的数据里有目标用户的ID
@@ -390,10 +390,18 @@ class NotificationConsumer(AsyncWebsocketConsumer):
                         "url": data['url'],
                         "roomID": data['roomID']
                     })
-                await self.upload_notice(data['url'], data['roomID'])
-
-
-        # elif data['type'] == 'file':
+                await self.upload_chat_notice(data['url'], data['roomID'])
+        elif data['type'] == 'file':
+            user_id = data['user_id']  # 假设传来的数据里有目标用户的ID
+            file_id = data['file_id']
+            channel_name = await self.get_channel_name_for_user(user_id)
+            if channel_name:
+                # 用channel_name发送消息给指定用户
+                await self.channel_layer.send(channel_name, {
+                    "type": "file_notice",
+                    "url": data['url'],
+                })
+            await self.upload_file_notice(data['url'], file_id)
 
 
 
@@ -413,6 +421,14 @@ class NotificationConsumer(AsyncWebsocketConsumer):
             'roomID': event["roomID"]
         }))
 
+
+    async def file_notice(self, event):
+        # 实际发送消息给WebSocket客户端
+        await self.send(text_data=json.dumps({
+            'type': 'file_notice',
+            'url': event["url"],
+        }))
+
     async def send_notification(self, event):
         # 实际发送消息给WebSocket客户端
         await self.send(text_data=json.dumps({
@@ -425,9 +441,15 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         UserNoticeChannel.objects.update_or_create(user_id=self.user_id, defaults={'channel_name': self.channel_name})
 
     @database_sync_to_async
-    def upload_notice(self, url, roomID):
+    def upload_chat_notice(self, url, roomID):
         Notice.objects.create(receiver_id=self.user_id, notice_type='chat_mention', url=url,
                               associated_resource_id=roomID)
+
+
+    @database_sync_to_async
+    def upload_file_notice(self, url, file_id):
+        Notice.objects.create(receiver_id=self.user_id, notice_type='document_mention', url=url,
+                              associated_resource_id=file_id)
 
 
 
