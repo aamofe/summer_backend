@@ -21,8 +21,8 @@ def create_document(request,project_id):
     user=request.user
     title=request.POST.get("title")
     content=request.POST.get("content")
-    if content is None:
-        return JsonResponse({'errno': 1, 'msg': "内容为空"})
+    # if content is None:
+    #     return JsonResponse({'errno': 1, 'msg': "内容为空"})
     if title is None:
         return JsonResponse({'errno': 1, 'msg': "标题为空"})
     # try:
@@ -37,7 +37,10 @@ def create_document(request,project_id):
         member=Member.objects.filter(team=project.team,user=user)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-    document=Document.objects.create(title=title,content=content,project=project,user=user)
+    document=Document.objects.create(title=title,project=project,user=user)
+    if content:
+        document.content=content
+        document.save()
     return JsonResponse({'errno': 0,"document":document.to_dict(), 'msg': "创建成功"})
 def share_document(request):
     if request.method!='POST':
@@ -58,10 +61,10 @@ def share_document(request):
     if not document.url:
         payload = {"document_id":document_id,"editable":True}
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        document.url_editable="http://www.aamoef.top/api/document/view_document/"+token+'/'
+        document.url_editable="http://www.aamoef.top/tiptap/"+token+'/'
         payload = {"document_id":document_id,"editable":False}
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        document.url="http://www.aamoef.top/api/document/view_document/"+token+'/'
+        document.url="http://www.aamoef.top/tiptap/"+token+'/'
         document.save()
     data=[document.url_editable if editable else document.url]
     return JsonResponse({'errno':0,'data':data})
@@ -282,6 +285,7 @@ def recover_one_document(request):
             document=Prototype.objects.get(id=document_id,is_deleted=True)
         except Document.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "文档不存在"})
+        # document.update()
         document.is_deleted=False
         document.save()
     return JsonResponse({'errno': 0, 'msg': "恢复单个文档成功"})
@@ -296,12 +300,8 @@ def recover_all_document(request):
         project = Project.objects.get(id=project_id)
     except Project.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
-    document_list=Document.objects.filter(project=project,is_deleted=True)
-    prototype_list=Prototype.objects.filter(project=project,is_deleted=True)
-    for d in document_list:
-        d.is_deleted=False
-        d.save()
-    for p in prototype_list:
-        p.is_deleted=False
-        p.save()
+    document_list = Document.objects.filter(project=project, is_deleted=True)
+    prototype_list = Prototype.objects.filter(project=project, is_deleted=True)
+    document_list.update(is_deleted=False)
+    prototype_list.update(is_deleted=False)
     return JsonResponse({'errno': 0, 'msg': "一键恢复成功"})
