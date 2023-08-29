@@ -125,6 +125,7 @@ def activate(request, token):
             url = 'http://www.aamofe.top/'
             team=Team.objects.create(name="个人空间",user=user)
             user.current_team_id=team.id
+            user.save()
     except:
         title = '激活失败'
         message = '该邮箱已注册，请更换邮箱重新注册'
@@ -148,11 +149,6 @@ def login(request):
         encode = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
         token = str(encode)
         user_info={'user_id': user.id,'current_team':user.current_team_id,'token':token}
-        if user.current_team_id==0:
-            team=Team.objects.create(user=user,name="个人空间")
-            member=Member.objects.create(user=user,role="CR",team=team)
-            user.current_team_id=team.id
-            user.save()
         return JsonResponse({ 'user_info':user_info, 'errno': 0, 'msg': "登录成功"})
     else:
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})

@@ -25,7 +25,8 @@ class Document(models.Model):
             'creator':self.user.id,
             'created_at':self.created_at,
             'modified_at':self.modified_at,
-            'is_locked':self.is_locked
+            'is_locked':self.is_locked,
+            'type':'document'
         }
 
 
@@ -47,4 +48,5 @@ class Prototype(models.Model):
             'modified_at':self.modified_at,
             'project_name':self.project.name,
             'creator':self.user.nickname,
+            'type':'prototype'
         }

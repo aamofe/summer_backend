@@ -34,7 +34,6 @@ from user.views import upload_cover_method
 # Create your views here.
 @validate_login
 def create_team(request):
-    print("1111 ctrat+tam")
     if request.method == 'POST':
         user = request.user
         team_name = request.POST.get("team_name")
@@ -75,7 +74,7 @@ def update_team(request, team_id):  # 修改团队描述 上传头像
             return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
         if not team.user == user:
             return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
-        if team_name:
+        if team_name and team_name!='个人空间':
             team.name = team_name
         if description:
             team.description = description
@@ -246,7 +245,7 @@ def update_permisson(request, team_id):
     if medtor.role == 'MB' or (medtor.role == 'MG' and medted.role == 'CR'):
         return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
     if choice == medted.role:
-        return JsonResponse({'errno': 1, 'msg': "身份未发生改变"})
+        return JsonResponse({'errno': 0, 'msg': "身份未发生改变"})
     elif choice == 'DE':
         medted.delete()
     elif choice == 'MG' or choice == 'MB':
@@ -359,8 +358,7 @@ def get_current_team(request):
         try:
             team = Team.objects.get(user=user,name="个人空间")
         except Team.DoesNotExist:
-            team=Team.objects.create(user=user,name="个人空间")
-            member=Member.objects.create(user=user,role="CR",team=team)
+            return JsonResponse({'errno': 1, 'msg': "个人空间不存在"})
         user.current_team_id=team.id
         user.save()
     team_list=team.to_dict()
