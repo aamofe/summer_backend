@@ -1,121 +1,824 @@
-[pid: 198546|app: 0|req: 11/37] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 16:01:28 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198544|app: 0|req: 11/38] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 16:01:28 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198544|app: 0|req: 12/39] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 16:01:28 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198548|app: 0|req: 12/40] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 16:01:28 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198542|app: 0|req: 6/41] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 16:01:28 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198548|app: 0|req: 13/42] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 16:01:28 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 9 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198546|app: 0|req: 13/43] 219.239.227.188 () {48 vars in 918 bytes} [Mon Aug 28 16:01:28 2023] GET /api/user/show_info/0 => generated 0 bytes in 19 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 0)
+[pid: 198546|app: 0|req: 374/1625] 219.239.227.245 () {42 vars in 825 bytes} [Tue Aug 29 03:31:28 2023] GET /api/user/show_info/0 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 0)
 1
 3
-[pid: 198544|app: 0|req: 14/44] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 16:01:28 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198548|app: 0|req: 15/45] 219.239.227.188 () {48 vars in 922 bytes} [Mon Aug 28 16:01:28 2023] GET /api/team/all_projects/ => generated 193 bytes in 40 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
-[pid: 198548|app: 0|req: 15/46] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 16:01:28 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 44 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
-[pid: 198542|app: 0|req: 7/47] 219.239.227.188 () {48 vars in 922 bytes} [Mon Aug 28 16:01:28 2023] GET /api/team/all_projects/ => generated 193 bytes in 74 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
-[pid: 198544|app: 0|req: 14/48] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 16:01:28 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 86 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198544|app: 0|req: 413/1626] 219.239.227.245 () {42 vars in 829 bytes} [Tue Aug 29 03:31:28 2023] GET /api/team/all_projects/ => generated 321 bytes in 37 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198546|app: 0|req: 375/1627] 219.239.227.245 () {42 vars in 856 bytes} [Tue Aug 29 03:31:28 2023] GET /api/team/get_current_team/?user_id=1 => generated 257 bytes in 40 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198542|app: 0|req: 293/1628] 219.239.227.245 () {42 vars in 823 bytes} [Tue Aug 29 03:31:28 2023] GET /api/team/all_teams/ => generated 1297 bytes in 65 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 1)
+Internal Server Error: /api/team/get_invitation/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./team/views.py", line 104, in get_invitation
+    team=Team.objects.get(id=team_id)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 623, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1491, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1318, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got ''.
+[pid: 198548|app: 0|req: 548/1629] 219.239.227.245 () {42 vars in 850 bytes} [Tue Aug 29 03:31:28 2023] GET /api/team/get_invitation/?team_id= => generated 130405 bytes in 69 msecs (HTTP/1.1 500) 9 headers in 335 bytes (1 switches on core 0)
 is_login :  True
-[pid: 198546|app: 0|req: 14/49] 219.239.227.188 () {48 vars in 920 bytes} [Mon Aug 28 16:01:28 2023] GET /api/user/show_info/0/ => generated 247 bytes in 49 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
-[pid: 198546|app: 0|req: 14/50] 219.239.227.188 () {48 vars in 916 bytes} [Mon Aug 28 16:01:28 2023] GET /api/team/all_teams/ => generated 963 bytes in 98 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
-[pid: 198548|app: 0|req: 16/51] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 16:01:32 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198542|app: 0|req: 8/52] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 16:01:32 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198546|app: 0|req: 15/53] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 16:01:32 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198548|app: 0|req: 17/54] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 16:01:32 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198542|app: 0|req: 9/55] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 16:01:32 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198546|app: 0|req: 16/56] 219.239.227.188 () {52 vars in 911 bytes} [Mon Aug 28 16:01:32 2023] OPTIONS /api/team/get_one_project/?project_id=42 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198544|app: 0|req: 15/57] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 16:01:32 2023] OPTIONS /api/document/all_prototype/42/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198544|app: 0|req: 17/58] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 16:01:32 2023] OPTIONS /api/document/all_documents/42/ => generated 0 bytes in 14 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198544|app: 0|req: 18/59] 219.239.227.188 () {48 vars in 918 bytes} [Mon Aug 28 16:01:32 2023] GET /api/user/show_info/0 => generated 0 bytes in 30 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 1)
-[pid: 198548|app: 0|req: 19/60] 219.239.227.188 () {48 vars in 922 bytes} [Mon Aug 28 16:01:32 2023] GET /api/team/all_projects/ => generated 193 bytes in 41 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198548|app: 0|req: 549/1630] 219.239.227.245 () {40 vars in 775 bytes} [Tue Aug 29 03:31:28 2023] GET /api/user/show_info/0/ => generated 267 bytes in 17 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 414/1631] 180.101.245.248 () {42 vars in 823 bytes} [Tue Aug 29 03:31:32 2023] GET /api/team/rename_project/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
 1
 3
-[pid: 198546|app: 0|req: 18/61] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 16:01:32 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 80 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
-[pid: 198548|app: 0|req: 19/62] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 16:01:32 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 82 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
-[pid: 198544|app: 0|req: 19/64] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 16:01:32 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198544|app: 0|req: 19/65] 219.239.227.188 () {48 vars in 955 bytes} [Mon Aug 28 16:01:32 2023] GET /api/team/get_one_project/?project_id=42 => generated 157 bytes in 68 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
-[pid: 198542|app: 0|req: 11/65] 219.239.227.188 () {48 vars in 938 bytes} [Mon Aug 28 16:01:32 2023] GET /api/document/all_prototype/42/ => generated 96 bytes in 49 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
-[pid: 198542|app: 0|req: 11/66] 219.239.227.188 () {48 vars in 938 bytes} [Mon Aug 28 16:01:32 2023] GET /api/document/all_documents/42/ => generated 95 bytes in 42 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
-[pid: 198546|app: 0|req: 18/67] 219.239.227.188 () {48 vars in 916 bytes} [Mon Aug 28 16:01:32 2023] GET /api/team/all_teams/ => generated 963 bytes in 98 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198542|app: 0|req: 295/1632] 219.239.227.245 () {42 vars in 829 bytes} [Tue Aug 29 03:32:02 2023] GET /api/team/all_projects/ => generated 321 bytes in 36 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198542|app: 0|req: 295/1633] 219.239.227.245 () {42 vars in 856 bytes} [Tue Aug 29 03:32:02 2023] GET /api/team/get_current_team/?user_id=1 => generated 257 bytes in 53 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
 is_login :  True
-[pid: 198544|app: 0|req: 20/68] 219.239.227.188 () {48 vars in 920 bytes} [Mon Aug 28 16:01:32 2023] GET /api/user/show_info/0/ => generated 247 bytes in 18 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
-[pid: 198548|app: 0|req: 20/69] 219.239.227.188 () {52 vars in 889 bytes} [Mon Aug 28 16:01:47 2023] OPTIONS /api/team/create_project/42/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198548|app: 0|req: 21/70] 219.239.227.188 () {52 vars in 1047 bytes} [Mon Aug 28 16:01:47 2023] POST /api/team/create_project/42/ => generated 59 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
-[pid: 198546|app: 0|req: 19/71] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 16:01:51 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198542|app: 0|req: 13/72] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 16:01:51 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 2 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198542|app: 0|req: 13/73] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 16:01:51 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198546|app: 0|req: 20/74] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 16:01:51 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198542|app: 0|req: 14/75] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 16:01:51 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198544|app: 0|req: 21/76] 219.239.227.188 () {52 vars in 911 bytes} [Mon Aug 28 16:01:51 2023] OPTIONS /api/team/get_one_project/?project_id=42 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198548|app: 0|req: 22/77] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 16:01:51 2023] OPTIONS /api/document/all_prototype/42/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198548|app: 0|req: 24/78] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 16:01:51 2023] OPTIONS /api/document/all_documents/42/ => generated 0 bytes in 7 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198548|app: 0|req: 550/1634] 219.239.227.245 () {42 vars in 827 bytes} [Tue Aug 29 03:32:02 2023] GET /api/user/show_info/0/ => generated 267 bytes in 19 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198544|app: 0|req: 416/1635] 219.239.227.245 () {42 vars in 823 bytes} [Tue Aug 29 03:32:02 2023] GET /api/team/all_teams/ => generated 1297 bytes in 98 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 0)
+Internal Server Error: /api/team/get_invitation/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./team/views.py", line 104, in get_invitation
+    team=Team.objects.get(id=team_id)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 623, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1491, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1318, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got ''.
+[pid: 198544|app: 0|req: 416/1636] 219.239.227.245 () {42 vars in 850 bytes} [Tue Aug 29 03:32:02 2023] GET /api/team/get_invitation/?team_id= => generated 130405 bytes in 94 msecs (HTTP/1.1 500) 9 headers in 335 bytes (1 switches on core 1)
+[pid: 198546|app: 0|req: 376/1637] 219.239.227.245 () {42 vars in 825 bytes} [Tue Aug 29 03:32:08 2023] GET /api/user/show_info/0 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 0)
 1
 3
-[pid: 198544|app: 0|req: 23/79] 219.239.227.188 () {48 vars in 918 bytes} [Mon Aug 28 16:01:51 2023] GET /api/user/show_info/0 => generated 0 bytes in 36 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 0)
-[pid: 198546|app: 0|req: 22/80] 219.239.227.188 () {48 vars in 938 bytes} [Mon Aug 28 16:01:51 2023] GET /api/document/all_prototype/42/ => generated 96 bytes in 63 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
-[pid: 198546|app: 0|req: 22/81] 219.239.227.188 () {48 vars in 922 bytes} [Mon Aug 28 16:01:51 2023] GET /api/team/all_projects/ => generated 193 bytes in 70 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
-[pid: 198548|app: 0|req: 25/82] 219.239.227.188 () {48 vars in 955 bytes} [Mon Aug 28 16:01:51 2023] GET /api/team/get_one_project/?project_id=42 => generated 157 bytes in 59 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
-[pid: 198544|app: 0|req: 23/83] 219.239.227.188 () {48 vars in 916 bytes} [Mon Aug 28 16:01:51 2023] GET /api/team/all_teams/ => generated 963 bytes in 76 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
-[pid: 198548|app: 0|req: 25/84] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 16:01:51 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 80 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
-[pid: 198544|app: 0|req: 24/85] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 16:01:51 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198542|app: 0|req: 15/86] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 16:01:51 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 44 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198542|app: 0|req: 297/1638] 219.239.227.245 () {42 vars in 829 bytes} [Tue Aug 29 03:32:08 2023] GET /api/team/all_projects/ => generated 321 bytes in 46 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198542|app: 0|req: 297/1639] 219.239.227.245 () {42 vars in 856 bytes} [Tue Aug 29 03:32:08 2023] GET /api/team/get_current_team/?user_id=1 => generated 257 bytes in 44 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198548|app: 0|req: 552/1640] 219.239.227.245 () {42 vars in 823 bytes} [Tue Aug 29 03:32:08 2023] GET /api/team/all_teams/ => generated 1297 bytes in 68 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 1)
+Internal Server Error: /api/team/get_invitation/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./team/views.py", line 104, in get_invitation
+    team=Team.objects.get(id=team_id)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 623, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1491, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1318, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got ''.
+[pid: 198548|app: 0|req: 552/1641] 219.239.227.245 () {42 vars in 850 bytes} [Tue Aug 29 03:32:08 2023] GET /api/team/get_invitation/?team_id= => generated 130405 bytes in 80 msecs (HTTP/1.1 500) 9 headers in 335 bytes (1 switches on core 0)
 is_login :  True
-[pid: 198548|app: 0|req: 26/87] 219.239.227.188 () {48 vars in 920 bytes} [Mon Aug 28 16:01:51 2023] GET /api/user/show_info/0/ => generated 247 bytes in 19 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
-[pid: 198546|app: 0|req: 23/88] 219.239.227.188 () {48 vars in 938 bytes} [Mon Aug 28 16:01:51 2023] GET /api/document/all_documents/42/ => generated 95 bytes in 37 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
-[pid: 198548|app: 0|req: 27/89] 219.239.227.188 () {50 vars in 957 bytes} [Mon Aug 28 16:02:17 2023] POST /api/user/login/ => generated 226 bytes in 19 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
-[pid: 198548|app: 0|req: 28/90] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 16:02:19 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198542|app: 0|req: 16/91] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 16:02:19 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198544|app: 0|req: 25/92] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 16:02:19 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198544|app: 0|req: 26/93] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 16:02:19 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198544|app: 0|req: 27/94] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 16:02:19 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198546|app: 0|req: 24/95] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 16:02:19 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198546|app: 0|req: 26/96] 219.239.227.188 () {48 vars in 918 bytes} [Mon Aug 28 16:02:19 2023] GET /api/user/show_info/0 => generated 0 bytes in 28 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 1)
-[pid: 198548|app: 0|req: 29/97] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 16:02:19 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 198548|app: 0|req: 553/1642] 219.239.227.245 () {40 vars in 775 bytes} [Tue Aug 29 03:32:08 2023] GET /api/user/show_info/0/ => generated 267 bytes in 16 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
 1
 3
-[pid: 198542|app: 0|req: 18/98] 219.239.227.188 () {48 vars in 922 bytes} [Mon Aug 28 16:02:19 2023] GET /api/team/all_projects/ => generated 193 bytes in 54 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
-[pid: 198546|app: 0|req: 26/99] 219.239.227.188 () {48 vars in 922 bytes} [Mon Aug 28 16:02:19 2023] GET /api/team/all_projects/ => generated 193 bytes in 69 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
-[pid: 198542|app: 0|req: 18/101] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 16:02:19 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 72 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
-[pid: 198544|app: 0|req: 29/101] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 16:02:19 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 78 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198546|app: 0|req: 378/1643] 219.239.227.245 () {42 vars in 829 bytes} [Tue Aug 29 03:32:32 2023] GET /api/team/all_projects/ => generated 321 bytes in 35 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 418/1644] 219.239.227.245 () {42 vars in 856 bytes} [Tue Aug 29 03:32:32 2023] GET /api/team/get_current_team/?user_id=1 => generated 257 bytes in 52 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198546|app: 0|req: 378/1645] 219.239.227.245 () {42 vars in 823 bytes} [Tue Aug 29 03:32:32 2023] GET /api/team/all_teams/ => generated 1297 bytes in 59 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 0)
 is_login :  True
-[pid: 198548|app: 0|req: 30/102] 219.239.227.188 () {48 vars in 920 bytes} [Mon Aug 28 16:02:19 2023] GET /api/user/show_info/0/ => generated 247 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
-[pid: 198544|app: 0|req: 29/103] 219.239.227.188 () {48 vars in 916 bytes} [Mon Aug 28 16:02:19 2023] GET /api/team/all_teams/ => generated 963 bytes in 91 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
-[pid: 198548|app: 0|req: 31/104] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 16:02:22 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198546|app: 0|req: 27/105] 219.239.227.188 () {52 vars in 872 bytes} [Mon Aug 28 16:02:22 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198548|app: 0|req: 32/106] 219.239.227.188 () {52 vars in 878 bytes} [Mon Aug 28 16:02:22 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198542|app: 0|req: 19/107] 219.239.227.188 () {52 vars in 874 bytes} [Mon Aug 28 16:02:22 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198542|app: 0|req: 20/108] 219.239.227.188 () {52 vars in 907 bytes} [Mon Aug 28 16:02:22 2023] OPTIONS /api/team/get_current_team/?user_id=12 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198546|app: 0|req: 28/109] 219.239.227.188 () {52 vars in 911 bytes} [Mon Aug 28 16:02:22 2023] OPTIONS /api/team/get_one_project/?project_id=17 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
-[pid: 198546|app: 0|req: 29/110] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 16:02:22 2023] OPTIONS /api/document/all_prototype/17/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198548|app: 0|req: 33/111] 219.239.227.188 () {52 vars in 894 bytes} [Mon Aug 28 16:02:22 2023] OPTIONS /api/document/all_documents/17/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 198548|app: 0|req: 554/1646] 219.239.227.245 () {42 vars in 827 bytes} [Tue Aug 29 03:32:32 2023] GET /api/user/show_info/0/ => generated 267 bytes in 19 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+Internal Server Error: /api/team/get_invitation/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./team/views.py", line 104, in get_invitation
+    team=Team.objects.get(id=team_id)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 623, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1491, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1318, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got ''.
+[pid: 198544|app: 0|req: 418/1647] 219.239.227.245 () {42 vars in 850 bytes} [Tue Aug 29 03:32:32 2023] GET /api/team/get_invitation/?team_id= => generated 130405 bytes in 84 msecs (HTTP/1.1 500) 9 headers in 335 bytes (1 switches on core 1)
 1
 3
-[pid: 198542|app: 0|req: 22/112] 219.239.227.188 () {48 vars in 918 bytes} [Mon Aug 28 16:02:22 2023] GET /api/user/show_info/0 => generated 0 bytes in 37 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 0)
-[pid: 198548|app: 0|req: 34/113] 219.239.227.188 () {48 vars in 955 bytes} [Mon Aug 28 16:02:22 2023] GET /api/team/get_one_project/?project_id=17 => generated 157 bytes in 46 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
-[pid: 198544|app: 0|req: 31/114] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 16:02:22 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 68 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
-[pid: 198546|app: 0|req: 31/115] 219.239.227.188 () {52 vars in 876 bytes} [Mon Aug 28 16:02:22 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 6 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
-[pid: 198546|app: 0|req: 31/116] 219.239.227.188 () {48 vars in 922 bytes} [Mon Aug 28 16:02:22 2023] GET /api/team/all_projects/ => generated 193 bytes in 77 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
-[pid: 198542|app: 0|req: 22/117] 219.239.227.188 () {48 vars in 951 bytes} [Mon Aug 28 16:02:22 2023] GET /api/team/get_current_team/?user_id=12 => generated 252 bytes in 85 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
-[pid: 198544|app: 0|req: 32/118] 219.239.227.188 () {48 vars in 916 bytes} [Mon Aug 28 16:02:22 2023] GET /api/team/all_teams/ => generated 963 bytes in 109 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
-[pid: 198548|app: 0|req: 36/119] 219.239.227.188 () {48 vars in 938 bytes} [Mon Aug 28 16:02:22 2023] GET /api/document/all_prototype/17/ => generated 2020 bytes in 46 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 0)
+[pid: 198546|app: 0|req: 380/1648] 219.239.227.245 () {42 vars in 829 bytes} [Tue Aug 29 03:32:40 2023] GET /api/team/all_projects/ => generated 321 bytes in 37 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198548|app: 0|req: 556/1649] 219.239.227.245 () {42 vars in 856 bytes} [Tue Aug 29 03:32:40 2023] GET /api/team/get_current_team/?user_id=1 => generated 257 bytes in 46 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
 is_login :  True
-[pid: 198548|app: 0|req: 36/120] 219.239.227.188 () {48 vars in 938 bytes} [Mon Aug 28 16:02:22 2023] GET /api/document/all_documents/17/ => generated 269 bytes in 52 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
-[pid: 198544|app: 0|req: 32/121] 219.239.227.188 () {48 vars in 920 bytes} [Mon Aug 28 16:02:22 2023] GET /api/user/show_info/0/ => generated 247 bytes in 20 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198548|app: 0|req: 556/1650] 219.239.227.245 () {42 vars in 827 bytes} [Tue Aug 29 03:32:40 2023] GET /api/user/show_info/0/ => generated 267 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198542|app: 0|req: 298/1651] 219.239.227.245 () {42 vars in 823 bytes} [Tue Aug 29 03:32:40 2023] GET /api/team/all_teams/ => generated 1297 bytes in 72 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 0)
+Internal Server Error: /api/team/get_invitation/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./team/views.py", line 104, in get_invitation
+    team=Team.objects.get(id=team_id)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 623, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1491, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1318, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got ''.
+[pid: 198546|app: 0|req: 380/1652] 219.239.227.245 () {42 vars in 850 bytes} [Tue Aug 29 03:32:40 2023] GET /api/team/get_invitation/?team_id= => generated 130405 bytes in 77 msecs (HTTP/1.1 500) 9 headers in 335 bytes (1 switches on core 0)
+[pid: 198542|app: 0|req: 299/1653] 219.239.227.245 () {42 vars in 825 bytes} [Tue Aug 29 03:32:45 2023] GET /api/user/show_info/0 => generated 0 bytes in 20 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 1)
 1
 3
-[pid: 198544|app: 0|req: 33/122] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 16:02:26 2023] GET /api/team/all_teams/ => generated 666 bytes in 32 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 420/1654] 219.239.227.245 () {42 vars in 829 bytes} [Tue Aug 29 03:32:45 2023] GET /api/team/all_projects/ => generated 321 bytes in 43 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198544|app: 0|req: 420/1655] 219.239.227.245 () {42 vars in 856 bytes} [Tue Aug 29 03:32:45 2023] GET /api/team/get_current_team/?user_id=1 => generated 257 bytes in 38 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198548|app: 0|req: 557/1656] 219.239.227.245 () {42 vars in 823 bytes} [Tue Aug 29 03:32:45 2023] GET /api/team/all_teams/ => generated 1297 bytes in 68 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 1)
+Internal Server Error: /api/team/get_invitation/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./team/views.py", line 104, in get_invitation
+    team=Team.objects.get(id=team_id)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 623, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1491, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1318, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got ''.
+[pid: 198546|app: 0|req: 381/1657] 219.239.227.245 () {42 vars in 850 bytes} [Tue Aug 29 03:32:45 2023] GET /api/team/get_invitation/?team_id= => generated 130405 bytes in 73 msecs (HTTP/1.1 500) 9 headers in 335 bytes (1 switches on core 1)
+is_login :  True
+[pid: 198548|app: 0|req: 558/1658] 219.239.227.245 () {40 vars in 775 bytes} [Tue Aug 29 03:32:45 2023] GET /api/user/show_info/0/ => generated 267 bytes in 17 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
 1
 3
-[pid: 198544|app: 0|req: 34/123] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 16:02:31 2023] GET /api/team/all_teams/ => generated 666 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 198542|app: 0|req: 300/1659] 219.239.227.245 () {42 vars in 827 bytes} [Tue Aug 29 03:33:01 2023] GET /api/user/show_info/0/ => generated 267 bytes in 20 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+Internal Server Error: /api/team/get_invitation/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./team/views.py", line 104, in get_invitation
+    team=Team.objects.get(id=team_id)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 623, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1491, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1318, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got ''.
+[pid: 198544|app: 0|req: 422/1660] 219.239.227.245 () {42 vars in 850 bytes} [Tue Aug 29 03:33:01 2023] GET /api/team/get_invitation/?team_id= => generated 130405 bytes in 301 msecs (HTTP/1.1 500) 9 headers in 335 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 422/1661] 219.239.227.245 () {42 vars in 829 bytes} [Tue Aug 29 03:33:01 2023] GET /api/team/all_projects/ => generated 321 bytes in 464 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198548|app: 0|req: 559/1662] 219.239.227.245 () {42 vars in 856 bytes} [Tue Aug 29 03:33:01 2023] GET /api/team/get_current_team/?user_id=1 => generated 257 bytes in 472 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198546|app: 0|req: 382/1663] 219.239.227.245 () {42 vars in 823 bytes} [Tue Aug 29 03:33:01 2023] GET /api/team/all_teams/ => generated 1297 bytes in 510 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 0)
+[pid: 198544|app: 0|req: 423/1664] 180.101.244.14 () {40 vars in 1335 bytes} [Tue Aug 29 03:34:57 2023] GET /api/user/activate/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo5LCJlbWFpbCI6IjI2Mjk2MzY2NzRAcXEuY29tIiwidGltZXN0YW1wIjoxNjkzMDM1ODg0fQ.T9HgJNSYfYdiWvMXLaCGottJZnEf1m_cEtnaotpqs0o/ => generated 3508 bytes in 2 msecs (HTTP/1.1 200) 7 headers in 222 bytes (1 switches on core 1)
+Not Found: /api/user/activate/static/images/logo.png
+[pid: 198544|app: 0|req: 424/1665] 180.101.244.14 () {38 vars in 938 bytes} [Tue Aug 29 03:34:58 2023] GET /api/user/activate/static/images/logo.png => generated 3575 bytes in 6 msecs (HTTP/1.1 404) 7 headers in 229 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 425/1666] 219.239.227.245 () {42 vars in 825 bytes} [Tue Aug 29 03:37:08 2023] GET /api/user/show_info/0 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 0)
+[pid: 198544|app: 0|req: 426/1667] 219.239.227.245 () {44 vars in 780 bytes} [Tue Aug 29 03:37:08 2023] OPTIONS /api/team/get_invitation/?team_id= => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
 1
 3
-[pid: 198544|app: 0|req: 35/124] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 16:03:11 2023] GET /api/team/all_teams/ => generated 666 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198548|app: 0|req: 561/1668] 219.239.227.245 () {42 vars in 829 bytes} [Tue Aug 29 03:37:08 2023] GET /api/team/all_projects/ => generated 321 bytes in 33 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 428/1669] 219.239.227.245 () {42 vars in 856 bytes} [Tue Aug 29 03:37:08 2023] GET /api/team/get_current_team/?user_id=1 => generated 257 bytes in 46 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198548|app: 0|req: 561/1670] 219.239.227.245 () {42 vars in 823 bytes} [Tue Aug 29 03:37:08 2023] GET /api/team/all_teams/ => generated 1297 bytes in 56 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 0)
+Internal Server Error: /api/team/get_invitation/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./team/views.py", line 104, in get_invitation
+    team=Team.objects.get(id=team_id)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 623, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1491, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1318, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got ''.
+[pid: 198544|app: 0|req: 428/1671] 219.239.227.245 () {42 vars in 850 bytes} [Tue Aug 29 03:37:08 2023] GET /api/team/get_invitation/?team_id= => generated 130405 bytes in 67 msecs (HTTP/1.1 500) 9 headers in 335 bytes (1 switches on core 1)
+is_login :  True
+[pid: 198548|app: 0|req: 562/1672] 219.239.227.245 () {40 vars in 775 bytes} [Tue Aug 29 03:37:08 2023] GET /api/user/show_info/0/ => generated 267 bytes in 17 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 429/1673] 219.239.227.245 () {42 vars in 829 bytes} [Tue Aug 29 03:37:14 2023] GET /api/team/all_projects/ => generated 321 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
 1
 3
-[pid: 198544|app: 0|req: 36/125] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 16:03:16 2023] GET /api/team/all_teams/ => generated 666 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198542|app: 0|req: 302/1674] 219.239.227.245 () {42 vars in 856 bytes} [Tue Aug 29 03:37:14 2023] GET /api/team/get_current_team/?user_id=1 => generated 257 bytes in 68 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 198548|app: 0|req: 564/1676] 219.239.227.245 () {42 vars in 827 bytes} [Tue Aug 29 03:37:14 2023] GET /api/user/show_info/0/ => generated 267 bytes in 32 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198548|app: 0|req: 564/1676] 219.239.227.245 () {42 vars in 823 bytes} [Tue Aug 29 03:37:14 2023] GET /api/team/all_teams/ => generated 1297 bytes in 79 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 0)
+Internal Server Error: /api/team/get_invitation/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./team/views.py", line 104, in get_invitation
+    team=Team.objects.get(id=team_id)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 623, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1491, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1318, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got ''.
+[pid: 198542|app: 0|req: 302/1677] 219.239.227.245 () {42 vars in 850 bytes} [Tue Aug 29 03:37:14 2023] GET /api/team/get_invitation/?team_id= => generated 130405 bytes in 83 msecs (HTTP/1.1 500) 9 headers in 335 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 430/1678] 219.239.227.245 () {44 vars in 759 bytes} [Tue Aug 29 03:41:28 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198548|app: 0|req: 565/1679] 219.239.227.245 () {44 vars in 753 bytes} [Tue Aug 29 03:41:28 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198548|app: 0|req: 566/1680] 219.239.227.245 () {44 vars in 755 bytes} [Tue Aug 29 03:41:28 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 431/1681] 219.239.227.245 () {44 vars in 786 bytes} [Tue Aug 29 03:41:28 2023] OPTIONS /api/team/get_current_team/?user_id=1 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198542|app: 0|req: 303/1682] 219.239.227.245 () {44 vars in 757 bytes} [Tue Aug 29 03:41:28 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
 1
 3
-[pid: 198548|app: 0|req: 37/126] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 16:03:20 2023] GET /api/team/all_teams/ => generated 666 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
-[pid: 198548|app: 0|req: 38/127] 219.239.227.141 () {46 vars in 883 bytes} [Mon Aug 28 16:04:01 2023] POST /api/document/change_lock/ => generated 263 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198546|app: 0|req: 384/1683] 219.239.227.245 () {42 vars in 829 bytes} [Tue Aug 29 03:41:28 2023] GET /api/team/all_projects/ => generated 321 bytes in 46 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 198544|app: 0|req: 433/1684] 219.239.227.245 () {42 vars in 827 bytes} [Tue Aug 29 03:41:28 2023] GET /api/user/show_info/0/ => generated 267 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198542|app: 0|req: 304/1685] 219.239.227.245 () {42 vars in 856 bytes} [Tue Aug 29 03:41:28 2023] GET /api/team/get_current_team/?user_id=1 => generated 257 bytes in 51 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 433/1686] 219.239.227.245 () {42 vars in 823 bytes} [Tue Aug 29 03:41:28 2023] GET /api/team/all_teams/ => generated 1297 bytes in 76 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 0)
+Internal Server Error: /api/team/get_invitation/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./team/views.py", line 104, in get_invitation
+    team=Team.objects.get(id=team_id)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 623, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1491, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1318, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got ''.
+[pid: 198546|app: 0|req: 384/1687] 219.239.227.245 () {42 vars in 850 bytes} [Tue Aug 29 03:41:28 2023] GET /api/team/get_invitation/?team_id= => generated 130405 bytes in 85 msecs (HTTP/1.1 500) 9 headers in 335 bytes (1 switches on core 1)
+[pid: 198546|app: 0|req: 385/1688] 219.239.227.245 () {42 vars in 825 bytes} [Tue Aug 29 03:41:33 2023] GET /api/user/show_info/0 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 0)
 1
 3
-[pid: 198544|app: 0|req: 37/128] 219.239.227.141 () {44 vars in 893 bytes} [Mon Aug 28 16:04:05 2023] GET /api/team/all_teams/ => generated 666 bytes in 33 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 434/1689] 219.239.227.245 () {42 vars in 829 bytes} [Tue Aug 29 03:41:33 2023] GET /api/team/all_projects/ => generated 321 bytes in 42 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198542|app: 0|req: 306/1690] 219.239.227.245 () {42 vars in 856 bytes} [Tue Aug 29 03:41:33 2023] GET /api/team/get_current_team/?user_id=1 => generated 257 bytes in 52 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198548|app: 0|req: 567/1691] 219.239.227.245 () {42 vars in 823 bytes} [Tue Aug 29 03:41:33 2023] GET /api/team/all_teams/ => generated 1297 bytes in 59 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 0)
+Internal Server Error: /api/team/get_invitation/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./team/views.py", line 104, in get_invitation
+    team=Team.objects.get(id=team_id)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 623, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1491, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1318, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got ''.
+[pid: 198542|app: 0|req: 306/1692] 219.239.227.245 () {42 vars in 850 bytes} [Tue Aug 29 03:41:33 2023] GET /api/team/get_invitation/?team_id= => generated 130405 bytes in 74 msecs (HTTP/1.1 500) 9 headers in 335 bytes (1 switches on core 1)
+is_login :  True
+[pid: 198548|app: 0|req: 568/1693] 219.239.227.245 () {40 vars in 775 bytes} [Tue Aug 29 03:41:33 2023] GET /api/user/show_info/0/ => generated 267 bytes in 18 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198546|app: 0|req: 386/1694] 219.239.227.245 () {44 vars in 764 bytes} [Tue Aug 29 03:41:38 2023] OPTIONS /api/team/update_project/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198546|app: 0|req: 387/1695] 219.239.227.245 () {46 vars in 946 bytes} [Tue Aug 29 03:41:38 2023] POST /api/team/update_project/ => generated 53 bytes in 23 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
 1
-[pid: 198546|app: 0|req: 32/129] 220.196.160.75 () {42 vars in 828 bytes} [Mon Aug 28 16:04:56 2023] GET /api/document/view_document/29/ => generated 252 bytes in 24 msecs (HTTP/1.1 200) 7 headers in 221 bytes (1 switches on core 1)
+3
+[pid: 198548|app: 0|req: 569/1696] 219.239.227.245 () {42 vars in 829 bytes} [Tue Aug 29 03:44:09 2023] GET /api/team/all_projects/ => generated 321 bytes in 43 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198544|app: 0|req: 436/1697] 219.239.227.245 () {42 vars in 856 bytes} [Tue Aug 29 03:44:09 2023] GET /api/team/get_current_team/?user_id=1 => generated 257 bytes in 66 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 198542|app: 0|req: 308/1698] 219.239.227.245 () {42 vars in 827 bytes} [Tue Aug 29 03:44:09 2023] GET /api/user/show_info/0/ => generated 267 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198542|app: 0|req: 308/1699] 219.239.227.245 () {42 vars in 823 bytes} [Tue Aug 29 03:44:09 2023] GET /api/team/all_teams/ => generated 1297 bytes in 75 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 0)
+Internal Server Error: /api/team/get_invitation/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./team/views.py", line 104, in get_invitation
+    team=Team.objects.get(id=team_id)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 623, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1491, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1318, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got ''.
+[pid: 198544|app: 0|req: 436/1700] 219.239.227.245 () {42 vars in 850 bytes} [Tue Aug 29 03:44:09 2023] GET /api/team/get_invitation/?team_id= => generated 130405 bytes in 94 msecs (HTTP/1.1 500) 9 headers in 335 bytes (1 switches on core 1)
+[pid: 198542|app: 0|req: 309/1701] 219.239.227.245 () {44 vars in 780 bytes} [Tue Aug 29 03:50:36 2023] OPTIONS /api/team/get_invitation/?team_id= => generated 0 bytes in 3 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 438/1702] 219.239.227.245 () {42 vars in 825 bytes} [Tue Aug 29 03:50:35 2023] GET /api/user/show_info/0 => generated 0 bytes in 12 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 1)
+1
+3
+[pid: 198548|app: 0|req: 571/1703] 219.239.227.245 () {42 vars in 829 bytes} [Tue Aug 29 03:50:35 2023] GET /api/team/all_projects/ => generated 321 bytes in 44 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198546|app: 0|req: 388/1704] 219.239.227.245 () {42 vars in 856 bytes} [Tue Aug 29 03:50:36 2023] GET /api/team/get_current_team/?user_id=1 => generated 257 bytes in 53 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 438/1705] 219.239.227.245 () {42 vars in 823 bytes} [Tue Aug 29 03:50:35 2023] GET /api/team/all_teams/ => generated 1297 bytes in 78 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 0)
+Internal Server Error: /api/team/get_invitation/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./team/views.py", line 104, in get_invitation
+    team=Team.objects.get(id=team_id)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 623, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1491, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1318, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got ''.
+[pid: 198548|app: 0|req: 572/1706] 219.239.227.245 () {42 vars in 850 bytes} [Tue Aug 29 03:50:36 2023] GET /api/team/get_invitation/?team_id= => generated 130405 bytes in 68 msecs (HTTP/1.1 500) 9 headers in 335 bytes (1 switches on core 0)
+is_login :  True
+[pid: 198548|app: 0|req: 572/1707] 219.239.227.245 () {40 vars in 775 bytes} [Tue Aug 29 03:50:36 2023] GET /api/user/show_info/0/ => generated 267 bytes in 18 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 439/1708] 219.239.227.245 () {44 vars in 753 bytes} [Tue Aug 29 03:52:14 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198548|app: 0|req: 573/1709] 219.239.227.245 () {44 vars in 759 bytes} [Tue Aug 29 03:52:14 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 198544|app: 0|req: 440/1710] 219.239.227.245 () {44 vars in 755 bytes} [Tue Aug 29 03:52:14 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 198548|app: 0|req: 574/1711] 219.239.227.245 () {44 vars in 786 bytes} [Tue Aug 29 03:52:14 2023] OPTIONS /api/team/get_current_team/?user_id=1 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198542|app: 0|req: 311/1712] 219.239.227.245 () {44 vars in 757 bytes} [Tue Aug 29 03:52:14 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+1
+3
+[pid: 198548|app: 0|req: 575/1713] 219.239.227.245 () {42 vars in 829 bytes} [Tue Aug 29 03:52:14 2023] GET /api/team/all_projects/ => generated 321 bytes in 44 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198542|app: 0|req: 312/1714] 219.239.227.245 () {42 vars in 856 bytes} [Tue Aug 29 03:52:14 2023] GET /api/team/get_current_team/?user_id=1 => generated 257 bytes in 61 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+is_login :  True
+[pid: 198542|app: 0|req: 312/1716] 219.239.227.245 () {42 vars in 823 bytes} [Tue Aug 29 03:52:14 2023] GET /api/team/all_teams/ => generated 1297 bytes in 74 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 0)
+[pid: 198546|app: 0|req: 389/1716] 219.239.227.245 () {42 vars in 827 bytes} [Tue Aug 29 03:52:14 2023] GET /api/user/show_info/0/ => generated 267 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+Internal Server Error: /api/team/get_invitation/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./team/views.py", line 104, in get_invitation
+    team=Team.objects.get(id=team_id)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 623, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1491, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1318, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got ''.
+[pid: 198544|app: 0|req: 441/1717] 219.239.227.245 () {42 vars in 850 bytes} [Tue Aug 29 03:52:14 2023] GET /api/team/get_invitation/?team_id= => generated 130405 bytes in 87 msecs (HTTP/1.1 500) 9 headers in 335 bytes (1 switches on core 1)
+1
+3
+[pid: 198546|app: 0|req: 390/1718] 219.239.227.245 () {42 vars in 829 bytes} [Tue Aug 29 03:52:22 2023] GET /api/team/all_projects/ => generated 321 bytes in 38 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 443/1719] 219.239.227.245 () {42 vars in 856 bytes} [Tue Aug 29 03:52:22 2023] GET /api/team/get_current_team/?user_id=1 => generated 257 bytes in 54 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198548|app: 0|req: 577/1720] 219.239.227.245 () {42 vars in 823 bytes} [Tue Aug 29 03:52:22 2023] GET /api/team/all_teams/ => generated 1297 bytes in 65 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 1)
+is_login :  True
+[pid: 198548|app: 0|req: 577/1721] 219.239.227.245 () {42 vars in 827 bytes} [Tue Aug 29 03:52:22 2023] GET /api/user/show_info/0/ => generated 267 bytes in 20 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+Internal Server Error: /api/team/get_invitation/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2053, in get_prep_value
+    return int(value)
+ValueError: invalid literal for int() with base 10: ''
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./team/views.py", line 104, in get_invitation
+    team=Team.objects.get(id=team_id)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 623, in get
+    clone = self._chain() if self.query.combinator else self.filter(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1436, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1454, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 1461, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1545, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1576, in _add_q
+    child_clause, needed_inner = self.build_filter(
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1491, in build_filter
+    condition = self.build_lookup(lookups, col, value)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/sql/query.py", line 1318, in build_lookup
+    lookup = lookup_class(lhs, rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 27, in __init__
+    self.rhs = self.get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 341, in get_prep_lookup
+    return super().get_prep_lookup()
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/lookups.py", line 85, in get_prep_lookup
+    return self.lhs.output_field.get_prep_value(self.rhs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/fields/__init__.py", line 2055, in get_prep_value
+    raise e.__class__(
+ValueError: Field 'id' expected a number but got ''.
+[pid: 198544|app: 0|req: 443/1722] 219.239.227.245 () {42 vars in 850 bytes} [Tue Aug 29 03:52:22 2023] GET /api/team/get_invitation/?team_id= => generated 130405 bytes in 89 msecs (HTTP/1.1 500) 9 headers in 335 bytes (1 switches on core 1)
+1
+3
+[pid: 198544|app: 0|req: 445/1723] 219.239.227.245 () {42 vars in 829 bytes} [Tue Aug 29 03:52:25 2023] GET /api/team/all_projects/ => generated 321 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 198544|app: 0|req: 445/1724] 219.239.227.245 () {42 vars in 856 bytes} [Tue Aug 29 03:52:25 2023] GET /api/team/get_current_team/?user_id=1 => generated 257 bytes in 35 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198548|app: 0|req: 578/1725] 219.239.227.245 () {42 vars in 823 bytes} [Tue Aug 29 03:52:25 2023] GET /api/team/all_teams/ => generated 1297 bytes in 49 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 1)
+is_login :  True
+[pid: 198548|app: 0|req: 579/1726] 219.239.227.245 () {42 vars in 827 bytes} [Tue Aug 29 03:52:26 2023] GET /api/user/show_info/0/ => generated 267 bytes in 17 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 198544|app: 0|req: 446/1727] 219.239.227.245 () {44 vars in 778 bytes} [Tue Aug 29 03:52:26 2023] OPTIONS /api/team/all_members/?team_id=13 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 198542|app: 0|req: 313/1728] 219.239.227.245 () {42 vars in 848 bytes} [Tue Aug 29 03:52:26 2023] GET /api/team/all_members/?team_id=13 => generated 1358 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 1)
+[pid: 198548|app: 0|req: 580/1729] 59.83.208.107 () {40 vars in 723 bytes} [Tue Aug 29 04:12:16 2023] GET /api/team/get_invitation/?team_id=20 => generated 43 bytes in 1 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
+[pid: 198548|app: 0|req: 581/1730] 220.196.160.84 () {42 vars in 837 bytes} [Tue Aug 29 04:31:39 2023] GET /api/team/all_members/?team_id=13 => generated 43 bytes in 1 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 0)
+[pid: 198548|app: 0|req: 582/1731] 220.196.160.154 () {42 vars in 840 bytes} [Tue Aug 29 04:34:41 2023] GET /api/team/get_invitation/?team_id= => generated 43 bytes in 1 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
+Not Found: /api/.env
+[pid: 198548|app: 0|req: 583/1732] 20.163.46.242 () {36 vars in 531 bytes} [Tue Aug 29 04:46:30 2023] GET /api/.env => generated 2548 bytes in 5 msecs (HTTP/1.1 404) 7 headers in 229 bytes (1 switches on core 0)
+Not Found: /api/.env
+[pid: 198546|app: 0|req: 391/1733] 220.196.160.101 () {40 vars in 740 bytes} [Tue Aug 29 05:07:59 2023] GET /api/.env => generated 2548 bytes in 5 msecs (HTTP/1.1 404) 7 headers in 229 bytes (1 switches on core 0)
+[pid: 198546|app: 0|req: 392/1734] 180.101.245.246 () {42 vars in 838 bytes} [Tue Aug 29 05:12:05 2023] GET /api/team/all_members/?team_id=17 => generated 43 bytes in 1 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
+[pid: 198548|app: 0|req: 584/1735] 220.196.160.45 () {42 vars in 851 bytes} [Tue Aug 29 06:46:12 2023] GET /api/team/get_one_project/?project_id=53 => generated 43 bytes in 9 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
+[pid: 198546|app: 0|req: 393/1736] 180.101.245.249 () {42 vars in 835 bytes} [Tue Aug 29 06:52:35 2023] GET /api/document/all_prototype/46/ => generated 96 bytes in 32 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 0)
+[pid: 198546|app: 0|req: 394/1737] 180.101.245.248 () {42 vars in 835 bytes} [Tue Aug 29 07:15:28 2023] GET /api/document/all_documents/53/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
