@@ -417,35 +417,27 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         # 实际发送消息给WebSocket客户端
         await self.send(text_data=json.dumps({
             'type': 'chat_notice',
-            'url': event["url"],
+            'url': '/chat',
             'roomID': event["roomID"]
         }))
-
-
     async def file_notice(self, event):
         # 实际发送消息给WebSocket客户端
         await self.send(text_data=json.dumps({
             'type': 'file_notice',
             'url': event["url"],
         }))
-
     async def send_notification(self, event):
         # 实际发送消息给WebSocket客户端
         await self.send(text_data=json.dumps({
             'message': event["message"]
         }))
-
-
     @database_sync_to_async
     def save_user_notice_channel(self):
         UserNoticeChannel.objects.update_or_create(user_id=self.user_id, defaults={'channel_name': self.channel_name})
-
     @database_sync_to_async
     def upload_chat_notice(self, url, roomID):
         Notice.objects.create(receiver_id=self.user_id, notice_type='chat_mention', url=url,
                               associated_resource_id=roomID)
-
-
     @database_sync_to_async
     def upload_file_notice(self, url, file_id):
         Notice.objects.create(receiver_id=self.user_id, notice_type='document_mention', url=url,
