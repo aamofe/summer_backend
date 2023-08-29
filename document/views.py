@@ -5,7 +5,7 @@ from django.utils import timezone
 from jose import ExpiredSignatureError, JWTError
 import jwt
 from django.contrib.auth.models import AnonymousUser
-from document.models import Document, Prototype
+from document.models import Document, Prototype, History
 from summer_backend import settings
 from summer_backend.settings import SECRET_KEY
 from team.models import Team, Member, Project
@@ -327,6 +327,7 @@ def create(request):
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     if file_type=='document':
         file = Document.objects.create(title=title, project=project, user=user)
+        history = History.objects.create(content=content, document=file)
     else:
         file = Prototype.objects.create(title=title, project=project, user=user)
     if content:
@@ -467,6 +468,7 @@ def save(request):
         file.title=title
     if content:
         file.content=content
+        history = History.objects.create(content=content, document=file)
     file.save()
     return JsonResponse({'errno': 0, 'msg': "内容已保存"})
 @validate_login
@@ -516,3 +518,17 @@ def all_deleted(request):  # 包括 原型和协作文档
     for p in prototype_list:
         projects.append(p.to_dict())
     return JsonResponse({'errno': 0, 'msg': "获取回收站项目成功", 'documents':documents,'projects':documents})
+
+@validate_login
+def history(request):
+    if request.method != 'GET':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user = request.user
+    document_id=request.GET.get('document_id')
+    try:
+        document = Document.objects.get(id=document_id,is_deleted=False)
+    except Document.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "文档不存在"})
+    history_list = History.objects.filter(document=document).order_by('-modified_at')[:10]
+    history= [history.to_dict() for history in history_list]
+    return JsonResponse({'errno': 0,'history':history, 'msg': "历史记录返回成功"})

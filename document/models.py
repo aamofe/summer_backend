@@ -29,7 +29,17 @@ class Document(models.Model):
             'type':'document'
         }
 
-
+class History(models.Model):
+    document = models.ForeignKey(Document, on_delete=models.PROTECT)
+    content = models.TextField(verbose_name="文档内容",null=True)
+    modified_at = models.DateTimeField(verbose_name="修改时间", auto_now_add=True)
+    class Meta:
+        ordering = ['-modified_at']
+    def to_dict(self):
+        return {
+            'content':self.content,
+            'modified_at':self.modified_at,
+        }
 class Prototype(models.Model):
     title=models.CharField(verbose_name='标题',max_length=20)
     content=models.TextField(verbose_name='',default="")

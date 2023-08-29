@@ -25,4 +25,5 @@ urlpatterns = [
     path('save/',views.save),
     path('all_file/',views.all_file),
     path('all_deleted/',views.all_deleted),
+    path('history/',views.history)
 ]
