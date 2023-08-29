@@ -180,10 +180,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         # 假设你有一个名为ChatMessage的模型，用于存储消息
         ChatMessage.objects.create(team_id=self.team_id, message=message,user_id=user_id,files=files,reply_message=reply_message)
 
-        max_index_for_user = UserTeamChatStatus.objects.filter(user_id=user_id).aggregate(Max('index'))['index__max'] or 0
-        user_team_chat_status = UserTeamChatStatus.objects.get(user_id=user_id, team_id=self.team_id)
-        user_team_chat_status.index = max_index_for_user + 1
-        user_team_chat_status.save()
+
     @database_sync_to_async
     def search_messages(self, keyword):
         # 搜索包含关键字的消息
@@ -442,7 +439,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
     def upload_file_notice(self, url, file_id):
         Notice.objects.create(receiver_id=self.user_id, notice_type='document_mention', url=url,
                               associated_resource_id=file_id)
-
+'''''
 class PrivateChatConsumer(AsyncWebsocketConsumer):
     async def connect(self):
         # 获取发送者和接收者的用户ID
@@ -520,4 +517,4 @@ class PrivateChatConsumer(AsyncWebsocketConsumer):
         # 返回最新消息对象
         pass
 
-
+'''''
