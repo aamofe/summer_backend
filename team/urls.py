@@ -12,6 +12,7 @@ urlpatterns = [
     path('get_current_team/',views.get_current_team),
     path('get_invitation/', views.get_invitation, name='get_invitation'),
     path('accept_invitation/<str:token>/', views.accept_invitation, name='accept_invitation'),
+    path('team_name/<str:token>',views.team_name),
     path('all_teams/', views.all_teams, name='get_teams'),
     path('all_members/', views.all_members, name='get_members'),
     path('update_permisson/<str:team_id>/',views.update_permisson),
