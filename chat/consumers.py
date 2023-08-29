@@ -459,12 +459,17 @@ class PrivateChatConsumer(AsyncWebsocketConsumer):
         
         # 创建私聊的房间名称
         self.room_name = f"private_chat_{self.sender_user_id}_{self.receiver_user_id}"
+        
         unread_count = await self.get_unread_count(self.sender_user_id, self.receiver_user_id)
         latest_message = await self.get_latest_message(self.sender_user_id, self.receiver_user_id)
 
         # 发送当前未读消息数量和最新消息到 WebSocket 连接
         await self.send(text_data=json.dumps({
             'type': 'chat_status',
+            'username': await self.get_username(latest_message.user_id) if latest_message else None,
+            'sender_avatar_url': await self.get_avatar_url(latest_message.user_id) if latest_message else None,
+            'sender_avatar_url': await self.get_avatar_url(latest_message.user_id) if latest_message else None,
+            'time': latest_message.timestamp.strftime('%Y-%m-%d %H:%M:%S') if latest_message else None,
             'unread_count': unread_count,
             'latest_message': latest_message.message if latest_message else None,
         }))

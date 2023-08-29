@@ -113,21 +113,30 @@ def get_invitation(request):
         return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
     if team.name=='个人空间':
         return JsonResponse({'errno': 1, 'msg': "个人空间不可邀请好友"})
-    invitation = team.invitation
-    if not invitation:
-        payload = {"team_id": team_id}
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        # if platform.system()=='linux':
-        invitation = "http://www.aamofe.top/team/" + token + '/'
-        # else :
-        #     invitation = "http://127.0.0.1/api/team/accept_invitation/" + token+'/'
-        team.invitation = invitation
-        team.save()
+    payload = {"team_id": team_id,'inviter':user.nickname}
+    token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+    invitation = "http://www.aamofe.top/team/" + token + '/'
+    # team.invitation = invitation
+    # team.save()
     return JsonResponse({'errno': 0, 'msg': "链接已生成", 'invatation': invitation})
 
+def team_name(request,token):
+    if request.method!="GET":
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    team_id = payload.get('team_id')
+    inviter=payload.get('inviter')
+    if not team_id or not inviter:
+        return JsonResponse({'errno': 1, 'msg': "信息解析失败"})
+    try:
+        team = Team.objects.get(id=team_id)
+    except Team.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "团队不存在"})
+    invite_info={'inviter':inviter,'team_name':team.name}
+    return JsonResponse({"errno":0,'invite_info':invite_info,'msg':'解析团队信息成功'})
 @validate_login
 def accept_invitation(request,token):
-    if request.method=="POST":
+    if request.method!="POST":
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
     team_id = payload.get('team_id')
