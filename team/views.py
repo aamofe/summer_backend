@@ -281,7 +281,23 @@ def delete_one_project(request):
     project.is_deleted = True
     project.save()
     return JsonResponse({'errno': 0, 'msg': "项目删除成功"})
-
+@validate_login
+def recover_one_project(request):
+    if request.method != 'POST':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user=request.user
+    project_id=request.POST.get('project_id')
+    try:
+        project=Project.objects.get(id=project_id,is_deleted=True)
+    except Project.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "项目不存在"})
+    try:
+        member=Member.objects.get(user=user,team=project.team)
+    except Member.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "用户不属于当前团队"})
+    project.is_deleted=False
+    project.save()
+    return JsonResponse({'errno': 0, 'msg': "项目恢复成功"})
 
 @validate_login
 def rename_project(request):
@@ -427,23 +443,7 @@ def all_deleted_project(request):
     for p in projects:
         project_list.append(p.to_dict())
     return JsonResponse({'errno': 0, 'msg': "获取回收站项目成功",'projects':project_list})
-@validate_login
-def recover_one_project(request):
-    if request.method != 'POST':
-        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
-    user=request.user
-    project_id=request.POST.get('project_id')
-    try:
-        project=Project.objects.get(id=project_id,is_deleted=True)
-    except Project.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "文档不存在"})
-    try:
-        member=Member.objects.get(user=user,team=project.team)
-    except Member.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "用户不属于当前团队"})
-    project.is_deleted=False
-    project.save()
-    return JsonResponse({'errno': 0, 'msg': "恢复文档成功"})
+
 @validate_login
 def recover_all_project(request):
     if request.method != 'POST':
