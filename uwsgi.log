@@ -529,3 +529,22 @@ is_login :  True
 [pid: 29782|app: 0|req: 146/880] 180.101.245.252 () {38 vars in 1086 bytes} [Tue Aug 29 21:49:07 2023] GET /api/user/activate/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo0LCJlbWFpbCI6IjU3ODU4Njk5M0BxcS5jb20iLCJ0aW1lc3RhbXAiOjE2OTMyODAyMTV9.d082CQ4blX8fLnCIgDcqRKwwE6DWvFSQaPH4BvpJvwA/ => generated 3508 bytes in 2 msecs (HTTP/1.1 200) 7 headers in 222 bytes (1 switches on core 0)
 Not Found: /api/user/activate/static/images/logo.png
 [pid: 29787|app: 0|req: 320/881] 180.101.245.252 () {38 vars in 914 bytes} [Tue Aug 29 21:49:08 2023] GET /api/user/activate/static/images/logo.png => generated 3575 bytes in 6 msecs (HTTP/1.1 404) 7 headers in 229 bytes (1 switches on core 0)
+*** Starting uWSGI 2.0.21 (64bit) on [Tue Aug 29 22:15:25 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+writing pidfile to uwsgi.pid
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
