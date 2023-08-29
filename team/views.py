@@ -259,11 +259,11 @@ def create_project(request, team_id):
         return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
     team = team_list[0]
     project = Project.objects.create(name=project_name, team=team,user=user)
-    return JsonResponse({'errno': 0, 'msg': "项目创建成功"})
+    return JsonResponse({'errno': 0,'project':project.to_dict(), 'msg': "项目创建成功"})
 
 
 @validate_login
-def update_project(request):
+def delete_one_project(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     project_id=request.GET.get('project_id')
@@ -276,12 +276,9 @@ def update_project(request):
         member=Member.objects.get(team=project.team,user=user)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-    project.is_deleted ^= True
+    project.is_deleted = True
     project.save()
-    if project.is_deleted:
-        return JsonResponse({'errno': 0, 'msg': "项目删除成功"})
-    else:
-        return JsonResponse({'errno': 0, 'msg': "项目恢复成功"})
+    return JsonResponse({'errno': 0, 'msg': "项目删除成功"})
 
 
 @validate_login
@@ -318,7 +315,7 @@ def checkout_team(request):
         user.current_team_id=team.id
         user.save()
         team_info={'user_id': user.id,'current_team':user.current_team_id,'team_name':team.name}
-        return JsonResponse({ 'current_team':team_info, 'errno': 0, 'msg': "登录成功"})
+        return JsonResponse({ 'current_team':team_info, 'errno': 0, 'msg': "切换成功"})
     else:
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
 
