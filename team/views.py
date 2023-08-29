@@ -100,6 +100,8 @@ def get_invitation(request):
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
     team_id = request.GET.get("team_id")
+    if not team_id:
+        return JsonResponse({'errno': 1, 'msg': "请输入team_id"})
     try:
         team=Team.objects.get(id=team_id)
     except Team.DoesNotExist:
