@@ -233,7 +233,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     def index_up(self, user_id, team_id):
         from django.db.models import Max
         # 获取最大index值
-        max_index = UserTeamChatStatus.objects.filter(user_id=user_id,team_id=team_id).aggregate(Max('index'))['index__max'] or 0
+        max_index = UserTeamChatStatus.objects.filter(user_id=user_id).aggregate(Max('index'))['index__max'] or 0
 
         # 使用get_or_create获取或创建对象
         user_team_chat_status, created = UserTeamChatStatus.objects.get_or_create(user_id=user_id, team_id=team_id)
