@@ -100,6 +100,8 @@ def get_invitation(request):
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
     team_id = request.GET.get("team_id")
+    if not team_id:
+        return JsonResponse({'errno': 1, 'msg': "请输入team_id"})
     try:
         team=Team.objects.get(id=team_id)
     except Team.DoesNotExist:
@@ -113,21 +115,30 @@ def get_invitation(request):
         return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
     if team.name=='个人空间':
         return JsonResponse({'errno': 1, 'msg': "个人空间不可邀请好友"})
-    invitation = team.invitation
-    if not invitation:
-        payload = {"team_id": team_id}
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        # if platform.system()=='linux':
-        invitation = "http://www.aamofe.top/team/" + token + '/'
-        # else :
-        #     invitation = "http://127.0.0.1/api/team/accept_invitation/" + token+'/'
-        team.invitation = invitation
-        team.save()
+    payload = {"team_id": team_id,'inviter':user.nickname}
+    token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+    invitation = "http://www.aamofe.top/team/" + token + '/'
+    # team.invitation = invitation
+    # team.save()
     return JsonResponse({'errno': 0, 'msg': "链接已生成", 'invatation': invitation})
 
+def team_name(request,token):
+    if request.method!="GET":
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    team_id = payload.get('team_id')
+    inviter=payload.get('inviter')
+    if not team_id or not inviter:
+        return JsonResponse({'errno': 1, 'msg': "信息解析失败"})
+    try:
+        team = Team.objects.get(id=team_id)
+    except Team.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "团队不存在"})
+    invite_info={'inviter':inviter,'team_name':team.name}
+    return JsonResponse({"errno":0,'invite_info':invite_info,'msg':'解析团队信息成功'})
 @validate_login
 def accept_invitation(request,token):
-    if request.method=="POST":
+    if request.method!="POST":
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
     team_id = payload.get('team_id')
@@ -259,11 +270,11 @@ def create_project(request, team_id):
         return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
     team = team_list[0]
     project = Project.objects.create(name=project_name, team=team,user=user)
-    return JsonResponse({'errno': 0, 'msg': "项目创建成功"})
+    return JsonResponse({'errno': 0,'project':project.to_dict(), 'msg': "项目创建成功"})
 
 
 @validate_login
-def update_project(request):
+def delete_one_project(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     project_id=request.GET.get('project_id')
@@ -276,13 +287,26 @@ def update_project(request):
         member=Member.objects.get(team=project.team,user=user)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-    project.is_deleted ^= True
+    project.is_deleted = True
     project.save()
-    if project.is_deleted:
-        return JsonResponse({'errno': 0, 'msg': "项目删除成功"})
-    else:
-        return JsonResponse({'errno': 0, 'msg': "项目恢复成功"})
-
+    return JsonResponse({'errno': 0, 'msg': "项目删除成功"})
+@validate_login
+def recover_one_project(request):
+    if request.method != 'POST':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user=request.user
+    project_id=request.POST.get('project_id')
+    try:
+        project=Project.objects.get(id=project_id,is_deleted=True)
+    except Project.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "项目不存在"})
+    try:
+        member=Member.objects.get(user=user,team=project.team)
+    except Member.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "用户不属于当前团队"})
+    project.is_deleted=False
+    project.save()
+    return JsonResponse({'errno': 0, 'msg': "项目恢复成功"})
 
 @validate_login
 def rename_project(request):
@@ -317,8 +341,8 @@ def checkout_team(request):
            return JsonResponse({'errno': 1, 'msg': "当前用户不属于该团队"})
         user.current_team_id=team.id
         user.save()
-        team_info={'user_id': user.id,'current_team':user.current_team_id,}
-        return JsonResponse({ 'current_team':team_info, 'errno': 0, 'msg': "登录成功"})
+        team_info={'user_id': user.id,'current_team':user.current_team_id,'team_name':team.name}
+        return JsonResponse({ 'current_team':team_info, 'errno': 0, 'msg': "切换成功"})
     else:
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
 
@@ -392,10 +416,11 @@ def get_one_team(request):
 
 #退出团队
 @validate_login
-def quit_team(request,team_id):
+def quit_team(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user=request.user
+    team_id=request.POST.get("team_id")
     try:
         team=Team.objects.get(id=team_id)
     except Team.DoesNotExist:
@@ -404,7 +429,7 @@ def quit_team(request,team_id):
         member=Member.objects.get(user=user,team=team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于当前团队"})
-    if member.role=='CR':
+    if member.role=='CR' and team.name!='个人空间':
         member_list=Member.objects.get(team=team)
         member_list.delete()
         team.delete()
@@ -427,28 +452,13 @@ def all_deleted_project(request):
     for p in projects:
         project_list.append(p.to_dict())
     return JsonResponse({'errno': 0, 'msg': "获取回收站项目成功",'projects':project_list})
+
 @validate_login
-def recover_one_project(request):
+def recover_all_project(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user=request.user
-    project_id=request.POST.get('project_id')
-    try:
-        project=Project.objects.get(id=project_id,is_deleted=True)
-    except Project.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "文档不存在"})
-    try:
-        member=Member.objects.get(user=user,team=project.team)
-    except Member.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "用户不属于当前团队"})
-    project.is_deleted=False
-    project.save()
-    return JsonResponse({'errno': 0, 'msg': "恢复文档成功"})
-@validate_login
-def recover_all_project(request,team_id):
-    if request.method != 'POST':
-        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
-    user=request.user
+    team_id=request.POST.get('team_id')
     try:
         team=Team.objects.get(id=team_id)
     except Team.DoesNotExist:

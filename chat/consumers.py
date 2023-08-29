@@ -443,7 +443,81 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         Notice.objects.create(receiver_id=self.user_id, notice_type='document_mention', url=url,
                               associated_resource_id=file_id)
 
+class PrivateChatConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        # 获取发送者和接收者的用户ID
+        self.sender_user_id = self.scope['url_route']['kwargs']['sender_user_id']
+        self.receiver_user_id = self.scope['url_route']['kwargs']['receiver_user_id']
+        
+        # 创建私聊的房间名称
+        self.room_name = f"private_chat_{self.sender_user_id}_{self.receiver_user_id}"
+        
+        unread_count = await self.get_unread_count(self.sender_user_id, self.receiver_user_id)
+        latest_message = await self.get_latest_message(self.sender_user_id, self.receiver_user_id)
 
+        # 发送当前未读消息数量和最新消息到 WebSocket 连接
+        await self.send(text_data=json.dumps({
+            'type': 'chat_status',
+            'username': await self.get_username(latest_message.user_id) if latest_message else None,
+            'sender_avatar_url': await self.get_avatar_url(latest_message.user_id) if latest_message else None,
+            'sender_avatar_url': await self.get_avatar_url(latest_message.user_id) if latest_message else None,
+            'time': latest_message.timestamp.strftime('%Y-%m-%d %H:%M:%S') if latest_message else None,
+            'unread_count': unread_count,
+            'latest_message': latest_message.message if latest_message else None,
+        }))
+        # 将连接加入到房间
+        await self.channel_layer.group_add(
+            self.room_name,
+            self.channel_name
+        )
+        
+        await self.accept()
+    
+    async def disconnect(self, close_code):
+        # 将连接从房间移除
+        await self.channel_layer.group_discard(
+            self.room_name,
+            self.channel_name
+        )
+    
+    async def receive(self, text_data):
+        text_data_json = json.loads(text_data)
+        message = text_data_json['message']
+        
+        # 将消息发送到房间
+        await self.channel_layer.group_send(
+            self.room_name,
+            {
+                'type': 'chat_message',
+                'message': message,
+                'sender_user_id': self.sender_user_id,
+                'receiver_user_id': self.receiver_user_id
+            }
+        )
+    
+    async def chat_message(self, event):
+        message = event['message']
+        sender_user_id = event['sender_user_id']
+        receiver_user_id = event['receiver_user_id']
+        
+        # 发送消息到 WebSocket 连接
+        await self.send(text_data=json.dumps({
+            'type': 'chat_message',
+            'message': message,
+            'sender_user_id': sender_user_id,
+            'receiver_user_id': receiver_user_id
+        }))
 
+    @database_sync_to_async
+    def get_unread_count(self, sender_user_id, receiver_user_id):
+        # 在此处查询未读消息数量
+        # 返回未读消息数量
+        pass
+    
+    @database_sync_to_async
+    def get_latest_message(self, sender_user_id, receiver_user_id):
+        # 在此处查询最新消息
+        # 返回最新消息对象
+        pass
 
 
