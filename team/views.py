@@ -317,7 +317,7 @@ def checkout_team(request):
            return JsonResponse({'errno': 1, 'msg': "当前用户不属于该团队"})
         user.current_team_id=team.id
         user.save()
-        team_info={'user_id': user.id,'current_team':user.current_team_id,}
+        team_info={'user_id': user.id,'current_team':user.current_team_id,'team_name':team.name}
         return JsonResponse({ 'current_team':team_info, 'errno': 0, 'msg': "登录成功"})
     else:
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})

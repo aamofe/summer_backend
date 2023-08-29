@@ -7,7 +7,7 @@ from user.models import User
 # Create your models here.
 class Document(models.Model):
     title=models.CharField(verbose_name="标题",max_length=20)
-    content=models.TextField(verbose_name="文档内容")
+    content=models.TextField(verbose_name="文档内容",null=True)
     url=models.URLField(verbose_name="不可编辑文档链接",null=True)
     url_editable=models.URLField(verbose_name="可编辑链接",null=True)
     created_at=models.DateTimeField(verbose_name="创建时间",auto_now_add=True)
