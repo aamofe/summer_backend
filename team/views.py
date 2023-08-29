@@ -39,6 +39,10 @@ def create_team(request):
         user = request.user
         team_name = request.POST.get("team_name")
         description = request.POST.get('description')
+        if not team_name:
+            team_name="未命名团队"
+        elif team_name=='个人空间':
+            return JsonResponse({'errno':1,'msg':"团队名称不能为个人空间"})
         team = Team.objects.create(name=team_name, user=user)
         cover = request.FILES.get('cover')
         if description:
@@ -103,82 +107,35 @@ def get_invitation(request):
     try:
         member=Member.objects.get(team=team,user=user)
     except Member.DoesNotExist:
+        print("team_user : ",team.user.id,"当前用户 ： ",user.id)
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     if member.role == 'MB':
         return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
+    if team.name=='个人空间':
+        return JsonResponse({'errno': 1, 'msg': "个人空间不可邀请好友"})
     invitation = team.invitation
     if not invitation:
         payload = {"team_id": team_id}
         token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
         # if platform.system()=='linux':
-        invitation = "http://www.aamofe.top/api/team/open_invitation/" + token + '/'
+        invitation = "http://www.aamofe.top/team/" + token + '/'
         # else :
         #     invitation = "http://127.0.0.1/api/team/accept_invitation/" + token+'/'
         team.invitation = invitation
         team.save()
-    return JsonResponse({'errno': 1, 'msg': "链接已生成", 'invatation': invitation})
-# @validate_all
-# def redi(request):
-#     token1 = request.META.get('HTTP_Authorization'.upper())
-#     if not token1:
-#         return redirect('http://www.aamofe.top/')
-#     payload = jwt.decode(token1, SECRET_KEY, algorithms=['HS256'])
-#     token1 = token1.replace('Bearer ', '')
-#     try:
-#         jwt_token = jwt.decode(token1, settings.SECRET_KEY, options={'verify_signature': False})
-#         try:
-#             user = User.objects.get(id=jwt_token.get('id'), is_active=True)
-#             user_id = user.id
-#         except User.DoesNotExist:
-#             title = '用户不存在'
-#             content = '请先注册'
-#     except ExpiredSignatureError:
-#         title = '登录已过期'
-#         content = '请重新登录'
-#     except JWTError:
-#         title = '用户身份错误'
-#         content = '请重新登录'
-#     request.user=user
-#     return JsonResponse({'title':title,"user_id":user.id,"content":content})
-
-@validate_all
-def open_invitation(request, token):
-    title = ''
-    content = ''
-    user_id = ''
-    team_id = ''
-    # 下面是用户的信息
-    print(request.META)
-    print(111)
-    pprint.pprint(request.META)
-    # 下面是team_id的信息
-    payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
-    team_id = payload.get('team_id')
-    team_list = Team.objects.filter(id=team_id)
-    if not team_list.exists():
-        title = '链接不正确'
-        content = "记得要个新链接"
-    else:
-        team = team_list[0]
-        team_id = team.id
-        title = "邀请你加入团队 " + team.name
-        content = '点击下方链接'
-    context = {'title': title, 'content': content, "team_id": team_id, 'user_id': user_id}
-    return render(request, "invite.html", context)
-
+    return JsonResponse({'errno': 0, 'msg': "链接已生成", 'invatation': invitation})
 
 @validate_login
-def accept_invitation(request):
+def accept_invitation(request,token):
     if request.method=="POST":
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
-    team_id = request.POST.get('team_id')
-    # user_id = request.POST.get('user_id')
+    payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+    team_id = payload.get('team_id')
     try:
         team = Team.objects.get(id=team_id)
     except Team.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "团队不存在"})
     user=request.user
-    # user = User.objects.get(id=user_id,is_active=True)
     try:
         member=Member.objects.get(team=team,user=user)
         return JsonResponse({'errno': 0, 'msg': "您已加入该团队"})
@@ -214,7 +171,7 @@ def all_members(request):
     if request.method != 'GET':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
-    team_id = request.GET.get("team_id")
+    team_id = user.current_team_id
     if not team_id:
         return JsonResponse({'errno': 1, 'msg': "请输入团队id"})
     try:
@@ -302,7 +259,7 @@ def create_project(request, team_id):
         return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
     team = team_list[0]
     project = Project.objects.create(name=project_name, team=team,user=user)
-    return JsonResponse({'errno': 1, 'msg': "项目创建成功"})
+    return JsonResponse({'errno': 0, 'msg': "项目创建成功"})
 
 
 @validate_login
@@ -499,9 +456,7 @@ def recover_all_project(request):
     except Team.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "团队不存在"})
     project_list=Project.objects.filter(team=team,is_deleted=True)
-    for p in project_list:
-        p.is_deleted=False
-        p.save()
+    project_list.update(is_deleted=False)
     return JsonResponse({'errno': 0, 'msg': "一键恢复成功"})
 @validate_login
 def get_one_project(request):

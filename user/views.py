@@ -320,9 +320,9 @@ def show_info(request, id):
             user = User.objects.get(id=id, is_active=True)
         except User.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "查看对象不存在"})
-    print('isLogin :',is_login)
+    # print('isLogin :',is_login)
     user_info = user.to_dict()
-    pprint.pprint(user_info)
+    # pprint.pprint(user_info)
     return JsonResponse({'errno': 0, 'msg': "查看信息成功", 'user_info': user_info})
 @validate_login
 def personal_info(request):

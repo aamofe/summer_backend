@@ -1,0 +1,22 @@
+npm WARN exec The following package was not found and will be installed: @hocuspocus/cli@2.4.0
+npm WARN deprecated @npmcli/move-file@1.1.2: This functionality has been moved to @npmcli/fs
+node:events:492
+      throw er; // Unhandled 'error' event
+      ^
+
+Error: listen EADDRINUSE: address already in use 0.0.0.0:1234
+    at Server.setupListenHandle [as _listen2] (node:net:1751:16)
+    at listenInCluster (node:net:1799:12)
+    at doListen (node:net:1948:7)
+    at process.processTicksAndRejections (node:internal/process/task_queues:83:21)
+Emitted 'error' event on Server instance at:
+    at emitErrorNT (node:net:1778:8)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21) {
+  code: 'EADDRINUSE',
+  errno: -98,
+  syscall: 'listen',
+  address: '0.0.0.0',
+  port: 1234
+}
+
+Node.js v18.17.1
