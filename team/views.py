@@ -115,6 +115,8 @@ def get_invitation(request):
         return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
     if team.name=='个人空间':
         return JsonResponse({'errno': 1, 'msg': "个人空间不可邀请好友"})
+    if not user.nickname :
+        return JsonResponse({'errno': 1, 'msg': "用户未设置昵称"})
     payload = {"team_id": team_id,'inviter':user.nickname}
     token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
     invitation = "http://www.aamofe.top/team/" + token + '/'
@@ -128,6 +130,8 @@ def team_name(request,token):
     payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
     team_id = payload.get('team_id')
     inviter=payload.get('inviter')
+    print('hahah : tid= ',team_id)
+    print('hah : inviter= ',inviter)
     if not team_id or not inviter:
         return JsonResponse({'errno': 1, 'msg': "信息解析失败"})
     try:
@@ -279,7 +283,7 @@ def delete_one_project(request):
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     project_id=request.GET.get('project_id')
     try:
-        project = Project.objects.get(id=project_id,is_deleted=False)
+        project = Project.objects.get(id=project_id,is_deleted=True)
     except Project.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     user = request.user
