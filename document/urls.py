@@ -17,6 +17,14 @@ urlpatterns = [
     path('view_prototype/',views.view_prototype),
     path('all_prototype/<int:project_id>/',views.all_prototype),
     path('all_deleted_document/',views.all_deleted_document),
-    path('recover_one_document/',views.recover_one_document),
-    path('recover_all_document/',views.recover_all_document)
+    path('restore_one_document/',views.restore_one_document),
+    path('recover_all_document/',views.recover_all_document),
+
+
+    path('create/',views.create),
+    path('delete/',views.delete),
+    path('restore/',views.restore),
+    path('save/',views.save),
+    path('all_file/',views.all_file),
+    path('all_deleted/',views.all_deleted),
 ]
