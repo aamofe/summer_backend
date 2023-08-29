@@ -548,3 +548,155 @@ lock engine: pthread robust mutexes
 thunder lock: disabled (you can enable it with --thunder-lock)
 probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
 bind(): Address already in use [core/socket.c line 769]
+*** Starting uWSGI 2.0.21 (64bit) on [Wed Aug 30 00:09:03 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+writing pidfile to uwsgi.pid
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 bound to TCP address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0xa4fef0
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+WSGI app 0 (mountpoint='') ready in 2 seconds on interpreter 0xa4fef0 pid: 113862 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+spawned uWSGI master process (pid: 113862)
+spawned uWSGI worker 1 (pid: 113873, cores: 2)
+spawned uWSGI worker 2 (pid: 113876, cores: 2)
+spawned uWSGI worker 3 (pid: 113878, cores: 2)
+spawned uWSGI worker 4 (pid: 113880, cores: 2)
+[pid: 113880|app: 0|req: 1/1] 219.239.227.218 () {38 vars in 657 bytes} [Wed Aug 30 00:09:13 2023] GET /api/document/history/?document_id=23 => generated 448 bytes in 288 msecs (HTTP/1.1 200) 7 headers in 213 bytes (1 switches on core 0)
+[pid: 113878|app: 0|req: 1/2] 118.73.145.141 () {42 vars in 779 bytes} [Wed Aug 30 00:09:21 2023] GET /api/document/view_document/3 => generated 0 bytes in 104 msecs (HTTP/1.1 301) 3 headers in 130 bytes (1 switches on core 0)
+1
+[pid: 113878|app: 0|req: 2/3] 118.73.145.141 () {40 vars in 759 bytes} [Wed Aug 30 00:09:21 2023] GET /api/document/view_document/3/ => generated 298 bytes in 673 msecs (HTTP/1.1 200) 7 headers in 221 bytes (1 switches on core 1)
+[pid: 113873|app: 0|req: 1/4] 118.73.145.141 () {42 vars in 765 bytes} [Wed Aug 30 00:09:21 2023] GET /api/team/all_members/ => generated 43 bytes in 92 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 0)
+[pid: 113878|app: 0|req: 3/5] 118.73.145.141 () {46 vars in 902 bytes} [Wed Aug 30 00:09:22 2023] POST /api/document/change_lock/ => generated 315 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 113880|app: 0|req: 2/6] 223.104.40.236 () {44 vars in 957 bytes} [Wed Aug 30 00:09:33 2023] GET /api/document/view_document/3 => generated 0 bytes in 10 msecs (HTTP/1.1 301) 3 headers in 130 bytes (1 switches on core 1)
+1
+[pid: 113880|app: 0|req: 3/7] 223.104.40.236 () {44 vars in 959 bytes} [Wed Aug 30 00:09:33 2023] GET /api/document/view_document/3/ => generated 298 bytes in 229 msecs (HTTP/1.1 200) 7 headers in 221 bytes (1 switches on core 0)
+[pid: 113880|app: 0|req: 4/8] 223.104.40.236 () {44 vars in 943 bytes} [Wed Aug 30 00:09:34 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
+[pid: 113878|app: 0|req: 4/9] 223.104.40.236 () {48 vars in 1080 bytes} [Wed Aug 30 00:09:34 2023] POST /api/document/change_lock/ => generated 315 bytes in 32 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 113878|app: 0|req: 5/10] 219.239.227.218 () {42 vars in 833 bytes} [Wed Aug 30 00:09:36 2023] POST /api/document/save/ => generated 53 bytes in 46 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 0)
+[pid: 113880|app: 0|req: 5/11] 219.239.227.218 () {42 vars in 833 bytes} [Wed Aug 30 00:09:39 2023] POST /api/document/save/ => generated 53 bytes in 53 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
+[pid: 113876|app: 0|req: 1/12] 219.239.227.218 () {42 vars in 833 bytes} [Wed Aug 30 00:09:42 2023] POST /api/document/save/ => generated 53 bytes in 144 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 0)
+[pid: 113880|app: 0|req: 6/13] 219.239.227.218 () {38 vars in 657 bytes} [Wed Aug 30 00:09:46 2023] GET /api/document/history/?document_id=23 => generated 756 bytes in 22 msecs (HTTP/1.1 200) 7 headers in 213 bytes (1 switches on core 0)
+[pid: 113880|app: 0|req: 7/14] 118.73.145.141 () {48 vars in 979 bytes} [Wed Aug 30 00:09:47 2023] POST /api/team/create_team/ => generated 59 bytes in 36 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+1
+3
+[pid: 113880|app: 0|req: 8/15] 118.73.145.141 () {42 vars in 824 bytes} [Wed Aug 30 00:09:47 2023] GET /api/team/all_teams/ => generated 234 bytes in 23 msecs (HTTP/1.1 200) 7 headers in 213 bytes (1 switches on core 0)
+[pid: 113873|app: 0|req: 3/16] 118.73.145.141 () {42 vars in 821 bytes} [Wed Aug 30 00:09:51 2023] GET /api/user/show_info/0 => generated 0 bytes in 36 msecs (HTTP/1.1 301) 3 headers in 122 bytes (1 switches on core 1)
+[pid: 113880|app: 0|req: 9/17] 118.73.145.141 () {42 vars in 825 bytes} [Wed Aug 30 00:09:51 2023] GET /api/team/all_projects/ => generated 99 bytes in 40 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 0)
+is_login :  False
+1
+3
+[pid: 113873|app: 0|req: 4/18] 118.73.145.141 () {40 vars in 686 bytes} [Wed Aug 30 00:09:52 2023] GET /api/user/show_info/0/ => generated 41 bytes in 2 msecs (HTTP/1.1 200) 7 headers in 220 bytes (1 switches on core 1)
+Internal Server Error: /api/team/get_current_team/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./team/views.py", line 374, in get_current_team
+    member=Member.objects.filter(user=user,team=team)[0]
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 450, in __getitem__
+    return qs._result_cache[0]
+IndexError: list index out of range
+[pid: 113876|app: 0|req: 2/19] 118.73.145.141 () {42 vars in 852 bytes} [Wed Aug 30 00:09:51 2023] GET /api/team/get_current_team/?user_id=6 => generated 66910 bytes in 93 msecs (HTTP/1.1 500) 7 headers in 242 bytes (1 switches on core 1)
+[pid: 113873|app: 0|req: 4/20] 118.73.145.141 () {42 vars in 819 bytes} [Wed Aug 30 00:09:51 2023] GET /api/team/all_teams/ => generated 234 bytes in 67 msecs (HTTP/1.1 200) 7 headers in 213 bytes (1 switches on core 0)
+Not Found: /api/team/create_project/
+[pid: 113878|app: 0|req: 6/21] 118.73.145.141 () {48 vars in 981 bytes} [Wed Aug 30 00:10:01 2023] POST /api/team/create_project// => generated 6089 bytes in 8 msecs (HTTP/1.1 404) 9 headers in 321 bytes (1 switches on core 1)
+Not Found: /api/team/create_project/
+[pid: 113880|app: 0|req: 10/22] 118.73.145.141 () {48 vars in 981 bytes} [Wed Aug 30 00:10:04 2023] POST /api/team/create_project// => generated 6089 bytes in 7 msecs (HTTP/1.1 404) 9 headers in 321 bytes (1 switches on core 1)
+Not Found: /api/team/create_project/
+[pid: 113878|app: 0|req: 7/23] 118.73.145.141 () {48 vars in 981 bytes} [Wed Aug 30 00:10:06 2023] POST /api/team/create_project// => generated 6089 bytes in 6 msecs (HTTP/1.1 404) 9 headers in 321 bytes (1 switches on core 0)
+Not Found: /api/team/create_project/
+[pid: 113880|app: 0|req: 11/24] 118.73.145.141 () {48 vars in 981 bytes} [Wed Aug 30 00:10:09 2023] POST /api/team/create_project// => generated 6089 bytes in 6 msecs (HTTP/1.1 404) 9 headers in 321 bytes (1 switches on core 0)
+[pid: 113878|app: 0|req: 9/25] 118.73.145.141 () {42 vars in 826 bytes} [Wed Aug 30 00:10:12 2023] GET /api/user/show_info/0 => generated 0 bytes in 11 msecs (HTTP/1.1 301) 3 headers in 122 bytes (1 switches on core 0)
+1
+3
+[pid: 113873|app: 0|req: 5/26] 118.73.145.141 () {42 vars in 824 bytes} [Wed Aug 30 00:10:12 2023] GET /api/team/all_teams/ => generated 234 bytes in 40 msecs (HTTP/1.1 200) 7 headers in 213 bytes (1 switches on core 1)
+is_login :  False
+[pid: 113876|app: 0|req: 4/27] 118.73.145.141 () {40 vars in 691 bytes} [Wed Aug 30 00:10:12 2023] GET /api/user/show_info/0/ => generated 41 bytes in 3 msecs (HTTP/1.1 200) 7 headers in 220 bytes (1 switches on core 1)
+[pid: 113878|app: 0|req: 9/28] 118.73.145.141 () {42 vars in 830 bytes} [Wed Aug 30 00:10:12 2023] GET /api/team/all_projects/ => generated 99 bytes in 47 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
+Internal Server Error: /api/team/get_current_team/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./team/views.py", line 374, in get_current_team
+    member=Member.objects.filter(user=user,team=team)[0]
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 450, in __getitem__
+    return qs._result_cache[0]
+IndexError: list index out of range
+[pid: 113876|app: 0|req: 4/29] 118.73.145.141 () {42 vars in 857 bytes} [Wed Aug 30 00:10:12 2023] GET /api/team/get_current_team/?user_id=6 => generated 66915 bytes in 77 msecs (HTTP/1.1 500) 7 headers in 242 bytes (1 switches on core 0)
+[pid: 113880|app: 0|req: 13/30] 118.73.145.141 () {42 vars in 821 bytes} [Wed Aug 30 00:10:16 2023] GET /api/user/show_info/0 => generated 0 bytes in 10 msecs (HTTP/1.1 301) 3 headers in 122 bytes (1 switches on core 0)
+1
+3
+[pid: 113880|app: 0|req: 13/31] 118.73.145.141 () {42 vars in 825 bytes} [Wed Aug 30 00:10:16 2023] GET /api/team/all_projects/ => generated 99 bytes in 33 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
+[pid: 113878|app: 0|req: 10/32] 118.73.145.141 () {42 vars in 819 bytes} [Wed Aug 30 00:10:16 2023] GET /api/team/all_teams/ => generated 234 bytes in 38 msecs (HTTP/1.1 200) 7 headers in 213 bytes (1 switches on core 0)
+is_login :  False
+[pid: 113880|app: 0|req: 14/33] 118.73.145.141 () {40 vars in 686 bytes} [Wed Aug 30 00:10:16 2023] GET /api/user/show_info/0/ => generated 41 bytes in 1 msecs (HTTP/1.1 200) 7 headers in 220 bytes (1 switches on core 0)
+Internal Server Error: /api/team/get_current_team/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./team/views.py", line 374, in get_current_team
+    member=Member.objects.filter(user=user,team=team)[0]
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 450, in __getitem__
+    return qs._result_cache[0]
+IndexError: list index out of range
+[pid: 113873|app: 0|req: 6/34] 118.73.145.141 () {42 vars in 852 bytes} [Wed Aug 30 00:10:16 2023] GET /api/team/get_current_team/?user_id=6 => generated 66910 bytes in 76 msecs (HTTP/1.1 500) 7 headers in 242 bytes (1 switches on core 0)
+Not Found: /api/team/create_project/
+[pid: 113880|app: 0|req: 15/35] 118.73.145.141 () {48 vars in 981 bytes} [Wed Aug 30 00:10:22 2023] POST /api/team/create_project// => generated 6089 bytes in 6 msecs (HTTP/1.1 404) 9 headers in 321 bytes (1 switches on core 1)
+Not Found: /api/team/create_project/
+[pid: 113878|app: 0|req: 11/36] 118.73.145.141 () {48 vars in 981 bytes} [Wed Aug 30 00:10:24 2023] POST /api/team/create_project// => generated 6089 bytes in 6 msecs (HTTP/1.1 404) 9 headers in 321 bytes (1 switches on core 1)
+Not Found: /api/team/create_project/
+[pid: 113878|app: 0|req: 12/37] 118.73.145.141 () {48 vars in 981 bytes} [Wed Aug 30 00:10:37 2023] POST /api/team/create_project// => generated 6089 bytes in 6 msecs (HTTP/1.1 404) 9 headers in 321 bytes (1 switches on core 0)
+Not Found: /api/team/create_project/
+[pid: 113878|app: 0|req: 13/38] 118.73.145.141 () {48 vars in 981 bytes} [Wed Aug 30 00:10:38 2023] POST /api/team/create_project// => generated 6089 bytes in 6 msecs (HTTP/1.1 404) 9 headers in 321 bytes (1 switches on core 1)
+Not Found: /api/team/create_project/
+[pid: 113876|app: 0|req: 5/39] 118.73.145.141 () {48 vars in 981 bytes} [Wed Aug 30 00:10:38 2023] POST /api/team/create_project// => generated 6089 bytes in 7 msecs (HTTP/1.1 404) 9 headers in 321 bytes (1 switches on core 1)
+Not Found: /api/team/create_project/
+[pid: 113876|app: 0|req: 6/40] 118.73.145.141 () {48 vars in 981 bytes} [Wed Aug 30 00:10:38 2023] POST /api/team/create_project// => generated 6089 bytes in 6 msecs (HTTP/1.1 404) 9 headers in 321 bytes (1 switches on core 0)
+Not Found: /api/team/create_project/
+[pid: 113873|app: 0|req: 7/41] 118.73.145.141 () {48 vars in 981 bytes} [Wed Aug 30 00:10:44 2023] POST /api/team/create_project// => generated 6089 bytes in 7 msecs (HTTP/1.1 404) 9 headers in 321 bytes (1 switches on core 1)
+Not Found: /api/team/create_project/
+[pid: 113878|app: 0|req: 14/42] 118.73.145.141 () {48 vars in 981 bytes} [Wed Aug 30 00:10:46 2023] POST /api/team/create_project// => generated 6089 bytes in 6 msecs (HTTP/1.1 404) 9 headers in 321 bytes (1 switches on core 0)
+Not Found: /api/team/create_project/
+[pid: 113880|app: 0|req: 16/43] 118.73.145.141 () {48 vars in 981 bytes} [Wed Aug 30 00:10:47 2023] POST /api/team/create_project// => generated 6089 bytes in 6 msecs (HTTP/1.1 404) 9 headers in 321 bytes (1 switches on core 0)
+[pid: 113880|app: 0|req: 17/44] 219.239.227.240 () {42 vars in 694 bytes} [Wed Aug 30 00:10:53 2023] GET /api/team/all_teams/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
+[pid: 113878|app: 0|req: 15/45] 219.239.227.240 () {42 vars in 725 bytes} [Wed Aug 30 00:10:53 2023] GET /api/team/get_current_team/?user_id= => generated 43 bytes in 1 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
+[pid: 113876|app: 0|req: 7/46] 219.239.227.240 () {42 vars in 700 bytes} [Wed Aug 30 00:10:53 2023] GET /api/team/all_projects/ => generated 43 bytes in 0 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
+[pid: 113878|app: 0|req: 16/47] 219.239.227.240 () {42 vars in 725 bytes} [Wed Aug 30 00:10:53 2023] GET /api/team/get_current_team/?user_id= => generated 43 bytes in 1 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 0)
+[pid: 113876|app: 0|req: 8/48] 219.239.227.240 () {42 vars in 696 bytes} [Wed Aug 30 00:10:53 2023] GET /api/user/show_info/0 => generated 0 bytes in 5 msecs (HTTP/1.1 301) 3 headers in 122 bytes (1 switches on core 0)
+[pid: 113873|app: 0|req: 8/49] 219.239.227.240 () {42 vars in 700 bytes} [Wed Aug 30 00:10:53 2023] GET /api/team/all_projects/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 0)
+is_login :  False
+[pid: 113880|app: 0|req: 18/50] 219.239.227.240 () {42 vars in 698 bytes} [Wed Aug 30 00:10:53 2023] GET /api/user/show_info/0/ => generated 41 bytes in 1 msecs (HTTP/1.1 200) 7 headers in 220 bytes (1 switches on core 0)
+Not Found: /api/team/create_project/
+[pid: 113880|app: 0|req: 19/51] 219.239.227.240 () {48 vars in 856 bytes} [Wed Aug 30 00:11:03 2023] POST /api/team/create_project// => generated 6089 bytes in 7 msecs (HTTP/1.1 404) 9 headers in 321 bytes (1 switches on core 1)
