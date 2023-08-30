@@ -280,9 +280,9 @@ def create_project(request, team_id):
 def delete_one_project(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
-    project_id=request.GET.get('project_id')
+    project_id=request.POST.get('project_id')
     try:
-        project = Project.objects.get(id=project_id,is_deleted=True)
+        project = Project.objects.get(id=project_id,is_deleted=False)
     except Project.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     user = request.user

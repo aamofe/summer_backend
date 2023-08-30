@@ -216,6 +216,7 @@ def share_prototype(request):
         return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
     prototype_id=request.POST.get('prototype_id')
     visible=request.POST.get('visible')
+    print(' share prototype_id : ', prototype_id)
     try :
         prototype=Prototype.objects.get(id=prototype_id)
     except Prototype.DoesNotExist:
@@ -520,6 +521,7 @@ def all_file(request):
     user = request.user
     file_type=request.GET.get("file_type")
     project_id=request.GET.get(('project_id'))
+    print('参数 啊啊啊啊: ',file_type,project_id)
     if not file_type or not project_id:
         return JsonResponse({'errno': 1, 'msg': "参数不全"})
     if not (file_type == 'document' or file_type == 'prototype') or not project_id.isdigit():
