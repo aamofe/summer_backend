@@ -121,10 +121,7 @@ def get_invitation(request):
         return JsonResponse({'errno': 1, 'msg': "用户未设置昵称"})
     payload = {"team_id": team_id,'inviter':user.nickname}
     token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-    invitation = "http://www.aamofe.top/team/" + token + '/'
-    # team.invitation = invitation
-    # team.save()
-    return JsonResponse({'errno': 0, 'msg': "链接已生成", 'invatation': invitation})
+    return JsonResponse({'errno': 0, 'msg': "链接已生成", 'token': token})
 
 def team_name(request,token):
     if request.method!="GET":
