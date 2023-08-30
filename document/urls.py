@@ -21,11 +21,15 @@ urlpatterns = [
     # path('recover_all_document/',views.recover_all_document),
     path('create/',views.create),
     path('delete/',views.delete),
-    path('restore/',views.restore),
+    # path('restore/',views.restore),
     path('save/',views.save),
-    path('all_file/',views.all_file),
+    # path('all_file/',views.all_file),
     path('all_deleted/',views.all_deleted),
     path('history/',views.history),
     path('share_prototype/',views.share_prototype),
+    path('create_folder/',views.create_folder),
+    path('delete_folder/',views.delete_folder),
+    path('view_folder/',views.view_folder),
+    path('restore/',views.restore)
 
 ]
