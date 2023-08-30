@@ -123,7 +123,11 @@ def activate(request, token):
             title = '激活成功'
             message = '欢迎登录'
             url = 'http://www.aamofe.top/'
-            team=Team.objects.create(name="个人空间",user=user)
+            try:
+                team=Team.objects.filter(user=user,name='个人空间')
+            except Team.DoesNotExist:
+                team=Team.objects.create(name="个人空间",user=user)
+                member=Member.objects.create(role='CR',user=user,team=team)
             user.current_team_id=team.id
             user.save()
     except:
