@@ -700,3 +700,22 @@ is_login :  False
 [pid: 113880|app: 0|req: 18/50] 219.239.227.240 () {42 vars in 698 bytes} [Wed Aug 30 00:10:53 2023] GET /api/user/show_info/0/ => generated 41 bytes in 1 msecs (HTTP/1.1 200) 7 headers in 220 bytes (1 switches on core 0)
 Not Found: /api/team/create_project/
 [pid: 113880|app: 0|req: 19/51] 219.239.227.240 () {48 vars in 856 bytes} [Wed Aug 30 00:11:03 2023] POST /api/team/create_project// => generated 6089 bytes in 7 msecs (HTTP/1.1 404) 9 headers in 321 bytes (1 switches on core 1)
+*** Starting uWSGI 2.0.21 (64bit) on [Wed Aug 30 11:40:08 2023] ***
+compiled with version: 9.4.0 on 30 June 2023 07:31:33
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+writing pidfile to uwsgi.pid
+detected binary path: /usr/local/bin/uwsgi
+!!! no internal routing support, rebuild with pcre support !!!
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]
