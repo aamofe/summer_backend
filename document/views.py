@@ -210,23 +210,63 @@ def save_prototype(request):
     prototype.save()
     return JsonResponse({'errno': 0, 'msg': "原型保存成功"})
 
+@validate_login
+def share_prototype(request):
+    if request.method!='POST':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
+    prototype_id=request.POST.get('prototype_id')
+    visible=request.POST.get('visible')
+    try :
+        prototype=Prototype.objects.get(id=prototype_id)
+    except Prototype.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "文档不存在"})
+    except (ValueError, TypeError):
+        return JsonResponse({'errno': 1, 'msg': "编辑权限错误"})
+    token=prototype.token
+    if not prototype.token:
+        payload = {"prototype_id":prototype_id,}
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+        prototype.token=token
+    if visible=='1':
+        prototype.visible=True
+    elif visible=='0':
+        prototype.visible=False
+    else:
+        return JsonResponse({'errno': 0, 'token': token, 'msg': '操作错误'})
+    prototype.save()
+    return JsonResponse({'errno':0,'token':token,'msg':'获取预览链接成功'})
 #获取单个原型
 @validate_login
-def view_prototype(request):
+def view_prototype(request,token):
     if request.method!='GET':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user=request.user
-    prototype_id=request.GET.get('prototype_id')
-    print("111 ",prototype_id)
-    try:
-        prototype=Prototype.objects.get(id=prototype_id)
-    except Prototype.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "原型不存在"})
-    try:
-        member=Member.objects.get(user=user,team=prototype.project.team)
-    except Member.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-    return JsonResponse({'errno': 0,'prototype':prototype.to_dict(), 'msg': "获取原型成功"})
+    if token.isdigit():
+        editable=True
+        prototype_id=token
+        try:
+            prototype = Prototype.objects.get(id=prototype_id, is_deleted=False)
+        except Prototype.DoesNotExist:
+            return JsonResponse({'errno': 1, 'msg': "原型不存在"})
+        try:
+            member = Member.objects.get(user=user, team=prototype.project.team)
+        except Member.DoesNotExist:
+            return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
+    else:
+        editable=False
+        payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
+        prototype_id = payload.get('prototype_id')
+        if not prototype_id:
+            return JsonResponse({'errno': 1, 'msg': "解密失败"})
+        try:
+            prototype = Prototype.objects.get(id=prototype_id, is_deleted=False)
+        except Prototype.DoesNotExist:
+            return JsonResponse({'errno': 1, 'msg': "原型不存在"})
+        if not prototype.visible:
+            return JsonResponse({'errno': 1, 'msg': "链接已失效"})
+    prototypes=prototype.to_dict()
+    prototypes['editable']=editable
+    return JsonResponse({'errno': 0,'prototype':prototypes, 'msg': "获取原型成功"})
 #当前项目所有原型
 def all_prototype(request,project_id):
     if request.method!='GET':

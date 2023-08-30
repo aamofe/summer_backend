@@ -12,9 +12,9 @@ class Document(models.Model):
     url_editable=models.URLField(verbose_name="可编辑链接",null=True)
     created_at=models.DateTimeField(verbose_name="创建时间",auto_now_add=True)
     modified_at=models.DateTimeField(verbose_name="最近修改时间",auto_now=True)
-    # team=models.ForeignKey(Team,verbose_name="所属团队",on_delete=models.PROTECT)
-    project=models.ForeignKey(Project,verbose_name="所属项目",on_delete=models.PROTECT)
-    user=models.ForeignKey(User,verbose_name="创建者",on_delete=models.PROTECT)
+    # team=models.ForeignKey(Team,verbose_name="所属团队",on_delete=models.CASCADE)
+    project=models.ForeignKey(Project,verbose_name="所属项目",on_delete=models.CASCADE)
+    user=models.ForeignKey(User,verbose_name="创建者",on_delete=models.CASCADE)
     is_locked=models.IntegerField(verbose_name="文件锁",default=False)
     is_deleted=models.BooleanField(verbose_name="是否被删除",default=False)
     def to_dict(self):
@@ -30,7 +30,7 @@ class Document(models.Model):
         }
 
 class History(models.Model):
-    document = models.ForeignKey(Document, on_delete=models.PROTECT)
+    document = models.ForeignKey(Document, on_delete=models.CASCADE)
     content = models.TextField(verbose_name="文档内容",null=True)
     modified_at = models.DateTimeField(verbose_name="修改时间", auto_now_add=True)
     class Meta:
@@ -45,10 +45,12 @@ class Prototype(models.Model):
     content=models.TextField(verbose_name='',default="")
     created_at = models.DateTimeField(verbose_name="创建时间", auto_now_add=True)
     modified_at = models.DateTimeField(verbose_name="最近修改时间", auto_now=True)
-    # team=models.ForeignKey(Team,verbose_name='原型所属团队',on_delete=models.PROTECT)
-    project = models.ForeignKey(Project, verbose_name="所属项目", on_delete=models.PROTECT)
-    user=models.ForeignKey(User,verbose_name="创建者",on_delete=models.PROTECT)
+    # team=models.ForeignKey(Team,verbose_name='原型所属团队',on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, verbose_name="所属项目", on_delete=models.CASCADE)
+    user=models.ForeignKey(User,verbose_name="创建者",on_delete=models.CASCADE)
     is_deleted=models.BooleanField(verbose_name="是否已删除",default=False)
+    visible=models.BooleanField(verbose_name='是否可见',default=True)
+    token = models.URLField(verbose_name="预览原型链接", null=True)
     def to_dict(self):
         return {
             'id':self.id,
