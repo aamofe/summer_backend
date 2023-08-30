@@ -29,6 +29,7 @@ from user.authentication import validate_all, validate_login
 from user.cos_utils import get_cos_client, Label, Category, SubLabel
 from user.models import User
 from team.models import Team, Member, Project
+from chat.models import Group, ChatMember
 from django.utils import timezone
 
 from user.views import upload_cover_method
@@ -46,9 +47,11 @@ def create_team(request):
         elif team_name=='个人空间':
             return JsonResponse({'errno':1,'msg':"团队名称不能为个人空间"})
         team = Team.objects.create(name=team_name, user=user)
+        group = Group.objects.create(name=team_name, user=user,actual_team=team.id)
         cover = request.FILES.get('cover')
         if description:
             team.description = description
+            group.description=description
         if cover:
             res, cover_url, content = upload_cover_method(cover, user.id, 'team_cover')
             if res == -2:
@@ -57,8 +60,10 @@ def create_team(request):
                 return JsonResponse({'errno': 1, 'msg': content})
             else:
                 team.cover_url = cover_url
+                group.cover_url=cover_url
         team.save()
         member = Member.objects.create(role='CR', user=user, team=team)
+        chat_member=ChatMember.objects.create(role='CR',user=user,team=group)
         return JsonResponse({'errno': 0, 'msg': "创建团队成功"})
     else:
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
