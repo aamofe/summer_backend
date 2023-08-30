@@ -61,7 +61,7 @@ def register(request):
             now_time = timezone.now()
             if (now_time - user.created_at).seconds <= 300:
                 return JsonResponse({'errno': 1, 'msg': "注册时间间隔需大于5min"})
-    user = User.objects.create(nickname=nickname,username=username, password=pswd1, email=email,current_team_id=0)
+    user = User.objects.create(nickname=nickname,username=username, password=pswd1, email=email,current_team_id=0,is_new=True)
     if avatar:
         res, avatar_url, content = upload_cover_method(avatar, user.id, 'user_avatar')
         if res == -2:
@@ -123,7 +123,11 @@ def activate(request, token):
             title = '激活成功'
             message = '欢迎登录'
             url = 'http://www.aamofe.top/'
-            team=Team.objects.create(name="个人空间",user=user)
+            try:
+                team=Team.objects.filter(user=user,name='个人空间')
+            except Team.DoesNotExist:
+                team=Team.objects.create(name="个人空间",user=user)
+                member=Member.objects.create(role='CR',user=user,team=team)
             user.current_team_id=team.id
             user.save()
     except:

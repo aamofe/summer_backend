@@ -218,6 +218,7 @@ def share_prototype(request):
         return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
     prototype_id=request.POST.get('prototype_id')
     visible=request.POST.get('visible')
+    print(' share prototype_id : ', prototype_id)
     try :
         prototype=Prototype.objects.get(id=prototype_id)
     except Prototype.DoesNotExist:
@@ -246,10 +247,12 @@ def view_prototype(request,token):
     if token.isdigit():
         editable=True
         prototype_id=token
+        print("当前用户 : ",user.id )
         try:
             prototype = Prototype.objects.get(id=prototype_id, is_deleted=False)
         except Prototype.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "原型不存在"})
+        print("项目所属团队 ： ",prototype.project.team)
         try:
             member = Member.objects.get(user=user, team=prototype.project.team)
         except Member.DoesNotExist:
