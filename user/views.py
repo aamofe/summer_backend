@@ -152,7 +152,9 @@ def login(request):
         payload = {'exp': datetime.utcnow() + timedelta(days=5), 'id': user.id}
         encode = jwt.encode(payload, settings.SECRET_KEY, algorithm='HS256')
         token = str(encode)
-        user_info={'user_id': user.id,'current_team':user.current_team_id,'token':token}
+        user_info={'user_id': user.id,'current_team':user.current_team_id,'token':token,'is_new':user.is_new}
+        user.is_new=False
+        user.save()
         return JsonResponse({ 'user_info':user_info, 'errno': 0, 'msg': "登录成功"})
     else:
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
@@ -332,3 +334,10 @@ def personal_info(request):
     user_info = user.to_dict()
     # pprint.pprint(user_info)
     return JsonResponse({'errno': 0, 'msg': "查看信息成功", 'user_info': user_info})
+
+
+@validate_login
+def logout1(request):
+    user=request.user
+    user.delete()
+    return JsonResponse({'msg':'注销成功'})
