@@ -62,6 +62,7 @@ def create_team(request):
                 team.cover_url = cover_url
                 group.cover_url=cover_url
         team.save()
+        group.save()
         member = Member.objects.create(role='CR', user=user, team=team)
         chat_member=ChatMember.objects.create(role='CR',user=user,team=group)
         return JsonResponse({'errno': 0, 'msg': "创建团队成功"})
@@ -201,6 +202,7 @@ def all_members(request):
         member=Member.objects.get(team=team,user=user)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "当前用户不属于该团队"})
+    print('all_members 我在获取所有成员 : ',team_id)
     members = []
     member_list = Member.objects.filter(team=team,role="CR")
     for member in member_list:
@@ -278,7 +280,7 @@ def create_project(request, team_id):
         return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
     team = team_list[0]
     project = Project.objects.create(name=project_name, team=team,user=user)
-    folder=Folder.objects.create(name=project_name,project=project)
+    folder=Folder.objects.create(name=project_name,project=project,user=user)
     return JsonResponse({'errno': 0,'project':project.to_dict(), 'msg': "项目创建成功"})
 
 
@@ -371,6 +373,7 @@ def get_current_team(request):
             return JsonResponse({'errno': 1, 'msg': "个人空间不存在"})
         user.current_team_id=team.id
         user.save()
+    print('get_current_team 我在获取所有成员 : ',team.id)
     team_list=team.to_dict()
     team_list['team_num']= Member.objects.filter(user=user).count()
     project_list=Project.objects.filter(team=team)
@@ -389,7 +392,7 @@ def all_projects(request):
     if request.method != 'GET':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
-    team_id = request.GET.get('team_id')  # 选择特定团队的项目
+    team_id = user.current_team_id  # 选择特定团队的项目
     sort_by = request.GET.get('sort_by', 'created_at')  # 默认按创建时间排序
     try:
         team = Team.objects.get(id=team_id)
@@ -399,7 +402,7 @@ def all_projects(request):
         member = Member.objects.get(user=user, team=team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-
+    print('all_projects 我在获取所有成员 : ',team_id)
     if sort_by == 'created_at':
         project_list = Project.objects.filter(team=team).order_by('-created_at')
     elif sort_by == 'name':

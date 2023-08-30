@@ -124,11 +124,12 @@ def activate(request, token):
             message = '欢迎登录'
             url = 'http://www.aamofe.top/'
             try:
-                team=Team.objects.filter(user=user,name='个人空间')
+                team=Team.objects.get(user=user,name='个人空间')
             except Team.DoesNotExist:
                 team=Team.objects.create(name="个人空间",user=user)
                 member=Member.objects.create(role='CR',user=user,team=team)
             user.current_team_id=team.id
+            print("我正在激活 我已经创建好个人空间了，我的空间id是 :",team.id)
             user.save()
     except:
         title = '激活失败'
