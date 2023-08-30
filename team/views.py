@@ -121,10 +121,7 @@ def get_invitation(request):
         return JsonResponse({'errno': 1, 'msg': "用户未设置昵称"})
     payload = {"team_id": team_id,'inviter':user.nickname}
     token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-    invitation = "http://www.aamofe.top/team/" + token + '/'
-    # team.invitation = invitation
-    # team.save()
-    return JsonResponse({'errno': 0, 'msg': "链接已生成", 'invatation': invitation})
+    return JsonResponse({'errno': 0, 'msg': "链接已生成", 'token': token})
 
 def team_name(request,token):
     if request.method!="GET":
@@ -283,9 +280,9 @@ def create_project(request, team_id):
 def delete_one_project(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
-    project_id=request.GET.get('project_id')
+    project_id=request.POST.get('project_id')
     try:
-        project = Project.objects.get(id=project_id,is_deleted=True)
+        project = Project.objects.get(id=project_id,is_deleted=False)
     except Project.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     user = request.user
