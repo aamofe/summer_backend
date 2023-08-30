@@ -4,12 +4,15 @@ from django.db.models import Max
 from django.http import JsonResponse
 
 from chat.models import UserTeamChatStatus, ChatMessage, Notice
-from team.models import Team, Member
+from chat.models import Group, ChatMember
 from user.cos_utils import get_cos_client
 from user.models import User
 import uuid
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
+
+
+
 
 
 def save_message(message,team_id,user_id):
@@ -43,12 +46,12 @@ def upload_image(request, team_id, user_id):
 
 
 def initial_chat(request,user_id):
-    Team_ids= Member.objects.filter(user_id= user_id).values('team_id')
+    Team_ids= ChatMember.objects.filter(user_id= user_id).values('team_id')
     rooms=[]
     print(Team_ids)
     for team_dict in Team_ids:
         team_id = team_dict['team_id']
-        members = Member.objects.filter(team_id=team_id)
+        members = ChatMember.objects.filter(team_id=team_id)
         last_message = ChatMessage.objects.filter(team_id=team_id).order_by('-timestamp').first()
         if not last_message:
             lastMessage = {
@@ -86,9 +89,9 @@ def initial_chat(request,user_id):
 
         room_data={
             'roomId':str(team_id),
-            'roomName':Team.objects.get(id=team_id).name,
+            'roomName':Group.objects.get(id=team_id).name,
             'unreadCount':unread_count,
-            'avatar':Team.objects.get(id=team_id).cover_url,
+            'avatar':Group.objects.get(id=team_id).cover_url,
             'index':index,
             'lastMessage':lastMessage,
             'users':users,

@@ -8,7 +8,7 @@ from channels.db import database_sync_to_async
 from asgiref.sync import sync_to_async
 from chat.models import ChatMessage, Notice, UserTeamChatStatus, UserChatChannel, UserNoticeChannel
 from user.models import User
-from team.models import Member, Team
+from .models import ChatMember, Group
 
 
 class TeamChatConsumer(AsyncWebsocketConsumer):
@@ -21,6 +21,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         self.user_id = self.scope['url_route']['kwargs']['user_id']
         self.room_group_name = f"chat_{self.team_id}"
         await self.save_user_chat_channel()
+
         # 将用户加入到团队群聊
         await self.channel_layer.group_add(
             self.room_group_name,
@@ -208,7 +209,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def get_users(self):
         try:
-            user_ids = Member.objects.filter(team_id=self.team_id).values_list('user_id', flat=True)
+            user_ids = ChatMember.objects.filter(team_id=self.team_id).values_list('user_id', flat=True)
             users = User.objects.filter(id__in=user_ids)
             return list(users)
         except User.DoesNotExist:
@@ -243,11 +244,22 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         user_team_chat_status.save()
 
     @database_sync_to_async
-    def increment_unread_count_in_db(self, user_id):
-        user_ids = Member.objects.filter(team_id=self.team_id).values_list('user_id',flat=True)
+    def increment_unread_count_and_index_in_db(self, user_id):
+        user_ids = ChatMember.objects.filter(team_id=self.team_id).values_list('user_id', flat=True)
         new_user_ids = user_ids.exclude(user_id=user_id)
-        UserTeamChatStatus.objects.filter(user_id__in=new_user_ids, team_id=self.team_id).update(
-            unread_count=F('unread_count') + 1)
+
+        for uid in new_user_ids:
+            status, created = UserTeamChatStatus.objects.get_or_create(user_id=uid, team_id=self.team_id,
+                                                                       defaults={'unread_count': 0})
+            if created:
+                # 如果创建了新的记录, 设置unread_count为1
+                status.unread_count = 1
+                status.index = 1
+            else:
+                # 否则增加unread_count
+                status.unread_count += 1
+                self.index_up(uid, self.team_id)
+            status.save()
         return user_ids
 
     @database_sync_to_async
@@ -272,11 +284,11 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         for uid in user_ids_list:
             channel_name = await self.get_channel_name_for_user(uid, self.team_id)
             if not channel_name:
+                print(f'No channel name for user {uid}')
                 continue
-            unread_count = await self.get_unread_count(uid)
             await self.channel_layer.send(channel_name, {
                 'type': 'chat_status',
-                'unread_count': unread_count,
+                'unread_count': await self.get_unread_count(uid),
                 'index': await self.get_index(uid),
                 'username': await self.return_username(await self.get_latest_message()),
                 'time': await self.return_time(await self.get_latest_message()),
@@ -285,9 +297,22 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 'cover_url': await self.get_cover_url(self.team_id),
             })
 
+
+    @database_sync_to_async
+    def create_status(self, user_id, team_id):
+        if UserTeamChatStatus.objects.filter(user_id=user_id, team_id=team_id).exists():
+            return UserTeamChatStatus.objects.get(user_id=user_id, team_id=team_id)
+        else:
+            status = UserTeamChatStatus.objects.create(user_id=user_id, team_id=team_id, unread_count=0, index=0)
+            return status
+
+
+
+
     # Now, when you want to increment and notify
     async def increment_and_notify(self, user_id):
-        user_ids = await self.increment_unread_count_in_db(user_id)
+
+        user_ids = await self.increment_unread_count_and_index_in_db(user_id)
         await self.notify_users_of_unread_count(user_ids)
 
     @database_sync_to_async
@@ -337,15 +362,15 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def get_team_name(self, team_id):
         try:
-            return Team.objects.get(id=team_id).name
-        except Team.DoesNotExist:
+            return Group.objects.get(id=team_id).name
+        except Group.DoesNotExist:
             return None
 
     @database_sync_to_async
     def get_cover_url(self, team_id):
         try:
-            return Team.objects.get(id=team_id).cover_url
-        except Team.DoesNotExist:
+            return Group.objects.get(id=team_id).cover_url
+        except Group.DoesNotExist:
             return None
 
     @database_sync_to_async
