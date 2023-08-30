@@ -14,7 +14,7 @@ class User(models.Model):
     email=models.EmailField(verbose_name="邮箱")
     #密码要求是 数字+字母 8-16位
     password=models.CharField(verbose_name="账户密码",max_length=16)
-    avatar_url = models.URLField(verbose_name="头像路径",default="https://summer-1315620690.cos.ap-beijing.myqcloud.com/avatar/default.png")
+    avatar_url = models.URLField(verbose_name="头像路径",default="https://summer-1315620690.cos.ap-beijing.myqcloud.com/user_avatar/default.png")
     created_at=models.DateTimeField(verbose_name='注册时间',auto_now_add=True)
     is_active=models.BooleanField(verbose_name='是否有效账户',max_length=20,default=False)
     current_team_id=models.IntegerField(verbose_name="当前团队id")

@@ -1,3 +1,6 @@
+from copy import deepcopy
+
+from django.db.models import Q, Count
 from django.shortcuts import render
 from django.shortcuts import render
 
@@ -387,7 +390,7 @@ def all_projects(request):
         team=Team.objects.get(user=user,name='个人空间')
         user.current_team_id=team.id
         user.save()
-    projects=Project.objects.filter(team=team,is_deleted=False)
+    projects=Project.objects.filter(team=team,is_deleted=False).order_by('-created_at')
     project_list=[]
     for p in projects:
         project_list.append(p.to_dict())
@@ -482,3 +485,39 @@ def get_one_project(request):
     project_['document_num']=Document.objects.filter(project=project).count()
     project_['prototype_num']=Prototype.objects.filter(project=project).count()
     return JsonResponse({'errno': 0, 'project':project_,'msg': "单个项目信息"})
+
+@validate_login
+def search(request):
+    if request.method != 'GET':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user=request.user
+    query=request.POST.get('query')
+    teams=[]
+    projects=[]
+    prototypes=[]
+    if query:
+
+        teams = Team.objects.filter(Q(member__user=user,name__icontains=query) | Q(description__icontains=query))
+        teams = teams.order_by('-created_at')  # 按创建时间降序排序
+        projects=Project.objects.filter(Q(project__team__member__user=user) | Q(description__icontains=query))
+        projects=projects.order_by('-created_at')
+        prototypes = Project.objects.filter(Q(prototype__team__member__user=user) | Q(description__icontains=query))
+        prototypes=prototypes.order_by('-created_at')
+    team_list=[team.to_dict() for team in teams]
+    project_list=[project.to_dict() for project in projects]
+    prototype_list=[ prototype.to_dict() for  prototype in  prototypes]
+    return JsonResponse({'errno':0,'teams':team_list,' prototypes': prototype_list,'project':project_list,'msg':'查询成功'})
+
+def copy(request):
+    if request.method != 'POST':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user=request.user
+    project_id=request.POST.get('project_id')
+    try:
+        project=Project.objects.get(id=project_id)
+    except:
+        return JsonResponse({'errno': 1, 'msg': "项目不存在"})
+    project1 = deepcopy(project)
+    project1.id = None  # 重置 ID，以便创建一个新的数据库记录
+    project1.title = f"{project.title} (1)"  # 修改名称
+    project1.save()  # 保存新的项目副本
