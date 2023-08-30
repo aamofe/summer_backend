@@ -18,6 +18,7 @@ class User(models.Model):
     created_at=models.DateTimeField(verbose_name='注册时间',auto_now_add=True)
     is_active=models.BooleanField(verbose_name='是否有效账户',max_length=20,default=False)
     current_team_id=models.IntegerField(verbose_name="当前团队id")
+    is_new=models.BooleanField(verbose_name='是否为新用户',default=True)
     def to_dict(self):
         return {
             'id':self.id,
@@ -26,8 +27,4 @@ class User(models.Model):
             'avatar_url':self.avatar_url,
             'email':self.email,
         }
-class Message(models.Model):#群聊和文档的@
-    title=models.CharField(verbose_name='消息标题',max_length=20)
-    content=models.CharField(verbose_name="消息具体内容",max_length=200)
-    url=models.URLField(verbose_name="跳转链接")
 

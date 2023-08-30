@@ -1,5 +1,8 @@
+import pytz
 from django.db import models
+
 from user.models import User
+shanghai_tz = pytz.timezone('Asia/Shanghai')
 # Create your models here.
 class Team(models.Model):
     name=models.CharField(verbose_name="团队名称",max_length=20,default='未命名团队')
@@ -12,7 +15,7 @@ class Team(models.Model):
         return {
             'id': self.id,
             'name': self.name,
-            'created_at':self.created_at,
+            'created_at':(self.created_at.astimezone(shanghai_tz)).strftime('%Y-%m-%d %H:%M:%S'),
             'creator':self.user.username,
         }
 class Member(models.Model):

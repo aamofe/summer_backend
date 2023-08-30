@@ -1,11 +1,13 @@
 import json
+
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.utils import timezone
 from jose import ExpiredSignatureError, JWTError
 import jwt
 from django.contrib.auth.models import AnonymousUser
-from document.models import Document, Prototype, History
+from document.models import Document, Prototype, History, Folder
 from summer_backend import settings
 from summer_backend.settings import SECRET_KEY
 from team.models import Team, Member, Project
@@ -252,6 +254,8 @@ def view_prototype(request,token):
             member = Member.objects.get(user=user, team=prototype.project.team)
         except Member.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
+        prototypes = prototype.to_dict()
+        prototypes['editable'] = editable
     else:
         editable=False
         payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
@@ -264,8 +268,9 @@ def view_prototype(request,token):
             return JsonResponse({'errno': 1, 'msg': "原型不存在"})
         if not prototype.visible:
             return JsonResponse({'errno': 1, 'msg': "链接已失效"})
-    prototypes=prototype.to_dict()
-    prototypes['editable']=editable
+        prototype_list=Prototype.objects.filter(project=prototype.project)
+        prototypes=[prototype.to_dict() for prototype in prototype_list]
+        prototypes['editable']=editable
     return JsonResponse({'errno': 0,'prototype':prototypes, 'msg': "获取原型成功"})
 #当前项目所有原型
 def all_prototype(request,project_id):
@@ -349,129 +354,160 @@ def create(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
-    file_type = request.POST.get('file_type')  # 原型 文档
-    project_id=request.POST.get('project_id')
+    file_type = request.POST.get('file_type')
+    project_id = request.POST.get('project_id')
     title = request.POST.get("title")
     content = request.POST.get("content")
-    if not title or not file_type or not title or not project_id :
+    if not title or not file_type or not project_id:
         return JsonResponse({'errno': 1, 'msg': "参数不全"})
-    if not(file_type=='document' or file_type=='prototype'):
+    if file_type not in {'document', 'prototype', 'folder'}:
         return JsonResponse({'errno': 1, 'msg': "创建文件类型错误"})
     try:
         project = Project.objects.get(id=project_id)
     except Project.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
-    try:
-        member = Member.objects.filter(team=project.team, user=user)
-    except Member.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-    if file_type=='document':
-        file = Document.objects.create(title=title, project=project, user=user)
-        history = History.objects.create(content=content, document=file)
-    else:
-        file = Prototype.objects.create(title=title, project=project, user=user)
-    if content:
-        file.content = content
-        file.save()
-    return JsonResponse({'errno': 0, "document": file.to_dict(), 'msg': "创建成功"})
-@validate_login
-def delete(request,):#删除/彻底 一个/多个 文档/原型
-    if request.method != 'POST':
-        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
-    user = request.user
-    file_type=request.POST.get('file_type')#原型 文档
-    file_id=request.POST.get('file_id') #删除1个 删除所有
-    project_id=request.POST.get('project_id')
-    forerver=request.POST.get('forever')#0代表否 1代表是
-    if not file_type or not project_id or not file_id or not forerver:
-        return JsonResponse({'errno': 1, 'msg': "参数不全"})
-    if not(file_type=='document' or file_type=='prototype') or not file_id.isdigit() or not forerver in {str(0),str(1)}:
-        return JsonResponse({'errno': 1, 'msg': "参数值错误"})
-    try:
-        project = Project.objects.get(id=project_id)
-    except Project.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "项目不存在"})
+
     try:
         member = Member.objects.get(user=user, team=project.team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-    if file_id==0:
-        if file_type=='document':
-            file_list = Document.objects.filter(project=project)
+
+    try:
+        if file_type == 'document':
+            file = Document.objects.create(title=title, project=project, user=user)
+            if content:
+                History.objects.create(content=content, document=file)
+        elif file_type == 'prototype':
+            file = Prototype.objects.create(title=title, project=project, user=user)
         else:
+            file = Folder.objects.create(title=title, project=project)
+            if content:
+                file.content = content
+                file.save()
+    except ObjectDoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "创建失败，请检查参数"})
+
+    return JsonResponse({'errno': 0, "document": file.to_dict(), 'msg': "创建成功"})
+def delete_child_documents(folder, forever):
+    child_documents = Document.objects.filter(folder=folder)
+    for child_document in child_documents:
+        if forever == '1':
+            child_document.delete()
+        else:
+            child_document.is_deleted = True
+            child_document.save()
+
+def delete_folder_and_contents(folder, forever):
+    child_folders = folder.child_folders.all()
+    for child_folder in child_folders:
+        delete_folder_and_contents(child_folder, forever)
+    if forever == '1':
+        folder.delete()
+    else:
+        folder.is_deleted = True
+        folder.save()
+
+@validate_login
+def delete(request):
+    if request.method != 'POST':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+
+    user = request.user
+    file_type = request.POST.get('file_type')
+    file_id = request.POST.get('file_id')
+    project_id = request.POST.get('project_id')
+    forever = request.POST.get('forever')
+
+    if not file_type or not project_id or not file_id or not forever:
+        return JsonResponse({'errno': 1, 'msg': "参数不全"})
+    if file_type not in {'document', 'prototype', 'folder'} or not file_id.isdigit() or not forever in {'0', '1'}:
+        return JsonResponse({'errno': 1, 'msg': "参数值错误"})
+
+    try:
+        project = Project.objects.get(id=project_id)
+    except Project.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "项目不存在"})
+
+    try:
+        member = Member.objects.get(user=user, team=project.team)
+    except Member.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
+
+    if file_id == '0':  # 删除整个项目的文件/文件夹
+        if file_type == 'document':
+            file_list = Document.objects.filter(project=project)
+        elif file_type == 'prototype':
             file_list = Prototype.objects.filter(project=project)
-        if forerver=='1':
-                file_list.delete()
+        else:
+            top_level_folders = Folder.objects.filter(project=project, parent_folder=None)
+            for folder in top_level_folders:
+                delete_folder_and_contents(folder, forever)
+        if forever == '1':
+            file_list.delete()
         else:
             file_list.update(is_deleted=True)
+        return JsonResponse({'errno': 0, 'msg': "删除成功"})
+    else:  # 只删除当前文件夹或文档
+        try:
+            if file_type == 'document':
+                file = Document.objects.get(id=file_id, is_deleted=False)
+            elif file_type == 'prototype':
+                file = Prototype.objects.get(id=file_id, is_deleted=False)
+            else:
+                folder = Folder.objects.get(id=file_id, project=project)
+                if forever == '1':
+                    delete_folder_and_contents(folder, forever)
+                else:
+                    folder.is_deleted = True
+                    folder.save()
+        except ObjectDoesNotExist:
+            return JsonResponse({'errno': 1, 'msg': "文件或文件夹不存在"})
 
-        return JsonResponse({'errno': 0, 'msg': "删除成功"})
-    else:
-        if file_type == 'document':
-            try:
-                file=Document.objects.get(id=file_id,is_deleted=False)
-            except Document.DoesNotExist:
-                return JsonResponse({'errno': 1, 'msg': "文档不存在"})
-        else:
-            try:
-                file = Prototype.objects.get(id=file_id,is_deleted=False)
-            except Project.DoesNotExist:
-                return JsonResponse({'errno': 1, 'msg': "原型不存在"})
-        if forerver=='1':
+        if forever == '1':
             file.delete()
-            print("彻底")
         else:
-            print(file.is_deleted)
-            file.is_deleted=True
+            file.is_deleted = True
             file.save()
-            print(file.is_deleted)
         return JsonResponse({'errno': 0, 'msg': "删除成功"})
+
 
 @validate_login
 def restore(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+
     user = request.user
-    file_type = request.POST.get('file_type')  # 原型 文档
-    file_id = request.POST.get('file_id')  # 删除1个 删除所有
+    file_type = request.POST.get('file_type')
+    file_id = request.POST.get('file_id')
     project_id = request.POST.get('project_id')
-    # print(file_type,file_id,project_id)
-    if not file_type or not file_id :
+
+    if not file_type or not file_id:
         return JsonResponse({'errno': 1, 'msg': "参数不全"})
+
     if not (file_type == 'document' or file_type == 'prototype') or not file_id.isdigit():
         return JsonResponse({'errno': 1, 'msg': "参数值错误"})
+
     try:
         project = Project.objects.get(id=project_id)
     except Project.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
+
     try:
         member = Member.objects.get(user=user, team=project.team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-    if file_id == 0:
+
+    try:
         if file_type == 'document':
-            file_list = Document.objects.filter(project=project)
+            file = Document.objects.get(id=file_id, is_deleted=True)
         else:
-            file_list = Prototype.objects.filter(project=project)
-        file_list.update(is_deleted=False)
-        return JsonResponse({'errno': 0, 'msg': "恢复成功"})
-    else:
-        if file_type == 'document':
-            print(file_id)
-            try:
-                file = Document.objects.get(id=file_id,is_deleted=True)
-            except Document.DoesNotExist:
-                return JsonResponse({'errno': 1, 'msg': "文档不存在"})
-        else:
-            try:
-                file = Prototype.objects.get(id=file_id,is_deleted=True)
-            except:
-                return JsonResponse({'errno': 1, 'msg': "原型不存在"})
-        print(file.is_deleted)
+            file = Prototype.objects.get(id=file_id, is_deleted=True)
         file.is_deleted = False
         file.save()
-        print(file.is_deleted)
         return JsonResponse({'errno': 0, 'msg': "恢复成功"})
+    except (Document.DoesNotExist, Prototype.DoesNotExist):
+        return JsonResponse({'errno': 1, 'msg': "文件或原型不存在"})
+
 @validate_login
 def save(request):
     if request.method!='POST':
@@ -516,12 +552,7 @@ def all_file(request):
     if request.method != 'GET':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
-    file_type=request.GET.get("file_type")
     project_id=request.GET.get(('project_id'))
-    if not file_type or not project_id:
-        return JsonResponse({'errno': 1, 'msg': "参数不全"})
-    if not (file_type == 'document' or file_type == 'prototype') or not project_id.isdigit():
-        return JsonResponse({'errno': 1, 'msg': "参数值错误"})
     try:
         project = Project.objects.get(id=project_id)
     except Project.DoesNotExist:
@@ -530,34 +561,32 @@ def all_file(request):
         member = Member.objects.get(user=user, team=project.team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-    if file_type=='document':
-        file_list = Document.objects.filter(project=project)
-    else:
-        file_list = Prototype.objects.filter(project=project)
-    files = []
-    for d in file_list:
-        files.append(d.to_dict())
-    files.append({'document_num': file_list.count()})
-    return JsonResponse({'errno': 0, 'files': files, 'msg': "获取原型成功"})
+    #怎么写呢
+    root_folders = Folder.objects.filter(project=project, parent_folder=None)
+    result = []
+    for folder in root_folders:
+        folder_info = folder.to_dict_recursive()
+        result.append(folder_info)
+    return JsonResponse({'errno': 0, 'files': result, 'msg': "获取原型成功"})
 @validate_login
-def all_deleted(request):  # 包括 原型和协作文档
+def all_deleted(request):  # 包括 原型、文档和文件夹
     if request.method != 'GET':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
-    project_id=request.GET.get('project_id')
+    project_id = request.GET.get('project_id')
     try:
         project = Project.objects.get(id=project_id)
     except Project.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
-    document_list=Document.objects.filter(project=project,is_deleted=True)
-    prototype_list=Prototype.objects.filter(project=project,is_deleted=True)
-    documents=[]
-    projects=[]
-    for d in document_list:
-        documents.append(d.to_dict())
-    for p in prototype_list:
-        projects.append(p.to_dict())
-    return JsonResponse({'errno': 0, 'msg': "获取回收站项目成功", 'documents':documents,'projects':documents})
+    document_list = Document.objects.filter(project=project, is_deleted=True)
+    prototype_list = Prototype.objects.filter(project=project, is_deleted=True)
+    folder_list = Folder.objects.filter(project=project, is_deleted=True)
+    documents = [d.to_dict() for d in document_list]
+    projects = [p.to_dict() for p in prototype_list]
+    folders = [f.to_dict() for f in folder_list]
+    return JsonResponse(
+        {'errno': 0, 'msg': "获取回收站项目成功", 'documents': documents, 'projects': projects, 'folders': folders})
+
 
 @validate_login
 def history(request):
