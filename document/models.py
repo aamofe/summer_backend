@@ -64,7 +64,9 @@ class Prototype(models.Model):
             'modified_at':self.modified_at,
             'project_name':self.project.name,
             'creator':self.user.nickname,
-            'type':'prototype'
+            'type':'prototype',
+            'length':self.length,
+            'width':self.width
         }
 
 # class Template(models.Model):
