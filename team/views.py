@@ -21,7 +21,7 @@ from datetime import datetime, timedelta
 from django.template import loader
 from jose import JWTError
 from jwt import ExpiredSignatureError
-from document.models import Document, Prototype
+from document.models import Document, Prototype, Folder
 
 from summer_backend import settings
 from summer_backend.settings import SECRET_KEY, EMAIL_HOST_USER
@@ -278,6 +278,7 @@ def create_project(request, team_id):
         return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
     team = team_list[0]
     project = Project.objects.create(name=project_name, team=team,user=user)
+    folder=Folder.objects.create(name=project_name,project=project)
     return JsonResponse({'errno': 0,'project':project.to_dict(), 'msg': "项目创建成功"})
 
 
@@ -381,22 +382,34 @@ def get_current_team(request):
     team_list['role_string']=member.role
     # pprint.pprint(team_list)
     return JsonResponse({'errno': 0,'team':team_list, 'msg': "请求成功"})
+
+
 @validate_login
 def all_projects(request):
     if request.method != 'GET':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
-    user=request.user
+    user = request.user
+    team_id = request.GET.get('team_id')  # 选择特定团队的项目
+    sort_by = request.GET.get('sort_by', 'created_at')  # 默认按创建时间排序
     try:
-        team=Team.objects.get(id=user.current_team_id)
+        team = Team.objects.get(id=team_id)
     except Team.DoesNotExist:
-        team=Team.objects.get(user=user,name='个人空间')
-        user.current_team_id=team.id
-        user.save()
-    projects=Project.objects.filter(team=team,is_deleted=False).order_by('-created_at')
-    project_list=[]
-    for p in projects:
-        project_list.append(p.to_dict())
-    return JsonResponse({'errno': 0, 'msg': "获取团队所有项目成功",'projects':project_list})
+        return JsonResponse({'errno': 1, 'msg': "团队不存在"})
+    try:
+        member = Member.objects.get(user=user, team=team)
+    except Member.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
+
+    if sort_by == 'created_at':
+        project_list = Project.objects.filter(team=team).order_by('-created_at')
+    elif sort_by == 'name':
+        project_list = Project.objects.filter(team=team).order_by('name')
+    else:
+        return JsonResponse({'errno': 1, 'msg': "无效的排序选项"})
+    projects = [project.to_dict() for project in project_list]
+    return JsonResponse({'errno': 0, 'projects': projects, 'msg': "获取项目列表成功"})
+
+
 @validate_login
 def get_one_team(request):
     if request.method != 'GET':
@@ -498,7 +511,6 @@ def search(request):
     projects=[]
     prototypes=[]
     if query:
-
         teams = Team.objects.filter(Q(member__user=user,name__icontains=query) | Q(description__icontains=query))
         teams = teams.order_by('-created_at')  # 按创建时间降序排序
         projects=Project.objects.filter(Q(project__team__member__user=user) | Q(description__icontains=query))
@@ -523,3 +535,5 @@ def copy(request):
     project1.id = None  # 重置 ID，以便创建一个新的数据库记录
     project1.title = f"{project.title} (1)"  # 修改名称
     project1.save()  # 保存新的项目副本
+
+
