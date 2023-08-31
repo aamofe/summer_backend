@@ -17,19 +17,20 @@ class Folder(models.Model):
         children = []
         parent_folder = self
         for child_folder in parent_folder.child_folders.all():
-            children.append(child_folder.to_dict(sorted_by))  # 递归获取子文件夹信息
+            if child_folder.is_deleted==False:
+                children.append(child_folder.to_dict(sorted_by))  # 递归获取子文件夹信息
         if sorted_by == 'created_at':
-            documents = Document.objects.filter(parent_folder=parent_folder).order_by('created_at')
-            prototypes = Prototype.objects.filter(parent_folder=parent_folder).order_by('created_at')
+            documents = Document.objects.filter(parent_folder=parent_folder,is_deleted=False).order_by('created_at')
+            prototypes = Prototype.objects.filter(parent_folder=parent_folder,is_deleted=False).order_by('created_at')
         elif sorted_by == '-created_at':
-            documents = Document.objects.filter(parent_folder=parent_folder).order_by('-created_at')
-            prototypes = Prototype.objects.filter(parent_folder=parent_folder).order_by('-created_at')
+            documents = Document.objects.filter(parent_folder=parent_folder,is_deleted=False).order_by('-created_at')
+            prototypes = Prototype.objects.filter(parent_folder=parent_folder,is_deleted=False).order_by('-created_at')
         elif sorted_by == 'name':
-            documents = Document.objects.filter(parent_folder=parent_folder).order_by('title')
-            prototypes = Prototype.objects.filter(parent_folder=parent_folder).order_by('title')
+            documents = Document.objects.filter(parent_folder=parent_folder,is_deleted=False).order_by('title')
+            prototypes = Prototype.objects.filter(parent_folder=parent_folder,is_deleted=False).order_by('title')
         else:
-            documents = Document.objects.filter(parent_folder=parent_folder).order_by('-title')
-            prototypes = Prototype.objects.filter(parent_folder=parent_folder).order_by('-title')
+            documents = Document.objects.filter(parent_folder=parent_folder,is_deleted=False).order_by('-title')
+            prototypes = Prototype.objects.filter(parent_folder=parent_folder,is_deleted=False).order_by('-title')
         for document in documents:
             children.append(document.to_dict('name'))
         for prototype in prototypes:
