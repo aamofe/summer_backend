@@ -79,5 +79,14 @@ class ChatMember(models.Model):
     team=models.ForeignKey('Group',on_delete=models.CASCADE)
     def __str__(self):
         return f"{self.get_role_display()}"
+class File(models.Model):
+    chat_message=models.ForeignKey(ChatMessage,on_delete=models.CASCADE)
+    url=models.URLField(verbose_name="文件地址")
+    name=models.CharField(verbose_name="文件名",max_length=50)
+    audio=models.BooleanField(verbose_name="是否为音频",default=False)
+    duration=models.IntegerField(verbose_name="音频时长",default=0)
+    size=models.IntegerField(verbose_name="文件大小",default=0)
+    preview=models.URLField(verbose_name="文件预览地址",default=None,null=True)
+    progress=models.IntegerField(verbose_name="文件上传进度",default=0)
 
 

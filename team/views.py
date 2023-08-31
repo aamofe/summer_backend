@@ -98,7 +98,9 @@ def update_team(request, team_id):  # 修改团队描述 上传头像
                 return JsonResponse({'errno': 1, 'msg': content})
             else:
                 team.cover_url = cover_url
+                group.cover_url=cover_url
         team.save()
+        group.save()
         return JsonResponse({'errno': 0, 'msg': "修改信息成功"})
     else:
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
@@ -115,10 +117,13 @@ def get_invitation(request):
         return JsonResponse({'errno': 1, 'msg': "请输入team_id"})
     try:
         team=Team.objects.get(id=team_id)
+        group=Group.objects.get(actual_team=team_id)
     except Team.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
     try:
         member=Member.objects.get(team=team,user=user)
+        ChatMember.objects.get(team=group,user=user)
+
     except Member.DoesNotExist:
         print("team_user : ",team.user.id,"当前用户 ： ",user.id)
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
@@ -156,14 +161,17 @@ def accept_invitation(request,token):
     team_id = payload.get('team_id')
     try:
         team = Team.objects.get(id=team_id)
+        group = Group.objects.get(actual_team=team_id)
     except Team.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "团队不存在"})
     user=request.user
     try:
         member=Member.objects.get(team=team,user=user)
+        chat_member=ChatMember.objects.get(team=group,user=user)
         return JsonResponse({'errno': 0, 'msg': "您已加入该团队"})
     except Member.DoesNotExist:
         member = Member.objects.create(user=user, team=team)
+        chat_member=ChatMember.objects.create(user=user,team=group)
         return JsonResponse({'errno': 0, 'msg': "加入成功"})
 @validate_login
 def all_teams(request):
@@ -240,6 +248,7 @@ def update_permisson(request, team_id):
     editor = request.user
     try:
         team=Team.objects.get(id=team_id)
+        group=Group.objects.get(actual_team=team_id)
     except Team.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
     try:
@@ -252,6 +261,7 @@ def update_permisson(request, team_id):
         return JsonResponse({'errno': 1, 'msg': "该用户不存在"})
     try:
         medted=Member.objects.get(team=team,user=edited)
+        Medted=ChatMember.objects.get(team=group,user=edited)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     if edited.id == editor.id:
@@ -262,9 +272,12 @@ def update_permisson(request, team_id):
         return JsonResponse({'errno': 0, 'msg': "身份未发生改变"})
     elif choice == 'DE':
         medted.delete()
+        Medted.delete()
     elif choice == 'MG' or choice == 'MB':
         medted.role = choice
+        Medted.role=choice
         medted.save()
+        Medted.save()
     else:
         return JsonResponse({'errno': 1, 'msg': "操作错误"})
     return JsonResponse({'errno': 0, 'msg': "操作成功"})
@@ -459,6 +472,7 @@ def quit_team(request):
     team_id=request.POST.get("team_id")
     try:
         team=Team.objects.get(id=team_id)
+        group=Group.objects.get(actual_team=team_id)
     except Team.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
     try:
@@ -469,6 +483,9 @@ def quit_team(request):
         member_list=Member.objects.get(team=team)
         member_list.delete()
         team.delete()
+        chat_member_list=ChatMember.objects.get(team=group)
+        chat_member_list.delete()
+        group.delete()
     else:
         member.delete()
     return JsonResponse({'errno': 0, 'msg': "成功退出团队"})

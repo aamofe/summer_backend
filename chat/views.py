@@ -21,24 +21,24 @@ def save_message(message,team_id,user_id):
 
 
 
-def upload_image(request, team_id, user_id):
+def upload_file(request, team_id, user_id):
     avatar = request.FILES.get('avatar')
     if not avatar:
         print("no avatar")
     current_time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
     formatted_string = f"team_id: {team_id}, user_id: {user_id}, time: {current_time}"
     print(formatted_string)
-    avatar_url, content = upload_cover_method(avatar,formatted_string,'chat_avatar')
+    avatar_url, contenttype = upload_cover_method(avatar,formatted_string,'chat_avatar')
     channel_layer = get_channel_layer()
     async_to_sync(channel_layer.group_send)(
         f"chat_{team_id}",
         {
             'type': 'new_file_uploaded',
             'file_url': avatar_url,
-            'file_type': 'image',
+            'file_type': contenttype,
         }
     )
-    save_message(avatar_url,team_id,user_id)
+    save_message
 
     return JsonResponse({'errno': 0, 'msg': '上传成功', 'url': avatar_url})
 
@@ -139,7 +139,7 @@ def upload_cover_method(cover_file, cover_id, url):
         BizType='aa3bbd2417d7fa61b38470534735ff20',
         Key=cover_key,
     )
-    return cover_url, None
+    return cover_url, ContentType
 
 
 def get_user_messages(request, user_id):
@@ -196,7 +196,23 @@ def delete_all_read(request, user_id):
         return JsonResponse({"message": "All read messages deleted"})
     return JsonResponse({"error": "Method not allowed"}, status=405)
 
-def get_group_id(request,user_id,team_id):
+def get_group_id(request,team_id):
     group_id=Group.objects.get(actual_team=team_id).id
     return JsonResponse({'group_id':group_id})
 
+def get_group_members(request,group_id):
+    members=ChatMember.objects.filter(team_id=group_id)
+    data=[]
+    for member in members:
+        data.append({
+            'id':member.user_id,
+            'username':User.objects.get(id=member.user_id).username,
+            'nickname':User.objects.get(id=member.user_id).nickname,
+            'avatar_url':User.objects.get(id=member.user_id).avatar_url,
+            'role':member.role,
+        })
+    return JsonResponse({'members':data})
+
+
+def get_all_groups_members(request):
+    return None
