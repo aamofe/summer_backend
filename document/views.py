@@ -495,3 +495,75 @@ def delete_permanently(request):
     deleted_prototype = Prototype.objects.filter(Q(parent_folder__project=project, is_deleted=True))
     deleted_prototype.delete()
     return JsonResponse({'errno': 0, 'msg': "已彻底删除"})
+
+#创建模板（网站）
+
+#保存为模板
+@validate_login
+def save_as_template(request):
+    if request.method != 'POST':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
+    user = request.user
+    content = request.POST.get('content')
+    title=request.POST.get('title')
+    file_type = request.POST.get('file_type')  # 'prototype' or 'document'
+    if file_type == 'prototype':
+        prototype = Prototype.objects.create(
+            title=title,
+            content=content,
+            user=user,
+            is_template=True,
+            is_private=True  # Adjust as needed
+        )
+        return JsonResponse({'errno': 0, 'msg': "成功保存为模板！", 'template_id': prototype.id})
+    elif file_type == 'document':
+        document = Document.objects.create(
+            title=title,
+            content=content,
+            user=user,
+            is_template=True,
+            is_private=True  # Adjust as needed
+        )
+        return JsonResponse({'errno': 0, 'msg': "成功保存为模板！", 'template_id': document.id})
+    else:
+        return JsonResponse({'errno': 1, 'msg': "不支持的文件类型！"})
+#从模板导入
+@validate_login
+def import_from_template(request):
+    if request.method != 'POST':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
+    user = request.user
+    file_id = request.POST.get('file_id')
+    file_type = request.POST.get('file_type')  # 'prototype' or 'document'
+    project_id= request.POST.get("project_id")
+    #判断项目相关
+    if file_type == 'prototype':
+        try:
+            template = Prototype.objects.get(id=file_id, is_template=True)
+        except Prototype.DoesNotExist:
+            return JsonResponse({'errno': 1, 'msg': "模板不存在或不可用！"})
+        if not template.user is None or template.user!=user:
+            return JsonResponse({'errno': 1, 'msg': "模板不存在或不属于当前用户！"})
+        prototype =Prototype.objects.create(
+            title='未命名原型',
+            content=template.content,
+            #parent_folder，这里怎么传
+            is_template=False)
+        return JsonResponse({'errno': 0, 'msg': "成功导入模板！", 'prototype':prototype.to_dict()})
+    
+    elif file_type == 'document':
+        try:
+            template = Document.objects.get(id=file_id, is_template=True,)
+        except Document.DoesNotExist:
+            return JsonResponse({'errno': 1, 'msg': "模板不存在或不可用！"})
+        if not template.user is None or template.user!=user:
+            return JsonResponse({'errno': 1, 'msg': "模板不存在或不属于当前用户！"})
+        document =Document.objects.create(
+            title='未命名原型',
+            content=template.content,
+            #parent_folder，
+            is_template=False)
+        return JsonResponse({'errno': 0, 'msg': "成功导入模板！",'document':document.to_dict()})
+    else:
+        return JsonResponse({'errno': 1, 'msg': "不支持的文件类型！"})
+#
