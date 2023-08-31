@@ -17,23 +17,24 @@ class Folder(models.Model):
         children = []
         parent_folder = self
         for child_folder in parent_folder.child_folders.all():
-            children.append(child_folder.to_dict(sorted_by))  # 递归获取子文件夹信息
+            if child_folder.is_deleted==False:
+                children.append(child_folder.to_dict(sorted_by))  # 递归获取子文件夹信息
         if sorted_by == 'created_at':
-            documents = Document.objects.filter(parent_folder=parent_folder).order_by('created_at')
-            prototypes = Prototype.objects.filter(parent_folder=parent_folder).order_by('created_at')
+            documents = Document.objects.filter(parent_folder=parent_folder,is_deleted=False).order_by('created_at')
+            prototypes = Prototype.objects.filter(parent_folder=parent_folder,is_deleted=False).order_by('created_at')
         elif sorted_by == '-created_at':
-            documents = Document.objects.filter(parent_folder=parent_folder).order_by('-created_at')
-            prototypes = Prototype.objects.filter(parent_folder=parent_folder).order_by('-created_at')
+            documents = Document.objects.filter(parent_folder=parent_folder,is_deleted=False).order_by('-created_at')
+            prototypes = Prototype.objects.filter(parent_folder=parent_folder,is_deleted=False).order_by('-created_at')
         elif sorted_by == 'name':
-            documents = Document.objects.filter(parent_folder=parent_folder).order_by('title')
-            prototypes = Prototype.objects.filter(parent_folder=parent_folder).order_by('title')
+            documents = Document.objects.filter(parent_folder=parent_folder,is_deleted=False).order_by('title')
+            prototypes = Prototype.objects.filter(parent_folder=parent_folder,is_deleted=False).order_by('title')
         else:
-            documents = Document.objects.filter(parent_folder=parent_folder).order_by('-title')
-            prototypes = Prototype.objects.filter(parent_folder=parent_folder).order_by('-title')
+            documents = Document.objects.filter(parent_folder=parent_folder,is_deleted=False).order_by('-title')
+            prototypes = Prototype.objects.filter(parent_folder=parent_folder,is_deleted=False).order_by('-title')
         for document in documents:
-            children.append(document.to_dict())
+            children.append(document.to_dict('name'))
         for prototype in prototypes:
-            children.append(prototype.to_dict())
+            children.append(prototype.to_dict('name'))
         return {
             'id': self.id,
             'name': self.name,
@@ -59,11 +60,11 @@ class Document(models.Model):
     is_template=models.BooleanField(verbose_name='是否为模板',default=False)
     is_private=models.BooleanField(verbose_name='是否私有',default=True)
 
-    def to_dict(self):
+    def to_dict(self,name='title'):
 
         return {
             'id':self.id,
-            'title':self.title,
+            name:self.title,
             'content':self.content,
             'creator':self.user.id,
             'created_at':(self.created_at.astimezone(shanghai_tz)).strftime('%Y-%m-%d %H:%M:%S'),
@@ -103,10 +104,10 @@ class Prototype(models.Model):
 
     is_template=models.BooleanField(verbose_name='是否为模板',default=False)
     is_private=models.BooleanField(verbose_name='是否私有',default=True)
-    def to_dict(self):
+    def to_dict(self,name='title'):
         return {
             'id':self.id,
-            'title':self.title,
+            name:self.title,
             'content':self.content,
             'created_at':(self.created_at.astimezone(shanghai_tz)).strftime('%Y-%m-%d %H:%M:%S'),
             'modified_at':(self.modified_at.astimezone(shanghai_tz)).strftime('%Y-%m-%d %H:%M:%S'),

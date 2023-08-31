@@ -190,7 +190,7 @@ def create(request):
     if not(file_type=='document' or file_type=='prototype'):
         return JsonResponse({'errno': 1, 'msg': "创建文件类型错误"})
     try:
-        parent_folder = Folder.objects.get(id=parent_folder_id,is_delete=False)
+        parent_folder = Folder.objects.get(id=parent_folder_id,is_deleted=False)
     except Folder.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
     try:
@@ -343,7 +343,7 @@ def create_folder(request):
     parent_folder_id = request.POST.get('parent_folder_id')  # 修改参数名为 parent_folder_id
     if parent_folder_id:
         try:
-            parent_folder = Folder.objects.get(id=parent_folder_id,is_delete=False)
+            parent_folder = Folder.objects.get(id=parent_folder_id,is_deleted=False)
         except Folder.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "父文件夹不存在"})
     else:
