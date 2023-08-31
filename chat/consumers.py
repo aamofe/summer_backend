@@ -149,7 +149,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
             'team_id': self.team_id,
             'user_id': user_id,
             'message': message,
-            'files': files,
+            'files': [files],
             'replyMessage': replyMessage,
             'username': username,
             'avatar_url': avatar_url,
@@ -260,7 +260,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def get_files(self, msg):
         if msg.files:
-            file_data = {
+            file_data = [{
                 'url': msg.files.url,
                 'name': msg.files.name,
                 'audio': msg.files.audio,
@@ -268,7 +268,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 'size': msg.files.size,
                 'preview': msg.files.preview,
                 'progress': msg.files.progress,
-            }
+            }]
             return file_data
         else:
             return None
