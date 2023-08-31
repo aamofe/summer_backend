@@ -231,9 +231,5 @@ def get_group(request, user_id):
         data.append(group.team_id)
     return JsonResponse({'groups': data})
 
-def make_group(request):
-    if request.method == "POST":
-        creator_id = request.POST.get('creator_id')
+#def make_group(request):
 
-
-    return JsonResponse({"error": "Method not allowed"}, status=405)

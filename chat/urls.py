@@ -21,5 +21,5 @@ urlpatterns = [
     path('get_group_members/<int:group_id>',views.get_group_members),
     path('get_all_groups_members/<int:user_id>',views.get_all_groups_members),
 
-    path('make_group',views.make_group),
+    #path('make_group',views.make_group),
 ]
