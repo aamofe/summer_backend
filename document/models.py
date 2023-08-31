@@ -16,14 +16,25 @@ class Folder(models.Model):
     def to_dict(self):
         children = []
         for child_folder in self.child_folders.all():
-            children.append(child_folder.to_dict_recursive())  # 递归获取子文件夹信息
-        for document in Document.objects.filter(parent_folder=self):
+            children.append(child_folder.to_dict())  # 递归获取子文件夹信息
+        parent_folder=self
+        if self.is_deleted:
+            try:
+                copy=Copy.objects.get(original=parent_folder)
+                parent_folder=copy.revised
+            except Copy.DoesNotExist:
+                pass
+        for document in Document.objects.filter(parent_folder=parent_folder):
+            # print("我的孩子")
             children.append(document.to_dict())
+        for prototype in Prototype.objects.filter(parent_folder=parent_folder):
+            # print("我的孩子")
+            children.append(prototype.to_dict())
         return {
             'id': self.id,
             'name': self.name,
             'project_name': self.project.name,
-            'parent_folder_id': self.parent_folder_id,
+            'parent_folder_id': self.parent_folder.id if not self.parent_folder is None else None,
             'type': 'folder',
             'children': children  # 添加子文件夹和子文件信息
         }

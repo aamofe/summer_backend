@@ -355,26 +355,32 @@ def create(request):
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
     file_type = request.POST.get('file_type')  # 原型 文档
-    folder_id=request.POST.get('folder_id')
+    parent_folder_id=request.POST.get('parent_folder_id')
 
     title = request.POST.get("title")
     content = request.POST.get("content")
-    if not title or not file_type or not title or not folder_id :
+    if not title or not file_type or not title or not parent_folder_id :
         return JsonResponse({'errno': 1, 'msg': "参数不全"})
     if not(file_type=='document' or file_type=='prototype'):
         return JsonResponse({'errno': 1, 'msg': "创建文件类型错误"})
     try:
-        folder = Folder.objects.get(id=folder_id,is_deleted=False)
+        parent_folder = Folder.objects.get(id=parent_folder_id)
+        if parent_folder.is_deleted==True:
+            try:
+                copy=Copy.objects.get(original=parent_folder)
+                parent_folder=copy.revised
+            except Copy.DoesNotExist:
+                pass
     except Folder.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
     try:
-        member = Member.objects.filter(team=folder.parent_folder.project.team, user=user)
+        member = Member.objects.filter(team=parent_folder.project.team, user=user)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     if file_type=='document':
-        file = Document.objects.create(title=title,folder=folder, user=user)
+        file = Document.objects.create(title=title,parent_folder=parent_folder, user=user)
     else:
-        file = Prototype.objects.create(title=title, folder=folder, user=user)
+        file = Prototype.objects.create(title=title,parent_folder=parent_folder, user=user)
     if content:
         file.content = content
         file.save()
@@ -588,24 +594,31 @@ def create_folder(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
     user = request.user
-    project_id = request.POST.get('project_id')
-    parent_folder_id = request.POST.get('folder_id')  # 修改参数名为 parent_folder_id
-    try:
-        project = Project.objects.get(id=project_id)
-    except Project.DoesNotExist:
+    # project_id = request.POST.get('project_id')
+    
+    parent_folder_id = request.POST.get('parent_folder_id')  # 修改参数名为 parent_folder_id
+    if parent_folder_id:
+        try:
+            parent_folder = Folder.objects.get(id=parent_folder_id)
+            if parent_folder.is_deleted==True:
+                try:
+                    copy=Copy.objects.get(original=parent_folder)
+                    parent_folder=copy.revised
+                except Copy.DoesNotExist:
+                    pass
+        except Folder.DoesNotExist:
+            return JsonResponse({'errno': 1, 'msg': "父文件夹不存在"})
+    else:
+       return JsonResponse({'errno': 1, 'msg': "请传入父文件夹id"})
+    project=parent_folder.project
+    if project.is_deleted:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     try:
         member=Member.objects.get(user=user,team=parent_folder.project.team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-    if parent_folder_id:
-        try:
-            parent_folder = Folder.objects.get(id=parent_folder_id, project=project)
-        except Folder.DoesNotExist:
-            return JsonResponse({'errno': 1, 'msg': "父文件夹不存在"})
-    else:
-        parent_folder = None
-    if parent_folder.parent_folder!=None and parent_folder.parent_folder.parent_folder!=None:
+    
+    if parent_folder.parent_folder!=None:
         return JsonResponse({'errno': 1, 'msg': "不可创建三级文件夹"})
     folder_name = request.POST.get('folder_name')  # 从请求中获取文件夹名
     if not folder_name:
@@ -657,38 +670,29 @@ def delete_folder(request):
 def view_folder(request):
     if request.method != 'GET':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
-    project_id = request.GET.get('project_id')
-    folder_id = request.GET.get('folder_id')
-    user=request.user
+    # project_id = request.GET.get('project_id')
+    parent_folder_id = request.GET.get('parent_folder_id')
     try:
-        project = Project.objects.get(id=project_id)
-    except Project.DoesNotExist:
+        parent_folder = Folder.objects.get(id=parent_folder_id)
+    except Folder.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
+    if parent_folder.is_deleted==True:
+        try:
+            copy=Copy.objects.get(original=parent_folder)
+            parent_folder=copy.revised
+        except Copy.DoesNotExist:
+            pass
+    user=request.user
+    project=parent_folder.project
+    if project.is_deleted:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     try:
         member=Member.objects.get(user=user,team=parent_folder.project.team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-    try:
-        folder = Folder.objects.get(id=folder_id, project=project)
-    except Folder.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
-    if folder.is_deleted==True:
-        try:
-            copy=Copy.objects.get(original=folder)
-            folder=copy.revised
-        except Copy.DoesNotExist:
-            pass
-    children = []
-    for child_folder in folder.child_folders.all():
-        children.append(child_folder.to_dict())  # 递归获取子文件夹信息
-    for document in Document.objects.filter(folder=folder):
-        children.append(document.to_dict())
-    for prototype in Prototype.objects.filter(project=project):
-        children.append(prototype.to_dict())
-
-    folder_info = folder.to_dict()
-    folder_info['children'] = children
-    return JsonResponse({'errno': 0, 'msg': "获取文件夹信息成功", 'folder': folder_info})
+    
+    parent_folder_info = parent_folder.to_dict()
+    return JsonResponse({'errno': 0, 'msg': "获取文件夹信息成功", 'parent_folder': parent_folder_info})
 
 @validate_login
 def restore(request):
