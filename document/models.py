@@ -45,12 +45,12 @@ class Folder(models.Model):
 class Document(models.Model):
     title=models.CharField(verbose_name="标题",max_length=20)
     content=models.TextField(verbose_name="文档内容",null=True)
-    url=models.URLField(verbose_name="不可编辑文档链接",null=True)
-    url_editable=models.URLField(verbose_name="可编辑链接",null=True)
+    # url=models.URLField(verbose_name="不可编辑文档链接",null=True)
+    # url_editable=models.URLField(verbose_name="可编辑链接",null=True)
     created_at=models.DateTimeField(verbose_name="创建时间",auto_now_add=True)
     modified_at=models.DateTimeField(verbose_name="最近修改时间",auto_now=True)
     deleted_at = models.DateTimeField(verbose_name='被删除时间', null=True)
-
+    editable=models.BooleanField(verbose_name='是否可编辑',default=True)
     parent_folder=models.ForeignKey(Folder,null=True,verbose_name="所属文件夹",on_delete=models.CASCADE)
     user=models.ForeignKey(User,null=True,verbose_name="创建者",on_delete=models.CASCADE)
     is_locked=models.IntegerField(verbose_name="文件锁",default=False)
@@ -76,12 +76,15 @@ class History(models.Model):
     document = models.ForeignKey(Document, on_delete=models.CASCADE)
     content = models.TextField(verbose_name="文档内容",null=True)
     modified_at = models.DateTimeField(verbose_name="修改时间", auto_now_add=True)
+    user=models.ForeignKey(User,verbose_name="修改用户",on_delete=models.PROTECT)
     class Meta:
         ordering = ['-modified_at']
     def to_dict(self):
         return {
+            'id':self.id,
             'content':self.content,
-            'modified_at':self.modified_at,
+            'modified_at':(self.modified_at.astimezone(shanghai_tz)).strftime('%Y-%m-%d %H:%M:%S'),
+            'user':self.user.nickname
         }
 class Prototype(models.Model):
     title=models.CharField(verbose_name='标题',max_length=20)

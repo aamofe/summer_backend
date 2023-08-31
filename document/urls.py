@@ -10,6 +10,7 @@ urlpatterns = [
     path('view_document/<str:token>/', views.view_document, name='create_document'),
     path('share_document/',views.share_document),
     path('change_lock/',views.change_lock),
+    path('update_document_permisson/',views.update_document_permisson),
     # path('save_document/',views.save_document),
     # path('all_documents/<int:project_id>/',views.all_documents),
     # path('create_prototype/<int:project_id>/',views.create_prototype),

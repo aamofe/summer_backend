@@ -17,33 +17,47 @@ from user.authentication import validate_login, validate_all
 from user.cos_utils import get_cos_client
 from user.models import User
 from user.views import upload_cover_method
-
+@validate_login
 def share_document(request):
     if request.method!='POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
     document_id=request.POST.get('document_id')
-    editable=request.POST.get('editable')
     try :
         document=Document.objects.get(id=document_id,parent_folder__is_deleted=False)
     except Document.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "文档不存在"})
-    print("editable : ",editable)
+    payload = {"document_id":document_id}
+    token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
+    url="http://www.aamoef.top/tiptap/"+token+'/'
+    return JsonResponse({'errno':0,'data':{'url':url}})
+
+@validate_login
+def update_document_permisson(request):
+    if request.method!='POST':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
+    document_id=request.POST.get('document_id')
+    editable=request.POST.get('editable')
+    user=request.user
+    try :
+        document=Document.objects.get(id=document_id,parent_folder__is_deleted=False)
+    except Document.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "文档不存在"})
     try:
         editable = int(editable)  # 将字符串转换为整数
     except (ValueError, TypeError):
         return JsonResponse({'errno': 1, 'msg': "编辑权限错误"})
     if editable != 1 and editable != 0:
         return JsonResponse({'errno': 1, 'msg': "编辑权限错误"})
-    if not document.url:
-        payload = {"document_id":document_id,"editable":True}
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        document.url_editable="http://www.aamoef.top/tiptap/"+token+'/'
-        payload = {"document_id":document_id,"editable":False}
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-        document.url="http://www.aamoef.top/tiptap/"+token+'/'
-        document.save()
-    data=[document.url_editable if editable else document.url]
-    return JsonResponse({'errno':0,'data':data})
+    try:
+        member=Member.objects.get(team=document.parent_folder.project.team,user=user)
+    except Member.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
+    if member.role=='MB':
+        return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
+    document.editable=True if editable==1 else False
+    document.save()
+    print(document.editable)
+    return JsonResponse({'errno': 0, 'msg': "修改权限成功"})
 @validate_all
 def view_document(request,token):
     if request.method!='GET':
@@ -75,7 +89,7 @@ def view_document(request,token):
             document=Document.objects.get(id=document_id,is_deleted=False,parent_folder__is_deleted=False)
         except Document.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "文档不存在"})
-        editable=payload.get('editable')
+        editable=document.editable
     dict=document.to_dict()
     dict['editable']=editable
     return JsonResponse({'errno': 0, 'msg': "查看成功",'document':dict})
@@ -278,6 +292,8 @@ def save(request):
         file.title=title
     if content:
         file.content=content
+        if file_type=='document':
+            history=History.objects.create(document=file,content=content,user=user)
     file.save()
     return JsonResponse({'errno': 0, 'msg': "内容已保存"})
 
@@ -363,7 +379,7 @@ def view_folder(request):
     if sorted_by not in{'created_at','-created_at','name','-name'}:
         return JsonResponse({'errno': 1, 'msg': "排序方法错误"})
     try:
-        parent_folder = Folder.objects.get(id=parent_folder_id,is_delete=False)
+        parent_folder = Folder.objects.get(id=parent_folder_id,is_deleted=False)
     except Folder.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
     user=request.user
