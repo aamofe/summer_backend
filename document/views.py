@@ -266,8 +266,22 @@ def save(request):
     user=request.user
     if not file_type or not file_id :
         return JsonResponse({'errno': 1, 'msg': "参数不全"})
-    if not(file_type=='document' or file_type=='prototype') or not file_id.isdigit() :
+    if not(file_type=='document' or file_type=='prototype' or file_type=='folder') or not file_id.isdigit() :
+        print('错误 ： ',file_type,file_id)
         return JsonResponse({'errno': 1, 'msg': "参数值错误"})
+    if file_type=='folder':
+        try:
+            folder=Folder.objects.get(id=file_id)
+        except Folder.DoesNotExist:
+            return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
+        if folder.parent_folder is None:
+            return JsonResponse({'errno': 1, 'msg': "顶级文件夹不可改名"})
+        if not title:
+            return JsonResponse({'errno': 1, 'msg': "请输入文件夹名称"})
+        print('tile :',title)
+        folder.name=title
+        folder.save()
+        return JsonResponse({'errno': 0, 'msg': "名称修改成功"})
     if file_type=='document':
         try :
             file=Document.objects.get(id=file_id)
