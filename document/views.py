@@ -9,7 +9,7 @@ from django.utils import timezone
 from jose import ExpiredSignatureError, JWTError
 import jwt
 from django.contrib.auth.models import AnonymousUser
-from document.models import Document, Prototype, History, Folder, Copy
+from document.models import Document, Prototype, History, Folder 
 from summer_backend import settings
 from summer_backend.settings import SECRET_KEY
 from team.models import Team, Member, Project
@@ -175,13 +175,7 @@ def create(request):
     if not(file_type=='document' or file_type=='prototype'):
         return JsonResponse({'errno': 1, 'msg': "创建文件类型错误"})
     try:
-        parent_folder = Folder.objects.get(id=parent_folder_id)
-        if parent_folder.is_deleted==True:
-            try:
-                copy=Copy.objects.get(original=parent_folder)
-                parent_folder=copy.revised
-            except Copy.DoesNotExist:
-                pass
+        parent_folder = Folder.objects.get(id=parent_folder_id,is_delete=False)
     except Folder.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
     try:
@@ -210,7 +204,7 @@ def delete(request,):#删除/彻底 一个/多个 文档/原型
         return JsonResponse({'errno': 1, 'msg': "参数值错误"})
     if file_type=='folder':
         try:
-            folder=Folder.objects.get(id=file_id)
+            folder=Folder.objects.get(id=file_id,is_deleted=False)
         except Folder.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
         try:
@@ -218,19 +212,7 @@ def delete(request,):#删除/彻底 一个/多个 文档/原型
         except Member.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
         if folder.is_deleted:
-            try:
-                copy=Copy.objects.get(original=folder)
-                revised=copy.revised
-                #把所有副本的内容都还给正版
-                f= Folder.objects.filter(parent_folder=revised)
-                f.update(parent_folder=folder)
-                d=Document.objects.filter(parent_folder=folder)
-                d.update(parent_folder=folder)
-                p=Prototype.objects.filter(parent_folder=folder)
-                p.update(parent_folder=folder)
-                copy.delete()
-            except Copy.DoesNotExist:
-                pass
+            return JsonResponse({'errno': 1, 'msg': "文件夹已被删除"})
         else:
             folder.is_deleted=True
             folder.deleted_at=timezone.now()
@@ -286,11 +268,7 @@ def save(request):
             return JsonResponse({'errno': 1, 'msg': "原型不存在"})
     parent_folder=file.parent_folder
     if parent_folder.is_deleted:
-        try:
-            copy=Copy.objects.get(original=parent_folder)
-            parent_folder=copy.revised
-        except Copy.DoesNotExist:
-            return JsonResponse({'errno': 1, 'msg': "文件夹"})
+        return JsonResponse({'errno': 1, 'msg': "文件夹已被删除"})
     try:
         member = Member.objects.get(user=user, team=parent_folder.project.team)
     except Member.DoesNotExist:
@@ -351,13 +329,7 @@ def create_folder(request):
     parent_folder_id = request.POST.get('parent_folder_id')  # 修改参数名为 parent_folder_id
     if parent_folder_id:
         try:
-            parent_folder = Folder.objects.get(id=parent_folder_id)
-            if parent_folder.is_deleted==True:
-                try:
-                    copy=Copy.objects.get(original=parent_folder)
-                    parent_folder=copy.revised
-                except Copy.DoesNotExist:
-                    pass
+            parent_folder = Folder.objects.get(id=parent_folder_id,is_delete=False)
         except Folder.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "父文件夹不存在"})
     else:
@@ -391,15 +363,9 @@ def view_folder(request):
     if sorted_by not in{'created_at','-created_at','name','-name'}:
         return JsonResponse({'errno': 1, 'msg': "排序方法错误"})
     try:
-        parent_folder = Folder.objects.get(id=parent_folder_id)
+        parent_folder = Folder.objects.get(id=parent_folder_id,is_delete=False)
     except Folder.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
-    if parent_folder.is_deleted==True:
-        try:
-            copy=Copy.objects.get(original=parent_folder)
-            parent_folder=copy.revised
-        except Copy.DoesNotExist:
-            pass
     user=request.user
     project=parent_folder.project
     if project.is_deleted:
@@ -416,7 +382,6 @@ def view_folder(request):
 def restore(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
-
     user = request.user
     project_id = request.POST.get('project_id')
     file_id = request.POST.get('file_id')  # ID of the item to be restored
@@ -435,29 +400,11 @@ def restore(request):
         #先判断父文件夹
         #父文件夹为空或者父文件夹存在的时候，都需要判断 自己是否有副本
         if file.parent_folder is None or file.parent_folder.is_deleted==False :
-            try:
-                copy=Copy.objects.get(original=file)
-                revised=copy.revised
-                folder_list=Folder.objects.filter(parent_folder=revised)
-                folder_list.update(parent_folder=file)
-                document_list=Document.objects.filter(folder=revised)
-                document_list.update(folder=file)
-                prototype_list=Prototype.objects.filter(folder=revised)
-                prototype_list.update(folder=file)
-            except Copy.DoesNotExist:
-                pass
             file.is_deleted=False
             file.save()
         else:#if file.parent_folder.is_deleted==True:
             parent_folder=file.parent_folder
-            try:
-                copy = Copy.objects.get(original=parent_folder)
-            except Copy.DoesNotExist:
-                folder = Folder.objects.create(name=parent_folder.name, project=parent_folder.project)
-                copy = Copy.objects.create(original=parent_folder, revised=folder)
-            file.parent_folder = copy.revised
-            file.is_deleted = False
-            file.save()
+            return JsonResponse({'errno': 1, 'msg': "父文件夹已被删除"})
     elif file_type=='document':
         try:
             file=Document.objects.get(id=file_id,is_deleted=True)
@@ -468,13 +415,7 @@ def restore(request):
             file.is_deleted = False
             file.save()
         else:
-            parent_folder = file.folder
-            try:
-                copy=Copy.objects.get(original=parent_folder)
-            except Copy.DoesNotExist:
-                folder = Folder.objects.create(name=parent_folder.name, project=parent_folder.project)
-                copy = Copy.objects.create(original=parent_folder, revised=folder)
-            file.parent_folder = copy.revised
+            return JsonResponse({'errno': 1, 'msg': "父文件夹已被删除"})
     else:
         try:
             file=Prototype.objects.get(id=file_id,is_deleted=True)
@@ -485,14 +426,8 @@ def restore(request):
             file.is_deleted = False
             file.save()
         else:
-            parent_folder = file.folder
-            try:
-                copy = Copy.objects.get(original=parent_folder)
-            except Copy.DoesNotExist:
-                folder = Folder.objects.create(name=parent_folder.name, project=parent_folder.project)
-                copy = Copy.objects.create(original=parent_folder, revised=folder)
-            file.parent_folder = copy.revised
-    return JsonResponse({'errno': 0, 'msg': "项目恢复成功"})
+            return JsonResponse({'errno': 1, 'msg': "父文件夹不存在"})
+    return JsonResponse({'errno': 0, 'msg': "文档恢复成功"})
 
 def rename_folder(request):
     if request.method != 'POST':

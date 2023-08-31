@@ -557,20 +557,76 @@ def search(request):
     project_list=[project.to_dict() for project in projects]
     prototype_list=[ prototype.to_dict() for  prototype in  prototypes]
     return JsonResponse({'errno':0,'teams':team_list,' prototypes': prototype_list,'project':project_list,'msg':'查询成功'})
+
 @validate_login
 def copy(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
-    user=request.user
-    project_id=request.POST.get('project_id')
+    
+    user = request.user
+    project_id = request.POST.get('project_id')
+    
     try:
-        project=Project.objects.get(id=project_id)
-    except:
+        project = Project.objects.get(id=project_id)
+    except Project.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
+    
     project1 = deepcopy(project)
-    project1.id = None  # 重置 ID，以便创建一个新的数据库记录
-    project1.name = f"{project.name} (1)"  # 修改名称
-    project1.save()  # 保存新的项目副本
-    print(project1.to_dict())
-    return JsonResponse({'errno':0,'project':project1.to_dict(),'msg':'复制成功'})
+    project1.id = None
+    project1.name = f"{project.name} (Copy)"  # 修改名称，以免重名
+    project1.save()
+    
+    try:
+        folder = Folder.objects.get(parent_folder=None, project=project)
+    except Folder.DoesNotExist:
+         return JsonResponse({'errno': 1, 'msg': '数据库bug'})
+    
+    folder1 = deepcopy(folder)
+    folder1.project = project1
+    folder1.parent_folder = None  # 更新为新项目的根文件夹
+    folder1.id = None
+    folder1.save()
+    
+    for f in Folder.objects.filter(parent_folder=folder):
+        f1 = deepcopy(f)
+        f1.project = project1
+        f1.parent_folder = folder1
+        f1.id = None
+        f1.save()
+        
+        for d in Document.objects.filter(parent_folder=f):
+            d1 = deepcopy(d)
+            d1.project = project1
+            d1.parent_folder = f1
+            d1.id = None
+            d1.save()
+        
+        for p in Prototype.objects.filter(parent_folder=f):
+            p1 = deepcopy(p)
+            p1.project = project1
+            p1.parent_folder = f1
+            p1.id = None
+            p1.save()
+    
+    for d in Document.objects.filter(parent_folder=folder):
+        d1 = deepcopy(d)
+        d1.project = project1
+        d1.parent_folder = folder1
+        d1.id = None
+        d1.save()
+    
+    for p in Prototype.objects.filter(parent_folder=folder):
+        p1 = deepcopy(p)
+        p1.project = project1
+        p1.parent_folder = folder1
+        p1.id = None
+        p1.save()
 
+    return JsonResponse({
+        'errno': 0,
+        'msg': '复制成功',
+        'project1': project1.to_dict(),
+        'folder1': folder1.to_dict(),
+        'project': project.to_dict(),
+        'folder': folder.to_dict(),
+    })
