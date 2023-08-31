@@ -10,7 +10,7 @@ class Team(models.Model):
     description=models.CharField(verbose_name="团队描述", max_length=50, null=True)
     created_at = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
     cover_url=models.URLField(verbose_name="团队封面",default="https://summer-1315620690.cos.ap-beijing.myqcloud.com/team_cover/default.png")
-    is_real=models.BooleanField(verbose_name='是否为真是群聊',default=True)
+    # is_real=models.BooleanField(verbose_name='是否为真是群聊',default=True)
     def to_dict(self):
         return {
             'id': self.id,

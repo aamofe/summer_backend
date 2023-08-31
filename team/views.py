@@ -332,7 +332,7 @@ def recover_one_project(request):
     except Project.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     try:
-        member=Member.objects.get(user=user,team=parent_folder.project.team)
+        member=Member.objects.get(user=user,team=project.team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于当前团队"})
     project.is_deleted=False
