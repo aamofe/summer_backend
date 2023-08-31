@@ -31,9 +31,9 @@ class Folder(models.Model):
             documents = Document.objects.filter(parent_folder=parent_folder).order_by('-title')
             prototypes = Prototype.objects.filter(parent_folder=parent_folder).order_by('-title')
         for document in documents:
-            children.append(document.to_dict())
+            children.append(document.to_dict('name'))
         for prototype in prototypes:
-            children.append(prototype.to_dict())
+            children.append(prototype.to_dict('name'))
         return {
             'id': self.id,
             'name': self.name,
@@ -59,11 +59,11 @@ class Document(models.Model):
     is_template=models.BooleanField(verbose_name='是否为模板',default=False)
     is_private=models.BooleanField(verbose_name='是否私有',default=True)
 
-    def to_dict(self):
+    def to_dict(self,name='title'):
 
         return {
             'id':self.id,
-            'title':self.title,
+            name:self.title,
             'content':self.content,
             'creator':self.user.id,
             'created_at':(self.created_at.astimezone(shanghai_tz)).strftime('%Y-%m-%d %H:%M:%S'),
@@ -103,10 +103,10 @@ class Prototype(models.Model):
 
     is_template=models.BooleanField(verbose_name='是否为模板',default=False)
     is_private=models.BooleanField(verbose_name='是否私有',default=True)
-    def to_dict(self):
+    def to_dict(self,name='title'):
         return {
             'id':self.id,
-            'title':self.title,
+            name:self.title,
             'content':self.content,
             'created_at':(self.created_at.astimezone(shanghai_tz)).strftime('%Y-%m-%d %H:%M:%S'),
             'modified_at':(self.modified_at.astimezone(shanghai_tz)).strftime('%Y-%m-%d %H:%M:%S'),
