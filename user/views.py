@@ -63,11 +63,9 @@ def register(request):
                 return JsonResponse({'errno': 1, 'msg': "注册时间间隔需大于5min"})
     user = User.objects.create(nickname=nickname,username=username, password=pswd1, email=email,current_team_id=0,is_new=True)
     if avatar:
-        res, avatar_url, content = upload_cover_method(avatar, user.id, 'user_avatar')
-        if res == -2:
+        res, avatar_url = upload_cover_method(avatar, user.id, 'user_avatar')
+        if res == -1:
             return JsonResponse({'errno': 1, 'msg': "图片格式不合法"})
-        elif res == 1:
-            return JsonResponse({'errno': 1, 'msg': content})
         else:
             user.avatar_url = avatar_url
     user.save()
@@ -179,11 +177,9 @@ def update_info(request):
         if password:
             user.password = password
         if avatar:
-            res, avatar_url, content = upload_cover_method(avatar, user.id, 'user_avatar')
-            if res == -2:
+            res, avatar_url = upload_cover_method(avatar, user.id, 'user_avatar')
+            if res == -1:
                 return JsonResponse({'errno': 1, 'msg': "图片格式不合法"})
-            elif res == 1:
-                return JsonResponse({'errno': 1, 'msg': content})
             else:
                 user.avatar_url = avatar_url
         user.save()
@@ -205,7 +201,7 @@ def upload_cover_method(cover_file, cover_id, url):
     elif file_extension == 'png':
         ContentType = "image/png"
     else:
-        return -2, None, None
+        return -1,None
     cover_key = f"{url}/{cover_id}.{file_extension}"
     response_cover = client.put_object(
         Bucket=bucket_name,
@@ -218,28 +214,8 @@ def upload_cover_method(cover_file, cover_id, url):
         cover_url = response_cover['url']
     else:
         cover_url = f'https://{bucket_name}.cos.{bucket_region}.myqcloud.com/{cover_key}'
-    response_submit = client.get_object_sensitive_content_recognition(
-        Bucket=bucket_name,
-        BizType='aa3bbd2417d7fa61b38470534735ff20',
-        Key=cover_key,
-    )
-    res = int(response_submit['Result'])
-    Score = int(response_submit['Score'])
-    if res == 1 or res == 2 or Score >= 60:
-        category = response_submit['Category']
-        label = response_submit['Label']
-        subLabel = response_submit['SubLabel']
-        if label == 'Politics':
-            content = "您的视频封面被判定为违规！" + \
-                      "标签是" + Label[label] + "，具体内容是：" + response_submit['PoliticsInfo']['Label'] + \
-                      "。判定比例高达 " + str(Score) + "%。请修改"
-        else:
-            content = "您的视频封面被判定为违规！" + \
-                      "标签是：" + Label[label] + "，分类为：" + Category[category] + "，具体内容是" + SubLabel[subLabel] + \
-                      "。判定比例高达" + str(Score) + "%。请修改！"
-        delete_cover_method(url, cover_id, file_extension)
-        return 1, None, content
-    return res, cover_url, None
+    return 0,cover_url
+
 def delete_cover_method(url, cover_id, file_extension):
     client, bucket_name, bucket_region = get_cos_client()
     cover_key = f"{url}/{cover_id}.{file_extension}"

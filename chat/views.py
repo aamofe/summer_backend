@@ -38,8 +38,6 @@ def upload_file(request, team_id, user_id):
             'file_type': contenttype,
         }
     )
-    save_message
-
     return JsonResponse({'errno': 0, 'msg': '上传成功', 'url': avatar_url})
 
 
@@ -134,11 +132,6 @@ def upload_cover_method(cover_file, cover_id, url):
         cover_url = response_cover['url']
     else:
         cover_url = f'https://{bucket_name}.cos.{bucket_region}.myqcloud.com/{cover_key}'
-    response_submit = client.get_object_sensitive_content_recognition(
-        Bucket=bucket_name,
-        BizType='aa3bbd2417d7fa61b38470534735ff20',
-        Key=cover_key,
-    )
     return cover_url, ContentType
 
 
