@@ -220,3 +220,145 @@ Traceback (most recent call last):
     deleted_items.sort(key=lambda item: item.deleted_at, reverse=True)
 TypeError: '<' not supported between instances of 'NoneType' and 'datetime.datetime'
 [pid: 470105|app: 0|req: 9/22] 219.239.227.245 () {42 vars in 860 bytes} [Fri Sep  1 02:30:50 2023] GET /api/document/all_deleted/?project_id=5 => generated 64251 bytes in 85 msecs (HTTP/1.1 500) 9 headers in 334 bytes (1 switches on core 1)
+Internal Server Error: /api/document/all_deleted/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./document/views.py", line 327, in all_deleted
+    deleted_items.sort(key=lambda item: item.deleted_at, reverse=True)
+TypeError: '<' not supported between instances of 'NoneType' and 'datetime.datetime'
+[pid: 470105|app: 0|req: 10/23] 219.239.227.245 () {38 vars in 665 bytes} [Fri Sep  1 02:31:00 2023] GET /api/document/all_deleted/?project_id=5 => generated 63828 bytes in 46 msecs (HTTP/1.1 500) 7 headers in 242 bytes (1 switches on core 0)
+[pid: 470106|app: 0|req: 6/24] 219.239.227.240 () {42 vars in 837 bytes} [Fri Sep  1 02:31:58 2023] POST /api/document/upload/ => generated 53 bytes in 19 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
+[pid: 470105|app: 0|req: 11/25] 219.239.227.240 () {44 vars in 860 bytes} [Fri Sep  1 02:32:16 2023] GET /api/document/view_document/1/ => generated 53 bytes in 18 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 470108|app: 0|req: 5/26] 219.239.227.240 () {44 vars in 757 bytes} [Fri Sep  1 02:32:16 2023] GET /api/document/view_document/1 => generated 0 bytes in 11 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 470108|app: 0|req: 6/27] 219.239.227.240 () {44 vars in 759 bytes} [Fri Sep  1 02:32:16 2023] GET /api/document/view_document/1/ => generated 53 bytes in 16 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 470108|app: 0|req: 7/28] 219.239.227.240 () {42 vars in 843 bytes} [Fri Sep  1 02:32:16 2023] POST /api/document/upload/ => generated 173 bytes in 177 msecs (HTTP/1.1 200) 7 headers in 213 bytes (1 switches on core 0)
+[pid: 470108|app: 0|req: 8/29] 219.239.227.240 () {44 vars in 757 bytes} [Fri Sep  1 02:32:35 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 1)
+[pid: 470108|app: 0|req: 9/30] 219.239.227.240 () {44 vars in 759 bytes} [Fri Sep  1 02:32:36 2023] GET /api/document/view_document/1/ => generated 748 bytes in 23 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 470108|app: 0|req: 10/31] 219.239.227.240 () {44 vars in 743 bytes} [Fri Sep  1 02:32:36 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 470108|app: 0|req: 11/32] 219.239.227.240 () {44 vars in 860 bytes} [Fri Sep  1 02:32:36 2023] GET /api/document/view_document/1/ => generated 747 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  1
+[pid: 470108|app: 0|req: 12/33] 219.239.227.240 () {44 vars in 844 bytes} [Fri Sep  1 02:32:36 2023] GET /api/team/all_members/ => generated 325 bytes in 44 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 470108|app: 0|req: 13/34] 219.239.227.240 () {38 vars in 644 bytes} [Fri Sep  1 02:32:44 2023] GET /api/document/view_document/1/ => generated 747 bytes in 26 msecs (HTTP/1.1 200) 7 headers in 213 bytes (1 switches on core 1)
+Internal Server Error: /api/document/restore/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./document/views.py", line 444, in restore
+    if file.folder.is_deleted==False:
+AttributeError: 'Document' object has no attribute 'folder'
+[pid: 470108|app: 0|req: 14/35] 219.239.227.218 () {42 vars in 839 bytes} [Fri Sep  1 02:33:15 2023] POST /api/document/restore/ => generated 63162 bytes in 49 msecs (HTTP/1.1 500) 7 headers in 242 bytes (1 switches on core 0)
+[pid: 470108|app: 0|req: 15/36] 219.239.227.240 () {44 vars in 860 bytes} [Fri Sep  1 02:33:17 2023] GET /api/document/view_document/1/ => generated 747 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  1
+[pid: 470103|app: 0|req: 5/37] 219.239.227.240 () {44 vars in 844 bytes} [Fri Sep  1 02:33:17 2023] GET /api/team/all_members/ => generated 325 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 470106|app: 0|req: 7/38] 219.239.227.240 () {44 vars in 860 bytes} [Fri Sep  1 02:33:31 2023] GET /api/document/view_document/1/ => generated 747 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+all_members 我在获取所有成员 :  1
+[pid: 470106|app: 0|req: 8/39] 219.239.227.240 () {44 vars in 844 bytes} [Fri Sep  1 02:33:31 2023] GET /api/team/all_members/ => generated 325 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 470106|app: 0|req: 9/40] 219.239.227.240 () {44 vars in 757 bytes} [Fri Sep  1 02:34:29 2023] GET /api/document/view_document/1 => generated 0 bytes in 10 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 470103|app: 0|req: 6/41] 219.239.227.240 () {44 vars in 759 bytes} [Fri Sep  1 02:34:29 2023] GET /api/document/view_document/1/ => generated 748 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 470105|app: 0|req: 12/42] 219.239.227.240 () {44 vars in 743 bytes} [Fri Sep  1 02:34:29 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+Internal Server Error: /api/document/restore/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./document/views.py", line 444, in restore
+    if file.parent_folder.is_deleted==False:
+AttributeError: 'Document' object has no attribute 'folder'
+[pid: 470105|app: 0|req: 13/43] 219.239.227.218 () {42 vars in 839 bytes} [Fri Sep  1 02:34:30 2023] POST /api/document/restore/ => generated 63176 bytes in 41 msecs (HTTP/1.1 500) 7 headers in 242 bytes (1 switches on core 1)
+[pid: 470106|app: 0|req: 10/44] 219.239.227.240 () {44 vars in 757 bytes} [Fri Sep  1 02:34:30 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 1)
+[pid: 470106|app: 0|req: 11/45] 219.239.227.240 () {44 vars in 759 bytes} [Fri Sep  1 02:34:30 2023] GET /api/document/view_document/1/ => generated 748 bytes in 23 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 470105|app: 0|req: 14/46] 219.239.227.240 () {44 vars in 743 bytes} [Fri Sep  1 02:34:30 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+...brutally killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/summer/summer_backend
+closing all non-uwsgi socket fds > 2 (max_fd = 1048576)...
+found fd 6 mapped to socket 0 (127.0.0.1:8000)
+running /home/summer/miniconda3/envs/django/bin/uwsgi
+[uWSGI] getting INI configuration from ./uwsgi.ini
+*** Starting uWSGI 2.0.21 (64bit) on [Fri Sep  1 02:34:38 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 inherited INET address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0x18fe8d0
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x18fe8d0 pid: 469048 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 469048)
+spawned uWSGI worker 1 (pid: 472157, cores: 2)
+spawned uWSGI worker 2 (pid: 472159, cores: 2)
+spawned uWSGI worker 3 (pid: 472160, cores: 2)
+spawned uWSGI worker 4 (pid: 472161, cores: 2)
+[pid: 472157|app: 0|req: 1/1] 219.239.227.218 () {42 vars in 839 bytes} [Fri Sep  1 02:34:40 2023] POST /api/document/restore/ => generated 59 bytes in 154 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 0)
+[pid: 472159|app: 0|req: 1/2] 219.239.227.240 () {44 vars in 860 bytes} [Fri Sep  1 02:34:40 2023] GET /api/document/view_document/1/ => generated 747 bytes in 162 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+all_members 我在获取所有成员 :  1
+[pid: 472159|app: 0|req: 2/3] 219.239.227.240 () {44 vars in 844 bytes} [Fri Sep  1 02:34:41 2023] GET /api/team/all_members/ => generated 325 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 472159|app: 0|req: 3/4] 219.239.227.218 () {38 vars in 661 bytes} [Fri Sep  1 02:35:05 2023] GET /api/document/all_deleted/?project_id=5 => generated 1326 bytes in 44 msecs (HTTP/1.1 200) 7 headers in 214 bytes (1 switches on core 0)
+[pid: 472157|app: 0|req: 2/5] 219.239.227.240 () {44 vars in 757 bytes} [Fri Sep  1 02:35:10 2023] GET /api/document/view_document/1 => generated 0 bytes in 10 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 1)
+[pid: 472159|app: 0|req: 4/6] 219.239.227.240 () {44 vars in 759 bytes} [Fri Sep  1 02:35:10 2023] GET /api/document/view_document/1/ => generated 748 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 472159|app: 0|req: 5/7] 219.239.227.240 () {44 vars in 743 bytes} [Fri Sep  1 02:35:10 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 472159|app: 0|req: 6/8] 219.239.227.240 () {44 vars in 860 bytes} [Fri Sep  1 02:35:10 2023] GET /api/document/view_document/1/ => generated 747 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  1
+[pid: 472161|app: 0|req: 1/9] 219.239.227.240 () {44 vars in 844 bytes} [Fri Sep  1 02:35:10 2023] GET /api/team/all_members/ => generated 325 bytes in 121 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 472161|app: 0|req: 2/10] 219.239.227.240 () {44 vars in 860 bytes} [Fri Sep  1 02:35:17 2023] GET /api/document/view_document/1/ => generated 747 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 472160|app: 0|req: 2/11] 219.239.227.240 () {44 vars in 757 bytes} [Fri Sep  1 02:35:17 2023] GET /api/document/view_document/1 => generated 0 bytes in 107 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+all_members 我在获取所有成员 :  1
+[pid: 472160|app: 0|req: 2/12] 219.239.227.240 () {44 vars in 844 bytes} [Fri Sep  1 02:35:17 2023] GET /api/team/all_members/ => generated 325 bytes in 62 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 472159|app: 0|req: 7/13] 219.239.227.240 () {44 vars in 759 bytes} [Fri Sep  1 02:35:17 2023] GET /api/document/view_document/1/ => generated 748 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 472159|app: 0|req: 8/14] 219.239.227.240 () {44 vars in 743 bytes} [Fri Sep  1 02:35:18 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 472161|app: 0|req: 3/15] 219.239.227.240 () {44 vars in 757 bytes} [Fri Sep  1 02:35:22 2023] GET /api/document/view_document/1 => generated 0 bytes in 12 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 472160|app: 0|req: 3/16] 219.239.227.240 () {44 vars in 860 bytes} [Fri Sep  1 02:35:22 2023] GET /api/document/view_document/1/ => generated 747 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 472160|app: 0|req: 4/17] 219.239.227.240 () {44 vars in 759 bytes} [Fri Sep  1 02:35:22 2023] GET /api/document/view_document/1/ => generated 748 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  1
+[pid: 472159|app: 0|req: 9/18] 219.239.227.240 () {44 vars in 844 bytes} [Fri Sep  1 02:35:22 2023] GET /api/team/all_members/ => generated 325 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 472161|app: 0|req: 4/19] 219.239.227.240 () {44 vars in 743 bytes} [Fri Sep  1 02:35:22 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 472159|app: 0|req: 10/20] 219.239.227.240 () {48 vars in 957 bytes} [Fri Sep  1 02:35:24 2023] POST /api/document/save/ => generated 53 bytes in 44 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 472159|app: 0|req: 11/21] 219.239.227.240 () {44 vars in 757 bytes} [Fri Sep  1 02:35:33 2023] GET /api/document/view_document/1 => generated 0 bytes in 12 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 472157|app: 0|req: 3/22] 219.239.227.240 () {44 vars in 759 bytes} [Fri Sep  1 02:35:33 2023] GET /api/document/view_document/1/ => generated 2081 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 314 bytes (1 switches on core 0)
+[pid: 472160|app: 0|req: 5/23] 219.239.227.240 () {44 vars in 743 bytes} [Fri Sep  1 02:35:33 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 472160|app: 0|req: 6/24] 219.239.227.240 () {44 vars in 860 bytes} [Fri Sep  1 02:35:34 2023] GET /api/document/view_document/1/ => generated 2080 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 1)
+[pid: 472157|app: 0|req: 4/25] 220.196.160.51 () {42 vars in 851 bytes} [Fri Sep  1 02:35:35 2023] GET /api/team/get_one_project/?project_id=73 => generated 43 bytes in 2 msecs (HTTP/1.1 200) 7 headers in 212 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  1
+[pid: 472159|app: 0|req: 12/26] 219.239.227.240 () {44 vars in 844 bytes} [Fri Sep  1 02:35:35 2023] GET /api/team/all_members/ => generated 325 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 472159|app: 0|req: 13/27] 219.239.227.240 () {44 vars in 860 bytes} [Fri Sep  1 02:35:35 2023] GET /api/document/view_document/1/ => generated 2080 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 0)
+all_members 我在获取所有成员 :  1
+[pid: 472159|app: 0|req: 14/28] 219.239.227.240 () {44 vars in 844 bytes} [Fri Sep  1 02:35:36 2023] GET /api/team/all_members/ => generated 325 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 472159|app: 0|req: 15/29] 219.239.227.218 () {38 vars in 661 bytes} [Fri Sep  1 02:35:39 2023] GET /api/document/all_deleted/?project_id=5 => generated 1326 bytes in 37 msecs (HTTP/1.1 200) 7 headers in 214 bytes (1 switches on core 0)
+[pid: 472159|app: 0|req: 16/30] 219.239.227.240 () {44 vars in 860 bytes} [Fri Sep  1 02:35:49 2023] GET /api/document/view_document/1/ => generated 2080 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  1
+[pid: 472159|app: 0|req: 17/31] 219.239.227.240 () {44 vars in 844 bytes} [Fri Sep  1 02:35:50 2023] GET /api/team/all_members/ => generated 325 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)

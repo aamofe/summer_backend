@@ -441,7 +441,7 @@ def restore(request):
         except Folder.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "文档不存在"})
         #判断父文件夹 存在：
-        if file.folder.is_deleted==False:
+        if file.parent_folder.is_deleted==False:
             file.is_deleted = False
             file.save()
         else:
@@ -452,7 +452,7 @@ def restore(request):
         except Prototype.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "原型设计不存在"})
         # 判断父文件夹 存在：
-        if file.folder.is_deleted == False:
+        if file.parent_folder.is_deleted == False:
             file.is_deleted = False
             file.save()
         else:
