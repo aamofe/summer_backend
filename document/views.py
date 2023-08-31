@@ -485,19 +485,20 @@ def save(request):
     content=request.POST.get('content')
     file_type = request.POST.get('file_type')  # 原型 文档
     file_id = request.POST.get('file_id')  # 删除1个 删除所有
-    folder_id = request.POST.get('folder_id')
+    parent_folder_id = request.POST.get('parent_folder_id')
     title=request.POST.get('title')
     user=request.user
-    if not file_type or not file_id or not folder_id:
+
+    if not file_type or not file_id or not parent_folder_id:
         return JsonResponse({'errno': 1, 'msg': "参数不全"})
-    if not(file_type=='document' or file_type=='prototype') or not file_id.isdigit() or not folder_id.isdigit() :
+    if not(file_type=='document' or file_type=='prototype') or not file_id.isdigit() or not parent_folder_id.isdigit() :
         return JsonResponse({'errno': 1, 'msg': "参数值错误"})
     try:
-        folder =Folder.objects.get(id=folder_id)
+        folder =Folder.objects.get(id=parent_folder_id)
     except Folder.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     try:
-        member = Member.objects.get(user=user, team=folder.parent_folder.project.team)
+        member = Member.objects.get(user=user, team=folder.project.team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     if file_type=='document':
