@@ -47,7 +47,7 @@ def create_team(request):
         elif team_name=='个人空间':
             return JsonResponse({'errno':1,'msg':"团队名称不能为个人空间"})
         team = Team.objects.create(name=team_name, user=user)
-        group = Group.objects.create(name=team_name, user=user,actual_team=team.id,choice='team')
+        group = Group.objects.create(name=team_name, user=user,actual_team=team.id,type='team')
         cover = request.FILES.get('cover')
         if description:
             team.description = description
