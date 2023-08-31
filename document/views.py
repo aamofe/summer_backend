@@ -273,7 +273,7 @@ def view_prototype(request,token):
             return JsonResponse({'errno': 1, 'msg': "链接已失效"})
         prototype_list=Prototype.objects.filter(project=prototype.project)
         prototypes=[prototype.to_dict() for prototype in prototype_list]
-        prototypes['editable']=editable
+        prototypes.append({'editable':editable})
     return JsonResponse({'errno': 0,'prototype':prototypes, 'msg': "获取原型成功"})
 #当前项目所有原型
 # def all_prototype(request,project_id):
