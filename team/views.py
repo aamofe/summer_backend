@@ -309,6 +309,7 @@ def delete_one_project(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     project_id=request.POST.get('project_id')
+    print('project_id : ',project_id)
     try:
         project = Project.objects.get(id=project_id,is_deleted=False)
     except Project.DoesNotExist:
@@ -556,7 +557,7 @@ def search(request):
     project_list=[project.to_dict() for project in projects]
     prototype_list=[ prototype.to_dict() for  prototype in  prototypes]
     return JsonResponse({'errno':0,'teams':team_list,' prototypes': prototype_list,'project':project_list,'msg':'查询成功'})
-
+@validate_login
 def copy(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
@@ -568,7 +569,8 @@ def copy(request):
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     project1 = deepcopy(project)
     project1.id = None  # 重置 ID，以便创建一个新的数据库记录
-    project1.title = f"{project.title} (1)"  # 修改名称
+    project1.name = f"{project.name} (1)"  # 修改名称
     project1.save()  # 保存新的项目副本
-
+    print(project1.to_dict())
+    return JsonResponse({'errno':0,'project':project1.to_dict(),'msg':'复制成功'})
 
