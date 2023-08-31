@@ -11,6 +11,7 @@ class ChatMessage(models.Model):
     team_id = models.IntegerField()
     user_id = models.IntegerField(default=0)
     timestamp = models.DateTimeField(auto_now_add=True)
+    date = models.TextField(default=None, blank=True, null=True)
     forwarded_from = models.ManyToManyField("self", blank=True)
 
 
@@ -92,6 +93,6 @@ class File(models.Model):
     duration=models.IntegerField(verbose_name="音频时长",default=0)
     size=models.IntegerField(verbose_name="文件大小",default=0)
     preview=models.URLField(verbose_name="文件预览地址",default=None,null=True)
-    progress=models.IntegerField(verbose_name="文件上传进度",default=0)
+
 
 

@@ -1,4 +1,5 @@
 import datetime
+import json
 
 from django.db.models import Max
 from django.http import JsonResponse
@@ -231,5 +232,67 @@ def get_group(request, user_id):
         data.append(group.team_id)
     return JsonResponse({'groups': data})
 
-#def make_group(request):
+def make_group(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        creator_id = data.get('creator')
+        invitees = data.get('invitees', [])
+        name = data.get('name', 'My New Group Chat')
+        description = data.get('description', '')
+        cover_url = data.get('url')
+
+
+        try:
+            creator = User.objects.get(pk=creator_id)
+        except User.DoesNotExist:
+            return JsonResponse({"error": "Creator not found"}, status=400)
+
+        group = Group(
+            name=name,
+            user=creator,
+            description=description,
+            cover_url=cover_url,
+            type='group'
+        )
+        group.save()
+
+        ChatMember(user=creator, team=group, role='CR').save()
+        UserTeamChatStatus(user=creator, team=group, unread_count=0, index=0).save()
+        channel_layer=get_channel_layer()
+
+
+        for invitee_id in invitees:
+            try:
+                invitee = User.objects.get(pk=invitee_id)
+                ChatMember(user=invitee, team=group,role='MB').save()
+                UserTeamChatStatus(user=invitee, team=group, unread_count=0, index=0).save()
+
+            except User.DoesNotExist:
+                # Handle or log error if the invitee doesn't exist.
+                # For this example, I'll just continue to the next invitee.
+                continue
+        users = []
+        members = ChatMember.objects.filter(team_id=group.id)
+        for member in members:
+            users.append({
+                '_id': str(member.user_id),
+                'username': User.objects.get(id=member.user_id).username,
+                'avatar': User.objects.get(id=member.user_id).avatar_url,
+            })
+        async_to_sync(channel_layer.group_send)(
+            f"chat_{group.id}",
+            {
+                'type': 'new_group_chat',
+                'roomId': str(group.id),
+                'roomName': group.name,
+                'unreadCount':0,
+                'avatar':group.cover_url,
+                'index':0,
+                'lastMessage':'',
+                'users':users,
+            }
+        )
+
+    else:
+        return JsonResponse({"error": "Invalid request method"}, status=400)
 

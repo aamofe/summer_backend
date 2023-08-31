@@ -63,6 +63,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                     'user_id': str(msg.user_id),
                     'username': await self.get_username(msg.user_id),
                     'files': await self.get_files(msg),
+                    'date': msg.date,
                     'replyMessage': msg.reply_message,
                     'avatar_url': await self.get_avatar_url(msg.user_id),
                     'time': msg.timestamp.strftime('%Y-%m-%d %H:%M:%S')
@@ -92,10 +93,11 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 return
             user_id = text_data_json['user_id']
             message = text_data_json.get('message', '')  # 如果'message'不存在，返回空字符串
+            date = text_data_json.get('date', '')
             replyMessage = text_data_json.get('replyMessage', {})  # 如果'reply_message'不存在，返回空字典
             file_data = text_data_json.get('files', None)  # 如果'files'不存在，返回空列表
             file_data_item = file_data[0]
-            await self.handle_files(file_data_item, message, user_id, replyMessage)
+            await self.handle_files(file_data_item, message, user_id, replyMessage,date)
 
             # 将消息发送给团队群聊的所有成员
             await self.channel_layer.group_send(
@@ -104,6 +106,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                     'type': 'chat_message',
                     'message': message,
                     'files': file_data_item,
+                    'date': date,
                     'user_id': user_id,
                     'replyMessage': replyMessage,
                     'username': await self.get_username(user_id),
@@ -140,7 +143,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         avatar_url = event.get('avatar_url', '')
         time = event.get('time', '')
         files = event.get('files', [])  # 获取files字段，如果没有则默认为空列表
-
+        date = event.get('date', '')
         replyMessage = event.get('replyMessage', None)  #
         print(replyMessage)
         # 发送消息给 WebSocket
@@ -148,6 +151,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
             'type': 'chat_message',
             'team_id': self.team_id,
             'user_id': user_id,
+            'date': date,
             'message': message,
             'files': [files],
             'replyMessage': replyMessage,
@@ -156,7 +160,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
             'time': time
         }))
     @database_sync_to_async
-    def handle_files(self, file_data, message, user_id, replyMessage):
+    def handle_files(self, file_data, message, user_id, replyMessage,date):
         if file_data:  # 检查是否真的拿到了文件数据
             file_instance = File(
                 url=file_data['url'],
@@ -165,14 +169,13 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 duration=file_data.get('duration', 0),
                 size=file_data.get('size', 0),
                 preview=file_data.get('preview', None),
-                progress=file_data.get('progress', 0)
             )
             file_instance.save()
             print('拿到文件了')
             if file_instance:
                 print('有文件')
                 chat_message = ChatMessage.objects.create(team_id=self.team_id, message=message, user_id=user_id,
-                                                          files=file_instance, reply_message=replyMessage)
+                                                          files=file_instance, reply_message=replyMessage,date=date)
                 file_instance.chat_message = chat_message
                 file_instance.save()
             print('保存文件成功')
@@ -180,8 +183,9 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
             print('没有文件')
             # 假设你有一个名为ChatMessage的模型，用于存储消息
             ChatMessage.objects.create(team_id=self.team_id, message=message, user_id=user_id,
-                                       reply_message=replyMessage)
+                                       reply_message=replyMessage,date=date)
 
+    #async def new_group_chat(self, event):
 
     async def new_file_uploaded(self, event):
         # Handle the logic for the new_file_uploaded event
@@ -267,7 +271,6 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 'duration': msg.files.duration,
                 'size': msg.files.size,
                 'preview': msg.files.preview,
-                'progress': msg.files.progress,
             }]
             return file_data
         else:
