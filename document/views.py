@@ -1,4 +1,5 @@
 import json
+import pprint
 import uuid
 
 from django.core.exceptions import ObjectDoesNotExist
@@ -381,6 +382,8 @@ def view_folder(request):
         return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
     user=request.user
     project=parent_folder.project
+    pprint.pprint(project.to_dict())
+    print(project.is_deleted)
     if project.is_deleted:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     try:

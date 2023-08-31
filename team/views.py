@@ -437,7 +437,7 @@ def all_projects(request):
         sort_field = '-' + sort_field
     else:
         sort_field = sort_by if sort_by in valid_sort_fields else '-created_at'
-    project_list = Project.objects.filter(team=team).order_by(sort_field)
+    project_list = Project.objects.filter(team=team,is_deleted=False).order_by(sort_field)
     projects = [project.to_dict() for project in project_list]
     return JsonResponse({'errno': 0, 'projects': projects, 'msg': "获取项目列表成功"})
 
@@ -533,8 +533,8 @@ def get_one_project(request):
     except Project.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     project_=project.to_dict()
-    project_['document_num']=Document.objects.filter(project=project).count()
-    project_['prototype_num']=Prototype.objects.filter(project=project).count()
+    project_['document_num']=Document.objects.filter(parent_folder__project=project).count()
+    project_['prototype_num']=Prototype.objects.filter(parent_folder__project=project).count()
     return JsonResponse({'errno': 0, 'project':project_,'msg': "单个项目信息"})
 
 @validate_login
