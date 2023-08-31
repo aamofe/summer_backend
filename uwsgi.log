@@ -590,3 +590,207 @@ spawned uWSGI worker 4 (pid: 220298, cores: 2)
 [pid: 220293|app: 0|req: 2/8] 219.239.227.188 () {48 vars in 1144 bytes} [Thu Aug 31 11:11:15 2023] GET /api/document/view_prototype/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcm90b3R5cGVfaWQiOiIxIn0.qiHpsvdvCEbsBfmqBCtoqMlvaLSGP30vohNhlN1l5AI => generated 0 bytes in 11 msecs (HTTP/1.1 301) 5 headers in 330 bytes (1 switches on core 1)
 [pid: 220295|app: 0|req: 2/9] 219.239.227.188 () {52 vars in 1103 bytes} [Thu Aug 31 11:11:15 2023] OPTIONS /api/document/view_prototype/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcm90b3R5cGVfaWQiOiIxIn0.qiHpsvdvCEbsBfmqBCtoqMlvaLSGP30vohNhlN1l5AI/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
 [pid: 220295|app: 0|req: 3/10] 219.239.227.188 () {48 vars in 1146 bytes} [Thu Aug 31 11:11:15 2023] GET /api/document/view_prototype/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcm90b3R5cGVfaWQiOiIxIn0.qiHpsvdvCEbsBfmqBCtoqMlvaLSGP30vohNhlN1l5AI/ => generated 303 bytes in 126 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 220298|app: 0|req: 4/11] 219.239.227.218 () {40 vars in 690 bytes} [Thu Aug 31 11:15:06 2023] POST /api/user/login/ => generated 240 bytes in 20 msecs (HTTP/1.1 200) 7 headers in 213 bytes (1 switches on core 1)
+[pid: 220297|app: 0|req: 3/12] 219.239.227.218 () {42 vars in 849 bytes} [Thu Aug 31 11:16:19 2023] POST /api/team/create_project/1/ => generated 117 bytes in 50 msecs (HTTP/1.1 200) 7 headers in 213 bytes (1 switches on core 0)
+[pid: 220297|app: 0|req: 4/13] 219.239.227.218 () {42 vars in 849 bytes} [Thu Aug 31 11:18:22 2023] POST /api/team/create_project/1/ => generated 124 bytes in 37 msecs (HTTP/1.1 200) 7 headers in 213 bytes (1 switches on core 1)
+[pid: 220298|app: 0|req: 5/14] 219.239.227.218 () {42 vars in 849 bytes} [Thu Aug 31 11:18:49 2023] POST /api/team/create_project/1/ => generated 124 bytes in 41 msecs (HTTP/1.1 200) 7 headers in 213 bytes (1 switches on core 0)
+[pid: 220298|app: 0|req: 6/15] 219.239.227.188 () {52 vars in 916 bytes} [Thu Aug 31 11:20:33 2023] OPTIONS /api/document/view_prototype/1?prototype_id=1 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 220297|app: 0|req: 5/16] 219.239.227.188 () {48 vars in 959 bytes} [Thu Aug 31 11:20:33 2023] GET /api/document/view_prototype/1?prototype_id=1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 238 bytes (1 switches on core 0)
+[pid: 220295|app: 0|req: 4/17] 219.239.227.188 () {52 vars in 918 bytes} [Thu Aug 31 11:20:33 2023] OPTIONS /api/document/view_prototype/1/?prototype_id=1 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+当前用户 :  2
+[pid: 220295|app: 0|req: 5/18] 219.239.227.188 () {48 vars in 961 bytes} [Thu Aug 31 11:20:33 2023] GET /api/document/view_prototype/1/?prototype_id=1 => generated 298 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 220293|app: 0|req: 3/19] 219.239.227.188 () {52 vars in 866 bytes} [Thu Aug 31 11:20:44 2023] OPTIONS /api/document/save/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 220293|app: 0|req: 4/20] 219.239.227.188 () {52 vars in 1027 bytes} [Thu Aug 31 11:20:44 2023] POST /api/document/save/ => generated 47 bytes in 19 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 220297|app: 0|req: 6/21] 180.101.245.253 () {38 vars in 1131 bytes} [Thu Aug 31 11:21:07 2023] GET /api/user/activate/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6IjI2Mjk2MzY2NzRAcXEuY29tIiwidGltZXN0YW1wIjoxNjkzMzk3Nzk1fQ._F-UdCKT2hpY58pHrNq5boyrBejnF004ufs5207PlD8 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 3 headers in 287 bytes (1 switches on core 1)
+[pid: 220295|app: 0|req: 6/22] 180.101.245.253 () {38 vars in 1133 bytes} [Thu Aug 31 11:21:07 2023] GET /api/user/activate/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6IjI2Mjk2MzY2NzRAcXEuY29tIiwidGltZXN0YW1wIjoxNjkzMzk3Nzk1fQ._F-UdCKT2hpY58pHrNq5boyrBejnF004ufs5207PlD8/ => generated 3508 bytes in 93 msecs (HTTP/1.1 200) 7 headers in 222 bytes (1 switches on core 1)
+Not Found: /api/user/activate/static/images/logo.png
+[pid: 220295|app: 0|req: 7/23] 180.101.245.253 () {38 vars in 959 bytes} [Thu Aug 31 11:21:09 2023] GET /api/user/activate/static/images/logo.png => generated 3739 bytes in 9 msecs (HTTP/1.1 404) 7 headers in 229 bytes (1 switches on core 0)
+[pid: 220293|app: 0|req: 5/24] 219.239.227.188 () {52 vars in 916 bytes} [Thu Aug 31 11:21:52 2023] OPTIONS /api/document/view_prototype/1?prototype_id=1 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 220297|app: 0|req: 7/25] 219.239.227.188 () {48 vars in 959 bytes} [Thu Aug 31 11:21:52 2023] GET /api/document/view_prototype/1?prototype_id=1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 238 bytes (1 switches on core 0)
+[pid: 220298|app: 0|req: 7/26] 219.239.227.188 () {52 vars in 918 bytes} [Thu Aug 31 11:21:52 2023] OPTIONS /api/document/view_prototype/1/?prototype_id=1 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+当前用户 :  2
+[pid: 220298|app: 0|req: 8/27] 219.239.227.188 () {48 vars in 961 bytes} [Thu Aug 31 11:21:52 2023] GET /api/document/view_prototype/1/?prototype_id=1 => generated 298 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 220297|app: 0|req: 8/28] 219.239.227.188 () {52 vars in 916 bytes} [Thu Aug 31 11:23:19 2023] OPTIONS /api/document/view_prototype/1?prototype_id=1 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 220297|app: 0|req: 9/29] 219.239.227.188 () {48 vars in 959 bytes} [Thu Aug 31 11:23:19 2023] GET /api/document/view_prototype/1?prototype_id=1 => generated 0 bytes in 5 msecs (HTTP/1.1 301) 5 headers in 238 bytes (1 switches on core 0)
+[pid: 220298|app: 0|req: 9/30] 219.239.227.188 () {52 vars in 918 bytes} [Thu Aug 31 11:23:19 2023] OPTIONS /api/document/view_prototype/1/?prototype_id=1 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+当前用户 :  2
+[pid: 220293|app: 0|req: 6/31] 219.239.227.188 () {48 vars in 961 bytes} [Thu Aug 31 11:23:19 2023] GET /api/document/view_prototype/1/?prototype_id=1 => generated 298 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 220298|app: 0|req: 10/32] 219.239.227.188 () {52 vars in 866 bytes} [Thu Aug 31 11:23:27 2023] OPTIONS /api/document/save/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 220295|app: 0|req: 8/33] 219.239.227.188 () {52 vars in 1027 bytes} [Thu Aug 31 11:23:27 2023] POST /api/document/save/ => generated 47 bytes in 20 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 220295|app: 0|req: 9/34] 219.239.227.188 () {52 vars in 916 bytes} [Thu Aug 31 11:24:36 2023] OPTIONS /api/document/view_prototype/1?prototype_id=1 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 220293|app: 0|req: 7/35] 219.239.227.188 () {48 vars in 959 bytes} [Thu Aug 31 11:24:36 2023] GET /api/document/view_prototype/1?prototype_id=1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 238 bytes (1 switches on core 0)
+[pid: 220298|app: 0|req: 11/36] 219.239.227.188 () {52 vars in 918 bytes} [Thu Aug 31 11:24:37 2023] OPTIONS /api/document/view_prototype/1/?prototype_id=1 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+当前用户 :  2
+[pid: 220295|app: 0|req: 10/37] 219.239.227.188 () {48 vars in 961 bytes} [Thu Aug 31 11:24:37 2023] GET /api/document/view_prototype/1/?prototype_id=1 => generated 298 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 220297|app: 0|req: 10/38] 219.239.227.188 () {52 vars in 866 bytes} [Thu Aug 31 11:24:48 2023] OPTIONS /api/document/save/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 220298|app: 0|req: 12/39] 219.239.227.188 () {52 vars in 1027 bytes} [Thu Aug 31 11:24:48 2023] POST /api/document/save/ => generated 47 bytes in 18 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+...brutally killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/summer/summer_backend
+closing all non-uwsgi socket fds > 2 (max_fd = 1048576)...
+found fd 6 mapped to socket 0 (127.0.0.1:8000)
+running /home/summer/miniconda3/envs/django/bin/uwsgi
+[uWSGI] getting INI configuration from ./uwsgi.ini
+*** Starting uWSGI 2.0.21 (64bit) on [Thu Aug 31 11:26:43 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 inherited INET address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0x20c18d0
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+WSGI app 0 (mountpoint='') ready in 0 seconds on interpreter 0x20c18d0 pid: 215905 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 215905)
+spawned uWSGI worker 1 (pid: 224860, cores: 2)
+spawned uWSGI worker 2 (pid: 224862, cores: 2)
+spawned uWSGI worker 3 (pid: 224863, cores: 2)
+spawned uWSGI worker 4 (pid: 224865, cores: 2)
+[pid: 224865|app: 0|req: 1/1] 219.239.227.188 () {52 vars in 916 bytes} [Thu Aug 31 11:27:10 2023] OPTIONS /api/document/view_prototype/1?prototype_id=1 => generated 0 bytes in 4 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 224863|app: 0|req: 1/2] 219.239.227.188 () {48 vars in 959 bytes} [Thu Aug 31 11:27:10 2023] GET /api/document/view_prototype/1?prototype_id=1 => generated 0 bytes in 111 msecs (HTTP/1.1 301) 5 headers in 238 bytes (1 switches on core 0)
+[pid: 224865|app: 0|req: 2/3] 219.239.227.188 () {52 vars in 918 bytes} [Thu Aug 31 11:27:10 2023] OPTIONS /api/document/view_prototype/1/?prototype_id=1 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+当前用户 :  2
+[pid: 224862|app: 0|req: 1/4] 219.239.227.188 () {48 vars in 961 bytes} [Thu Aug 31 11:27:10 2023] GET /api/document/view_prototype/1/?prototype_id=1 => generated 298 bytes in 131 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 224863|app: 0|req: 2/5] 219.239.227.188 () {52 vars in 866 bytes} [Thu Aug 31 11:27:18 2023] OPTIONS /api/document/save/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 224865|app: 0|req: 3/6] 219.239.227.188 () {52 vars in 1027 bytes} [Thu Aug 31 11:27:18 2023] POST /api/document/save/ => generated 47 bytes in 119 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+...brutally killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/summer/summer_backend
+closing all non-uwsgi socket fds > 2 (max_fd = 1048576)...
+found fd 6 mapped to socket 0 (127.0.0.1:8000)
+running /home/summer/miniconda3/envs/django/bin/uwsgi
+[uWSGI] getting INI configuration from ./uwsgi.ini
+*** Starting uWSGI 2.0.21 (64bit) on [Thu Aug 31 11:27:40 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 inherited INET address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0x1f698d0
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x1f698d0 pid: 215905 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 215905)
+spawned uWSGI worker 1 (pid: 225150, cores: 2)
+spawned uWSGI worker 2 (pid: 225152, cores: 2)
+spawned uWSGI worker 3 (pid: 225153, cores: 2)
+spawned uWSGI worker 4 (pid: 225155, cores: 2)
+[pid: 225155|app: 0|req: 1/1] 219.239.227.188 () {52 vars in 916 bytes} [Thu Aug 31 11:27:51 2023] OPTIONS /api/document/view_prototype/1?prototype_id=1 => generated 0 bytes in 4 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 225155|app: 0|req: 2/2] 219.239.227.188 () {48 vars in 959 bytes} [Thu Aug 31 11:27:51 2023] GET /api/document/view_prototype/1?prototype_id=1 => generated 0 bytes in 102 msecs (HTTP/1.1 301) 5 headers in 238 bytes (1 switches on core 1)
+[pid: 225155|app: 0|req: 3/3] 219.239.227.188 () {52 vars in 918 bytes} [Thu Aug 31 11:27:51 2023] OPTIONS /api/document/view_prototype/1/?prototype_id=1 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+当前用户 :  2
+[pid: 225155|app: 0|req: 4/4] 219.239.227.188 () {48 vars in 961 bytes} [Thu Aug 31 11:27:51 2023] GET /api/document/view_prototype/1/?prototype_id=1 => generated 298 bytes in 36 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 225155|app: 0|req: 5/5] 219.239.227.188 () {52 vars in 866 bytes} [Thu Aug 31 11:27:56 2023] OPTIONS /api/document/save/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+Internal Server Error: /api/document/save/
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./user/authentication.py", line 26, in valid_per
+    return func(request, *args, **kwargs)
+  File "/home/summer/summer_backend/./document/views.py", line 501, in save
+    member = Member.objects.get(user=user, team=folder.parent_folder.project.team)
+AttributeError: 'NoneType' object has no attribute 'project'
+[pid: 225155|app: 0|req: 6/6] 219.239.227.188 () {52 vars in 1027 bytes} [Thu Aug 31 11:27:56 2023] POST /api/document/save/ => generated 66436 bytes in 45 msecs (HTTP/1.1 500) 9 headers in 334 bytes (1 switches on core 1)
+...brutally killing workers...
+worker 1 buried after 1 seconds
+worker 2 buried after 1 seconds
+worker 3 buried after 1 seconds
+worker 4 buried after 1 seconds
+binary reloading uWSGI...
+chdir() to /home/summer/summer_backend
+closing all non-uwsgi socket fds > 2 (max_fd = 1048576)...
+found fd 6 mapped to socket 0 (127.0.0.1:8000)
+running /home/summer/miniconda3/envs/django/bin/uwsgi
+[uWSGI] getting INI configuration from ./uwsgi.ini
+*** Starting uWSGI 2.0.21 (64bit) on [Thu Aug 31 11:28:34 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1048576
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+uwsgi socket 0 inherited INET address 127.0.0.1:8000 fd 6
+Python version: 3.9.16 (main, Mar  8 2023, 14:00:05)  [GCC 11.2.0]
+Set PythonHome to /home/summer/miniconda3/envs/django
+Python main interpreter initialized at 0x1c268d0
+python threads support enabled
+your server socket listen backlog is limited to 100 connections
+your mercy for graceful operations on workers is 60 seconds
+mapped 416880 bytes (407 KB) for 8 cores
+*** Operational MODE: preforking+threaded ***
+added /home/summer/miniconda3/envs/django/lib/python3.9/ to pythonpath.
+WSGI app 0 (mountpoint='') ready in 1 seconds on interpreter 0x1c268d0 pid: 215905 (default app)
+*** uWSGI is running in multiple interpreter mode ***
+gracefully (RE)spawned uWSGI master process (pid: 215905)
+spawned uWSGI worker 1 (pid: 225443, cores: 2)
+spawned uWSGI worker 2 (pid: 225445, cores: 2)
+spawned uWSGI worker 3 (pid: 225446, cores: 2)
+spawned uWSGI worker 4 (pid: 225448, cores: 2)
+[pid: 225448|app: 0|req: 1/1] 219.239.227.188 () {52 vars in 916 bytes} [Thu Aug 31 11:28:44 2023] OPTIONS /api/document/view_prototype/1?prototype_id=1 => generated 0 bytes in 4 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 225443|app: 0|req: 1/2] 219.239.227.188 () {48 vars in 959 bytes} [Thu Aug 31 11:28:44 2023] GET /api/document/view_prototype/1?prototype_id=1 => generated 0 bytes in 153 msecs (HTTP/1.1 301) 5 headers in 238 bytes (1 switches on core 0)
+[pid: 225446|app: 0|req: 1/3] 219.239.227.188 () {52 vars in 918 bytes} [Thu Aug 31 11:28:44 2023] OPTIONS /api/document/view_prototype/1/?prototype_id=1 => generated 0 bytes in 4 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+当前用户 :  2
+[pid: 225443|app: 0|req: 2/4] 219.239.227.188 () {48 vars in 961 bytes} [Thu Aug 31 11:28:44 2023] GET /api/document/view_prototype/1/?prototype_id=1 => generated 298 bytes in 38 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 225448|app: 0|req: 2/5] 219.239.227.188 () {52 vars in 866 bytes} [Thu Aug 31 11:28:51 2023] OPTIONS /api/document/save/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 225443|app: 0|req: 3/6] 219.239.227.188 () {52 vars in 1027 bytes} [Thu Aug 31 11:28:51 2023] POST /api/document/save/ => generated 53 bytes in 36 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 225448|app: 0|req: 3/7] 219.239.227.188 () {52 vars in 888 bytes} [Thu Aug 31 11:29:03 2023] OPTIONS /api/document/share_prototype/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 225448|app: 0|req: 4/8] 219.239.227.188 () {52 vars in 1045 bytes} [Thu Aug 31 11:29:03 2023] POST /api/document/share_prototype/ => generated 192 bytes in 125 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 225445|app: 0|req: 1/9] 219.239.227.188 () {52 vars in 1101 bytes} [Thu Aug 31 11:29:04 2023] OPTIONS /api/document/view_prototype/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcm90b3R5cGVfaWQiOiIxIn0.qiHpsvdvCEbsBfmqBCtoqMlvaLSGP30vohNhlN1l5AI => generated 0 bytes in 4 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 225448|app: 0|req: 5/10] 219.239.227.188 () {48 vars in 1144 bytes} [Thu Aug 31 11:29:04 2023] GET /api/document/view_prototype/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcm90b3R5cGVfaWQiOiIxIn0.qiHpsvdvCEbsBfmqBCtoqMlvaLSGP30vohNhlN1l5AI => generated 0 bytes in 11 msecs (HTTP/1.1 301) 5 headers in 330 bytes (1 switches on core 0)
+[pid: 225448|app: 0|req: 6/11] 219.239.227.188 () {52 vars in 1103 bytes} [Thu Aug 31 11:29:04 2023] OPTIONS /api/document/view_prototype/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcm90b3R5cGVfaWQiOiIxIn0.qiHpsvdvCEbsBfmqBCtoqMlvaLSGP30vohNhlN1l5AI/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 225446|app: 0|req: 2/12] 219.239.227.188 () {48 vars in 1146 bytes} [Thu Aug 31 11:29:04 2023] GET /api/document/view_prototype/eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwcm90b3R5cGVfaWQiOiIxIn0.qiHpsvdvCEbsBfmqBCtoqMlvaLSGP30vohNhlN1l5AI/ => generated 986 bytes in 126 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
