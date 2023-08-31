@@ -315,7 +315,7 @@ def delete_one_project(request):
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     user = request.user
     try:
-        member=Member.objects.get(team=parent_folder.project.team,user=user)
+        member=Member.objects.get(team=project.team,user=user)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     project.is_deleted = True
@@ -351,7 +351,7 @@ def rename_project(request):
     user = request.user
     new_name = request.POST.get("name")
     try:
-        member=Member.objects.get(team=parent_folder.project.team,user=user)
+        member=Member.objects.get(team=project.team,user=user)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     project.name = new_name
@@ -412,14 +412,13 @@ def get_current_team(request):
     # pprint.pprint(team_list)
     return JsonResponse({'errno': 0,'team':team_list, 'msg': "请求成功"})
 
-
 @validate_login
 def all_projects(request):
     if request.method != 'GET':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
     team_id = user.current_team_id  # 选择特定团队的项目
-    sort_by = request.GET.get('sort_by', 'created_at')  # 默认按创建时间排序
+    sort_by = request.GET.get('sort_by', '-created_at')  # 默认按创建时间降序排序
     try:
         team = Team.objects.get(id=team_id)
     except Team.DoesNotExist:
@@ -428,13 +427,16 @@ def all_projects(request):
         member = Member.objects.get(user=user, team=team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-    print('all_projects 我在获取所有成员 : ',team_id)
-    if sort_by == 'created_at':
-        project_list = Project.objects.filter(team=team).order_by('-created_at')
-    elif sort_by == 'name':
-        project_list = Project.objects.filter(team=team).order_by('name')
+    # print('all_projects 我在获取所有成员 : ', team_id)
+    valid_sort_fields = ['created_at', 'name']
+    if sort_by.startswith('-'):
+        sort_field = sort_by[1:]
+        if sort_field not in valid_sort_fields:
+            sort_field = 'created_at'  # 默认排序字段为 created_at
+        sort_field = '-' + sort_field
     else:
-        return JsonResponse({'errno': 1, 'msg': "无效的排序选项"})
+        sort_field = sort_by if sort_by in valid_sort_fields else '-created_at'
+    project_list = Project.objects.filter(team=team).order_by(sort_field)
     projects = [project.to_dict() for project in project_list]
     return JsonResponse({'errno': 0, 'projects': projects, 'msg': "获取项目列表成功"})
 

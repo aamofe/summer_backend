@@ -1,4 +1,5 @@
 import json
+import uuid
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
@@ -13,7 +14,9 @@ from summer_backend import settings
 from summer_backend.settings import SECRET_KEY
 from team.models import Team, Member, Project
 from user.authentication import validate_login, validate_all
+from user.cos_utils import get_cos_client
 from user.models import User
+from user.views import upload_cover_method
 
 def share_document(request):
     if request.method!='POST':
@@ -373,7 +376,8 @@ def create_folder(request):
     if not folder_name:
         return JsonResponse({'errno': 1, 'msg': "文件夹名称不能为空"})
     folder = Folder.objects.create(name=folder_name, project=project, user=user, parent_folder=parent_folder)
-    return JsonResponse({'errno': 0, 'msg': "文件夹创建成功", 'folder': folder.to_dict()})
+    folders={'folder_id':folder.id}
+    return JsonResponse({'errno': 0, 'msg': "文件夹创建成功", 'folder':folders})
 
 
 
@@ -383,6 +387,9 @@ def view_folder(request):
         return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
     # project_id = request.GET.get('project_id')
     parent_folder_id = request.GET.get('parent_folder_id')
+    sorted_by=request.GET.get('sorted_by','created_at')
+    if sorted_by not in{'created_at','-created_at','name','-name'}:
+        return JsonResponse({'errno': 1, 'msg': "排序方法错误"})
     try:
         parent_folder = Folder.objects.get(id=parent_folder_id)
     except Folder.DoesNotExist:
@@ -402,7 +409,7 @@ def view_folder(request):
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     
-    parent_folder_info = parent_folder.to_dict()
+    parent_folder_info = parent_folder.to_dict(sorted_by)
     return JsonResponse({'errno': 0, 'msg': "获取文件夹信息成功", 'parent_folder': parent_folder_info})
 
 @validate_login
@@ -502,3 +509,18 @@ def rename_folder(request):
     folder.name=name
     folder.save()
     return JsonResponse({'errno': 0, 'msg': "名称修改成功"})
+
+@validate_login
+def upload(request):
+    if request.method != 'POST':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user = request.user
+    file_type=request.POST.get('fiel_type')
+    file=request.POST.get('file')
+    if not file_type in {'document','prototype'}:
+        return JsonResponse({'errno': 1, 'msg': "文件类型不合法"})
+    res,url=upload_cover_method(file,0,file_type)
+    if res == -1:
+        return JsonResponse({'errno': 1, 'msg': "图片格式不合法"})
+    else:
+        return JsonResponse({'errno':0,'url':url,'msg':'上传图片成功'})

@@ -31,6 +31,6 @@ urlpatterns = [
     # path('delete_folder/',views.delete_folder),
     path('view_folder/',views.view_folder),
     path('restore/',views.restore),
-    path('rename_folder/',views.rename_folder)
-
+    path('rename_folder/',views.rename_folder),
+    path('upload/',views.upload)
 ]

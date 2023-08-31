@@ -13,22 +13,32 @@ class Folder(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     deleted_at=models.DateTimeField(verbose_name='被删除时间',null=True)
     is_deleted=models.BooleanField(verbose_name='是否被删除',default=False)
-    def to_dict(self):
+    def to_dict(self, sorted_by='created_at'):
         children = []
-        for child_folder in self.child_folders.all():
-            children.append(child_folder.to_dict())  # 递归获取子文件夹信息
-        parent_folder=self
+        parent_folder = self
         if self.is_deleted:
             try:
-                copy=Copy.objects.get(original=parent_folder)
-                parent_folder=copy.revised
+                copy = Copy.objects.get(original=parent_folder)
+                parent_folder = copy.revised
             except Copy.DoesNotExist:
                 pass
-        for document in Document.objects.filter(parent_folder=parent_folder):
-            # print("我的孩子")
+        for child_folder in parent_folder.child_folders.all():
+            children.append(child_folder.to_dict(sorted_by))  # 递归获取子文件夹信息
+        if sorted_by == 'created_at':
+            documents = Document.objects.filter(parent_folder=parent_folder).order_by('created_at')
+            prototypes = Prototype.objects.filter(parent_folder=parent_folder).order_by('created_at')
+        elif sorted_by == '-created_at':
+            documents = Document.objects.filter(parent_folder=parent_folder).order_by('-created_at')
+            prototypes = Prototype.objects.filter(parent_folder=parent_folder).order_by('-created_at')
+        elif sorted_by == 'name':
+            documents = Document.objects.filter(parent_folder=parent_folder).order_by('title')
+            prototypes = Prototype.objects.filter(parent_folder=parent_folder).order_by('title')
+        else:
+            documents = Document.objects.filter(parent_folder=parent_folder).order_by('-title')
+            prototypes = Prototype.objects.filter(parent_folder=parent_folder).order_by('-title')
+        for document in documents:
             children.append(document.to_dict())
-        for prototype in Prototype.objects.filter(parent_folder=parent_folder):
-            # print("我的孩子")
+        for prototype in prototypes:
             children.append(prototype.to_dict())
         return {
             'id': self.id,
@@ -51,10 +61,14 @@ class Document(models.Model):
     modified_at=models.DateTimeField(verbose_name="最近修改时间",auto_now=True)
     deleted_at = models.DateTimeField(verbose_name='被删除时间', null=True)
 
-    parent_folder=models.ForeignKey(Folder,verbose_name="所属文件夹",on_delete=models.CASCADE)
-    user=models.ForeignKey(User,verbose_name="创建者",on_delete=models.CASCADE)
+    parent_folder=models.ForeignKey(Folder,null=True,verbose_name="所属文件夹",on_delete=models.CASCADE)
+    user=models.ForeignKey(User,null=True,verbose_name="创建者",on_delete=models.CASCADE)
     is_locked=models.IntegerField(verbose_name="文件锁",default=False)
     is_deleted=models.BooleanField(verbose_name="是否被删除",default=False)
+    
+    is_template=models.BooleanField(verbose_name='是否为模板',default=False)
+    is_private=models.BooleanField(verbose_name='是否私有',default=True)
+
     def to_dict(self):
 
         return {
@@ -81,18 +95,21 @@ class History(models.Model):
         }
 class Prototype(models.Model):
     title=models.CharField(verbose_name='标题',max_length=20)
-    content=models.TextField(verbose_name='',default="")
+    content=models.TextField(verbose_name='',null=True)
     created_at = models.DateTimeField(verbose_name="创建时间", auto_now_add=True)
     modified_at = models.DateTimeField(verbose_name="最近修改时间", auto_now=True)
     deleted_at = models.DateTimeField(verbose_name='被删除时间', null=True)
 
-    parent_folder=models.ForeignKey(Folder,verbose_name="所属文件夹",on_delete=models.CASCADE)
-    user=models.ForeignKey(User,verbose_name="创建者",on_delete=models.CASCADE)
+    parent_folder=models.ForeignKey(Folder,null=True,verbose_name="所属文件夹",on_delete=models.CASCADE)
+    user=models.ForeignKey(User,null=True,verbose_name="创建者",on_delete=models.CASCADE)
     is_deleted=models.BooleanField(verbose_name="是否已删除",default=False)
     visible=models.BooleanField(verbose_name='是否可见',default=True)
     token = models.URLField(verbose_name="预览原型链接", null=True)
     height =models.DecimalField(default=1080,max_digits=10, decimal_places=2)
     width = models.DecimalField(default=1920,max_digits=10, decimal_places=2)
+
+    is_template=models.BooleanField(verbose_name='是否为模板',default=False)
+    is_private=models.BooleanField(verbose_name='是否私有',default=True)
     def to_dict(self):
         return {
             'id':self.id,
@@ -105,10 +122,4 @@ class Prototype(models.Model):
             'height':self.height,
             'width':self.width
         }
-
-# class Template(models.Model):
-#     title = models.CharField(verbose_name='标题', max_length=20)
-#     content = models.TextField(verbose_name='', default="")
-#     created_at = models.DateTimeField(verbose_name="创建时间", auto_now_add=True)
-#     modified_at = models.DateTimeField(verbose_name="最近修改时间", auto_now=True)
 
