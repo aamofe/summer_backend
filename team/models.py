@@ -15,6 +15,7 @@ class Team(models.Model):
         return {
             'id': self.id,
             'name': self.name,
+            'description':self.description if not self.description is None else "暂无描述",
             'created_at':(self.created_at.astimezone(shanghai_tz)).strftime('%Y-%m-%d %H:%M:%S'),
             'creator':self.user.username,
         }
