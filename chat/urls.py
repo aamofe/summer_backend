@@ -15,5 +15,7 @@ urlpatterns = [
     path('notice/delete/<int:notice_id>',views.delete_notice),
     path('notice/delete_all_read/<int:user_id>',views.delete_all_read),
 
+    path('get_group_id/<int:user_id>/<int:team_id>',views.get_group_id),
+    path('get_group_members/<int:group_id>',views.get_group_members),
 
 ]

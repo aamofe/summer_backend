@@ -62,6 +62,7 @@ def create_team(request):
                 team.cover_url = cover_url
                 group.cover_url=cover_url
         team.save()
+        group.save()
         member = Member.objects.create(role='CR', user=user, team=team)
         chat_member=ChatMember.objects.create(role='CR',user=user,team=group)
         return JsonResponse({'errno': 0, 'msg': "创建团队成功"})
@@ -78,14 +79,17 @@ def update_team(request, team_id):  # 修改团队描述 上传头像
         cover = request.FILES.get('cover')
         try:
             team=Team.objects.get(id=team_id)
+            group=Group.objects.get(actual_team=team_id)
         except Team.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
         if not team.user == user:
             return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
         if team_name and team_name!='个人空间':
             team.name = team_name
+            group.name=team_name
         if description:
             team.description = description
+            group.description=description
         if cover:
             res, cover_url, content = upload_cover_method(cover, team.id, 'team_cover')
             if res == -2:

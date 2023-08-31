@@ -196,3 +196,7 @@ def delete_all_read(request, user_id):
         return JsonResponse({"message": "All read messages deleted"})
     return JsonResponse({"error": "Method not allowed"}, status=405)
 
+def get_group_id(request,user_id,team_id):
+    group_id=Group.objects.get(actual_team=team_id).id
+    return JsonResponse({'group_id':group_id})
+
