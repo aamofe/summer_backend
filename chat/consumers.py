@@ -6,7 +6,7 @@ from django.utils import timezone
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from asgiref.sync import sync_to_async
-from chat.models import ChatMessage, Notice, UserTeamChatStatus, UserChatChannel, UserNoticeChannel
+from chat.models import ChatMessage, Notice, UserTeamChatStatus, UserChatChannel, UserNoticeChannel, File
 from user.models import User
 from .models import ChatMember, Group
 
@@ -92,17 +92,27 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 return
             user_id = text_data_json['user_id']
             message = text_data_json.get('message', '')  # 如果'message'不存在，返回空字符串
-            files = text_data_json.get('files', [])  # 如果'files'不存在，返回空列表
             replyMessage = text_data_json.get('replyMessage', {})  # 如果'reply_message'不存在，返回空字典
-            await self.save_message(message,user_id,files,replyMessage)
-            await self.index_up(user_id,self.team_id)
+            file_data = text_data_json.get('files', [])  # 如果'files'不存在，返回空列表
+            if file_data:  # 检查是否真的拿到了文件数据
+                file_instance = File(
+                    url=file_data['url'],
+                    name=file_data['name'],
+                    audio=file_data.get('audio', False),  # 使用get以处理可能的缺失字段
+                    duration=file_data.get('duration', 0),
+                    size=file_data.get('size', 0),
+                    preview=file_data.get('preview', None),
+                    progress=file_data.get('progress', 0)
+                )
+                await self.save_message(message, user_id, file_instance, replyMessage)
+            await self.save_message(message, user_id, None, replyMessage)
             # 将消息发送给团队群聊的所有成员
             await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'chat_message',
                     'message': message,
-                    'files': files,
+                    'files': file_data,
                     'user_id': user_id,
                     'replyMessage': replyMessage,
                     'username': await self.get_username(user_id),
@@ -139,6 +149,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         avatar_url = event.get('avatar_url', '')
         time = event.get('time', '')
         files = event.get('files', [])  # 获取files字段，如果没有则默认为空列表
+
         replyMessage = event.get('replyMessage', None)  #
         print(replyMessage)
         # 发送消息给 WebSocket
@@ -177,10 +188,14 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
             'latest_message': latest_message,
         }))
     @database_sync_to_async
-    def save_message(self, message,user_id,files,reply_message):
-        # 假设你有一个名为ChatMessage的模型，用于存储消息
-        ChatMessage.objects.create(team_id=self.team_id, message=message,user_id=user_id,files=files,reply_message=reply_message)
-
+    def save_message(self, message,user_id,file,reply_message):
+        if not file:
+            # 假设你有一个名为ChatMessage的模型，用于存储消息
+            ChatMessage.objects.create(team_id=self.team_id, message=message, user_id=user_id,reply_message=reply_message)
+        else:
+            chat_message=ChatMessage.objects.create(team_id=self.team_id, message=message,user_id=user_id,files=file,reply_message=reply_message)
+            file.chat_message=chat_message
+            file.save()
 
     @database_sync_to_async
     def search_messages(self, keyword):

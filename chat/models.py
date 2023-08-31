@@ -7,7 +7,7 @@ from user.models import User
 class ChatMessage(models.Model):
     message = models.TextField(default=None)
     reply_message = models.TextField(default=None)
-    files = models.TextField(default=None)
+    files = models.ForeignKey('File', on_delete=models.CASCADE, blank=True, null=True)
     team_id = models.IntegerField()
     user_id = models.IntegerField(default=0)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -51,13 +51,18 @@ class UserNoticeChannel(models.Model):
 
 
 class Group(models.Model):
+    Chat_Choices=(
+        ('team','团队'),
+        ('group','群聊'),
+        ('private','私聊')
+    )
     name=models.CharField(verbose_name="团队名称",max_length=20,default='未命名团队')
     actual_team=models.IntegerField(blank=True,null=True)
     user=models.ForeignKey(User,verbose_name="创建者",on_delete=models.CASCADE,related_name="chat_team_user")
     description=models.CharField(verbose_name="团队描述", max_length=50, null=True)
     created_at = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
     cover_url=models.URLField(verbose_name="团队封面",default="https://summer-1315620690.cos.ap-beijing.myqcloud.com/team_cover/default.png")
-    is_private=models.BooleanField(verbose_name='是否为私聊',default=False)
+    type=models.CharField(verbose_name="团队类型",choices=Chat_Choices,max_length=10,default='team')
     def to_dict(self):
         return {
             'id': self.id,
@@ -80,7 +85,7 @@ class ChatMember(models.Model):
     def __str__(self):
         return f"{self.get_role_display()}"
 class File(models.Model):
-    chat_message=models.ForeignKey(ChatMessage,on_delete=models.CASCADE)
+    chat_message=models.ForeignKey(ChatMessage,on_delete=models.CASCADE,blank=True,null=True)
     url=models.URLField(verbose_name="文件地址")
     name=models.CharField(verbose_name="文件名",max_length=50)
     audio=models.BooleanField(verbose_name="是否为音频",default=False)
