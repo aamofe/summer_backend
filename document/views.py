@@ -37,7 +37,7 @@ from user.models import User
 #     except Project.DoesNotExist:
 #         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
 #     try:
-#         member=Member.objects.filter(team=project.team,user=user)
+#         member=Member.objects.filter(team=parent_folder.project.team,user=user)
 #     except Member.DoesNotExist:
 #         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
 #     document=Document.objects.create(title=title,project=project,user=user)
@@ -94,10 +94,10 @@ def view_document(request,token):
     if token.isdigit():
         document_id=token
         try:
-            document=Document.objects.get(id=document_id,is_deleted=False,folder__is_deleted=False)
+            document=Document.objects.get(id=document_id,is_deleted=False,parent_folder__is_deleted=False)
         except Document.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "文档不存在"})
-        team_id=document.project.team.id
+        team_id=document.parent_folder.project.team.id
         try :
             team=Team.objects.get(id=team_id)
         except Team.DoesNotExist:
@@ -115,7 +115,7 @@ def view_document(request,token):
         payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
         document_id=payload.get('document_id')
         try:
-            document=Document.objects.get(id=document_id,is_deleted=False,folder__is_deleted=False)
+            document=Document.objects.get(id=document_id,is_deleted=False,parent_folder__is_deleted=False)
         except Document.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "文档不存在"})
         editable=payload.get('editable')
@@ -130,7 +130,7 @@ def change_lock(request):
     document_id=request.POST.get("document_id")
     type=request.POST.get('type')# + -
     try :
-        document=Document.objects.get(id=document_id,folder__is_deleted=False)
+        document=Document.objects.get(id=document_id,parent_folder__is_deleted=False)
     except Document.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "文档不存在"})
     if type=='+':
@@ -153,7 +153,7 @@ def change_lock(request):
 #     except Project.DoesNotExist:
 #         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
 #     try:
-#         member=Member.objects.get(user=user,team=project.team)
+#         member=Member.objects.get(user=user,team=parent_folder.project.team)
 #     except Member.DoesNotExist:
 #         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
 #     document_list=Document.objects.filter(project=project)
@@ -175,7 +175,7 @@ def change_lock(request):
 #     title=request.POST.get('title')
 #     content=request.POST.get('content')
 #     try:
-#         member=Member.objects.filter(team=project.team,user=user)
+#         member=Member.objects.filter(team=parent_folder.project.team,user=user)
 #     except Member.DoesNotExist:
 #         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
 #     if title:
@@ -197,7 +197,7 @@ def change_lock(request):
 #     except Prototype.DoesNotExist:
 #         return JsonResponse({'errno': 1, 'msg': "原型不存在"})
 #     try:
-#         member=Member.objects.get(user=user,team=prototype.project.team)
+#         member=Member.objects.get(user=user,team=prototype.parent_folder.project.team)
 #     except Member.DoesNotExist:
 #         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
 #     content = request.POST.get('content')
@@ -218,7 +218,7 @@ def share_prototype(request):
     prototype_id=request.POST.get('prototype_id')
     visible=request.POST.get('visible')
     try :
-        prototype=Prototype.objects.get(id=prototype_id,is_deleted=False,folder__is_deleted=False)
+        prototype=Prototype.objects.get(id=prototype_id,is_deleted=False,parent_folder__is_deleted=False)
     except Prototype.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "文档不存在"})
     except (ValueError, TypeError):
@@ -247,11 +247,11 @@ def view_prototype(request,token):
         prototype_id=token
         print("当前用户 : ",user.id )
         try:
-            prototype = Prototype.objects.get(id=prototype_id, is_deleted=False,folder__is_deleted=False)
+            prototype = Prototype.objects.get(id=prototype_id, is_deleted=False,parent_folder__is_deleted=False)
         except Prototype.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "原型不存在"})
         try:
-            member = Member.objects.get(user=user, team=prototype.project.team)
+            member = Member.objects.get(user=user, team=prototype.parent_folder.project.team)
         except Member.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
         prototypes = prototype.to_dict()
@@ -263,7 +263,7 @@ def view_prototype(request,token):
         if not prototype_id:
             return JsonResponse({'errno': 1, 'msg': "解密失败"})
         try:
-            prototype = Prototype.objects.get(id=prototype_id, is_deleted=False,folder__is_deleted=False)
+            prototype = Prototype.objects.get(id=prototype_id, is_deleted=False,parent_folder__is_deleted=False)
         except Prototype.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "原型不存在"})
         if not prototype.visible:
@@ -368,7 +368,7 @@ def create(request):
     except Folder.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
     try:
-        member = Member.objects.filter(team=folder.project.team, user=user)
+        member = Member.objects.filter(team=folder.parent_folder.project.team, user=user)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     if file_type=='document':
@@ -397,7 +397,7 @@ def delete(request,):#删除/彻底 一个/多个 文档/原型
     except Folder.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
     try:
-        member = Member.objects.get(user=user, team=folder.project.team)
+        member = Member.objects.get(user=user, team=folder.parent_folder.project.team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     if file_id==0:
@@ -414,12 +414,12 @@ def delete(request,):#删除/彻底 一个/多个 文档/原型
     else:
         if file_type == 'document':
             try:
-                file=Document.objects.get(id=file_id,is_deleted=False,folder__is_deleted=False)
+                file=Document.objects.get(id=file_id,is_deleted=False,parent_folder__is_deleted=False)
             except Document.DoesNotExist:
                 return JsonResponse({'errno': 1, 'msg': "文档不存在"})
         else:
             try:
-                file = Prototype.objects.get(id=file_id,is_deleted=False,folder__is_deleted=False)
+                file = Prototype.objects.get(id=file_id,is_deleted=False,parent_folder__is_deleted=False)
             except Project.DoesNotExist:
                 return JsonResponse({'errno': 1, 'msg': "原型不存在"})
         if forerver=='1':
@@ -451,7 +451,7 @@ def delete(request,):#删除/彻底 一个/多个 文档/原型
 #     except Folder.DoesNotExist:
 #         return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
 #     try:
-#         member = Member.objects.get(user=user, team=folder.project.team)
+#         member = Member.objects.get(user=user, team=folder.parent_folder.project.team)
 #     except Member.DoesNotExist:
 #         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
 #     if file_id == 0:
@@ -465,12 +465,12 @@ def delete(request,):#删除/彻底 一个/多个 文档/原型
 #         if file_type == 'document':
 #             print(file_id)
 #             try:
-#                 file = Document.objects.get(id=file_id,is_deleted=True,folder__is_deleted=False)
+#                 file = Document.objects.get(id=file_id,is_deleted=True,parent_folder__is_deleted=False)
 #             except Document.DoesNotExist:
 #                 return JsonResponse({'errno': 1, 'msg': "文档不存在"})
 #         else:
 #             try:
-#                 file = Prototype.objects.get(id=file_id,is_deleted=True,folder__is_deleted=False)
+#                 file = Prototype.objects.get(id=file_id,is_deleted=True,parent_folder__is_deleted=False)
 #             except:
 #                 return JsonResponse({'errno': 1, 'msg': "原型不存在"})
 #         print(file.is_deleted)
@@ -497,7 +497,7 @@ def save(request):
     except Folder.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     try:
-        member = Member.objects.get(user=user, team=folder.project.team)
+        member = Member.objects.get(user=user, team=folder.parent_folder.project.team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     if file_type=='document':
@@ -532,7 +532,7 @@ def save(request):
 #     except Project.DoesNotExist:
 #         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
 #     try:
-#         member = Member.objects.get(user=user, team=project.team)
+#         member = Member.objects.get(user=user, team=parent_folder.project.team)
 #     except Member.DoesNotExist:
 #         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
 #     if file_type=='document':
@@ -594,7 +594,7 @@ def create_folder(request):
     except Project.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     try:
-        member=Member.objects.get(user=user,team=project.team)
+        member=Member.objects.get(user=user,team=parent_folder.project.team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     if parent_folder_id:
@@ -626,7 +626,7 @@ def delete_folder(request):
     except Project.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     try:
-        member=Member.objects.get(user=user,team=project.team)
+        member=Member.objects.get(user=user,team=parent_folder.project.team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     try:
@@ -664,7 +664,7 @@ def view_folder(request):
     except Project.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     try:
-        member=Member.objects.get(user=user,team=project.team)
+        member=Member.objects.get(user=user,team=parent_folder.project.team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     try:

@@ -17,7 +17,7 @@ class Folder(models.Model):
         children = []
         for child_folder in self.child_folders.all():
             children.append(child_folder.to_dict_recursive())  # 递归获取子文件夹信息
-        for document in Document.objects.filter(folder=self):
+        for document in Document.objects.filter(parent_folder=self):
             children.append(document.to_dict())
         return {
             'id': self.id,

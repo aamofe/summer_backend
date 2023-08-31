@@ -280,11 +280,11 @@ def create_project(request, team_id):
         return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
     team = team_list[0]
     project = Project.objects.create(name=project_name, team=team,user=user)
-    folder=Folder.objects.create(name=project_name,project=project,user=user)
+    folder=Folder.objects.create(name=project_name,project=project,user=user,parent_folder=None)
     # projects=project.to_dict()
     project_info=[]
     project_info.append(project.to_dict())
-    project_info.append(folder.to_dict())
+    project_info.append({'folder_id':folder.id,'folder_name':folder.name})
     return JsonResponse({'errno': 0,'project':project.to_dict(), 'msg': "项目创建成功"})
 
 
@@ -299,7 +299,7 @@ def delete_one_project(request):
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     user = request.user
     try:
-        member=Member.objects.get(team=project.team,user=user)
+        member=Member.objects.get(team=parent_folder.project.team,user=user)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     project.is_deleted = True
@@ -316,7 +316,7 @@ def recover_one_project(request):
     except Project.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     try:
-        member=Member.objects.get(user=user,team=project.team)
+        member=Member.objects.get(user=user,team=parent_folder.project.team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于当前团队"})
     project.is_deleted=False
@@ -335,7 +335,7 @@ def rename_project(request):
     user = request.user
     new_name = request.POST.get("name")
     try:
-        member=Member.objects.get(team=project.team,user=user)
+        member=Member.objects.get(team=parent_folder.project.team,user=user)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     project.name = new_name
