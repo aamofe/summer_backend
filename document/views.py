@@ -211,10 +211,10 @@ def delete(request,):#删除/彻底 一个/多个 文档/原型
     user = request.user
     file_type=request.POST.get('file_type')#原型 文档
     file_id=request.POST.get('file_id') #删除1个
-    forerver=request.POST.get('forever')#0代表否 1代表是
-    if not file_type  or not file_id or not forerver:
+    # forerver=request.POST.get('forever')#0代表否 1代表是
+    if not file_type  or not file_id:
         return JsonResponse({'errno': 1, 'msg': "参数不全"})
-    if not(file_type in {'document','prototype','folder'}) or not file_id.isdigit() or not forerver in {str(0),str(1)}:
+    if not(file_type in {'document','prototype','folder'}) or not file_id.isdigit() :
         return JsonResponse({'errno': 1, 'msg': "参数值错误"})
     if file_type=='folder':
         try:
@@ -248,12 +248,9 @@ def delete(request,):#删除/彻底 一个/多个 文档/原型
         member = Member.objects.get(user=user, team=parent_folder.project.team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-    if forerver=='1':
-        file.delete()
-    else:
-        file.is_deleted=True
-        file.deleted_at=timezone.now()
-        file.save()
+    file.is_deleted=True
+    file.deleted_at=timezone.now()
+    file.save()
     return JsonResponse({'errno': 0, 'msg': "删除成功"})
 
 @validate_login
@@ -466,12 +463,32 @@ def upload(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
-    file_type=request.POST.get('fiel_type')
-    file=request.POST.get('file')
+    file_type=request.POST.get('file_type')
+    file=request.FILES.get('file')
     if not file_type in {'document','prototype'}:
         return JsonResponse({'errno': 1, 'msg': "文件类型不合法"})
+    if not file:
+         return JsonResponse({'errno': 1, 'msg': "请上传文件"})
     res,url=upload_cover_method(file,0,file_type)
     if res == -1:
         return JsonResponse({'errno': 1, 'msg': "图片格式不合法"})
     else:
         return JsonResponse({'errno':0,'url':url,'msg':'上传图片成功'})
+
+@validate_login 
+def delete_permanently(request):
+    if request.method != 'POST':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user = request.user
+    project_id = request.GET.get('project_id')
+    try:
+        project = Project.objects.get(id=project_id)
+    except Project.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "项目不存在"})
+    deleted_folders = Folder.objects.filter(project=project, is_deleted=True)
+    deleted_folders.delete()
+    deleted_documents = Document.objects.filter(Q(parent_folder__project=project, is_deleted=True))
+    deleted_documents.delete()
+    deleted_prototype = Prototype.objects.filter(Q(parent_folder__project=project, is_deleted=True))
+    deleted_prototype.delete()
+    return JsonResponse({'errno': 0, 'msg': "已彻底删除"})
