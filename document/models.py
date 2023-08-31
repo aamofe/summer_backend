@@ -16,12 +16,6 @@ class Folder(models.Model):
     def to_dict(self, sorted_by='created_at'):
         children = []
         parent_folder = self
-        if self.is_deleted:
-            try:
-                copy = Copy.objects.get(original=parent_folder)
-                parent_folder = copy.revised
-            except Copy.DoesNotExist:
-                pass
         for child_folder in parent_folder.child_folders.all():
             children.append(child_folder.to_dict(sorted_by))  # 递归获取子文件夹信息
         if sorted_by == 'created_at':
@@ -48,10 +42,6 @@ class Folder(models.Model):
             'type': 'folder',
             'children': children  # 添加子文件夹和子文件信息
         }
-class Copy(models.Model):
-    original = models.ForeignKey(Folder, related_name='original_copies', on_delete=models.CASCADE)
-    revised = models.ForeignKey(Folder, related_name='revised_copies', on_delete=models.CASCADE)
-
 class Document(models.Model):
     title=models.CharField(verbose_name="标题",max_length=20)
     content=models.TextField(verbose_name="文档内容",null=True)
