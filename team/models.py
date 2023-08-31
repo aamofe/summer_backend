@@ -38,6 +38,7 @@ class Project(models.Model):
     team=models.ForeignKey(Team,verbose_name="所属团队",on_delete=models.CASCADE)
     is_deleted = models.BooleanField(verbose_name='是否已删除', default=False)
     user=models.ForeignKey(User,verbose_name="创建者",on_delete=models.CASCADE)
+    deleted_at=models.DateTimeField(verbose_name='被删除时间',null=True)
     def to_dict(self):
         return{
             'name':self.name,
