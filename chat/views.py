@@ -214,5 +214,23 @@ def get_group_members(request,group_id):
     return JsonResponse({'members':data})
 
 
-def get_all_groups_members(request):
-    return None
+def get_all_groups_members(request,user_id):
+    groups=ChatMember.objects.filter(user_id=user_id)
+    data=[]
+    for group in groups:
+        data.append({
+            'id':group.team_id,
+            'name':Group.objects.get(id=group.team_id).name,
+            'avatar_url':Group.objects.get(id=group.team_id).cover_url,
+            'role':group.role,
+        })
+    return JsonResponse({'groups':data})
+
+
+
+def get_group(request, user_id):
+    groups = ChatMember.objects.filter(user_id=user_id)
+    data = []
+    for group in groups:
+        data.append(group.team_id)
+    return JsonResponse({'groups': data})
