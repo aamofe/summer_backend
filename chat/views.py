@@ -208,16 +208,19 @@ def get_group_members(request,group_id):
 
 
 def get_all_groups_members(request,user_id):
-    groups=ChatMember.objects.filter(user_id=user_id)
-    data=[]
+    groups = ChatMember.objects.filter(user_id=user_id)
+    data = []
     for group in groups:
-        data.append({
-            'id':group.team_id,
-            'name':Group.objects.get(id=group.team_id).name,
-            'avatar_url':Group.objects.get(id=group.team_id).cover_url,
-            'role':group.role,
-        })
-    return JsonResponse({'groups':data})
+        members = ChatMember.objects.filter(team_id=group.team_id)
+        for member in members:
+            data.append({
+                'id': member.user_id,
+                'username': User.objects.get(id=member.user_id).username,
+                'nickname': User.objects.get(id=member.user_id).nickname,
+                'avatar_url': User.objects.get(id=member.user_id).avatar_url,
+                'role': member.role,
+            })
+    return JsonResponse({'members': data})
 
 
 
@@ -227,3 +230,10 @@ def get_group(request, user_id):
     for group in groups:
         data.append(group.team_id)
     return JsonResponse({'groups': data})
+
+def make_group(request):
+    if request.method == "POST":
+        creator_id = request.POST.get('creator_id')
+
+
+    return JsonResponse({"error": "Method not allowed"}, status=405)
