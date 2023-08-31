@@ -281,6 +281,10 @@ def create_project(request, team_id):
     team = team_list[0]
     project = Project.objects.create(name=project_name, team=team,user=user)
     folder=Folder.objects.create(name=project_name,project=project,user=user)
+    # projects=project.to_dict()
+    project_info=[]
+    project_info.append(project.to_dict())
+    project_info.append(folder.to_dict())
     return JsonResponse({'errno': 0,'project':project.to_dict(), 'msg': "项目创建成功"})
 
 
@@ -335,6 +339,12 @@ def rename_project(request):
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     project.name = new_name
+    try:
+        folder=Folder.objects.get(parent_folder=None,project=project)
+        folder.name=new_name
+        folder.save()
+    except Folder.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
     project.save()
     return JsonResponse({'errno': 0, 'msg': "项目重命名成功"})
 @validate_login
