@@ -301,7 +301,7 @@ def create_project(request, team_id):
     project_info=[]
     project_info.append(project.to_dict())
     project_info.append({'folder_id':folder.id,'folder_name':folder.name})
-    return JsonResponse({'errno': 0,'project':project.to_dict(), 'msg': "项目创建成功"})
+    return JsonResponse({'errno': 0,'project':project_info, 'msg': "项目创建成功"})
 
 
 @validate_login
