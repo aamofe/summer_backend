@@ -339,6 +339,12 @@ def rename_project(request):
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     project.name = new_name
+    try:
+        folder=Folder.objects.get(parent_folder=None,project=project)
+        folder.name=new_name
+        folder.save()
+    except Folder.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
     project.save()
     return JsonResponse({'errno': 0, 'msg': "项目重命名成功"})
 @validate_login

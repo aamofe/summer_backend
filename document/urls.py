@@ -30,6 +30,7 @@ urlpatterns = [
     path('create_folder/',views.create_folder),
     path('delete_folder/',views.delete_folder),
     path('view_folder/',views.view_folder),
-    path('restore/',views.restore)
+    path('restore/',views.restore),
+    path('rename_folder/',views.rename_folder)
 
 ]

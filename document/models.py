@@ -28,8 +28,8 @@ class Folder(models.Model):
             'children': children  # 添加子文件夹和子文件信息
         }
 class Copy(models.Model):
-    original=models.ForeignKey(Folder,on_delete=models.CASCADE)
-    revised=models.ForeignKey(Folder,on_delete=models.CASCADE)
+    original = models.ForeignKey(Folder, related_name='original_copies', on_delete=models.CASCADE)
+    revised = models.ForeignKey(Folder, related_name='revised_copies', on_delete=models.CASCADE)
 
 class Document(models.Model):
     title=models.CharField(verbose_name="标题",max_length=20)
@@ -80,8 +80,8 @@ class Prototype(models.Model):
     is_deleted=models.BooleanField(verbose_name="是否已删除",default=False)
     visible=models.BooleanField(verbose_name='是否可见',default=True)
     token = models.URLField(verbose_name="预览原型链接", null=True)
-    length =models.DecimalField(default=1920,max_digits=10, decimal_places=2)
-    width = models.DecimalField(default=1080,max_digits=10, decimal_places=2)
+    height =models.DecimalField(default=1080,max_digits=10, decimal_places=2)
+    width = models.DecimalField(default=1920,max_digits=10, decimal_places=2)
     def to_dict(self):
         return {
             'id':self.id,
@@ -91,7 +91,7 @@ class Prototype(models.Model):
             'modified_at':(self.modified_at.astimezone(shanghai_tz)).strftime('%Y-%m-%d %H:%M:%S'),
             'creator':self.user.nickname,
             'type':'prototype',
-            'length':self.length,
+            'height':self.height,
             'width':self.width
         }
 

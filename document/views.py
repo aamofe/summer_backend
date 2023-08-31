@@ -771,4 +771,18 @@ def restore(request):
             file.parent_folder = copy.revised
     return JsonResponse({'errno': 0, 'msg': "项目恢复成功"})
 
-
+def rename_folder(request):
+    if request.method != 'POST':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user = request.user
+    folder_id=request.POST.get('folder_id')
+    name=request.POST.get('name')
+    try:
+        folder=Folder.objects.get(id=folder_id)
+    except Folder.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
+    if folder.parent_folder is None:
+        return JsonResponse({'errno': 1, 'msg': "顶级文件夹不可改名"})
+    folder.name=name
+    folder.save()
+    return JsonResponse({'errno': 0, 'msg': "名称修改成功"})
