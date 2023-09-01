@@ -54,21 +54,8 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
             recent_messages = await self.get_recent_messages()
             user_id = text_data_json['user_id']
             # 创建一个空数组来存放所有消息
-            messages_array = []
 
-            # 遍历每条消息并将其添加到消息数组中
-            for msg in recent_messages:
-                message_data = {
-                    'message': msg.message,
-                    'user_id': str(msg.user_id),
-                    'username': await self.get_username(msg.user_id),
-                    'files': await self.get_files(msg),
-                    'date': msg.date,
-                    'replyMessage': msg.reply_message,
-                    'avatar_url': await self.get_avatar_url(msg.user_id),
-                    'time': msg.timestamp.strftime('%Y-%m-%d %H:%M:%S')
-                }
-                messages_array.append(message_data)
+            messages_array = await self.build_message_array()
 
             # 一次性发送整个消息数组
             await self.send(text_data=json.dumps({
@@ -154,12 +141,29 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 }
             )
             '''''''''
-            if '@所有人' in message:
-                await self.handle_mention_all(message)
-            else:
-                mentioned_users = set(re.findall(r'@(\w+)', message))
-                for user in mentioned_users:
-                    await self.handle_mention(user, message)
+
+    @database_sync_to_async
+    def get_recent_messages(self):
+        return ChatMessage.objects.filter(team_id=self.team_id).order_by('timestamp')
+
+    async def build_message_array(self):
+        recent_messages = await self.get_recent_messages()
+        messages_array = []
+
+        for msg in recent_messages:
+            message_data = {
+                'message': msg.message,
+                'user_id': str(msg.user_id),
+                'username': await self.get_username(msg.user_id),
+                'files': await self.get_files(msg),
+                'date': msg.date,
+                'replyMessage': msg.reply_message,
+                'avatar_url': await self.get_avatar_url(msg.user_id),
+                'time': msg.timestamp.strftime('%Y-%m-%d %H:%M:%S')
+            }
+            messages_array.append(message_data)
+
+        return messages_array
 
     async def chat_message(self, event):
         user_id = event['user_id']
@@ -577,7 +581,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
     async def chat_add_members(self, event):
         # 实际发送消息给WebSocket客户端
         await self.send(text_data=json.dumps({
-            'type': 'chat_add_menbers',
+            'type': 'chat_add_members',
             'roomId': event["roomId"],
             'users': event["users"],
         }))
