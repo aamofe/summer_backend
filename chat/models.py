@@ -89,7 +89,7 @@ class File(models.Model):
     chat_message=models.ForeignKey(ChatMessage,on_delete=models.CASCADE,blank=True,null=True)
     url=models.URLField(verbose_name="文件地址")
     name=models.CharField(verbose_name="文件名",max_length=50)
-    type=models.CharField(verbose_name="文件类型",max_length=10)
+    type=models.CharField(verbose_name="文件类型",max_length=50)
     audio=models.BooleanField(verbose_name="是否为音频",default=False)
     duration=models.IntegerField(verbose_name="音频时长",default=0)
     size=models.IntegerField(verbose_name="文件大小",default=0)
