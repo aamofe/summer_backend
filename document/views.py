@@ -303,6 +303,8 @@ def save(request):
             file=Prototype.objects.get(id=file_id,is_deleted=False)
         except Prototype.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "原型不存在"})
+        file.height=height
+        file.width=width
     if not file.is_private:
         return JsonResponse({'errno': 1, 'msg': "公有模板不可修改"})
     parent_folder=file.parent_folder
