@@ -1,0 +1,570 @@
+[pid: 53357|app: 0|req: 49/118] 219.239.227.141 () {40 vars in 725 bytes} [Fri Sep  1 17:03:08 2023] GET /api/chat/initial/2 => generated 76133 bytes in 531 msecs (HTTP/1.1 500) 9 headers in 342 bytes (1 switches on core 1)
+get_current_team 我在获取所有成员 :  1
+[pid: 53357|app: 0|req: 50/119] 219.239.227.141 () {42 vars in 878 bytes} [Fri Sep  1 17:03:22 2023] GET /api/team/get_current_team/ => generated 317 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+<QuerySet [{'team_id': 1}, {'team_id': 2}, {'team_id': 3}, {'team_id': 4}, {'team_id': 5}, {'team_id': 6}, {'team_id': 7}, {'team_id': 8}, {'team_id': 9}, {'team_id': 10}, {'team_id': 11}, {'team_id': 12}, {'team_id': 13}, {'team_id': 14}, {'team_id': 15}, {'team_id': 16}, {'team_id': 18}, {'team_id': 19}, {'team_id': 20}, {'team_id': 21}, '...(remaining elements truncated)...']>
+[pid: 53357|app: 0|req: 51/120] 219.239.227.141 () {40 vars in 725 bytes} [Fri Sep  1 17:03:23 2023] GET /api/chat/initial/1 => generated 12446 bytes in 324 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 37/121] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:03:26 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 38/122] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:03:26 2023] GET /api/document/view_document/1/ => generated 438 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 52/123] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:03:26 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 53/124] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:03:26 2023] GET /api/document/view_document/1/ => generated 438 bytes in 855 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 54/125] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:03:27 2023] GET /api/team/all_members/ => generated 376 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+get_current_team 我在获取所有成员 :  1
+[pid: 53356|app: 0|req: 39/126] 219.239.227.245 () {44 vars in 755 bytes} [Fri Sep  1 17:04:39 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 53352|app: 0|req: 19/127] 219.239.227.245 () {44 vars in 796 bytes} [Fri Sep  1 17:04:39 2023] OPTIONS /api/team/all_projects/?sort_by=created_at => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+1
+3
+[pid: 53352|app: 0|req: 20/128] 219.239.227.245 () {44 vars in 757 bytes} [Fri Sep  1 17:04:39 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 56/129] 219.239.227.245 () {42 vars in 856 bytes} [Fri Sep  1 17:04:39 2023] GET /api/team/get_current_team/?user_id=1 => generated 317 bytes in 34 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53352|app: 0|req: 20/130] 219.239.227.245 () {42 vars in 829 bytes} [Fri Sep  1 17:04:39 2023] GET /api/team/all_projects/ => generated 903 bytes in 41 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 56/131] 219.239.227.245 () {42 vars in 823 bytes} [Fri Sep  1 17:04:39 2023] GET /api/team/all_teams/ => generated 839 bytes in 46 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 40/132] 219.239.227.245 () {42 vars in 866 bytes} [Fri Sep  1 17:04:39 2023] GET /api/team/all_projects/?sort_by=created_at => generated 903 bytes in 23 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+is_login :  True
+[pid: 53356|app: 0|req: 41/133] 219.239.227.245 () {42 vars in 827 bytes} [Fri Sep  1 17:04:39 2023] GET /api/user/show_info/0/ => generated 276 bytes in 17 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 42/134] 219.239.227.245 () {44 vars in 764 bytes} [Fri Sep  1 17:04:48 2023] OPTIONS /api/team/rename_project/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 17/135] 219.239.227.245 () {46 vars in 948 bytes} [Fri Sep  1 17:04:48 2023] POST /api/team/rename_project/ => generated 65 bytes in 42 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 43/136] 219.239.227.245 () {44 vars in 772 bytes} [Fri Sep  1 17:04:58 2023] OPTIONS /api/team/delete_one_project/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+project_id :  6
+[pid: 53352|app: 0|req: 21/137] 219.239.227.245 () {46 vars in 956 bytes} [Fri Sep  1 17:04:58 2023] POST /api/team/delete_one_project/ => generated 59 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+1
+3
+get_current_team 我在获取所有成员 :  1
+[pid: 53354|app: 0|req: 18/138] 219.239.227.245 () {42 vars in 829 bytes} [Fri Sep  1 17:05:02 2023] GET /api/team/all_projects/ => generated 849 bytes in 42 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 58/139] 219.239.227.245 () {42 vars in 856 bytes} [Fri Sep  1 17:05:02 2023] GET /api/team/get_current_team/?user_id=1 => generated 317 bytes in 45 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 44/140] 219.239.227.245 () {42 vars in 866 bytes} [Fri Sep  1 17:05:02 2023] GET /api/team/all_projects/?sort_by=created_at => generated 849 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 58/141] 219.239.227.245 () {42 vars in 823 bytes} [Fri Sep  1 17:05:02 2023] GET /api/team/all_teams/ => generated 839 bytes in 46 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+is_login :  True
+[pid: 53356|app: 0|req: 45/142] 219.239.227.245 () {42 vars in 827 bytes} [Fri Sep  1 17:05:02 2023] GET /api/user/show_info/0/ => generated 276 bytes in 18 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 59/143] 219.239.227.245 () {44 vars in 773 bytes} [Fri Sep  1 17:05:05 2023] OPTIONS /api/team/all_deleted_project/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+1
+3
+get_current_team 我在获取所有成员 :  1
+[pid: 53352|app: 0|req: 23/144] 219.239.227.245 () {42 vars in 829 bytes} [Fri Sep  1 17:05:05 2023] GET /api/team/all_projects/ => generated 849 bytes in 37 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53352|app: 0|req: 23/145] 219.239.227.245 () {42 vars in 856 bytes} [Fri Sep  1 17:05:05 2023] GET /api/team/get_current_team/?user_id=1 => generated 317 bytes in 42 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 20/146] 219.239.227.245 () {42 vars in 843 bytes} [Fri Sep  1 17:05:05 2023] GET /api/team/all_deleted_project/ => generated 164 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 20/147] 219.239.227.245 () {42 vars in 823 bytes} [Fri Sep  1 17:05:05 2023] GET /api/team/all_teams/ => generated 839 bytes in 51 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 53354|app: 0|req: 21/148] 219.239.227.245 () {42 vars in 827 bytes} [Fri Sep  1 17:05:05 2023] GET /api/user/show_info/0/ => generated 276 bytes in 19 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 46/149] 219.239.227.245 () {44 vars in 774 bytes} [Fri Sep  1 17:05:09 2023] OPTIONS /api/team/recover_one_project/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 47/150] 219.239.227.245 () {46 vars in 958 bytes} [Fri Sep  1 17:05:09 2023] POST /api/team/recover_one_project/ => generated 59 bytes in 32 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+get_current_team 我在获取所有成员 :  1
+1
+3
+[pid: 53357|app: 0|req: 61/151] 219.239.227.245 () {42 vars in 856 bytes} [Fri Sep  1 17:05:12 2023] GET /api/team/get_current_team/?user_id=1 => generated 317 bytes in 37 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 61/152] 219.239.227.245 () {42 vars in 829 bytes} [Fri Sep  1 17:05:12 2023] GET /api/team/all_projects/ => generated 874 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 22/153] 219.239.227.245 () {42 vars in 866 bytes} [Fri Sep  1 17:05:12 2023] GET /api/team/all_projects/?sort_by=created_at => generated 874 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 48/154] 219.239.227.245 () {42 vars in 823 bytes} [Fri Sep  1 17:05:12 2023] GET /api/team/all_teams/ => generated 839 bytes in 47 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 53354|app: 0|req: 23/155] 219.239.227.245 () {42 vars in 827 bytes} [Fri Sep  1 17:05:12 2023] GET /api/user/show_info/0/ => generated 276 bytes in 17 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+get_current_team 我在获取所有成员 :  1
+1
+3
+[pid: 53352|app: 0|req: 24/156] 219.239.227.245 () {42 vars in 843 bytes} [Fri Sep  1 17:05:18 2023] GET /api/team/all_deleted_project/ => generated 139 bytes in 41 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 25/157] 219.239.227.245 () {42 vars in 829 bytes} [Fri Sep  1 17:05:18 2023] GET /api/team/all_projects/ => generated 874 bytes in 50 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 49/158] 219.239.227.245 () {42 vars in 856 bytes} [Fri Sep  1 17:05:18 2023] GET /api/team/get_current_team/?user_id=1 => generated 317 bytes in 53 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 25/159] 219.239.227.245 () {42 vars in 823 bytes} [Fri Sep  1 17:05:18 2023] GET /api/team/all_teams/ => generated 839 bytes in 61 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+is_login :  True
+[pid: 53356|app: 0|req: 50/160] 219.239.227.245 () {42 vars in 827 bytes} [Fri Sep  1 17:05:18 2023] GET /api/user/show_info/0/ => generated 276 bytes in 18 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53352|app: 0|req: 25/161] 219.239.227.245 () {44 vars in 789 bytes} [Fri Sep  1 17:05:29 2023] POST /api/team/all_deleted_project/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+当前用户 :  2
+原型id ：  1
+[pid: 53357|app: 0|req: 62/162] 219.239.227.188 () {44 vars in 908 bytes} [Fri Sep  1 17:06:12 2023] GET /api/document/view_prototype/1/?prototype_id=1 => generated 23583 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 63/163] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:06:33 2023] GET /api/document/view_document/1 => generated 0 bytes in 7 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 64/164] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:06:33 2023] GET /api/document/view_document/1/ => generated 438 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 26/165] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:06:33 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 51/166] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:06:34 2023] GET /api/document/view_document/1/ => generated 438 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 65/167] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:06:34 2023] GET /api/team/all_members/ => generated 376 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 66/168] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:06:39 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 67/169] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:06:39 2023] GET /api/document/view_document/1/ => generated 438 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 68/170] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:06:39 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 69/171] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:06:39 2023] GET /api/document/view_document/1/ => generated 438 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53352|app: 0|req: 26/172] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:06:39 2023] GET /api/team/all_members/ => generated 376 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+当前用户 :  2
+原型id ：  1
+[pid: 53352|app: 0|req: 27/173] 219.239.227.188 () {44 vars in 908 bytes} [Fri Sep  1 17:06:42 2023] GET /api/document/view_prototype/1/?prototype_id=1 => generated 23583 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 1)
+[pid: 53352|app: 0|req: 28/174] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:07:01 2023] GET /api/document/view_document/1 => generated 0 bytes in 10 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 70/175] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:07:01 2023] GET /api/document/view_document/1/ => generated 438 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 53352|app: 0|req: 29/176] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:07:01 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53352|app: 0|req: 30/177] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:07:02 2023] GET /api/document/view_document/1/ => generated 438 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 71/178] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:07:02 2023] GET /api/team/all_members/ => generated 376 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 52/179] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:07:05 2023] GET /api/document/view_document/1 => generated 0 bytes in 7 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 73/180] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:07:05 2023] GET /api/document/view_document/1/ => generated 438 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 74/181] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:07:05 2023] GET /api/document/view_document/1/ => generated 438 bytes in 37 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 74/182] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:07:05 2023] GET /api/team/all_members/ => generated 376 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 27/183] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:07:05 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+get_current_team 我在获取所有成员 :  2
+[pid: 53357|app: 0|req: 75/184] 219.239.227.141 () {42 vars in 878 bytes} [Fri Sep  1 17:07:07 2023] GET /api/team/get_current_team/ => generated 310 bytes in 36 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+<QuerySet [{'team_id': 1}, {'team_id': 11}, {'team_id': 12}, {'team_id': 14}, {'team_id': 17}, {'team_id': 17}, {'team_id': 19}, {'team_id': 20}]>
+Internal Server Error: /api/chat/initial/2
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./chat/views.py", line 83, in initial_chat
+    user_team_chat_status = UserTeamChatStatus.objects.get(user_id=user_id, team_id=team_id)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 640, in get
+    raise self.model.MultipleObjectsReturned(
+chat.models.UserTeamChatStatus.MultipleObjectsReturned: get() returned more than one UserTeamChatStatus -- it returned 2!
+[pid: 53356|app: 0|req: 53/185] 219.239.227.141 () {40 vars in 725 bytes} [Fri Sep  1 17:07:08 2023] GET /api/chat/initial/2 => generated 76133 bytes in 123 msecs (HTTP/1.1 500) 9 headers in 342 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 54/186] 219.239.227.188 () {48 vars in 976 bytes} [Fri Sep  1 17:07:09 2023] POST /api/document/save/ => generated 53 bytes in 250 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 55/187] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:07:37 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 1)
+[pid: 53352|app: 0|req: 31/188] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:07:37 2023] GET /api/document/view_document/1/ => generated 438 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 76/189] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:07:37 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 77/190] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:07:37 2023] GET /api/document/view_document/1/ => generated 438 bytes in 442 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 78/191] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:07:37 2023] GET /api/team/all_members/ => generated 376 bytes in 3120 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 79/192] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:07:53 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 56/193] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:07:53 2023] GET /api/document/view_document/1/ => generated 438 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 57/194] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:07:53 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+get_current_team 我在获取所有成员 :  2
+[pid: 53357|app: 0|req: 80/195] 219.239.227.141 () {42 vars in 878 bytes} [Fri Sep  1 17:07:53 2023] GET /api/team/get_current_team/ => generated 310 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+get_current_team 我在获取所有成员 :  1
+[pid: 53357|app: 0|req: 81/196] 219.239.227.141 () {42 vars in 878 bytes} [Fri Sep  1 17:07:53 2023] GET /api/team/get_current_team/ => generated 317 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+<QuerySet [{'team_id': 1}, {'team_id': 11}, {'team_id': 12}, {'team_id': 14}, {'team_id': 17}, {'team_id': 17}, {'team_id': 19}, {'team_id': 20}]>
+<QuerySet [{'team_id': 1}, {'team_id': 2}, {'team_id': 3}, {'team_id': 4}, {'team_id': 5}, {'team_id': 6}, {'team_id': 7}, {'team_id': 8}, {'team_id': 9}, {'team_id': 10}, {'team_id': 11}, {'team_id': 12}, {'team_id': 13}, {'team_id': 14}, {'team_id': 15}, {'team_id': 16}, {'team_id': 18}, {'team_id': 19}, {'team_id': 20}, {'team_id': 21}, '...(remaining elements truncated)...']>
+Internal Server Error: /api/chat/initial/2
+Traceback (most recent call last):
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/core/handlers/base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/summer/summer_backend/./chat/views.py", line 83, in initial_chat
+    user_team_chat_status = UserTeamChatStatus.objects.get(user_id=user_id, team_id=team_id)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/summer/miniconda3/envs/django/lib/python3.9/site-packages/django/db/models/query.py", line 640, in get
+    raise self.model.MultipleObjectsReturned(
+chat.models.UserTeamChatStatus.MultipleObjectsReturned: get() returned more than one UserTeamChatStatus -- it returned 2!
+[pid: 53357|app: 0|req: 82/197] 219.239.227.141 () {40 vars in 725 bytes} [Fri Sep  1 17:07:54 2023] GET /api/chat/initial/2 => generated 76133 bytes in 133 msecs (HTTP/1.1 500) 9 headers in 342 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 28/198] 219.239.227.141 () {40 vars in 725 bytes} [Fri Sep  1 17:07:54 2023] GET /api/chat/initial/1 => generated 12446 bytes in 315 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 83/199] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:07:59 2023] GET /api/document/view_document/1/ => generated 438 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53356|app: 0|req: 58/200] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:07:59 2023] GET /api/team/all_members/ => generated 376 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 84/201] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:08:01 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 29/202] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:08:01 2023] GET /api/document/view_document/1/ => generated 438 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 85/203] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:08:01 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 86/204] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:08:10 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 87/205] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:08:10 2023] GET /api/document/view_document/1/ => generated 438 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 88/206] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:08:10 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 59/207] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:08:10 2023] GET /api/document/view_document/1/ => generated 438 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 89/208] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:08:10 2023] GET /api/team/all_members/ => generated 376 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 90/209] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:08:14 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53352|app: 0|req: 32/210] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:08:14 2023] GET /api/document/view_document/1/ => generated 438 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 53352|app: 0|req: 33/211] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:08:14 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 91/212] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:08:14 2023] GET /api/document/view_document/1/ => generated 438 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 92/213] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:08:14 2023] GET /api/team/all_members/ => generated 376 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+project_id :  10
+[pid: 53356|app: 0|req: 60/214] 219.239.227.245 () {46 vars in 956 bytes} [Fri Sep  1 17:08:16 2023] POST /api/team/delete_one_project/ => generated 53 bytes in 20 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 61/215] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:08:17 2023] GET /api/document/view_document/1 => generated 0 bytes in 7 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 30/216] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:08:17 2023] GET /api/document/view_document/1/ => generated 438 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 53352|app: 0|req: 34/217] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:08:17 2023] GET /api/team/all_members/ => generated 43 bytes in 2 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 93/218] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:08:17 2023] GET /api/document/view_document/1/ => generated 438 bytes in 34 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 94/219] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:08:17 2023] GET /api/team/all_members/ => generated 376 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 95/220] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:08:21 2023] GET /api/document/view_document/1/ => generated 438 bytes in 34 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53356|app: 0|req: 62/221] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:08:21 2023] GET /api/document/view_document/1/ => generated 438 bytes in 33 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 96/222] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:08:21 2023] GET /api/team/all_members/ => generated 376 bytes in 103 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 97/223] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:08:21 2023] GET /api/team/all_members/ => generated 376 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+get_current_team 我在获取所有成员 :  1
+1
+3
+[pid: 53352|app: 0|req: 36/225] 219.239.227.245 () {42 vars in 843 bytes} [Fri Sep  1 17:08:22 2023] GET /api/team/all_deleted_project/ => generated 139 bytes in 32 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53352|app: 0|req: 36/225] 219.239.227.245 () {42 vars in 829 bytes} [Fri Sep  1 17:08:22 2023] GET /api/team/all_projects/ => generated 874 bytes in 37 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 32/226] 219.239.227.245 () {42 vars in 856 bytes} [Fri Sep  1 17:08:22 2023] GET /api/team/get_current_team/?user_id=1 => generated 317 bytes in 45 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 32/227] 219.239.227.245 () {42 vars in 823 bytes} [Fri Sep  1 17:08:22 2023] GET /api/team/all_teams/ => generated 839 bytes in 47 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 53357|app: 0|req: 98/228] 219.239.227.245 () {42 vars in 827 bytes} [Fri Sep  1 17:08:22 2023] GET /api/user/show_info/0/ => generated 276 bytes in 17 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53352|app: 0|req: 37/229] 219.239.227.240 () {46 vars in 803 bytes} [Fri Sep  1 17:08:23 2023] OPTIONS /api/document/view_document/1 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 63/230] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:08:23 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 64/231] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:08:23 2023] GET /api/document/view_document/1/ => generated 438 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 99/232] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:08:23 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53352|app: 0|req: 38/233] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:08:27 2023] GET /api/document/view_document/1 => generated 0 bytes in 7 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 65/234] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:08:27 2023] GET /api/document/view_document/1/ => generated 438 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 100/235] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:08:27 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 101/236] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:08:52 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 66/237] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:08:52 2023] GET /api/document/view_document/1 => generated 0 bytes in 7 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 67/238] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:08:52 2023] GET /api/document/view_document/1/ => generated 438 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 102/239] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:08:52 2023] GET /api/document/view_document/1/ => generated 438 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 103/240] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:08:52 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53352|app: 0|req: 39/241] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:08:52 2023] GET /api/document/view_document/1/ => generated 438 bytes in 38 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 68/242] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:08:52 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 69/243] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:08:52 2023] GET /api/document/view_document/1/ => generated 438 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 104/244] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:08:52 2023] GET /api/team/all_members/ => generated 376 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 105/245] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:08:52 2023] GET /api/team/all_members/ => generated 376 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 106/246] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:08:54 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 107/247] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:08:54 2023] GET /api/document/view_document/1/ => generated 438 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 70/248] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:08:54 2023] GET /api/team/all_members/ => generated 43 bytes in 0 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 108/249] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:08:54 2023] GET /api/document/view_document/1/ => generated 438 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 109/250] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:08:54 2023] GET /api/team/all_members/ => generated 376 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 71/251] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:08:59 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 72/252] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:08:59 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 33/253] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:08:59 2023] GET /api/document/view_document/1/ => generated 438 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 34/254] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:08:59 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 73/255] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:08:59 2023] GET /api/document/view_document/1/ => generated 438 bytes in 38 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 36/256] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:08:59 2023] GET /api/document/view_document/1/ => generated 438 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 110/257] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:09:00 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53354|app: 0|req: 36/258] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:09:00 2023] GET /api/team/all_members/ => generated 376 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53352|app: 0|req: 40/259] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:09:00 2023] GET /api/document/view_document/1/ => generated 438 bytes in 43 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53356|app: 0|req: 74/260] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:09:00 2023] GET /api/team/all_members/ => generated 376 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 75/261] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:09:03 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53352|app: 0|req: 41/262] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:09:04 2023] GET /api/document/view_document/1/ => generated 438 bytes in 35 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 111/263] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:09:04 2023] GET /api/document/view_document/1/ => generated 438 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 112/264] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:09:04 2023] GET /api/team/all_members/ => generated 376 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 76/265] 219.239.227.141 () {40 vars in 755 bytes} [Fri Sep  1 17:09:04 2023] GET /api/chat/get_all_groups_members/1 => generated 548 bytes in 54 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 113/266] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:09:06 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 37/267] 219.239.227.240 () {46 vars in 805 bytes} [Fri Sep  1 17:09:06 2023] OPTIONS /api/document/view_document/1/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 77/268] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:09:06 2023] GET /api/document/view_document/1/ => generated 438 bytes in 23 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 114/269] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:09:06 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 115/270] 219.239.227.141 () {44 vars in 810 bytes} [Fri Sep  1 17:09:12 2023] POST /api/chat/make_group => generated 16 bytes in 139 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 78/271] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:09:14 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 116/272] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:09:14 2023] GET /api/document/view_document/1/ => generated 438 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 79/273] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:09:14 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 38/274] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:09:14 2023] GET /api/document/view_document/1/ => generated 438 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 117/275] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:09:14 2023] GET /api/team/all_members/ => generated 376 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53352|app: 0|req: 42/276] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:09:18 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 1)
+[pid: 53352|app: 0|req: 43/277] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:09:18 2023] GET /api/document/view_document/1/ => generated 438 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 39/278] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:09:18 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 40/279] 219.239.227.141 () {44 vars in 810 bytes} [Fri Sep  1 17:09:20 2023] POST /api/chat/make_group => generated 16 bytes in 131 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 118/280] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:09:24 2023] GET /api/document/view_document/1 => generated 0 bytes in 9 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 41/281] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:09:24 2023] GET /api/document/view_document/1/ => generated 438 bytes in 22 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53352|app: 0|req: 44/282] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:09:24 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+get_current_team 我在获取所有成员 :  1
+[pid: 53356|app: 0|req: 80/283] 219.239.227.141 () {42 vars in 878 bytes} [Fri Sep  1 17:09:31 2023] GET /api/team/get_current_team/ => generated 317 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+<QuerySet [{'team_id': 1}, {'team_id': 2}, {'team_id': 3}, {'team_id': 4}, {'team_id': 5}, {'team_id': 6}, {'team_id': 7}, {'team_id': 8}, {'team_id': 9}, {'team_id': 10}, {'team_id': 11}, {'team_id': 12}, {'team_id': 13}, {'team_id': 14}, {'team_id': 15}, {'team_id': 16}, {'team_id': 18}, {'team_id': 19}, {'team_id': 20}, {'team_id': 21}, '...(remaining elements truncated)...']>
+[pid: 53357|app: 0|req: 119/284] 219.239.227.141 () {40 vars in 725 bytes} [Fri Sep  1 17:09:31 2023] GET /api/chat/initial/1 => generated 13954 bytes in 389 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 120/285] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:09:37 2023] GET /api/document/view_document/1/ => generated 438 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 121/286] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:09:37 2023] GET /api/team/all_members/ => generated 376 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 122/287] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:09:38 2023] GET /api/document/view_document/1/ => generated 438 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 123/288] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:09:38 2023] GET /api/team/all_members/ => generated 376 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 81/289] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:09:38 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 124/290] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:09:38 2023] GET /api/document/view_document/1/ => generated 438 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 82/291] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:09:38 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53352|app: 0|req: 45/292] 219.239.227.141 () {40 vars in 755 bytes} [Fri Sep  1 17:09:41 2023] GET /api/chat/get_all_groups_members/1 => generated 548 bytes in 54 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+1
+3
+get_current_team 我在获取所有成员 :  1
+[pid: 53357|app: 0|req: 125/293] 219.239.227.245 () {42 vars in 829 bytes} [Fri Sep  1 17:09:51 2023] GET /api/team/all_projects/ => generated 874 bytes in 42 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53352|app: 0|req: 47/294] 219.239.227.245 () {42 vars in 856 bytes} [Fri Sep  1 17:09:51 2023] GET /api/team/get_current_team/?user_id=1 => generated 317 bytes in 44 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53352|app: 0|req: 47/295] 219.239.227.245 () {42 vars in 866 bytes} [Fri Sep  1 17:09:51 2023] GET /api/team/all_projects/?sort_by=created_at => generated 874 bytes in 33 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 83/296] 219.239.227.245 () {42 vars in 823 bytes} [Fri Sep  1 17:09:51 2023] GET /api/team/all_teams/ => generated 839 bytes in 48 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 53356|app: 0|req: 84/297] 219.239.227.245 () {42 vars in 827 bytes} [Fri Sep  1 17:09:51 2023] GET /api/user/show_info/0/ => generated 276 bytes in 17 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 86/298] 219.239.227.245 () {44 vars in 792 bytes} [Fri Sep  1 17:10:00 2023] OPTIONS /api/team/get_one_project/?project_id=36 => generated 0 bytes in 2 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 86/299] 219.239.227.245 () {44 vars in 792 bytes} [Fri Sep  1 17:10:00 2023] OPTIONS /api/document/all_deleted/?project_id=36 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+1
+3
+get_current_team 我在获取所有成员 :  1
+[pid: 53357|app: 0|req: 127/300] 219.239.227.245 () {42 vars in 829 bytes} [Fri Sep  1 17:10:00 2023] GET /api/team/all_projects/ => generated 874 bytes in 46 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 127/301] 219.239.227.245 () {42 vars in 856 bytes} [Fri Sep  1 17:10:00 2023] GET /api/team/get_current_team/?user_id=1 => generated 317 bytes in 49 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 43/302] 219.239.227.245 () {42 vars in 823 bytes} [Fri Sep  1 17:10:00 2023] GET /api/team/all_teams/ => generated 839 bytes in 61 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 87/303] 219.239.227.245 () {42 vars in 862 bytes} [Fri Sep  1 17:10:00 2023] GET /api/team/get_one_project/?project_id=36 => generated 152 bytes in 39 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 43/304] 219.239.227.245 () {42 vars in 862 bytes} [Fri Sep  1 17:10:00 2023] GET /api/document/all_deleted/?project_id=36 => generated 98 bytes in 41 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+is_login :  True
+[pid: 53357|app: 0|req: 128/305] 219.239.227.245 () {42 vars in 827 bytes} [Fri Sep  1 17:10:01 2023] GET /api/user/show_info/0/ => generated 276 bytes in 17 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53352|app: 0|req: 48/306] 219.239.227.245 () {44 vars in 848 bytes} [Fri Sep  1 17:10:01 2023] OPTIONS /api/document/view_folder/?parent_folder_id=35&sorted_by=-created_at => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+{'id': 36, 'name': 'll'}
+False
+[pid: 53352|app: 0|req: 49/307] 219.239.227.245 () {42 vars in 918 bytes} [Fri Sep  1 17:10:01 2023] GET /api/document/view_folder/?parent_folder_id=35&sorted_by=-created_at => generated 202 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+get_current_team 我在获取所有成员 :  1
+[pid: 53352|app: 0|req: 50/308] 219.239.227.245 () {42 vars in 856 bytes} [Fri Sep  1 17:10:05 2023] GET /api/team/get_current_team/?user_id=1 => generated 317 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 88/309] 219.239.227.245 () {44 vars in 790 bytes} [Fri Sep  1 17:10:05 2023] OPTIONS /api/document/all_deleted/?project_id=5 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 45/310] 219.239.227.245 () {44 vars in 790 bytes} [Fri Sep  1 17:10:05 2023] OPTIONS /api/team/get_one_project/?project_id=5 => generated 0 bytes in 4 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+1
+3
+[pid: 53354|app: 0|req: 45/311] 219.239.227.245 () {42 vars in 829 bytes} [Fri Sep  1 17:10:05 2023] GET /api/team/all_projects/ => generated 874 bytes in 36 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 130/312] 219.239.227.245 () {42 vars in 860 bytes} [Fri Sep  1 17:10:05 2023] GET /api/team/get_one_project/?project_id=5 => generated 155 bytes in 36 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 89/313] 219.239.227.245 () {42 vars in 823 bytes} [Fri Sep  1 17:10:05 2023] GET /api/team/all_teams/ => generated 839 bytes in 51 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 130/314] 219.239.227.245 () {42 vars in 860 bytes} [Fri Sep  1 17:10:05 2023] GET /api/document/all_deleted/?project_id=5 => generated 935 bytes in 50 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 53356|app: 0|req: 90/315] 219.239.227.245 () {42 vars in 827 bytes} [Fri Sep  1 17:10:05 2023] GET /api/user/show_info/0/ => generated 276 bytes in 18 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 131/316] 219.239.227.245 () {44 vars in 846 bytes} [Fri Sep  1 17:10:05 2023] OPTIONS /api/document/view_folder/?parent_folder_id=5&sorted_by=-created_at => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+{'id': 5, 'name': 'aaaaaaa'}
+False
+[pid: 53356|app: 0|req: 91/317] 219.239.227.245 () {42 vars in 916 bytes} [Fri Sep  1 17:10:05 2023] GET /api/document/view_folder/?parent_folder_id=5&sorted_by=-created_at => generated 3136 bytes in 61 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 132/318] 219.239.227.245 () {44 vars in 752 bytes} [Fri Sep  1 17:10:18 2023] OPTIONS /api/document/save/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 92/319] 219.239.227.245 () {46 vars in 936 bytes} [Fri Sep  1 17:10:18 2023] POST /api/document/save/ => generated 53 bytes in 17 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 46/320] 219.239.227.245 () {46 vars in 936 bytes} [Fri Sep  1 17:10:18 2023] POST /api/document/save/ => generated 53 bytes in 16 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53352|app: 0|req: 51/321] 219.239.227.245 () {46 vars in 936 bytes} [Fri Sep  1 17:10:20 2023] POST /api/document/save/ => generated 53 bytes in 19 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 93/322] 219.239.227.141 () {40 vars in 755 bytes} [Fri Sep  1 17:10:43 2023] GET /api/chat/get_all_groups_members/1 => generated 548 bytes in 49 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53352|app: 0|req: 52/323] 219.239.227.141 () {44 vars in 810 bytes} [Fri Sep  1 17:10:48 2023] POST /api/chat/make_group => generated 16 bytes in 187 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+当前用户 :  2
+原型id ：  1
+[pid: 53356|app: 0|req: 94/324] 219.239.227.188 () {44 vars in 908 bytes} [Fri Sep  1 17:11:22 2023] GET /api/document/view_prototype/1/?prototype_id=1 => generated 21059 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 0)
+get_current_team 我在获取所有成员 :  2
+[pid: 53356|app: 0|req: 95/325] 219.239.227.141 () {42 vars in 878 bytes} [Fri Sep  1 17:11:45 2023] GET /api/team/get_current_team/ => generated 310 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 96/326] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:11:45 2023] GET /api/document/view_document/1 => generated 0 bytes in 7 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 133/327] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:11:45 2023] GET /api/document/view_document/1/ => generated 438 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 47/328] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:11:45 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+<QuerySet [{'team_id': 1}, {'team_id': 11}, {'team_id': 12}, {'team_id': 14}, {'team_id': 17}, {'team_id': 17}, {'team_id': 19}, {'team_id': 20}, {'team_id': 25}, {'team_id': 26}, {'team_id': 27}]>
+当前用户 :  2
+原型id ：  1
+[pid: 53357|app: 0|req: 134/329] 219.239.227.188 () {44 vars in 908 bytes} [Fri Sep  1 17:11:46 2023] GET /api/document/view_prototype/1/?prototype_id=1 => generated 21059 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 48/330] 219.239.227.141 () {40 vars in 725 bytes} [Fri Sep  1 17:11:46 2023] GET /api/chat/initial/2 => generated 7827 bytes in 194 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 135/331] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:11:46 2023] GET /api/document/view_document/1/ => generated 438 bytes in 1094 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53356|app: 0|req: 97/332] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:11:47 2023] GET /api/team/all_members/ => generated 376 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 49/333] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:11:49 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 98/334] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:11:49 2023] GET /api/document/view_document/1/ => generated 438 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 50/335] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:11:49 2023] GET /api/document/view_document/1/ => generated 438 bytes in 37 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 136/336] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:11:49 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 137/337] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:11:49 2023] GET /api/team/all_members/ => generated 376 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53352|app: 0|req: 53/338] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:11:52 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 138/339] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:11:52 2023] GET /api/document/view_document/1/ => generated 438 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 139/340] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:11:52 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 140/341] 219.239.227.141 () {40 vars in 755 bytes} [Fri Sep  1 17:11:55 2023] GET /api/chat/get_all_groups_members/1 => generated 548 bytes in 50 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 141/342] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:11:58 2023] GET /api/document/view_document/1/ => generated 438 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 142/343] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:11:58 2023] GET /api/team/all_members/ => generated 376 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 51/344] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:12:00 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 143/345] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:12:00 2023] GET /api/document/view_document/1/ => generated 438 bytes in 23 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53352|app: 0|req: 54/346] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:12:00 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 144/347] 219.239.227.141 () {40 vars in 755 bytes} [Fri Sep  1 17:12:05 2023] GET /api/chat/get_all_groups_members/1 => generated 548 bytes in 54 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+当前用户 :  2
+原型id ：  1
+[pid: 53357|app: 0|req: 145/348] 219.239.227.188 () {44 vars in 908 bytes} [Fri Sep  1 17:12:13 2023] GET /api/document/view_prototype/1/?prototype_id=1 => generated 21059 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 146/349] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:12:16 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 147/350] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:12:16 2023] GET /api/document/view_document/1/ => generated 438 bytes in 40 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 99/351] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:12:16 2023] GET /api/document/view_document/1/ => generated 438 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 100/352] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:12:16 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 148/353] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:12:16 2023] GET /api/team/all_members/ => generated 376 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 52/354] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:12:18 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 101/355] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:12:18 2023] GET /api/document/view_document/1/ => generated 438 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 53/356] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:12:18 2023] GET /api/document/view_document/1/ => generated 438 bytes in 36 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 54/357] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:12:18 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 149/358] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:12:18 2023] GET /api/team/all_members/ => generated 376 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 102/359] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:12:21 2023] GET /api/document/view_document/1/ => generated 438 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 55/360] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:12:22 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+all_members 我在获取所有成员 :  4
+[pid: 53356|app: 0|req: 103/361] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:12:22 2023] GET /api/team/all_members/ => generated 376 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 56/362] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:12:22 2023] GET /api/document/view_document/1/ => generated 438 bytes in 23 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 104/363] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:12:22 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 105/364] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:12:28 2023] GET /api/document/view_document/1/ => generated 438 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 150/365] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:12:28 2023] GET /api/team/all_members/ => generated 376 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53352|app: 0|req: 55/366] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:12:29 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53352|app: 0|req: 56/367] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:12:29 2023] GET /api/document/view_document/1/ => generated 438 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 151/368] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:12:30 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 152/369] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:12:39 2023] GET /api/document/view_document/1/ => generated 438 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+all_members 我在获取所有成员 :  4
+[pid: 53354|app: 0|req: 57/370] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:12:40 2023] GET /api/team/all_members/ => generated 376 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+当前用户 :  2
+原型id ：  1
+[pid: 53357|app: 0|req: 153/371] 219.239.227.188 () {44 vars in 908 bytes} [Fri Sep  1 17:12:43 2023] GET /api/document/view_prototype/1/?prototype_id=1 => generated 21059 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 154/372] 219.239.227.245 () {38 vars in 642 bytes} [Fri Sep  1 17:12:44 2023] GET /api/document/all_template/ => generated 1535 bytes in 30 msecs (HTTP/1.1 200) 7 headers in 214 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 155/373] 219.239.227.141 () {40 vars in 755 bytes} [Fri Sep  1 17:12:49 2023] GET /api/chat/get_all_groups_members/1 => generated 548 bytes in 52 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 156/374] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:12:52 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 58/375] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:12:52 2023] GET /api/document/view_document/1/ => generated 438 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 157/376] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:12:52 2023] GET /api/team/all_members/ => generated 43 bytes in 2 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 106/377] 219.239.227.141 () {44 vars in 810 bytes} [Fri Sep  1 17:12:54 2023] POST /api/chat/make_group => generated 16 bytes in 235 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+当前用户 :  2
+原型id ：  1
+[pid: 53356|app: 0|req: 107/378] 219.239.227.188 () {44 vars in 908 bytes} [Fri Sep  1 17:13:11 2023] GET /api/document/view_prototype/1/?prototype_id=1 => generated 21059 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 108/379] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:13:14 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 59/380] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:13:14 2023] GET /api/document/view_document/1/ => generated 438 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 109/381] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:13:14 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+当前用户 :  2
+原型id ：  1
+[pid: 53357|app: 0|req: 158/382] 219.239.227.188 () {44 vars in 908 bytes} [Fri Sep  1 17:13:29 2023] GET /api/document/view_prototype/1/?prototype_id=1 => generated 21059 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 0)
+get_current_team 我在获取所有成员 :  1
+[pid: 53357|app: 0|req: 159/383] 219.239.227.141 () {42 vars in 878 bytes} [Fri Sep  1 17:13:33 2023] GET /api/team/get_current_team/ => generated 317 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+<QuerySet [{'team_id': 1}, {'team_id': 2}, {'team_id': 3}, {'team_id': 4}, {'team_id': 5}, {'team_id': 6}, {'team_id': 7}, {'team_id': 8}, {'team_id': 9}, {'team_id': 10}, {'team_id': 11}, {'team_id': 12}, {'team_id': 13}, {'team_id': 14}, {'team_id': 15}, {'team_id': 16}, {'team_id': 18}, {'team_id': 19}, {'team_id': 20}, {'team_id': 21}, '...(remaining elements truncated)...']>
+[pid: 53357|app: 0|req: 160/384] 219.239.227.141 () {40 vars in 725 bytes} [Fri Sep  1 17:13:33 2023] GET /api/chat/initial/1 => generated 15462 bytes in 381 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 110/385] 219.239.227.240 () {48 vars in 954 bytes} [Fri Sep  1 17:13:43 2023] POST /api/document/save/ => generated 71 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 111/386] 219.239.227.240 () {48 vars in 954 bytes} [Fri Sep  1 17:13:47 2023] POST /api/document/save/ => generated 71 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 161/387] 219.239.227.240 () {48 vars in 954 bytes} [Fri Sep  1 17:13:49 2023] POST /api/document/save/ => generated 71 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53352|app: 0|req: 57/388] 219.239.227.240 () {48 vars in 954 bytes} [Fri Sep  1 17:13:50 2023] POST /api/document/save/ => generated 71 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 162/389] 219.239.227.240 () {48 vars in 954 bytes} [Fri Sep  1 17:13:56 2023] POST /api/document/save/ => generated 71 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 112/390] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:14:08 2023] GET /api/document/view_document/1 => generated 0 bytes in 6 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 163/391] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:14:08 2023] GET /api/document/view_document/1/ => generated 438 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 164/392] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:14:09 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 165/393] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:14:09 2023] GET /api/document/view_document/1/ => generated 438 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53356|app: 0|req: 113/394] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:14:09 2023] GET /api/team/all_members/ => generated 376 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 114/395] 219.239.227.240 () {48 vars in 954 bytes} [Fri Sep  1 17:14:10 2023] POST /api/document/save/ => generated 71 bytes in 23 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 115/396] 219.239.227.240 () {48 vars in 954 bytes} [Fri Sep  1 17:14:11 2023] POST /api/document/save/ => generated 71 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 166/397] 219.239.227.240 () {48 vars in 954 bytes} [Fri Sep  1 17:14:16 2023] POST /api/document/save/ => generated 71 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 116/398] 219.239.227.240 () {48 vars in 954 bytes} [Fri Sep  1 17:14:21 2023] POST /api/document/save/ => generated 71 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 167/399] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:14:21 2023] GET /api/document/view_document/1/ => generated 438 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53356|app: 0|req: 117/400] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:14:21 2023] GET /api/team/all_members/ => generated 376 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 118/401] 219.239.227.240 () {48 vars in 954 bytes} [Fri Sep  1 17:14:22 2023] POST /api/document/save/ => generated 71 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 60/402] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:14:24 2023] GET /api/document/view_document/1/ => generated 438 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53356|app: 0|req: 119/403] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:14:24 2023] GET /api/team/all_members/ => generated 376 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53352|app: 0|req: 58/404] 219.239.227.240 () {48 vars in 954 bytes} [Fri Sep  1 17:14:26 2023] POST /api/document/save/ => generated 71 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 120/405] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:14:28 2023] GET /api/document/view_document/1/ => generated 438 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+all_members 我在获取所有成员 :  4
+[pid: 53356|app: 0|req: 121/406] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:14:28 2023] GET /api/team/all_members/ => generated 376 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 61/407] 219.239.227.240 () {48 vars in 954 bytes} [Fri Sep  1 17:14:29 2023] POST /api/document/save/ => generated 71 bytes in 81 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+get_current_team 我在获取所有成员 :  1
+[pid: 53352|app: 0|req: 59/408] 219.239.227.141 () {42 vars in 878 bytes} [Fri Sep  1 17:14:31 2023] GET /api/team/get_current_team/ => generated 317 bytes in 35 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+get_current_team 我在获取所有成员 :  2
+[pid: 53357|app: 0|req: 168/409] 219.239.227.141 () {42 vars in 878 bytes} [Fri Sep  1 17:14:31 2023] GET /api/team/get_current_team/ => generated 310 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 122/410] 219.239.227.240 () {48 vars in 954 bytes} [Fri Sep  1 17:14:31 2023] POST /api/document/save/ => generated 71 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+<QuerySet [{'team_id': 1}, {'team_id': 2}, {'team_id': 3}, {'team_id': 4}, {'team_id': 5}, {'team_id': 6}, {'team_id': 7}, {'team_id': 8}, {'team_id': 9}, {'team_id': 10}, {'team_id': 11}, {'team_id': 12}, {'team_id': 13}, {'team_id': 14}, {'team_id': 15}, {'team_id': 16}, {'team_id': 18}, {'team_id': 19}, {'team_id': 20}, {'team_id': 21}, '...(remaining elements truncated)...']>
+<QuerySet [{'team_id': 1}, {'team_id': 11}, {'team_id': 12}, {'team_id': 14}, {'team_id': 17}, {'team_id': 17}, {'team_id': 19}, {'team_id': 20}, {'team_id': 25}, {'team_id': 26}, {'team_id': 27}, {'team_id': 28}]>
+[pid: 53356|app: 0|req: 123/411] 219.239.227.141 () {40 vars in 725 bytes} [Fri Sep  1 17:14:32 2023] GET /api/chat/initial/2 => generated 8581 bytes in 199 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 169/412] 219.239.227.141 () {40 vars in 725 bytes} [Fri Sep  1 17:14:32 2023] GET /api/chat/initial/1 => generated 15462 bytes in 364 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 170/413] 219.239.227.240 () {48 vars in 954 bytes} [Fri Sep  1 17:14:35 2023] POST /api/document/save/ => generated 71 bytes in 23 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 171/414] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:14:39 2023] GET /api/document/view_document/1/ => generated 438 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 172/415] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:14:39 2023] GET /api/team/all_members/ => generated 376 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 124/416] 219.239.227.240 () {48 vars in 954 bytes} [Fri Sep  1 17:14:41 2023] POST /api/document/save/ => generated 71 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 125/417] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:14:41 2023] GET /api/document/view_document/1/ => generated 438 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 173/418] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:14:41 2023] GET /api/team/all_members/ => generated 376 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 174/419] 219.239.227.240 () {48 vars in 954 bytes} [Fri Sep  1 17:14:42 2023] POST /api/document/save/ => generated 71 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+get_current_team 我在获取所有成员 :  2
+[pid: 53352|app: 0|req: 60/420] 219.239.227.141 () {42 vars in 878 bytes} [Fri Sep  1 17:14:47 2023] GET /api/team/get_current_team/ => generated 310 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+get_current_team 我在获取所有成员 :  1
+[pid: 53357|app: 0|req: 175/421] 219.239.227.141 () {42 vars in 878 bytes} [Fri Sep  1 17:14:47 2023] GET /api/team/get_current_team/ => generated 317 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 126/422] 219.239.227.240 () {44 vars in 849 bytes} [Fri Sep  1 17:14:47 2023] GET /api/document/get_token/ => generated 156 bytes in 2 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 176/423] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:14:47 2023] GET /api/document/view_document/1/ => generated 438 bytes in 31 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 177/424] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:14:47 2023] GET /api/team/all_members/ => generated 376 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+<QuerySet [{'team_id': 1}, {'team_id': 2}, {'team_id': 3}, {'team_id': 4}, {'team_id': 5}, {'team_id': 6}, {'team_id': 7}, {'team_id': 8}, {'team_id': 9}, {'team_id': 10}, {'team_id': 11}, {'team_id': 12}, {'team_id': 13}, {'team_id': 14}, {'team_id': 15}, {'team_id': 16}, {'team_id': 18}, {'team_id': 19}, {'team_id': 20}, {'team_id': 21}, '...(remaining elements truncated)...']>
+[pid: 53356|app: 0|req: 127/425] 219.239.227.141 () {40 vars in 725 bytes} [Fri Sep  1 17:14:47 2023] GET /api/chat/initial/1 => generated 15462 bytes in 349 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 128/426] 219.239.227.240 () {48 vars in 954 bytes} [Fri Sep  1 17:14:48 2023] POST /api/document/save/ => generated 71 bytes in 854 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+<QuerySet [{'team_id': 1}, {'team_id': 11}, {'team_id': 12}, {'team_id': 14}, {'team_id': 17}, {'team_id': 17}, {'team_id': 19}, {'team_id': 20}, {'team_id': 25}, {'team_id': 26}, {'team_id': 27}, {'team_id': 28}]>
+[pid: 53357|app: 0|req: 178/427] 219.239.227.141 () {40 vars in 725 bytes} [Fri Sep  1 17:14:48 2023] GET /api/chat/initial/2 => generated 8581 bytes in 1033 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 179/428] 219.239.227.141 () {40 vars in 755 bytes} [Fri Sep  1 17:14:50 2023] GET /api/chat/get_all_groups_members/1 => generated 548 bytes in 53 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 129/429] 219.239.227.240 () {44 vars in 849 bytes} [Fri Sep  1 17:14:51 2023] GET /api/document/get_token/ => generated 156 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 62/430] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:14:51 2023] GET /api/document/view_document/1/ => generated 438 bytes in 39 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53356|app: 0|req: 130/431] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:14:51 2023] GET /api/team/all_members/ => generated 376 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 63/432] 219.239.227.141 () {44 vars in 810 bytes} [Fri Sep  1 17:14:54 2023] POST /api/chat/make_group => generated 16 bytes in 105 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 180/433] 219.239.227.240 () {44 vars in 849 bytes} [Fri Sep  1 17:14:55 2023] GET /api/document/get_token/ => generated 156 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 64/434] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:14:55 2023] GET /api/document/view_document/1/ => generated 438 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 181/435] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:14:55 2023] GET /api/team/all_members/ => generated 376 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 131/436] 219.239.227.240 () {44 vars in 849 bytes} [Fri Sep  1 17:14:56 2023] GET /api/document/get_token/ => generated 156 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 65/437] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:14:57 2023] GET /api/document/view_document/1/ => generated 438 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 182/438] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:14:57 2023] GET /api/team/all_members/ => generated 376 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 132/439] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:15:04 2023] GET /api/document/view_document/1/ => generated 438 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+all_members 我在获取所有成员 :  4
+[pid: 53354|app: 0|req: 66/440] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:15:04 2023] GET /api/team/all_members/ => generated 376 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 183/441] 219.239.227.245 () {46 vars in 936 bytes} [Fri Sep  1 17:15:06 2023] POST /api/document/save/ => generated 53 bytes in 17 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 67/442] 219.239.227.245 () {46 vars in 936 bytes} [Fri Sep  1 17:15:07 2023] POST /api/document/save/ => generated 53 bytes in 16 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+get_current_team 我在获取所有成员 :  1
+[pid: 53356|app: 0|req: 133/443] 219.239.227.141 () {42 vars in 878 bytes} [Fri Sep  1 17:15:08 2023] GET /api/team/get_current_team/ => generated 317 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+<QuerySet [{'team_id': 1}, {'team_id': 2}, {'team_id': 3}, {'team_id': 4}, {'team_id': 5}, {'team_id': 6}, {'team_id': 7}, {'team_id': 8}, {'team_id': 9}, {'team_id': 10}, {'team_id': 11}, {'team_id': 12}, {'team_id': 13}, {'team_id': 14}, {'team_id': 15}, {'team_id': 16}, {'team_id': 18}, {'team_id': 19}, {'team_id': 20}, {'team_id': 21}, '...(remaining elements truncated)...']>
+[pid: 53356|app: 0|req: 134/444] 219.239.227.141 () {40 vars in 725 bytes} [Fri Sep  1 17:15:09 2023] GET /api/chat/initial/1 => generated 16216 bytes in 363 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 135/445] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:15:13 2023] GET /api/document/view_document/1/ => generated 438 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 184/446] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:15:13 2023] GET /api/team/all_members/ => generated 376 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 185/447] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:15:15 2023] GET /api/document/view_document/1/ => generated 438 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53354|app: 0|req: 68/448] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:15:16 2023] GET /api/team/all_members/ => generated 376 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 186/449] 219.239.227.245 () {44 vars in 753 bytes} [Fri Sep  1 17:15:16 2023] OPTIONS /api/team/all_teams/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 136/450] 219.239.227.245 () {44 vars in 759 bytes} [Fri Sep  1 17:15:16 2023] OPTIONS /api/team/all_projects/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 187/451] 219.239.227.245 () {44 vars in 786 bytes} [Fri Sep  1 17:15:16 2023] OPTIONS /api/team/get_current_team/?user_id=1 => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 137/452] 219.239.227.245 () {44 vars in 755 bytes} [Fri Sep  1 17:15:16 2023] OPTIONS /api/user/show_info/0 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 138/453] 219.239.227.245 () {44 vars in 757 bytes} [Fri Sep  1 17:15:16 2023] OPTIONS /api/user/show_info/0/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+get_current_team 我在获取所有成员 :  1
+[pid: 53352|app: 0|req: 62/454] 219.239.227.245 () {42 vars in 860 bytes} [Fri Sep  1 17:15:16 2023] GET /api/team/get_one_project/?project_id=5 => generated 155 bytes in 46 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 69/455] 219.239.227.245 () {42 vars in 829 bytes} [Fri Sep  1 17:15:16 2023] GET /api/team/all_projects/ => generated 874 bytes in 63 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 189/456] 219.239.227.245 () {42 vars in 856 bytes} [Fri Sep  1 17:15:16 2023] GET /api/team/get_current_team/?user_id=1 => generated 317 bytes in 65 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 189/457] 219.239.227.245 () {42 vars in 860 bytes} [Fri Sep  1 17:15:16 2023] GET /api/document/all_deleted/?project_id=5 => generated 935 bytes in 73 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+1
+3
+[pid: 53352|app: 0|req: 62/458] 219.239.227.245 () {42 vars in 823 bytes} [Fri Sep  1 17:15:16 2023] GET /api/team/all_teams/ => generated 839 bytes in 122 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+is_login :  True
+[pid: 53357|app: 0|req: 190/459] 219.239.227.245 () {42 vars in 827 bytes} [Fri Sep  1 17:15:16 2023] GET /api/user/show_info/0/ => generated 276 bytes in 18 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+{'id': 5, 'name': 'aaaaaaa'}
+False
+[pid: 53356|app: 0|req: 139/460] 219.239.227.245 () {42 vars in 916 bytes} [Fri Sep  1 17:15:16 2023] GET /api/document/view_folder/?parent_folder_id=5&sorted_by=-created_at => generated 3136 bytes in 66 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 191/461] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:15:17 2023] GET /api/document/view_document/1/ => generated 438 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53356|app: 0|req: 140/462] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:15:17 2023] GET /api/team/all_members/ => generated 376 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 192/463] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:15:20 2023] GET /api/document/view_document/1/ => generated 438 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+all_members 我在获取所有成员 :  4
+[pid: 53356|app: 0|req: 141/464] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:15:20 2023] GET /api/team/all_members/ => generated 376 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 193/465] 219.239.227.245 () {46 vars in 936 bytes} [Fri Sep  1 17:15:21 2023] POST /api/document/save/ => generated 53 bytes in 18 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 1)
+get_current_team 我在获取所有成员 :  1
+[pid: 53357|app: 0|req: 194/466] 219.239.227.141 () {42 vars in 878 bytes} [Fri Sep  1 17:15:25 2023] GET /api/team/get_current_team/ => generated 317 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+<QuerySet [{'team_id': 1}, {'team_id': 2}, {'team_id': 3}, {'team_id': 4}, {'team_id': 5}, {'team_id': 6}, {'team_id': 7}, {'team_id': 8}, {'team_id': 9}, {'team_id': 10}, {'team_id': 11}, {'team_id': 12}, {'team_id': 13}, {'team_id': 14}, {'team_id': 15}, {'team_id': 16}, {'team_id': 18}, {'team_id': 19}, {'team_id': 20}, {'team_id': 21}, '...(remaining elements truncated)...']>
+[pid: 53357|app: 0|req: 195/467] 219.239.227.141 () {40 vars in 725 bytes} [Fri Sep  1 17:15:25 2023] GET /api/chat/initial/1 => generated 16216 bytes in 364 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 142/468] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:15:27 2023] GET /api/document/view_document/1/ => generated 438 bytes in 30 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+all_members 我在获取所有成员 :  4
+[pid: 53354|app: 0|req: 70/469] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:15:27 2023] GET /api/team/all_members/ => generated 376 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 143/470] 219.239.227.240 () {46 vars in 803 bytes} [Fri Sep  1 17:15:33 2023] OPTIONS /api/document/view_document/1 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 196/471] 219.239.227.240 () {44 vars in 758 bytes} [Fri Sep  1 17:15:33 2023] GET /api/document/view_document/1 => generated 0 bytes in 7 msecs (HTTP/1.1 301) 5 headers in 222 bytes (1 switches on core 0)
+[pid: 53354|app: 0|req: 71/472] 219.239.227.240 () {46 vars in 805 bytes} [Fri Sep  1 17:15:33 2023] OPTIONS /api/document/view_document/1/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 197/473] 219.239.227.240 () {44 vars in 760 bytes} [Fri Sep  1 17:15:33 2023] GET /api/document/view_document/1/ => generated 438 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 313 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 144/474] 219.239.227.240 () {46 vars in 789 bytes} [Fri Sep  1 17:15:33 2023] OPTIONS /api/team/all_members/ => generated 0 bytes in 0 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 0)
+[pid: 53352|app: 0|req: 63/475] 219.239.227.240 () {44 vars in 744 bytes} [Fri Sep  1 17:15:33 2023] GET /api/team/all_members/ => generated 43 bytes in 1 msecs (HTTP/1.1 200) 9 headers in 304 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 145/476] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:15:40 2023] GET /api/document/view_document/1/ => generated 438 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 198/477] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:15:40 2023] GET /api/team/all_members/ => generated 376 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 199/478] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:15:46 2023] GET /api/document/view_document/1/ => generated 438 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+all_members 我在获取所有成员 :  4
+[pid: 53356|app: 0|req: 146/479] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:15:46 2023] GET /api/team/all_members/ => generated 376 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+get_current_team 我在获取所有成员 :  1
+[pid: 53354|app: 0|req: 72/480] 219.239.227.141 () {42 vars in 878 bytes} [Fri Sep  1 17:15:55 2023] GET /api/team/get_current_team/ => generated 317 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+<QuerySet [{'team_id': 1}, {'team_id': 2}, {'team_id': 3}, {'team_id': 4}, {'team_id': 5}, {'team_id': 6}, {'team_id': 7}, {'team_id': 8}, {'team_id': 9}, {'team_id': 10}, {'team_id': 11}, {'team_id': 12}, {'team_id': 13}, {'team_id': 14}, {'team_id': 15}, {'team_id': 16}, {'team_id': 18}, {'team_id': 19}, {'team_id': 20}, {'team_id': 21}, '...(remaining elements truncated)...']>
+[pid: 53356|app: 0|req: 147/481] 219.239.227.141 () {40 vars in 725 bytes} [Fri Sep  1 17:15:55 2023] GET /api/chat/initial/1 => generated 16216 bytes in 397 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 73/482] 219.239.227.240 () {44 vars in 861 bytes} [Fri Sep  1 17:16:08 2023] GET /api/document/view_document/1/ => generated 438 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+all_members 我在获取所有成员 :  4
+[pid: 53357|app: 0|req: 200/483] 219.239.227.240 () {44 vars in 845 bytes} [Fri Sep  1 17:16:08 2023] GET /api/team/all_members/ => generated 376 bytes in 24 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53352|app: 0|req: 64/484] 219.239.227.245 () {42 vars in 825 bytes} [Fri Sep  1 17:16:11 2023] GET /api/user/show_info/0 => generated 0 bytes in 8 msecs (HTTP/1.1 301) 5 headers in 214 bytes (1 switches on core 1)
+get_current_team 我在获取所有成员 :  1
+1
+3
+[pid: 53357|app: 0|req: 202/485] 219.239.227.245 () {42 vars in 856 bytes} [Fri Sep  1 17:16:11 2023] GET /api/team/get_current_team/?user_id=1 => generated 317 bytes in 53 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53354|app: 0|req: 74/486] 219.239.227.245 () {42 vars in 829 bytes} [Fri Sep  1 17:16:11 2023] GET /api/team/all_projects/ => generated 874 bytes in 61 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 149/487] 219.239.227.245 () {42 vars in 860 bytes} [Fri Sep  1 17:16:11 2023] GET /api/team/get_one_project/?project_id=5 => generated 155 bytes in 50 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53356|app: 0|req: 149/488] 219.239.227.245 () {42 vars in 823 bytes} [Fri Sep  1 17:16:11 2023] GET /api/team/all_teams/ => generated 839 bytes in 67 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 202/489] 219.239.227.245 () {42 vars in 860 bytes} [Fri Sep  1 17:16:11 2023] GET /api/document/all_deleted/?project_id=5 => generated 935 bytes in 52 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+is_login :  True
+[pid: 53357|app: 0|req: 203/490] 219.239.227.245 () {40 vars in 775 bytes} [Fri Sep  1 17:16:11 2023] GET /api/user/show_info/0/ => generated 276 bytes in 17 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+{'id': 5, 'name': 'aaaaaaa'}
+False
+[pid: 53352|app: 0|req: 65/491] 219.239.227.245 () {42 vars in 916 bytes} [Fri Sep  1 17:16:12 2023] GET /api/document/view_folder/?parent_folder_id=5&sorted_by=-created_at => generated 3136 bytes in 63 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 0)
+[pid: 53356|app: 0|req: 150/492] 219.239.227.245 () {44 vars in 756 bytes} [Fri Sep  1 17:16:14 2023] OPTIONS /api/document/create/ => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 204/493] 219.239.227.245 () {46 vars in 940 bytes} [Fri Sep  1 17:16:14 2023] POST /api/document/create/ => generated 291 bytes in 32 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+[pid: 53357|app: 0|req: 205/494] 219.239.227.245 () {44 vars in 802 bytes} [Fri Sep  1 17:16:16 2023] OPTIONS /api/document/view_prototype/?prototype_id=17 => generated 0 bytes in 1 msecs (HTTP/1.1 200) 8 headers in 459 bytes (1 switches on core 1)
+Not Found: /api/document/view_prototype/
+[pid: 53354|app: 0|req: 75/495] 219.239.227.245 () {42 vars in 872 bytes} [Fri Sep  1 17:16:16 2023] GET /api/document/view_prototype/?prototype_id=17 => generated 6213 bytes in 6 msecs (HTTP/1.1 404) 9 headers in 321 bytes (1 switches on core 0)
+get_current_team 我在获取所有成员 :  1
+[pid: 53357|app: 0|req: 206/496] 219.239.227.141 () {42 vars in 878 bytes} [Fri Sep  1 17:16:34 2023] GET /api/team/get_current_team/ => generated 317 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+<QuerySet [{'team_id': 1}, {'team_id': 2}, {'team_id': 3}, {'team_id': 4}, {'team_id': 5}, {'team_id': 6}, {'team_id': 7}, {'team_id': 8}, {'team_id': 9}, {'team_id': 10}, {'team_id': 11}, {'team_id': 12}, {'team_id': 13}, {'team_id': 14}, {'team_id': 15}, {'team_id': 16}, {'team_id': 18}, {'team_id': 19}, {'team_id': 20}, {'team_id': 21}, '...(remaining elements truncated)...']>
+get_current_team 我在获取所有成员 :  2
+[pid: 53357|app: 0|req: 208/497] 219.239.227.141 () {42 vars in 878 bytes} [Fri Sep  1 17:16:35 2023] GET /api/team/get_current_team/ => generated 310 bytes in 29 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 1)
+[pid: 53357|app: 0|req: 208/498] 219.239.227.141 () {40 vars in 725 bytes} [Fri Sep  1 17:16:34 2023] GET /api/chat/initial/1 => generated 16216 bytes in 369 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 0)
+<QuerySet [{'team_id': 1}, {'team_id': 11}, {'team_id': 12}, {'team_id': 14}, {'team_id': 17}, {'team_id': 17}, {'team_id': 19}, {'team_id': 20}, {'team_id': 25}, {'team_id': 26}, {'team_id': 27}, {'team_id': 28}, {'team_id': 29}]>
+[pid: 53356|app: 0|req: 151/499] 219.239.227.141 () {40 vars in 725 bytes} [Fri Sep  1 17:16:36 2023] GET /api/chat/initial/2 => generated 9335 bytes in 208 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 0)
+当前用户 :  2
+原型id ：  1
+[pid: 53357|app: 0|req: 209/500] 219.239.227.188 () {44 vars in 908 bytes} [Fri Sep  1 17:16:48 2023] GET /api/document/view_prototype/1/?prototype_id=1 => generated 21059 bytes in 26 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 1)
+当前用户 :  2
+原型id ：  1
+[pid: 53356|app: 0|req: 152/501] 219.239.227.188 () {44 vars in 908 bytes} [Fri Sep  1 17:17:05 2023] GET /api/document/view_prototype/1/?prototype_id=1 => generated 21059 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 1)
+get_current_team 我在获取所有成员 :  1
+[pid: 53357|app: 0|req: 210/502] 219.239.227.141 () {42 vars in 878 bytes} [Fri Sep  1 17:17:07 2023] GET /api/team/get_current_team/ => generated 317 bytes in 28 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+<QuerySet [{'team_id': 1}, {'team_id': 2}, {'team_id': 3}, {'team_id': 4}, {'team_id': 5}, {'team_id': 6}, {'team_id': 7}, {'team_id': 8}, {'team_id': 9}, {'team_id': 10}, {'team_id': 11}, {'team_id': 12}, {'team_id': 13}, {'team_id': 14}, {'team_id': 15}, {'team_id': 16}, {'team_id': 18}, {'team_id': 19}, {'team_id': 20}, {'team_id': 21}, '...(remaining elements truncated)...']>
+[pid: 53356|app: 0|req: 153/503] 219.239.227.141 () {40 vars in 725 bytes} [Fri Sep  1 17:17:07 2023] GET /api/chat/initial/1 => generated 16216 bytes in 371 msecs (HTTP/1.1 200) 9 headers in 307 bytes (1 switches on core 0)
+Fri Sep  1 17:17:08 2023 - logsize: 100341, triggering rotation to /home/summer/summer_backend/uwsgi.log.1693559828...
