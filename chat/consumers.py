@@ -475,6 +475,11 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         ChatMessage.objects.filter(team_id=self.team_id).delete()
         Group.objects.filter(id=self.team_id).delete()
         print('删除团队成功')
+    @database_sync_to_async
+    def add_user(self, invitee_id):
+        ChatMember.objects.create(user_id=invitee_id, team_id=self.team_id)
+        UserTeamChatStatus.objects.create(user_id=invitee_id, team_id=self.team_id, unread_count=0, index=0)
+        print('添加用户成功')
 
 
 class NotificationConsumer(AsyncWebsocketConsumer):

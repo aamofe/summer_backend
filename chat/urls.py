@@ -22,4 +22,5 @@ urlpatterns = [
     path('get_all_groups_members/<int:user_id>',views.get_all_groups_members),
 
     path('make_group',views.make_group),
+    path('add_group_member',views.add_group_member),
 ]
