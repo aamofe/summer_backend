@@ -235,7 +235,7 @@ def get_group(request, user_id):
 def make_group(request):
     if request.method == 'POST':
         data = json.loads(request.body)
-        creator_id = data.get('creator')
+        creator_id = data.get('creator_id')
         invitees = data.get('invitees', [])
         name = data.get('name', 'My New Group Chat')
         description = data.get('description', '')
@@ -280,7 +280,7 @@ def make_group(request):
                 'avatar': User.objects.get(id=member.user_id).avatar_url,
             })
         async_to_sync(channel_layer.group_send)(
-            f"chat_{group.id}",
+            "notification_group",
             {
                 'type': 'new_group_chat',
                 'roomId': str(group.id),
@@ -292,6 +292,7 @@ def make_group(request):
                 'users':users,
             }
         )
+        return JsonResponse({'group_id': group.id})
 
     else:
         return JsonResponse({"error": "Invalid request method"}, status=400)
