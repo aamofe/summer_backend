@@ -5,14 +5,12 @@ from django.db.models import Max
 from django.http import JsonResponse
 
 from chat.models import UserTeamChatStatus, ChatMessage, Notice
-from chat.models import Group, ChatMember,UserNoticeChannel
+from chat.models import Group, ChatMember,UserNoticeChannel,UserChatChannel
 from user.cos_utils import get_cos_client
 from user.models import User
 import uuid
 from channels.layers import get_channel_layer
 from asgiref.sync import async_to_sync
-
-
 
 def get_channel_name(user_id):
     try:
@@ -379,8 +377,8 @@ def add_group_member(request):
 
         channel_layer = get_channel_layer()
 
-        for member in members:
-            channel_name=get_channel_name(member.user_id)
+        for invitee_id in invitees:
+            channel_name=get_channel_name(invitee_id)
             async_to_sync(channel_layer.send)(
                 channel_name,
                 {
@@ -388,6 +386,22 @@ def add_group_member(request):
                     'room': room,
                 }
             )
+
+        invitee_set = set(map(int, invitees))
+        #对于群里的其他人，发送通知
+        members = ChatMember.objects.filter(team_id=group.id)
+        for member in members:
+            if member.user_id not in invitee_set:
+                print(member.user_id)
+                channel_name=get_channel_name(member.user_id)
+                async_to_sync(channel_layer.send)(
+                    channel_name,
+                    {
+                        'type': 'chat_add_members',
+                        'roomId': group.id,
+                        'users': users,
+                    }
+                )
 
         return JsonResponse({'message': 'Members added successfully'})
 

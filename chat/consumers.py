@@ -573,6 +573,14 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({
             'message': event["message"]
         }))
+
+    async def chat_add_members(self, event):
+        # 实际发送消息给WebSocket客户端
+        await self.send(text_data=json.dumps({
+            'type': 'chat_add_menbers',
+            'roomId': event["roomId"],
+            'users': event["users"],
+        }))
     @database_sync_to_async
     def save_user_notice_channel(self):
         UserNoticeChannel.objects.update_or_create(user_id=self.user_id, defaults={'channel_name': self.channel_name})
