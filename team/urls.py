@@ -27,5 +27,6 @@ urlpatterns = [
     path('recover_one_project/',views.recover_one_project),
     path('recover_all_project/',views.recover_all_project),
     path('get_one_project/',views.get_one_project),
-    path('copy/',views.copy)
+    path('copy/',views.copy),
+    path('delete_permanently/',views.delete_permanently)
 ]

@@ -54,12 +54,12 @@ class Document(models.Model):
     editable=models.BooleanField(verbose_name='是否可编辑',default=True)
     parent_folder=models.ForeignKey(Folder,null=True,verbose_name="所属文件夹",on_delete=models.CASCADE)
     user=models.ForeignKey(User,null=True,verbose_name="创建者",on_delete=models.CASCADE)
-    is_locked=models.IntegerField(verbose_name="文件锁",default=False)
+    # is_locked=models.IntegerField(verbose_name="文件锁",default=False)
     is_deleted=models.BooleanField(verbose_name="是否被删除",default=False)
     
     is_template=models.BooleanField(verbose_name='是否为模板',default=False)
     is_private=models.BooleanField(verbose_name='是否私有',default=True)
-
+    project=models.ForeignKey(Project,verbose_name="模板所属项目",null=True,on_delete=models.CASCADE)
     def to_dict(self,name='title'):
 
         return {
@@ -102,6 +102,7 @@ class Prototype(models.Model):
     height =models.DecimalField(default=1080,max_digits=10, decimal_places=2)
     width = models.DecimalField(default=1920,max_digits=10, decimal_places=2)
 
+    project=models.ForeignKey(Project,verbose_name="模板所属项目",null=True,on_delete=models.CASCADE)
     is_template=models.BooleanField(verbose_name='是否为模板',default=False)
     is_private=models.BooleanField(verbose_name='是否私有',default=True)
     def to_dict(self,name='title'):

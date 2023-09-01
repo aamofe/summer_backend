@@ -108,7 +108,7 @@ def update_team(request, team_id):  # 修改团队描述 上传头像
             group.description=description
         team.save()
         group.save()
-        return JsonResponse({'errno': 0, 'msg': "修改信息成功"})
+        return JsonResponse({'errno': 0, 'msg': "修改信息成功",'team':team.to_dict()})
     else:
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
 
@@ -380,7 +380,7 @@ def rename_project(request):
     except Folder.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
     project.save()
-    return JsonResponse({'errno': 0, 'msg': "项目重命名成功"})
+    return JsonResponse({'errno': 0, 'msg': "项目重命名成功",'project':project.to_dict()})
 @validate_login
 def checkout_team(request):
     if request.method == 'POST':
@@ -653,17 +653,27 @@ def copy(request):
         'folder': folder.to_dict(),
     })
 
-
+@validate_login
 def delete_permanently(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
-    team_id=user.current_team_id
-    try:
-        team=Team.objects.get(id=team_id)
-    except Team.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "当前团队不存在"})
-    try:
+    project_id=request.POST.get('project_id')
+    if not project_id:
+        return JsonResponse({'errno': 1, 'msg': "请输入项目id"})
+    elif  project_id==0:
+        team_id=user.current_team_id
+        try:
+            team=Team.objects.get(id=team_id)
+        except Team.DoesNotExist:
+            return JsonResponse({'errno': 1, 'msg': "当前团队不存在"})
         projects=Project.objects.filter(team=team)
-    except Project.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+        projects.delete()
+        return JsonResponse({'errno': 0, 'msg': "所有项目已删除"})
+    else:
+        try:
+            project=Project.objects.get(id=project_id,is_deleted=True)
+        except Project.DoesNotExist:
+            return JsonResponse({'errno': 1, 'msg': "项目未删除"})
+        project.delete()
+        return JsonResponse({'errno': 0, 'msg': "项目已删除"})
