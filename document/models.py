@@ -66,7 +66,7 @@ class Document(models.Model):
             'id':self.id,
             name:self.title,
             'content':self.content,
-            'creator':self.user.id,
+            'creator': self.user.nickname if self.user and hasattr(self.user, 'nickname') else "公共模板",
             'created_at':(self.created_at.astimezone(shanghai_tz)).strftime('%Y-%m-%d %H:%M:%S'),
             'modified_at':(self.modified_at.astimezone(shanghai_tz)).strftime('%Y-%m-%d %H:%M:%S'),
             'is_locked':self.is_locked,
@@ -111,7 +111,7 @@ class Prototype(models.Model):
             'content':self.content,
             'created_at':(self.created_at.astimezone(shanghai_tz)).strftime('%Y-%m-%d %H:%M:%S'),
             'modified_at':(self.modified_at.astimezone(shanghai_tz)).strftime('%Y-%m-%d %H:%M:%S'),
-            'creator':self.user.nickname,
+            'creator': self.user.nickname if self.user and hasattr(self.user, 'nickname') else "公共模板",
             'type':'prototype',
             'height':self.height,
             'width':self.width
