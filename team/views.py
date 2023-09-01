@@ -25,6 +25,7 @@ from document.models import Document, Prototype, Folder
 
 from summer_backend import settings
 from summer_backend.settings import SECRET_KEY, EMAIL_HOST_USER
+from team.photo import generate_cover
 from user.authentication import validate_all, validate_login
 from user.cos_utils import get_cos_client, Label, Category, SubLabel
 from user.models import User
@@ -53,14 +54,16 @@ def create_team(request):
             team.description = description
             group.description=description
         if cover:
-            res, cover_url, content = upload_cover_method(cover, user.id, 'team_cover')
-            if res == -2:
+            res, cover_url= upload_cover_method(cover, user.id, 'team_cover')
+            if res == -1:
                 return JsonResponse({'errno': 1, 'msg': "图片格式不合法"})
-            elif res == 1:
-                return JsonResponse({'errno': 1, 'msg': content})
             else:
                 team.cover_url = cover_url
                 group.cover_url=cover_url
+        else:
+            cover_url=generate_cover(2,team.name,team.id)
+            team.cover_url = cover_url
+            group.cover_url = cover_url
         team.save()
         group.save()
         member = Member.objects.create(role='CR', user=user, team=team)
@@ -84,21 +87,25 @@ def update_team(request, team_id):  # 修改团队描述 上传头像
             return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
         if not team.user == user:
             return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
+        if cover:
+            res, cover_url= upload_cover_method(cover, team.id, 'team_cover')
+            if res == -1:
+                return JsonResponse({'errno': 1, 'msg': "图片格式不合法"})
+            else:
+                team.cover_url = cover_url
+                group.cover_url=cover_url
         if team_name and team_name!='个人空间':
+            old_name=team.name
+            new_name=team_name
             team.name = team_name
+            if 'random' in str(team.cover_url) and not old_name[0]==new_name[0]:
+                cover_url = generate_cover(2, team_name, team.id)
+                team.cover_url = cover_url
+                group.cover_url = cover_url
             group.name=team_name
         if description:
             team.description = description
             group.description=description
-        if cover:
-            res, cover_url, content = upload_cover_method(cover, team.id, 'team_cover')
-            if res == -2:
-                return JsonResponse({'errno': 1, 'msg': "图片格式不合法"})
-            elif res == 1:
-                return JsonResponse({'errno': 1, 'msg': content})
-            else:
-                team.cover_url = cover_url
-                group.cover_url=cover_url
         team.save()
         group.save()
         return JsonResponse({'errno': 0, 'msg': "修改信息成功"})
@@ -143,8 +150,6 @@ def team_name(request,token):
     payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
     team_id = payload.get('team_id')
     inviter=payload.get('inviter')
-    print('hahah : tid= ',team_id)
-    print('hah : inviter= ',inviter)
     if not team_id or not inviter:
         return JsonResponse({'errno': 1, 'msg': "信息解析失败"})
     try:
@@ -289,6 +294,7 @@ def create_project(request, team_id):
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
     project_name = request.POST.get('project_name')
+    cover=request.FILES.get("cover")
     if not project_name:
         return JsonResponse({'errno': 1, 'msg': "请输入项目名称"})
     team_list = Team.objects.filter(id=team_id)
@@ -297,7 +303,14 @@ def create_project(request, team_id):
     team = team_list[0]
     project = Project.objects.create(name=project_name, team=team,user=user)
     folder=Folder.objects.create(name=project_name,project=project,user=user,parent_folder=None)
-    # projects=project.to_dict()
+    if cover:
+        res,cover_url=upload_cover_method(cover,project.id,'project_cover')
+        if res == -1:
+            return JsonResponse({'errno': 1, 'msg': "图片格式不合法"})
+    else:
+        cover_url=generate_cover(1,project_name,project.id)
+    project.cover_url = cover_url
+    project.save()
     project_info=project.to_dict()
     project_info['folder_id']=folder.id
     project_info['folder_name']=folder.name
@@ -355,7 +368,11 @@ def rename_project(request):
         member=Member.objects.get(team=project.team,user=user)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
+    old_name=project.name
     project.name = new_name
+    if not old_name[0]==new_name[0]:
+        cover_url=generate_cover(1,new_name,project.id)
+        project.cover_url=cover_url
     try:
         folder=Folder.objects.get(parent_folder=None,project=project)
         folder.name=new_name
