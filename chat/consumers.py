@@ -86,7 +86,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                     'deleter_id':deleter_id,
                 }
             )
-
+            return
         elif 'clean' in text_data_json:
             await self.mark_messages_as_read(self.user_id)
         else:
