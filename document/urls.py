@@ -32,7 +32,11 @@ urlpatterns = [
     # path('delete_folder/',views.delete_folder),
     path('view_folder/',views.view_folder),
     path('restore/',views.restore),
-    path('rename_folder/',views.rename_folder),
+    # path('rename_folder/',views.rename_folder),
     path('upload/',views.upload),
-    path('delete_permanently/',views.delete_permanently)
+    path('delete_permanently/',views.delete_permanently),
+    path('create_template_public/',views.create_template),
+    path('save_as_template/',views.save_as_template),
+    path('all_template/',views.all_template),
+    path('import_from_template/',views.import_from_template)
 ]
