@@ -96,8 +96,13 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
             date = text_data_json.get('date', '')
             replyMessage = text_data_json.get('replyMessage', {})  # 如果'reply_message'不存在，返回空字典
             file_data = text_data_json.get('files', None)  # 如果'files'不存在，返回空列表
-            file_data_item = file_data[0]
-            await self.handle_files(file_data_item, message, user_id, replyMessage,date)
+            if file_data is not None and isinstance(file_data, list) and len(file_data) > 0:
+                file_data_item = file_data[0]
+                await self.handle_files(file_data_item, message, user_id, replyMessage,date)
+            else:
+                await self.upload_chatmessage(message, user_id, replyMessage,date)
+                file_data_item = None
+
 
             # 将消息发送给团队群聊的所有成员
             await self.channel_layer.group_send(
@@ -159,6 +164,13 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
             'avatar_url': avatar_url,
             'time': time
         }))
+
+    @database_sync_to_async
+    def upload_chatmessage(self, message, user_id, replyMessage,date):
+        ChatMessage.objects.create(team_id=self.team_id, message=message, user_id=user_id,
+                                   reply_message=replyMessage, date=date)
+
+
     @database_sync_to_async
     def handle_files(self, file_data, message, user_id, replyMessage,date):
         if file_data:  # 检查是否真的拿到了文件数据
@@ -169,6 +181,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 duration=file_data.get('duration', 0),
                 size=file_data.get('size', 0),
                 preview=file_data.get('preview', None),
+                type = file_data.get('type', None),
             )
             file_instance.save()
             print('拿到文件了')
@@ -185,7 +198,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
             ChatMessage.objects.create(team_id=self.team_id, message=message, user_id=user_id,
                                        reply_message=replyMessage,date=date)
 
-    #async def new_group_chat(self, event):
+
 
     async def new_file_uploaded(self, event):
         # Handle the logic for the new_file_uploaded event
@@ -209,18 +222,6 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
             'unread_count': unread_count,
             'latest_message': latest_message,
         }))
-    @database_sync_to_async
-    def save_message(self, message,user_id,file,reply_message):
-        print('save_message')
-        if not file:
-            print('没有文件')
-            # 假设你有一个名为ChatMessage的模型，用于存储消息
-            ChatMessage.objects.create(team_id=self.team_id, message=message, user_id=user_id,reply_message=reply_message)
-        else:
-            print('有文件')
-            chat_message=ChatMessage.objects.create(team_id=self.team_id, message=message,user_id=user_id,files=file,reply_message=reply_message)
-            file.chat_message=chat_message
-            file.save()
 
     @database_sync_to_async
     def search_messages(self, keyword):
@@ -271,6 +272,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 'duration': msg.files.duration,
                 'size': msg.files.size,
                 'preview': msg.files.preview,
+                'type': msg.files.type,
             }]
             return file_data
         else:
@@ -503,6 +505,27 @@ class NotificationConsumer(AsyncWebsocketConsumer):
             'type': 'file_notice',
             'url': event["url"],
         }))
+
+    async def new_group_chat(self, event):
+        roomId = event["roomId"]
+        roomName = event["roomName"]
+        unreadCount = event["unreadCount"]
+        avatar = event["avatar"]
+        index = event["index"]
+        lastMessage = event["lastMessage"]
+        users = event["users"]
+        # 实际发送消息给WebSocket客户端
+        await self.send(text_data=json.dumps({
+            'type': 'new_group_chat',
+            'roomID': roomId,
+            'roomName': roomName,
+            'unreadCount': unreadCount,
+            'avatar': avatar,
+            'index': index,
+            'lastMessage': lastMessage,
+            'users': users,
+        }))
+
     async def send_notification(self, event):
         # 实际发送消息给WebSocket客户端
         await self.send(text_data=json.dumps({
@@ -519,82 +542,4 @@ class NotificationConsumer(AsyncWebsocketConsumer):
     def upload_file_notice(self, url, file_id):
         Notice.objects.create(receiver_id=self.user_id, notice_type='document_mention', url=url,
                               associated_resource_id=file_id)
-'''''
-class PrivateChatConsumer(AsyncWebsocketConsumer):
-    async def connect(self):
-        # 获取发送者和接收者的用户ID
-        self.sender_user_id = self.scope['url_route']['kwargs']['sender_user_id']
-        self.receiver_user_id = self.scope['url_route']['kwargs']['receiver_user_id']
-        
-        # 创建私聊的房间名称
-        self.room_name = f"private_chat_{self.sender_user_id}_{self.receiver_user_id}"
-        
-        unread_count = await self.get_unread_count(self.sender_user_id, self.receiver_user_id)
-        latest_message = await self.get_latest_message(self.sender_user_id, self.receiver_user_id)
 
-        # 发送当前未读消息数量和最新消息到 WebSocket 连接
-        await self.send(text_data=json.dumps({
-            'type': 'chat_status',
-            'username': await self.get_username(latest_message.user_id) if latest_message else None,
-            'sender_avatar_url': await self.get_avatar_url(latest_message.user_id) if latest_message else None,
-            'sender_avatar_url': await self.get_avatar_url(latest_message.user_id) if latest_message else None,
-            'time': latest_message.timestamp.strftime('%Y-%m-%d %H:%M:%S') if latest_message else None,
-            'unread_count': unread_count,
-            'latest_message': latest_message.message if latest_message else None,
-        }))
-        # 将连接加入到房间
-        await self.channel_layer.group_add(
-            self.room_name,
-            self.channel_name
-        )
-        
-        await self.accept()
-    
-    async def disconnect(self, close_code):
-        # 将连接从房间移除
-        await self.channel_layer.group_discard(
-            self.room_name,
-            self.channel_name
-        )
-    
-    async def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-        
-        # 将消息发送到房间
-        await self.channel_layer.group_send(
-            self.room_name,
-            {
-                'type': 'chat_message',
-                'message': message,
-                'sender_user_id': self.sender_user_id,
-                'receiver_user_id': self.receiver_user_id
-            }
-        )
-    
-    async def chat_message(self, event):
-        message = event['message']
-        sender_user_id = event['sender_user_id']
-        receiver_user_id = event['receiver_user_id']
-        
-        # 发送消息到 WebSocket 连接
-        await self.send(text_data=json.dumps({
-            'type': 'chat_message',
-            'message': message,
-            'sender_user_id': sender_user_id,
-            'receiver_user_id': receiver_user_id
-        }))
-
-    @database_sync_to_async
-    def get_unread_count(self, sender_user_id, receiver_user_id):
-        # 在此处查询未读消息数量
-        # 返回未读消息数量
-        pass
-    
-    @database_sync_to_async
-    def get_latest_message(self, sender_user_id, receiver_user_id):
-        # 在此处查询最新消息
-        # 返回最新消息对象
-        pass
-
-'''''
