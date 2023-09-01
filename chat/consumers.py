@@ -78,7 +78,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         elif 'delete_personal' in text_data_json:
             deleter_id=text_data_json['deleter_id']
             await self.delete_user(deleter_id)
-            await self.channel_layer.group_send()(
+            await self.channel_layer.group_send(
                 self.room_group_name,
                 {
                     'type': 'chat_delete_personal',
@@ -457,6 +457,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         UserChatChannel.objects.filter(user_id=user_id,team_id=self.team_id).delete()
         UserTeamChatStatus.objects.filter(user_id=user_id, team_id=self.team_id).delete()
         ChatMember.objects.filter(user_id=user_id, team_id=self.team_id).delete()
+        print('删除用户成功')
 
 
 
