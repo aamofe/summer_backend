@@ -75,6 +75,17 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 'messages': messages_array
             }))
             await self.mark_messages_as_read(user_id)
+        elif 'delete_personal' in text_data_json:
+            deleter_id=text_data_json['deleter_id']
+            await self.delete_user(deleter_id)
+            await self.channel_layer.group_send()(
+                self.room_group_name,
+                {
+                    'type': 'chat_delete_personal',
+                    'roomID':self.team_id,
+                    'deleter_id':deleter_id,
+                }
+            )
 
         elif 'clean' in text_data_json:
             await self.mark_messages_as_read(self.user_id)
@@ -221,6 +232,14 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
             'time': time,
             'unread_count': unread_count,
             'latest_message': latest_message,
+        }))
+
+    async def chat_delete_personal(self, event):
+        deleter_id=event['deleter_id']
+        await self.send(text_data=json.dumps({
+            'type':'chat_delete_personal',
+            'roomId':self.team_id,
+            'deleter_id':deleter_id,
         }))
 
     @database_sync_to_async
@@ -433,6 +452,13 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def save_user_chat_channel(self):
         UserChatChannel.objects.update_or_create(user_id=self.user_id,team_id=self.team_id ,defaults={'channel_name': self.channel_name})
+    @database_sync_to_async
+    def delete_user(self, user_id):
+        UserChatChannel.objects.filter(user_id=user_id,team_id=self.team_id).delete()
+        UserTeamChatStatus.objects.filter(user_id=user_id, team_id=self.team_id).delete()
+        ChatMember.objects.filter(user_id=user_id, team_id=self.team_id).delete()
+
+
 
 class NotificationConsumer(AsyncWebsocketConsumer):
     async def connect(self):
@@ -507,23 +533,11 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         }))
 
     async def new_group_chat(self, event):
-        roomId = event["roomId"]
-        roomName = event["roomName"]
-        unreadCount = event["unreadCount"]
-        avatar = event["avatar"]
-        index = event["index"]
-        lastMessage = event["lastMessage"]
-        users = event["users"]
+        room = event['room']
         # 实际发送消息给WebSocket客户端
         await self.send(text_data=json.dumps({
             'type': 'new_group_chat',
-            'roomID': roomId,
-            'roomName': roomName,
-            'unreadCount': unreadCount,
-            'avatar': avatar,
-            'index': index,
-            'lastMessage': lastMessage,
-            'users': users,
+            'room': room,
         }))
 
     async def send_notification(self, event):
