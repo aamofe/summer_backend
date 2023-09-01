@@ -1,3 +1,4 @@
+import asyncio
 import json
 import re
 
@@ -126,7 +127,10 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                     'time': await self.get_time(),
                 }
             )
-            await self.increment_and_notify(user_id)
+
+            await self.notify(user_id)
+
+            print('index up over')
             await self.mark_messages_as_read(user_id)
 
             '''''''''
@@ -319,37 +323,54 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     def get_time(self):
         return timezone.now().strftime('%Y-%m-%d %H:%M:%S')
 
+
+
     @database_sync_to_async
-    def index_up(self, user_id, team_id):
-        from django.db.models import Max
+    def increment_unread_count_and_index_in_db(self, user_id):
+        user_ids = ChatMember.objects.filter(team_id=self.team_id).values_list('user_id', flat=True)
+        new_user_ids = user_ids.exclude(user_id=user_id)
+        print(user_ids)
+        print(new_user_ids)
+        for uid in user_ids:
+            status, created = UserTeamChatStatus.objects.get_or_create(user_id=uid, team_id=self.team_id,
+                                                                       defaults={'unread_count': 0})
+            print('status', status, 'created', created)
+            if created:
+                # 如果创建了新的记录, 设置unread_count为1
+                if uid != user_id:
+                    status.unread_count = 1
+                print('创建了新的记录')
+            else:
+                # 否则增加unread_count
+                print('进入index')
+                if uid != user_id:
+                    status.unread_count += 1
+
+            # 获取最大index值
+            max_index = UserTeamChatStatus.objects.filter(user_id=uid).aggregate(Max('index'))[
+                                'index__max'] or 0
+            print('max_index', max_index)
+
+
+            # 设置index为最大值加1
+            status.index = max_index + 1
+
+            print('增加了unread_count')
+            status.save()
+        return user_ids
+
+    @database_sync_to_async
+    def increase_index(self, user_id, team_id):
+        print('进入index')
         # 获取最大index值
         max_index = UserTeamChatStatus.objects.filter(user_id=user_id).aggregate(Max('index'))['index__max'] or 0
-
+        print('max_index', max_index)
         # 使用get_or_create获取或创建对象
         user_team_chat_status, created = UserTeamChatStatus.objects.get_or_create(user_id=user_id, team_id=team_id)
 
         # 设置index为最大值加1
         user_team_chat_status.index = max_index + 1
         user_team_chat_status.save()
-
-    @database_sync_to_async
-    def increment_unread_count_and_index_in_db(self, user_id):
-        user_ids = ChatMember.objects.filter(team_id=self.team_id).values_list('user_id', flat=True)
-        new_user_ids = user_ids.exclude(user_id=user_id)
-
-        for uid in new_user_ids:
-            status, created = UserTeamChatStatus.objects.get_or_create(user_id=uid, team_id=self.team_id,
-                                                                       defaults={'unread_count': 0})
-            if created:
-                # 如果创建了新的记录, 设置unread_count为1
-                status.unread_count = 1
-                status.index = 1
-            else:
-                # 否则增加unread_count
-                status.unread_count += 1
-                self.index_up(uid, self.team_id)
-            status.save()
-        return user_ids
 
     @database_sync_to_async
     def get_user_ids(self, user_ids_query):
@@ -397,9 +418,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
 
 
 
-
-    # Now, when you want to increment and notify
-    async def increment_and_notify(self, user_id):
+    async def notify(self, user_id):
 
         user_ids = await self.increment_unread_count_and_index_in_db(user_id)
         await self.notify_users_of_unread_count(user_ids)
