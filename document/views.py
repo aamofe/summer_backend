@@ -290,6 +290,15 @@ def save(request):
         except Document.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "文档不存在"})
     else:
+        height=request.POST.get('height')
+        width=request.POST.get('width')
+        try:
+            height = float(height)
+            width=float(width)
+            if height < 0 or width<0:
+                return JsonResponse({'errno': 1, 'msg': "数字必须为非负数"})
+        except ValueError:
+            return JsonResponse({'errno': 1, 'msg': "必须传输数字类型"})
         try :
             file=Prototype.objects.get(id=file_id,is_deleted=False)
         except Prototype.DoesNotExist:

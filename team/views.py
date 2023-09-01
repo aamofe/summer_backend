@@ -635,3 +635,18 @@ def copy(request):
         'project': project.to_dict(),
         'folder': folder.to_dict(),
     })
+
+
+def delete_permanently(request):
+    if request.method != 'POST':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+    user = request.user
+    team_id=user.current_team_id
+    try:
+        team=Team.objects.get(id=team_id)
+    except Team.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "当前团队不存在"})
+    try:
+        projects=Project.objects.filter(team=team)
+    except Project.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
