@@ -224,7 +224,7 @@ def get_all_groups_members(request, user_id):
 
         for member in members:
             # 如果该用户ID已在集合中，跳过
-            if member.user_id in added_users:
+            if member.user_id in added_users or member.user_id == user_id:
                 continue
 
             user_info = User.objects.get(id=member.user_id)
