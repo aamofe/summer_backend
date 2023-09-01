@@ -18,6 +18,7 @@ class Team(models.Model):
             'description':self.description if not self.description is None else "暂无描述",
             'created_at':(self.created_at.astimezone(shanghai_tz)).strftime('%Y-%m-%d %H:%M:%S'),
             'creator':self.user.username,
+            'cover_url':self.cover_url
         }
 class Member(models.Model):
     CREATOR = 'CR'
@@ -40,8 +41,10 @@ class Project(models.Model):
     is_deleted = models.BooleanField(verbose_name='是否已删除', default=False)
     user=models.ForeignKey(User,verbose_name="创建者",on_delete=models.CASCADE)
     deleted_at=models.DateTimeField(verbose_name='被删除时间',null=True)
+    cover_url=models.URLField(verbose_name='头像封面',)
     def to_dict(self):
         return{
             'name':self.name,
             'id':self.id,
+            'cover_url':self.cover_url
         }
