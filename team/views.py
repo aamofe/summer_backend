@@ -535,6 +535,11 @@ def get_one_project(request):
     project_=project.to_dict()
     project_['document_num']=Document.objects.filter(parent_folder__project=project).count()
     project_['prototype_num']=Prototype.objects.filter(parent_folder__project=project).count()
+    try:
+        folder=Folder.objects.get(parent_folder=None,project=project)
+    except Folder.DoesNotExist:
+        return JsonResponse({'errno': 1 ,'msg': "父文件夹不存在"})
+    project_['folder_id']=folder.id
     return JsonResponse({'errno': 0, 'project':project_,'msg': "单个项目信息"})
 
 @validate_login

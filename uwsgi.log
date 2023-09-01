@@ -362,3 +362,22 @@ all_members 我在获取所有成员 :  1
 [pid: 472159|app: 0|req: 16/30] 219.239.227.240 () {44 vars in 860 bytes} [Fri Sep  1 02:35:49 2023] GET /api/document/view_document/1/ => generated 2080 bytes in 27 msecs (HTTP/1.1 200) 9 headers in 306 bytes (1 switches on core 1)
 all_members 我在获取所有成员 :  1
 [pid: 472159|app: 0|req: 17/31] 219.239.227.240 () {44 vars in 844 bytes} [Fri Sep  1 02:35:50 2023] GET /api/team/all_members/ => generated 325 bytes in 25 msecs (HTTP/1.1 200) 9 headers in 305 bytes (1 switches on core 0)
+*** Starting uWSGI 2.0.21 (64bit) on [Fri Sep  1 02:50:35 2023] ***
+compiled with version: 11.2.0 on 28 March 2023 07:25:39
+os: Linux-5.4.0-139-generic #156-Ubuntu SMP Fri Jan 20 17:27:18 UTC 2023
+nodename: VM-8-13-ubuntu
+machine: x86_64
+clock source: unix
+pcre jit disabled
+detected number of CPU cores: 2
+current working directory: /home/summer/summer_backend
+writing pidfile to uwsgi.pid
+detected binary path: /home/summer/miniconda3/envs/django/bin/uwsgi
+chdir() to /home/summer/summer_backend
+your processes number limit is 7547
+your memory page size is 4096 bytes
+detected max file descriptor number: 1024
+lock engine: pthread robust mutexes
+thunder lock: disabled (you can enable it with --thunder-lock)
+probably another instance of uWSGI is running on the same address (127.0.0.1:8000).
+bind(): Address already in use [core/socket.c line 769]

@@ -328,7 +328,10 @@ def all_deleted(request):  # 包括 原型和协作文档
 
     deleted_items_data = []
     for item in deleted_items:
-        deleted_items_data.append(item.to_dict())
+        if isinstance(item, Folder):
+            deleted_items_data.append(item.to_dict())
+        else:
+            deleted_items_data.append(item.to_dict('name'))
 
     return JsonResponse({'errno': 0, 'msg': "获取已删除项目成功", 'deleted_items': deleted_items_data})
 
