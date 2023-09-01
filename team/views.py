@@ -74,12 +74,13 @@ def create_team(request):
 
 
 @validate_login
-def update_team(request, team_id):  # 修改团队描述 上传头像
+def update_team(request):  # 修改团队描述 上传头像
     if request.method == 'POST':
         user = request.user
         description = request.POST.get('description')
         team_name = request.POST.get('team_name')
         cover = request.FILES.get('cover')
+        team_id=user.current_team_id
         try:
             team=Team.objects.get(id=team_id)
             group=Group.objects.get(actual_team=team_id)
@@ -87,6 +88,8 @@ def update_team(request, team_id):  # 修改团队描述 上传头像
             return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
         if not team.user == user:
             return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
+        if team.name=='个人空间' or team_name=='个人空间':
+            return JsonResponse({'errno': 1, 'msg': "个人空间不能修改名称"})
         if cover:
             res, cover_url= upload_cover_method(cover, team.id, 'team_cover')
             if res == -1:
@@ -661,13 +664,13 @@ def delete_permanently(request):
     project_id=request.POST.get('project_id')
     if not project_id:
         return JsonResponse({'errno': 1, 'msg': "请输入项目id"})
-    elif  project_id==0:
+    elif  project_id=='0':
         team_id=user.current_team_id
         try:
             team=Team.objects.get(id=team_id)
         except Team.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "当前团队不存在"})
-        projects=Project.objects.filter(team=team)
+        projects=Project.objects.filter(team=team,is_deleted=True)
         projects.delete()
         return JsonResponse({'errno': 0, 'msg': "所有项目已删除"})
     else:

@@ -69,7 +69,6 @@ class Document(models.Model):
             'creator': self.user.nickname if self.user and hasattr(self.user, 'nickname') else "公共模板",
             'created_at':(self.created_at.astimezone(shanghai_tz)).strftime('%Y-%m-%d %H:%M:%S'),
             'modified_at':(self.modified_at.astimezone(shanghai_tz)).strftime('%Y-%m-%d %H:%M:%S'),
-            'is_locked':self.is_locked,
             'type':'document'
         }
 
