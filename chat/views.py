@@ -208,19 +208,35 @@ def get_group_members(request,group_id):
     return JsonResponse({'members':data})
 
 
-def get_all_groups_members(request,user_id):
+def get_all_groups_members(request, user_id):
+    # 获取该用户所在的所有小组
     groups = ChatMember.objects.filter(user_id=user_id)
+
+    # 使用集合存储已添加的用户ID
+    added_users = set()
     data = []
+
     for group in groups:
-        members = ChatMember.objects.filter(team_id=group.team_id)
+        # 使用distinct()去重
+        members = ChatMember.objects.filter(team_id=group.team_id).distinct()
+
         for member in members:
+            # 如果该用户ID已在集合中，跳过
+            if member.user_id in added_users:
+                continue
+
+            user_info = User.objects.get(id=member.user_id)
             data.append({
                 'id': member.user_id,
-                'username': User.objects.get(id=member.user_id).username,
-                'nickname': User.objects.get(id=member.user_id).nickname,
-                'avatar_url': User.objects.get(id=member.user_id).avatar_url,
+                'username': user_info.username,
+                'nickname': user_info.nickname,
+                'avatar_url': user_info.avatar_url,
                 'role': member.role,
             })
+
+            # 添加用户ID到集合中
+            added_users.add(member.user_id)
+
     return JsonResponse({'members': data})
 
 
