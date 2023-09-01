@@ -77,6 +77,7 @@ def initial_chat(request,user_id):
                 '_id':str(member.user_id),
                 'username':User.objects.get(id=member.user_id).username,
                 'avatar':User.objects.get(id=member.user_id).avatar_url,
+                'role':member.role,
             })
         try:
             user_team_chat_status = UserTeamChatStatus.objects.get(user_id=user_id, team_id=team_id)
@@ -94,6 +95,7 @@ def initial_chat(request,user_id):
             'index':index,
             'lastMessage':lastMessage,
             'users':users,
+            'type':Group.objects.get(id=team_id).type,
         }
         rooms.append(room_data)
     return JsonResponse({'rooms':rooms})
@@ -253,10 +255,18 @@ def make_group(request):
         data = json.loads(request.body)
         creator_id = data.get('creator_id')
         invitees = data.get('invitees', [])
-        name = data.get('name', 'My New Group Chat')
         description = data.get('description', '')
         cover_url = data.get('url')
 
+        user_ids = invitees + [creator_id]
+        # 查询对应的用户对象，根据invitees中的用户ID
+        user_objects = User.objects.filter(id__in=user_ids)
+
+        # 提取每个用户对象的用户名字
+        user_names_list = [user.username for user in user_objects]
+
+        # 将用户名列表用逗号和空格连接成字符串
+        name= "、".join(user_names_list)
 
         try:
             creator = User.objects.get(pk=creator_id)
@@ -295,17 +305,23 @@ def make_group(request):
                 'username': User.objects.get(id=member.user_id).username,
                 'avatar': User.objects.get(id=member.user_id).avatar_url,
             })
+        data = {
+
+            'roomId': str(group.id),
+            'roomName': group.name,
+            'unreadCount': 0,
+            'avatar': group.cover_url,
+            'index': 0,
+            'lastMessage': '',
+            'users': users,
+        }
+
+        room = [data]
         async_to_sync(channel_layer.group_send)(
             "notification_group",
             {
                 'type': 'new_group_chat',
-                'roomId': str(group.id),
-                'roomName': group.name,
-                'unreadCount':0,
-                'avatar':group.cover_url,
-                'index':0,
-                'lastMessage':'',
-                'users':users,
+                'room': room,
             }
         )
         return JsonResponse({'group_id': group.id})
