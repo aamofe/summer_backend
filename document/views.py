@@ -66,7 +66,7 @@ def view_document(request,token):
     if token.isdigit():
         document_id=token
         try:
-            document=Document.objects.get(id=document_id,is_deleted=False,parent_folder__is_deleted=False)
+            document=Document.objects.get(id=document_id,is_deleted=False,parent_folder__is_deleted=False,is_template=False)
         except Document.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "文档不存在"})
         team_id=document.parent_folder.project.team.id
@@ -87,7 +87,7 @@ def view_document(request,token):
         payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
         document_id=payload.get('document_id')
         try:
-            document=Document.objects.get(id=document_id,is_deleted=False,parent_folder__is_deleted=False)
+            document=Document.objects.get(id=document_id,is_deleted=False,parent_folder__is_deleted=False,is_template=False)
         except Document.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "文档不存在"})
         editable=document.editable
@@ -100,26 +100,26 @@ def get_token(request):
     token = jwt.encode(payload, app_secret, algorithm='HS256')
     return JsonResponse({'errno':0,'msg':'密钥返回成功','token':token})
 
-@validate_all
-def change_lock(request):
-    if request.method!='POST':
-        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
-    document_id=request.POST.get("document_id")
-    type=request.POST.get('type')# + -
-    try :
-        document=Document.objects.get(id=document_id,parent_folder__is_deleted=False)
-    except Document.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "文档不存在"})
-    if type=='+':
-        document.is_locked+=1
-    elif type=='-':
-        if document.is_locked==0:
-            return JsonResponse({'errno': 1, 'msg': "锁为0，不可再减"})
-        document.is_locked-=1
-    else:
-        return JsonResponse({'errno': 1, 'msg': "操作符号错误"})
-    document.save()
-    return JsonResponse({'errno': 0, 'document':document.to_dict(),'msg': "文档上锁状态修改成功"})
+# @validate_all
+# def change_lock(request):
+#     if request.method!='POST':
+#         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
+#     document_id=request.POST.get("document_id")
+#     type=request.POST.get('type')# + -
+#     try :
+#         document=Document.objects.get(id=document_id,parent_folder__is_deleted=False)
+#     except Document.DoesNotExist:
+#         return JsonResponse({'errno': 1, 'msg': "文档不存在"})
+#     if type=='+':
+#         document.is_locked+=1
+#     elif type=='-':
+#         if document.is_locked==0:
+#             return JsonResponse({'errno': 1, 'msg': "锁为0，不可再减"})
+#         document.is_locked-=1
+#     else:
+#         return JsonResponse({'errno': 1, 'msg': "操作符号错误"})
+#     document.save()
+#     return JsonResponse({'errno': 0, 'document':document.to_dict(),'msg': "文档上锁状态修改成功"})
 @validate_login
 def share_prototype(request):
     if request.method!='POST':
@@ -127,7 +127,7 @@ def share_prototype(request):
     prototype_id=request.POST.get('prototype_id')
     visible=request.POST.get('visible')
     try :
-        prototype=Prototype.objects.get(id=prototype_id,is_deleted=False,parent_folder__is_deleted=False)
+        prototype=Prototype.objects.get(id=prototype_id,is_deleted=False,parent_folder__is_deleted=False,is_template=False)
     except Prototype.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "文档不存在"})
     except (ValueError, TypeError):
@@ -154,10 +154,8 @@ def view_prototype(request,token):
     if token.isdigit():
         editable=True
         prototype_id=token
-        print("当前用户 : ",user.id )
-        print("原型id ： ",prototype_id)
         try:
-            prototype = Prototype.objects.get(id=prototype_id, is_deleted=False,parent_folder__is_deleted=False)
+            prototype = Prototype.objects.get(id=prototype_id, is_deleted=False,parent_folder__is_deleted=False,is_template=False)
         except Prototype.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "原型不存在"})
         try:
@@ -219,10 +217,10 @@ def delete(request,):#删除/彻底 一个/多个 文档/原型
     user = request.user
     file_type=request.POST.get('file_type')#原型 文档
     file_id=request.POST.get('file_id') #删除1个
-    # forerver=request.POST.get('forever')#0代表否 1代表是
+    forerver=request.POST.get('forever')#0代表否 1代表是
     if not file_type  or not file_id:
         return JsonResponse({'errno': 1, 'msg': "参数不全"})
-    if not(file_type in {'document','prototype','folder'}) or not file_id.isdigit() :
+    if not(file_type in {'document','prototype','folder'}) or not file_id.isdigit()or not forerver in{'0','1'} :
         return JsonResponse({'errno': 1, 'msg': "参数值错误"})
     if file_type=='folder':
         try:
@@ -233,12 +231,15 @@ def delete(request,):#删除/彻底 一个/多个 文档/原型
             member = Member.objects.get(user=user, team=folder.project.team)
         except Member.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-        if folder.is_deleted:
-            return JsonResponse({'errno': 1, 'msg': "文件夹已被删除"})
+        if forerver=='1':
+            folder.delete()
         else:
-            folder.is_deleted=True
-            folder.deleted_at=timezone.now()
-            folder.save()
+            if folder.is_deleted:
+                return JsonResponse({'errno': 1, 'msg': "文件夹已被删除"})
+            else:
+                folder.is_deleted=True
+                folder.deleted_at=timezone.now()
+                folder.save()
         return JsonResponse({'errno': 0, 'msg': "文件夹删除成功"})
     #我是文档/原型
     if file_type == 'document':
@@ -258,9 +259,12 @@ def delete(request,):#删除/彻底 一个/多个 文档/原型
         member = Member.objects.get(user=user, team=parent_folder.project.team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-    file.is_deleted=True
-    file.deleted_at=timezone.now()
-    file.save()
+    if forerver=='1':
+        file.delete()
+    else:
+        file.is_deleted=True
+        file.deleted_at=timezone.now()
+        file.save()
     return JsonResponse({'errno': 0, 'msg': "删除成功"})
 
 @validate_login
@@ -297,23 +301,22 @@ def save(request):
         except Document.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "文档不存在"})
     else:
-        height=request.POST.get('height')
-        width=request.POST.get('width')
-        if not height or not width:
-            return JsonResponse({'errno': 1, 'msg': "请传入宽高"})
-        try:
-            height = float(height)
-            width=float(width)
-            if height < 0 or width<0:
-                return JsonResponse({'errno': 1, 'msg': "数字必须为非负数"})
-        except ValueError:
-            return JsonResponse({'errno': 1, 'msg': "必须传输数字类型"})
         try :
             file=Prototype.objects.get(id=file_id,is_deleted=False)
         except Prototype.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "原型不存在"})
-        file.height=height
-        file.width=width
+        height=request.POST.get('height')
+        width=request.POST.get('width')
+        if  height and width:
+            try:
+                height = float(height)
+                width=float(width)
+                if height < 0 or width<0:
+                    return JsonResponse({'errno': 1, 'msg': "数字必须为非负数"})
+            except ValueError:
+                return JsonResponse({'errno': 1, 'msg': "必须传输数字类型"})
+            file.height=height
+            file.width=width
     if file.is_template:
         if not file.is_private:
             return JsonResponse({'errno': 1, 'msg': "公有模板不可修改"})
@@ -528,11 +531,12 @@ def delete_permanently(request):
     deleted_prototype.delete()
     return JsonResponse({'errno': 0, 'msg': "已彻底删除"})
 
-#创建模板（网站）
+#创建模板（网站）留着玩
 def create_template(request):
     content = request.POST.get('content')
     title=request.POST.get('title')
     file_type = request.POST.get('file_type')  
+    
     if not content or not title or not file_type in {'prototype','document'}:
         return JsonResponse({'errno': 1, 'msg': "参数不正确"})
     if file_type == 'prototype':
@@ -562,15 +566,25 @@ def save_as_template(request):
     content = request.POST.get('content')
     title=request.POST.get('title')
     file_type = request.POST.get('file_type')  # 'prototype' or 'document'
+    project_id=request.POST.get('project_id')
     if not content or not title or not file_type in {'prototype','document'}:
         return JsonResponse({'errno': 1, 'msg': "参数不正确"})
+    try:
+        project=Project.objects.get(id=project_id)
+    except Project.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "项目不存在"})
+    try :
+        member=Member.objects.get(user=user,team=project.team)
+    except Member.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     if file_type == 'prototype':
         prototype = Prototype.objects.create(
             title=title,
             content=content,
             user=user,
             is_template=True,
-            is_private=True  # Adjust as needed
+            is_private=True, 
+            project=project
         )
         return JsonResponse({'errno': 0, 'msg': "成功保存为模板！", 'template_id': prototype.id})
     else:
@@ -579,7 +593,8 @@ def save_as_template(request):
             content=content,
             user=user,
             is_template=True,
-            is_private=True  # Adjust as needed
+            is_private=True ,
+            project=project
         )
         return JsonResponse({'errno': 0, 'msg': "成功保存为模板！", 'template_id': document.id})
 @validate_login
@@ -587,10 +602,20 @@ def all_template(request):
     if request.method != 'GET':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
     user=request.user
+    project_id=request.POST.get('project_id')
+    try:
+        project=Project.objects.get(id=project_id)
+    except Project.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "项目不存在"})
+    try :
+        member=Member.objects.get(user=user,team=project.team)
+    except Member.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
+    
     document1=Document.objects.filter(is_template=True,is_private=False)#网站的文档模板
-    document2=Document.objects.filter(is_template=True,is_private=True,user=user)#自己的文档模板
+    document2=Document.objects.filter(is_template=True,is_private=True,project=project)#自己的文档模板
     prototype1=Prototype.objects.filter(is_template=True,is_private=False)#网站的原型模板
-    prototype2=Prototype.objects.filter(is_template=True,is_private=True,user=user)#自己的原型模板
+    prototype2=Prototype.objects.filter(is_template=True,is_private=True,project=project)#自己的原型模板
     d1, d2, p1, p2 = [], [], [], []
     for d in document1:
         d1.append(d.to_dict())
@@ -628,28 +653,30 @@ def import_from_template(request):
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "当前用户不属于该团队"})
     #判断项目相关
+    project=parent_folder.project
+    if project.is_deleted:
+        return JsonResponse({'errno': 1, 'msg': "项目已被删除"})
     if file_type == 'prototype':
         try:
             template = Prototype.objects.get(id=file_id, is_template=True)
         except Prototype.DoesNotExist:
-            return JsonResponse({'errno': 1, 'msg': "模板不存在或不可用！"})
-        if template.user is None or template.user!=user:
-            return JsonResponse({'errno': 1, 'msg': "模板不存在或不属于当前用户！"})
+            return JsonResponse({'errno': 1, 'msg': "模板不存在或不可用"})
+        if template.project!=project:
+            return JsonResponse({'errno': 1, 'msg': "模板不存在或不属于当前项目"})
         prototype =Prototype.objects.create(
             title='未命名原型',
             content=template.content,
             parent_folder=parent_folder,
             user=user,
             is_template=False)
-        return JsonResponse({'errno': 0, 'msg': "成功导入模板！", 'prototype':prototype.to_dict()})
-    
-    elif file_type == 'document':
+        return JsonResponse({'errno': 0, 'msg': "成功导入模板", 'prototype':prototype.to_dict()})
+    else:
         try:
             template = Document.objects.get(id=file_id, is_template=True,)
         except Document.DoesNotExist:
-            return JsonResponse({'errno': 1, 'msg': "模板不存在或不可用！"})
-        if  template.user is None or template.user!=user:
-            return JsonResponse({'errno': 1, 'msg': "模板不存在或不属于当前用户！"})
+            return JsonResponse({'errno': 1, 'msg': "模板不存在或不可用"})
+        if template.project!=project:
+            return JsonResponse({'errno': 1, 'msg': "模板不属于当前项目"})
         document =Document.objects.create(
             title='未命名文档',
             content=template.content,
@@ -657,7 +684,5 @@ def import_from_template(request):
             user=user,
             is_template=False)
         return JsonResponse({'errno': 0, 'msg': "成功导入模板！",'document':document.to_dict()})
-    else:
-        return JsonResponse({'errno': 1, 'msg': "不支持的文件类型！"})
 #编辑自己模板
 
