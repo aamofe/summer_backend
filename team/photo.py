@@ -3,6 +3,7 @@ import uuid
 from PIL import Image, ImageDraw, ImageFont
 import os
 import tempfile
+from summer_backend.settings import MEDIA_ROOT
 
 from user.cos_utils import get_cos_client
 
@@ -27,18 +28,14 @@ def upload_cover_method( cover_id, url):
         cover_url = f'https://{bucket_name}.cos.{bucket_region}.myqcloud.com/{cover_key}'
     return cover_url
 def generate_cover(type, text, id):
-    font_path = "../static/font/msyh.ttc"  # 请根据你的系统中的路径进行替换
-
-
-
+    font_path =  os.path.join(MEDIA_ROOT,"msyh.ttc" )  # 请根据你的系统中的路径进行替换
     if type==1:
         font_size = 80  # 调整字体大小
-        background_path = "../static/img/background.png"  # 请替换为你的背景图片路径
+        background_path = os.path.join(MEDIA_ROOT, 'background.png')  # 请替换为你的背景图片路径
         image_width, image_height = 1132, 576
         background = Image.open(background_path)
         if '\u4e00' <= text[0] <= '\u9fff':
             text = ' '.join([text[i:i + 1] for i in range(0, len(text))])
-
     else:
         font_size = 750 # 调整字体大小
         image_width, image_height = 960,960
@@ -87,4 +84,4 @@ def generate_cover(type, text, id):
 # ]
 #
 # for i in range(27):
-generate_cover(1,"ll",36)
+# generate_cover(1,"ll",36)

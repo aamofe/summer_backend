@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-6mh&@c10&4qs+r7qav(r+jc4gh9_@+wq41usy8lgd73#x1j-q$
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+MEDIA_ROOT='/home/summer/summer_backend/team/'
 
 # Application definition
 
