@@ -629,9 +629,9 @@ def all_template(request):
         'errno':0,
         'msg':'返回模板成功',
         'document_public':d1,
-        'document_personal':d2,
+        'document_private':d2,
         'prototype_public':p1,
-        'prototype_personal':p2,
+        'prototype_private':p2,
     })
 #从模板导入
 @validate_login
