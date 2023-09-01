@@ -194,7 +194,7 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-
+app_secret='rfW4GxtPUZ5SQZ0TGqk1lQY9yoKrSO9Ei558kEkPEiKB4pWop9jARIO4a7EkBlft'
 # SECRET_KEY="keejk2ieodijejkn"
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.qq.com'

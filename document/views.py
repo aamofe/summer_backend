@@ -150,6 +150,7 @@ def view_prototype(request,token):
         editable=True
         prototype_id=token
         print("当前用户 : ",user.id )
+        print("原型id ： ",prototype_id)
         try:
             prototype = Prototype.objects.get(id=prototype_id, is_deleted=False,parent_folder__is_deleted=False)
         except Prototype.DoesNotExist:
@@ -160,6 +161,7 @@ def view_prototype(request,token):
             return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
         prototypes = prototype.to_dict()
         prototypes['editable'] = editable
+        prototypes['is_template']=prototype.is_template
     else:
         editable=False
         payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
@@ -167,12 +169,12 @@ def view_prototype(request,token):
         if not prototype_id:
             return JsonResponse({'errno': 1, 'msg': "解密失败"})
         try:
-            prototype = Prototype.objects.get(id=prototype_id, is_deleted=False,parent_folder__is_deleted=False)
+            prototype = Prototype.objects.get(id=prototype_id, is_deleted=False,parent_folder__is_deleted=False,is_template=False)
         except Prototype.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "原型不存在"})
         if not prototype.visible:
             return JsonResponse({'errno': 1, 'msg': "链接已失效"})
-        prototype_list=Prototype.objects.filter(parent_folder__project= prototype.parent_folder.project)
+        prototype_list=Prototype.objects.filter(parent_folder__project= prototype.parent_folder.project,is_template=False)
         prototypes=[prototype.to_dict() for prototype in prototype_list]
         prototypes.append({'editable':editable})
     return JsonResponse({'errno': 0,'prototype':prototypes, 'msg': "获取原型成功"})
@@ -292,6 +294,8 @@ def save(request):
     else:
         height=request.POST.get('height')
         width=request.POST.get('width')
+        if not height or not width:
+            return JsonResponse({'errno': 1, 'msg': "请传入宽高"})
         try:
             height = float(height)
             width=float(width)
@@ -305,8 +309,16 @@ def save(request):
             return JsonResponse({'errno': 1, 'msg': "原型不存在"})
         file.height=height
         file.width=width
-    if not file.is_private:
-        return JsonResponse({'errno': 1, 'msg': "公有模板不可修改"})
+    if file.is_template:
+        if not file.is_private:
+            return JsonResponse({'errno': 1, 'msg': "公有模板不可修改"})
+        else:
+            if title:
+                file.title=title
+            if content:
+                file.content=content
+            file.save()
+            return JsonResponse({'errno': 1, 'msg': "模板已修改"})
     parent_folder=file.parent_folder
     if parent_folder.is_deleted:
         return JsonResponse({'errno': 1, 'msg': "文件夹已被删除"})
