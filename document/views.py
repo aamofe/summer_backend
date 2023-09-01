@@ -244,6 +244,8 @@ def delete(request,):#删除/彻底 一个/多个 文档/原型
             file = Prototype.objects.get(id=file_id,is_deleted=False,parent_folder__is_deleted=False)
         except Project.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "原型不存在"})
+    if not file.is_private:
+        return JsonResponse({'errno': 1, 'msg': "公有模板不可删除"})
     parent_folder=file.parent_folder
     try:
         member = Member.objects.get(user=user, team=parent_folder.project.team)
@@ -278,6 +280,8 @@ def save(request):
             file=Prototype.objects.get(id=file_id,is_deleted=False)
         except Prototype.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "原型不存在"})
+    if not file.is_private:
+        return JsonResponse({'errno': 1, 'msg': "公有模板不可修改"})
     parent_folder=file.parent_folder
     if parent_folder.is_deleted:
         return JsonResponse({'errno': 1, 'msg': "文件夹已被删除"})
@@ -285,7 +289,6 @@ def save(request):
         member = Member.objects.get(user=user, team=parent_folder.project.team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-    
     if title:
         file.title=title
     if content:
@@ -445,22 +448,6 @@ def restore(request):
             return JsonResponse({'errno': 1, 'msg': "父文件夹不存在"})
     return JsonResponse({'errno': 0, 'msg': "文档恢复成功"})
 
-def rename_folder(request):
-    if request.method != 'POST':
-        return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
-    user = request.user
-    folder_id=request.POST.get('folder_id')
-    name=request.POST.get('name')
-    try:
-        folder=Folder.objects.get(id=folder_id)
-    except Folder.DoesNotExist:
-        return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
-    if folder.parent_folder is None:
-        return JsonResponse({'errno': 1, 'msg': "顶级文件夹不可改名"})
-    folder.name=name
-    folder.save()
-    return JsonResponse({'errno': 0, 'msg': "名称修改成功"})
-
 @validate_login
 def upload(request):
     if request.method != 'POST':
@@ -508,7 +495,7 @@ def create_template(request):
             title=title,
             content=content,
             is_template=True,
-            is_private=True  # Adjust as needed
+            is_private=False  # Adjust as needed
         )
         return JsonResponse({'errno': 0, 'msg': "成功保存为模板！", 'template_id': prototype.id})
     elif file_type == 'document':
@@ -516,7 +503,7 @@ def create_template(request):
             title=title,
             content=content,
             is_template=True,
-            is_private=True  # Adjust as needed
+            is_private=False  # Adjust as needed
         )
         return JsonResponse({'errno': 0, 'msg': "成功保存为模板！", 'template_id': document.id})
     else:
@@ -559,7 +546,7 @@ def all_template(request):
     document2=Document.objects.filter(is_template=True,is_private=True,user=user)#自己的文档模板
     prototype1=Prototype.objects.filter(is_template=True,is_private=False)#网站的原型模板
     prototype2=Prototype.objects.filter(is_template=True,is_private=True,user=user)#自己的原型模板
-    d1=[],d2=[],p1=[],p2=[]
+    d1, d2, p1, p2 = [], [], [], []
     for d in document1:
         d1.append(d.to_dict())
     for d in document2:
@@ -601,12 +588,13 @@ def import_from_template(request):
             template = Prototype.objects.get(id=file_id, is_template=True)
         except Prototype.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "模板不存在或不可用！"})
-        if not template.user is None or template.user!=user:
+        if template.user is None or template.user!=user:
             return JsonResponse({'errno': 1, 'msg': "模板不存在或不属于当前用户！"})
         prototype =Prototype.objects.create(
             title='未命名原型',
             content=template.content,
             parent_folder=parent_folder,
+            user=user,
             is_template=False)
         return JsonResponse({'errno': 0, 'msg': "成功导入模板！", 'prototype':prototype.to_dict()})
     
@@ -615,22 +603,16 @@ def import_from_template(request):
             template = Document.objects.get(id=file_id, is_template=True,)
         except Document.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "模板不存在或不可用！"})
-        if not template.user is None or template.user!=user:
+        if  template.user is None or template.user!=user:
             return JsonResponse({'errno': 1, 'msg': "模板不存在或不属于当前用户！"})
         document =Document.objects.create(
             title='未命名文档',
             content=template.content,
             parent_folder=parent_folder,
+            user=user,
             is_template=False)
         return JsonResponse({'errno': 0, 'msg': "成功导入模板！",'document':document.to_dict()})
     else:
         return JsonResponse({'errno': 1, 'msg': "不支持的文件类型！"})
 #编辑自己模板
 
-@validate_login
-def save_template(request):
-    if request.method != 'POST':
-        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
-    user = request.user
-    file_id = request.POST.get('file_id')#模板id
-    file_type = request.POST.get('file_type')  # 模板类型
