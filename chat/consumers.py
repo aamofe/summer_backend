@@ -87,6 +87,15 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 }
             )
             return
+        elif 'delete_all' in text_data_json:
+            await self.delete_group()
+            await self.channel_layer.group_send(
+                'notification_group',
+                {
+                    'type': 'chat_delete_all',
+                    'roomID':self.team_id,
+                }
+            )
         elif 'clean' in text_data_json:
             await self.mark_messages_as_read(self.user_id)
         else:
@@ -458,7 +467,14 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         UserTeamChatStatus.objects.filter(user_id=user_id, team_id=self.team_id).delete()
         ChatMember.objects.filter(user_id=user_id, team_id=self.team_id).delete()
         print('删除用户成功')
-
+    @database_sync_to_async
+    def delete_group(self):
+        UserChatChannel.objects.filter(team_id=self.team_id).delete()
+        UserTeamChatStatus.objects.filter(team_id=self.team_id).delete()
+        ChatMember.objects.filter(team_id=self.team_id).delete()
+        ChatMessage.objects.filter(team_id=self.team_id).delete()
+        Group.objects.filter(id=self.team_id).delete()
+        print('删除团队成功')
 
 
 class NotificationConsumer(AsyncWebsocketConsumer):
@@ -540,7 +556,13 @@ class NotificationConsumer(AsyncWebsocketConsumer):
             'type': 'new_group_chat',
             'room': room,
         }))
-
+    async def chat_delete_all(self, event):
+        roomID = event['roomID']
+        # 实际发送消息给WebSocket客户端
+        await self.send(text_data=json.dumps({
+            'type': 'chat_delete_all',
+            'roomID': roomID,
+        }))
     async def send_notification(self, event):
         # 实际发送消息给WebSocket客户端
         await self.send(text_data=json.dumps({
