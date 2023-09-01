@@ -12,7 +12,7 @@ import jwt
 from django.contrib.auth.models import AnonymousUser
 from document.models import Document, Prototype, History, Folder 
 from summer_backend import settings
-from summer_backend.settings import SECRET_KEY
+from summer_backend.settings import SECRET_KEY,app_secret
 from team.models import Team, Member, Project
 from user.authentication import validate_login, validate_all
 from user.cos_utils import get_cos_client
@@ -94,6 +94,11 @@ def view_document(request,token):
     dict=document.to_dict()
     dict['editable']=editable
     return JsonResponse({'errno': 0, 'msg': "查看成功",'document':dict})
+
+def get_token(request):
+    payload = {}
+    token = jwt.encode(payload, app_secret, algorithm='HS256')
+    return JsonResponse({'errno':0,'msg':'密钥返回成功','token':token})
 
 @validate_all
 def change_lock(request):
