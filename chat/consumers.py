@@ -3,11 +3,12 @@ from datetime import datetime
 import json
 import re
 
+from channels.layers import get_channel_layer
 from django.db.models import F, Max
 from django.utils import timezone
 from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
-from asgiref.sync import sync_to_async
+from asgiref.sync import sync_to_async, async_to_sync
 from chat.models import ChatMessage, Notice, UserTeamChatStatus, UserChatChannel, UserNoticeChannel, File
 from team.models import Member
 from user.models import User
@@ -101,21 +102,33 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                     'message': await self.to_dict(chatMessage),
                 }
             )
+            await self.notify(self.user_id)
         elif 'forward_single' in text_data_json:
             message_ids = text_data_json['message_ids']
             group_id = text_data_json.get('group_id', '')
             group_name = f"chat_{group_id}"
             replyMessage = text_data_json.get('replyMessage', {})
-            await self.handle_foward_single(message_ids,group_id)
-            await self.channel_layer.group_send(
-                group_name,
-                {
-                    'type': 'chat_message',
-                    'team_id': group_id,
-                    'message': await self.to_dict(await self.get_latest_message()),
-                }
-            )
-
+            for message_id in message_ids:
+                chatMessage = await self.handle_foward_single(message_id, group_id)
+                await self.channel_layer.group_send(
+                    group_name,
+                    {
+                        'type': 'chat_message',
+                        'user_id': self.user_id,
+                        'team_id': group_id,
+                        'message_id': await self.get_latest_message_id(),
+                        'message': '群聊的聊天记录',
+                        'files': await self.get_files(chatMessage),
+                        'date': chatMessage.date,
+                        'replyMessage': chatMessage.reply_message,
+                        'username': await self.get_username(chatMessage.user_id),
+                        'avatar_url': await self.get_avatar_url(chatMessage.user_id),
+                        'time': await self.get_time(),
+                    }
+                )
+                print('single before')
+                await self.notify(self.user_id)
+                print('single after')
         elif 'clean' in text_data_json:
             await self.mark_messages_as_read(self.user_id)
         else:
@@ -182,7 +195,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def get_recent_messages(self):
         #获取最近10条
-        return ChatMessage.objects.filter(team_id=self.team_id).order_by('timestamp')[:10]
+        return ChatMessage.objects.filter(team_id=self.team_id).order_by('-timestamp')[:10]
 
     async def build_message_array(self):
         recent_messages = await self.get_recent_messages()
@@ -440,6 +453,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         return UserTeamChatStatus.objects.get(user_id=user_id, team_id=self.team_id).index
     async def notify_users_of_unread_count(self, user_ids):
         user_ids_list = await self.get_user_ids(user_ids)
+        print(user_ids_list)
         for uid in user_ids_list:
             channel_name = await self.get_channel_name_for_user(uid, self.team_id)
             if not channel_name:
@@ -494,6 +508,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     async def notify(self, user_id):
 
         user_ids = await self.increment_unread_count_and_index_in_db(user_id)
+        print('notify', user_ids)
         await self.notify_users_of_unread_count(user_ids)
 
     @database_sync_to_async
@@ -583,18 +598,19 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     def to_dict(self, chatMessage):
         return chatMessage.to_dict(5) if chatMessage else None
     @database_sync_to_async
-    def handle_foward_single(self, message_ids, group_id):
+    def handle_foward_single(self, message_id, group_id):
         #获取message_ids中的每一个id，然后复制一遍，但修改其team_id为group_id存进数据库
-        for message_id in message_ids:
-            message=ChatMessage.objects.get(id=message_id)
-            new_message=ChatMessage.objects.create(team_id=group_id, message=message.message, user_id=message.user_id,
+        message=ChatMessage.objects.get(id=message_id)
+        new_message=ChatMessage.objects.create(team_id=group_id, message=message.message, user_id=message.user_id,
                                    reply_message=message.reply_message, date=message.date,files=message.files)
-            new_message.save()
-            if message.files:
-                new_message.files.chat_message=new_message
-                new_message.files.save()
-            new_message.save()
-            #将消息通过群聊转发发给群聊所有人
+        new_message.save()
+        if message.files:
+            new_message.files.chat_message=new_message
+            new_message.files.save()
+        new_message.save()
+        return new_message
+
+
 
 
 
@@ -620,42 +636,38 @@ class NotificationConsumer(AsyncWebsocketConsumer):
             if data['range'] == 'all':
                 roomID=data['roomID']
                 # 广播消息给所有人
-                await self.channel_layer.group_send("notification_group", {
-                    "type": "chat_notice",
-                    "url": data['url'],
-                    "roomID": roomID
-                })
                 await self.upload_all_chat_notice(data['url'], roomID)
             elif data['range'] == 'individual':
                 # 发送消息给指定用户
                 user_id = data['user_id']  # 假设传来的数据里有目标用户的ID
+                url=data['url']
+                roomID=data['roomID']
+                notice_id=await self.upload_chat_notice(url, roomID, user_id)
                 channel_name = await self.get_channel_name_for_user(user_id)
                 if channel_name:
                 # 用channel_name发送消息给指定用户
                     await self.channel_layer.send(channel_name, {
                         "type": "chat_notice",
-                        "url": data['url'],
-                        "roomID": data['roomID']
+                        "url": url,
+                        "roomID": roomID,
+                        "is_read": False,
+                        "id":notice_id,
                     })
-                await self.upload_chat_notice(data['url'], data['roomID'],user_id)
+
         elif data['type'] == 'file':
             user_id = data['user_id']  # 假设传来的数据里有目标用户的ID
             file_id = data['file_id']
+            url=data['url']
+            notice_id = await self.upload_file_notice(url, file_id, user_id)
             channel_name = await self.get_channel_name_for_user(user_id)
             if channel_name:
                 # 用channel_name发送消息给指定用户
                 await self.channel_layer.send(channel_name, {
                     "type": "file_notice",
-                    "url": data['url'],
+                    "url": url,
+                    "is_read": False,
+                    "id": notice_id,
                 })
-            await self.upload_file_notice(data['url'], file_id,user_id)
-
-    @database_sync_to_async
-    def upload_all_chat_notice(self, url,roomID):
-        members=Member.objects.filter(team_id=roomID)
-        for member in members:
-            Notice.objects.create(receiver_id=member.user_id, notice_type='chat_mention', url=url,
-                                  associated_resource_id=roomID)
 
     @database_sync_to_async
     def get_channel_name_for_user(self, user_id):
@@ -664,18 +676,45 @@ class NotificationConsumer(AsyncWebsocketConsumer):
             return channel.channel_name
         else:
             return None
+
+    @database_sync_to_async
+    def upload_all_chat_notice(self, url,roomID):
+        members=Member.objects.filter(team_id=roomID)
+
+        for member in members:
+            print(member.user_id)
+            notice=Notice.objects.create(receiver_id=member.user_id, notice_type='chat_mention', url=url,
+                                  associated_resource_id=roomID)
+            try:
+                channel_name = self.get_channel_name_for_user(member.user_id)
+                async_to_sync(self.channel_layer.group_send)(channel_name, {
+                    "type": "chat_notice",
+                    "url": url,
+                    "roomID": roomID,
+                    "is_read": False,
+                    "id":notice.id,
+                })
+            except:
+                print('没有找到channel_name')
+
+
+
     async def chat_notice(self, event):
         # 实际发送消息给WebSocket客户端
         await self.send(text_data=json.dumps({
             'type': 'chat_notice',
             'url': event["url"],
-            'roomID': event["roomID"]
+            'roomID': event["roomID"],
+            'is_read': event["is_read"],
+            'id': event["id"],
         }))
     async def file_notice(self, event):
         # 实际发送消息给WebSocket客户端
         await self.send(text_data=json.dumps({
             'type': 'file_notice',
             'url': event["url"],
+            'is_read': event["is_read"],
+            'id': event["id"],
         }))
 
     async def new_group_chat(self, event):
@@ -710,12 +749,14 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         UserNoticeChannel.objects.update_or_create(user_id=self.user_id, defaults={'channel_name': self.channel_name})
     @database_sync_to_async
     def upload_chat_notice(self, url, roomID,user_id):
-        Notice.objects.create(receiver_id=user_id, notice_type='chat_mention', url=url,
+        notice=Notice.objects.create(receiver_id=user_id, notice_type='chat_mention', url=url,
                               associated_resource_id=roomID)
+        return notice.id
     @database_sync_to_async
     def upload_file_notice(self, url, file_id,user_id):
-        Notice.objects.create(receiver_id=user_id, notice_type='document_mention', url=url,
+        notice=Notice.objects.create(receiver_id=user_id, notice_type='document_mention', url=url,
                               associated_resource_id=file_id)
+        return notice.id
 
 
 
