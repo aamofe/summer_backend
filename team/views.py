@@ -600,7 +600,10 @@ def copy(request):
     project1.id = None
     project1.name = f"{project.name} (Copy)"  # 修改名称，以免重名
     project1.save()
-    
+
+    url=generate_cover(1,project1.name,project1.id)
+    project1.cover_url=url
+    project1.save()
     try:
         folder = Folder.objects.get(parent_folder=None, project=project)
     except Folder.DoesNotExist:
@@ -646,14 +649,12 @@ def copy(request):
         p1.parent_folder = folder1
         p1.id = None
         p1.save()
-
+    projects=project1.to_dict()
+    projects['folder']=folder1.id
     return JsonResponse({
         'errno': 0,
         'msg': '复制成功',
-        'project1': project1.to_dict(),
-        'folder1': folder1.to_dict(),
-        'project': project.to_dict(),
-        'folder': folder.to_dict(),
+        'project':projects,
     })
 
 @validate_login
