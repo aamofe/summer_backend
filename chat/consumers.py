@@ -118,6 +118,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 self.room_group_name,
                 {
                     'type': 'chat_message',
+                    'message_id': await self.get_latest_message_id(),
                     'message': message,
                     'files': file_data_item,
                     'date': date,
@@ -157,6 +158,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
 
         for msg in recent_messages:
             message_data = {
+                'message_id': msg.id,
                 'message': msg.message,
                 'user_id': str(msg.user_id),
                 'username': await self.get_username(msg.user_id),
@@ -164,7 +166,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 'date': msg.date,
                 'replyMessage': msg.reply_message,
                 'avatar_url': await self.get_avatar_url(msg.user_id),
-                'time': msg.timestamp.strftime('%Y-%m-%d %H:%M:%S')
+                'time': msg.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
             }
             messages_array.append(message_data)
 
@@ -179,11 +181,13 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         files = event.get('files', [])  # 获取files字段，如果没有则默认为空列表
         date = event.get('date', '')
         replyMessage = event.get('replyMessage', None)  #
+        message_id = event.get('message_id', None)
         print(replyMessage)
         # 发送消息给 WebSocket
         await self.send(text_data=json.dumps({
             'type': 'chat_message',
             'team_id': self.team_id,
+            'message_id': message_id,
             'user_id': user_id,
             'date': date,
             'message': message,
@@ -504,6 +508,9 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         ChatMember.objects.create(user_id=invitee_id, team_id=self.team_id)
         UserTeamChatStatus.objects.create(user_id=invitee_id, team_id=self.team_id, unread_count=0, index=0)
         print('添加用户成功')
+    @database_sync_to_async
+    def get_latest_message_id(self):
+        return ChatMessage.objects.filter(team_id=self.team_id).order_by('-timestamp').first().id
 
 
 class NotificationConsumer(AsyncWebsocketConsumer):

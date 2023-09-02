@@ -23,4 +23,5 @@ urlpatterns = [
 
     path('make_group',views.make_group),
     path('add_group_member',views.add_group_member),
+    path('make_private_chat',views.make_private_chat)
 ]

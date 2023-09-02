@@ -76,7 +76,11 @@ def initial_chat(request,user_id):
                 'timestamp':last_message.timestamp.strftime('%Y/%m/%d/%H:%M'),
             }
         users = []
+        creator_id = ''
         for member in members:
+            #记录角色为CR的用户
+            if member.role == 'CR':
+                creator_id = member.user_id
             users.append({
                 '_id':str(member.user_id),
                 'username':User.objects.get(id=member.user_id).username,
@@ -89,18 +93,37 @@ def initial_chat(request,user_id):
             index=user_team_chat_status.index
         except UserTeamChatStatus.DoesNotExist:
             UserTeamChatStatus.objects.create(user_id=user_id, team_id=team_id, unread_count=0, index=0)
+        group=Group.objects.get(id=team_id)
+        if group.type=='private':
+            if user_id == group.user1_id:
+                avatar=group.user2.avatar_url
+            else:
+                avatar=group.user1.avatar_url
+            room_data={
+                'roomId':str(team_id),
+                'roomName':group.name,
+                'unreadCount':unread_count,
+                'avatar':avatar,
+                'index':index,
+                'creator_id':creator_id,
+                'lastMessage':lastMessage,
+                'users':users,
+                'type':'private',
+            }
+        else:
+            room_data={
+                'roomId':str(team_id),
+                'roomName':group.name,
+                'unreadCount':unread_count,
+                'avatar':group.cover_url,
+                'index':index,
+                'creator_id':creator_id,
+                'lastMessage':lastMessage,
+                'users':users,
+                'type':group.type,
+            }
 
 
-        room_data={
-            'roomId':str(team_id),
-            'roomName':Group.objects.get(id=team_id).name,
-            'unreadCount':unread_count,
-            'avatar':Group.objects.get(id=team_id).cover_url,
-            'index':index,
-            'lastMessage':lastMessage,
-            'users':users,
-            'type':Group.objects.get(id=team_id).type,
-        }
         rooms.append(room_data)
     return JsonResponse({'rooms':rooms})
 
@@ -316,8 +339,10 @@ def make_group(request):
             'unreadCount': 0,
             'avatar': group.cover_url,
             'index': 0,
+            'creator_id': creator_id,
             'lastMessage': '',
             'users': users,
+            'type': 'group',
         }
 
         room = [data]
@@ -370,8 +395,10 @@ def add_group_member(request):
             'unreadCount': 0,
             'avatar': group.cover_url,
             'index': 0,
+            'creator_id': group.user_id,
             'lastMessage': '',
             'users': users,
+            'type': 'group',
         }
         room = [data]
 
@@ -407,3 +434,92 @@ def add_group_member(request):
 
     else:
         return JsonResponse({"error": "Invalid request method"}, status=400)
+
+
+def make_private_chat(request):
+    if request.method == 'POST':
+        data = json.loads(request.body)
+        creator_id = data.get('creator_id')
+        invitee_id = data.get('invitee_id')
+
+        try :
+            creator = User.objects.get(pk=creator_id)
+            invitee = User.objects.get(pk=invitee_id)
+        except User.DoesNotExist:
+            return JsonResponse({"error": "Creator or invitee not found"}, status=400)
+
+
+        # 创建私聊群组
+        group = Group(
+            name='',
+            user=creator,
+            description='',
+            cover_url='',
+            type='private',
+            user1=creator,
+            user2=invitee,
+        )
+
+        group.save()
+        ChatMember(user=creator, team=group, role='MB').save()
+        ChatMember(user=invitee, team=group, role='MB').save()
+        UserTeamChatStatus(user=creator, team=group, unread_count=0, index=0).save()
+        UserTeamChatStatus(user=invitee, team=group, unread_count=0, index=0).save()
+
+        users = []
+        users.append({
+            '_id': str(creator.id),
+            'username': creator.username,
+            'avatar': creator.avatar_url,
+        })
+        users.append({
+            '_id': str(invitee.id),
+            'username': invitee.username,
+            'avatar': invitee.avatar_url,
+        })
+
+        data1 = {
+            'roomId': str(group.id),
+            'roomName': invitee.username,
+            'unreadCount': 0,
+            'avatar': invitee.avatar_url,
+            'index': 0,
+            'lastMessage': '',
+            'users': users,
+            'type': 'private',
+        }
+        data2 = {
+            'roomId': str(group.id),
+            'roomName': creator.username,
+            'unreadCount': 0,
+            'avatar': creator.avatar_url,
+            'index': 0,
+            'lastMessage': '',
+            'users': users,
+            'type': 'private',
+        }
+        channel_name_1=get_channel_name(creator_id)
+        channel_name_2=get_channel_name(invitee_id)
+
+        channel_layer = get_channel_layer()
+        async_to_sync(channel_layer.send)(
+            channel_name_1,
+            {
+                'type': 'new_group_chat',
+                'room': [data1],
+            }
+        )
+        async_to_sync(channel_layer.send)(
+            channel_name_2,
+            {
+                'type': 'new_group_chat',
+                'room': [data2],
+            }
+        )
+
+        return JsonResponse({'group_id': group.id})
+
+
+
+
+
