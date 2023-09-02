@@ -609,6 +609,7 @@ def copy(request):
     folder1.project = project1
     folder1.parent_folder = None  # 更新为新项目的根文件夹
     folder1.id = None
+    folder1.name=project1.name
     folder1.save()
     
     for f in Folder.objects.filter(parent_folder=folder):
