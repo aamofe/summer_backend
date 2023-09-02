@@ -170,10 +170,12 @@ def team_name(request,token):
     return JsonResponse({"errno":0,'invite_info':invite_info,'msg':'解析团队信息成功'})
 @validate_login
 def accept_invitation(request,token):
+    print('啊啊啊啊接收邀请')
     if request.method!="POST":
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     payload = jwt.decode(token, SECRET_KEY, algorithms=['HS256'])
     team_id = payload.get('team_id')
+    print('team_id : ',team_id)
     try:
         team = Team.objects.get(id=team_id)
     except Team.DoesNotExist:
@@ -184,13 +186,17 @@ def accept_invitation(request,token):
         group=Group.objects.create(name=team.name, user=team.user,actual_team=team.id,type='team')
     user=request.user
     try:
+        print('已加入')
         member=Member.objects.get(team=team,user=user)
+        print('已加入')
         try:
             chat_member=ChatMember.objects.get(team=group,user=user)
         except ChatMember.DoesNotExist:
             chat_member=ChatMember.objects.create(user=user,team=group)
+        print('已加入')
         return JsonResponse({'errno': 0, 'msg': "您已加入该团队"})
     except Member.DoesNotExist:
+        print("加入成功！")
         member = Member.objects.create(user=user, team=team)
         chat_member=ChatMember.objects.create(user=user,team=group)
         return JsonResponse({'errno': 0, 'msg': "加入成功"})
