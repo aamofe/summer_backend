@@ -26,5 +26,6 @@ class User(models.Model):
             'nickname':self.nickname,
             'avatar_url':self.avatar_url,
             'email':self.email,
+
         }
 
