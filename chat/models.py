@@ -115,6 +115,7 @@ class Group(models.Model):
             'name': self.name,
             'created_at':self.created_at,
             'creator':self.user.username,
+            'cover_url':self.cover_url,
         }
 class ChatMember(models.Model):
     CREATOR = 'CR'

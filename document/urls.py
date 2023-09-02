@@ -24,5 +24,6 @@ urlpatterns = [
     path('save_as_template/',views.save_as_template),
     path('all_template/',views.all_template),
     path('import_from_template/',views.import_from_template),
-    path('get_token/',views.get_token)
+    path('get_token/',views.get_token),
+    path('create_template/',views.create_template)
 ]

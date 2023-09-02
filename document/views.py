@@ -29,8 +29,7 @@ def share_document(request):
         return JsonResponse({'errno': 1, 'msg': "文档不存在"})
     payload = {"document_id":document_id}
     token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-    url="http://www.aamoef.top/tiptap/"+token+'/'
-    return JsonResponse({'errno':0,'data':{'url':url}})
+    return JsonResponse({'errno':0,'data':{'token':token}})
 
 @validate_login
 def update_document_permisson(request):
@@ -664,7 +663,7 @@ def import_from_template(request):
             parent_folder=parent_folder,
             user=user,
             is_template=False)
-        return JsonResponse({'errno': 0, 'msg': "成功导入模板", 'prototype':prototype.to_dict()})
+        return JsonResponse({'errno': 0, 'msg': "成功导入模板", 'prototype':prototype.to_dict("name")})
     else:
         try:
             template = Document.objects.get(id=file_id, is_template=True,)
@@ -678,6 +677,6 @@ def import_from_template(request):
             parent_folder=parent_folder,
             user=user,
             is_template=False)
-        return JsonResponse({'errno': 0, 'msg': "成功导入模板！",'document':document.to_dict()})
+        return JsonResponse({'errno': 0, 'msg': "成功导入模板！",'document':document.to_dict("name")})
 #编辑自己模板
 

@@ -6,6 +6,7 @@ from django.http import JsonResponse
 
 from chat.models import UserTeamChatStatus, ChatMessage, Notice
 from chat.models import Group, ChatMember,UserNoticeChannel,UserChatChannel
+from team.photo import generate_cover
 from user.cos_utils import get_cos_client
 from user.models import User
 import uuid
@@ -283,7 +284,7 @@ def make_group(request):
         creator_id = data.get('creator_id')
         invitees = data.get('invitees', [])
         description = data.get('description', '')
-        cover_url = data.get('url')
+        # cover_url = data.get('url')
 
         user_ids = invitees + [creator_id]
         # 查询对应的用户对象，根据invitees中的用户ID
@@ -291,22 +292,25 @@ def make_group(request):
 
         # 提取每个用户对象的用户名字
         user_names_list = [user.username for user in user_objects]
-
         # 将用户名列表用逗号和空格连接成字符串
         name= "、".join(user_names_list)
+
+        first_characters = [name[0] for name in user_names_list]
+        text = "、".join(first_characters)
 
         try:
             creator = User.objects.get(pk=creator_id)
         except User.DoesNotExist:
             return JsonResponse({"error": "Creator not found"}, status=400)
-
         group = Group(
             name=name,
             user=creator,
             description=description,
-            cover_url=cover_url,
             type='group'
         )
+        group.save()
+        cover_url = generate_cover(3, text, group.id)
+        group.cover_url=cover_url
         group.save()
 
         ChatMember(user=creator, team=group, role='CR').save()
@@ -353,7 +357,7 @@ def make_group(request):
                 'room': room,
             }
         )
-        return JsonResponse({'group_id': group.id})
+        return JsonResponse({'group': group.to_dict()})
 
     else:
         return JsonResponse({"error": "Invalid request method"}, status=400)
