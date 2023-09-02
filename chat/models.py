@@ -13,6 +13,7 @@ class ChatMessage(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     date = models.TextField(default=None, blank=True, null=True)
     forwarded_from = models.ManyToManyField("self", blank=True)
+    is_forwarded = models.BooleanField(default=False)
 
 
 class Notice(models.Model):

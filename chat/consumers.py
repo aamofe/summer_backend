@@ -85,6 +85,9 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                     'roomID':self.team_id,
                 }
             )
+        elif 'forward_all'in text_data_json:
+            message_ids = text_data_json['message_ids']
+            await self.forward_messages_as_combined(message_ids)
         elif 'clean' in text_data_json:
             await self.mark_messages_as_read(self.user_id)
         else:
@@ -411,7 +414,27 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 'team_name': await self.get_team_name(self.team_id),
                 'cover_url': await self.get_cover_url(self.team_id),
             })
+    @database_sync_to_async
+    def forward_messages_as_combined(self, message_ids):
+        # 获取所有要合并的消息
+        messages = ChatMessage.objects.filter(id__in=message_ids)
 
+        # 创建新的内容，可能包括每个原始消息的发送者、内容和头像
+        new_content = ""
+        for message in messages:
+            username=User.objects.get(id=message.user_id).username
+            new_content += f"{username}: {message.message}\n\n"
+
+        # 创建新消息
+        new_message = ChatMessage(user_id=self.user_id, message=new_content, is_forwarded=True, team_id=self.team_id,reply_message={},date=None,files=None)
+        new_message.save()
+
+        # 添加被合并的消息到forwarded_from字段
+        for message in messages:
+            new_message.forwarded_from.add(message)
+        print('合并消息成功',new_message)
+
+        return new_message
 
     @database_sync_to_async
     def create_status(self, user_id, team_id):
