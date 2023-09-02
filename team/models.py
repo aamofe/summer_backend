@@ -28,7 +28,7 @@ class Member(models.Model):
     ROLE_CHOICES = (
         (CREATOR, '创建者'),
         (MANAGER, '管理者'),
-        (MEMBER, '普通成员'),
+        (MEMBER, '协作者'),
     )
     role = models.CharField(max_length=2,choices=ROLE_CHOICES,default=MEMBER,)
     user=models.ForeignKey(User,verbose_name="成员",on_delete=models.CASCADE,related_name="team_team_user")
