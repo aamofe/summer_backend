@@ -512,7 +512,7 @@ def delete_permanently(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
-    project_id = request.GET.get('project_id')
+    project_id = request.POST.get('project_id')
     try:
         project = Project.objects.get(id=project_id)
     except Project.DoesNotExist:
