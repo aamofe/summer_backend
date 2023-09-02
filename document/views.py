@@ -56,7 +56,7 @@ def update_document_permisson(request):
         return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
     document.editable=True if editable==1 else False
     document.save()
-    return JsonResponse({'errno': 0, 'msg': "修改权限成功"})
+    return JsonResponse({'errno': 0, 'msg': "修改权限成功",'editable':document.editable})
 @validate_all
 def view_document(request,token):
     if request.method!='GET':
@@ -655,7 +655,7 @@ def import_from_template(request):
             template = Prototype.objects.get(id=file_id, is_template=True)
         except Prototype.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "模板不存在或不可用"})
-        if template.project!=project:
+        if template.is_private and template.project!=project:
             return JsonResponse({'errno': 1, 'msg': "模板不存在或不属于当前项目"})
         prototype =Prototype.objects.create(
             title='未命名原型',
@@ -669,7 +669,7 @@ def import_from_template(request):
             template = Document.objects.get(id=file_id, is_template=True,)
         except Document.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "模板不存在或不可用"})
-        if template.project!=project:
+        if template.is_private and template.project!=project:
             return JsonResponse({'errno': 1, 'msg': "模板不属于当前项目"})
         document =Document.objects.create(
             title='未命名文档',
