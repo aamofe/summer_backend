@@ -664,7 +664,7 @@ def import_from_template(request):
             parent_folder=parent_folder,
             user=user,
             is_template=False)
-        return JsonResponse({'errno': 0, 'msg': "成功导入模板", 'prototype':prototype.to_dict()})
+        return JsonResponse({'errno': 0, 'msg': "成功导入模板", 'prototype':prototype.to_dict("name")})
     else:
         try:
             template = Document.objects.get(id=file_id, is_template=True,)
@@ -678,6 +678,6 @@ def import_from_template(request):
             parent_folder=parent_folder,
             user=user,
             is_template=False)
-        return JsonResponse({'errno': 0, 'msg': "成功导入模板！",'document':document.to_dict()})
+        return JsonResponse({'errno': 0, 'msg': "成功导入模板！",'document':document.to_dict("name")})
 #编辑自己模板
 

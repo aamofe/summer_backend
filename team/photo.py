@@ -36,13 +36,15 @@ def generate_cover(type, text, id):
         background = Image.open(background_path)
         if '\u4e00' <= text[0] <= '\u9fff':
             text = ' '.join([text[i:i + 1] for i in range(0, len(text))])
+    elif type==3:
+        font_size =250
+        image_width, image_height = 960,960
+        background = Image.new("RGBA", (image_width, image_height), (62,109,186, 255))
     else:
         font_size = 750 # 调整字体大小
         image_width, image_height = 960,960
         background = Image.new("RGBA", (image_width, image_height), (62,109,186, 255))
         text=text[0]
-
-
     font = ImageFont.truetype(font_path, font_size)
     draw = ImageDraw.Draw(background)
     if type == 1:  # 项目封面
@@ -53,6 +55,29 @@ def generate_cover(type, text, id):
         x_start = 380 - font.getlength(text) / 2
         y_start = 330
         text_color = "#2a48a2"#蓝色
+        font = ImageFont.truetype(font_path, font_size)
+        draw.text((x_start, y_start), text, font=font, fill=text_color)
+    elif type==3:
+        url='group_cover'
+        letter=text.split('、')
+        text_color = "#FFFFFF"
+        font = ImageFont.truetype(font_path, font_size)
+        length=len(letter)
+        circle = 1 if length < 4 else (2 if length < 7 else 3)
+        if length==4:
+            y=[160,480]
+            x=[160,480]
+            for i in range(2):
+                for j in range(2):
+                    draw.text((x[j], y[i]), letter[2 * i+j], font=font, fill=text_color)
+        else:
+            for i in range(circle):
+                ll=min(3,length-3*i)
+                y = [320] if length < 4 else ([160, 480] if length < 7 else [0, 320, 640])
+                x = [320] if ll == 1 else ([160, 480] if ll == 2 else [0, 320, 640])
+                for j in range(ll):
+                    draw.text((x[j], y[i]), letter[3 * i+j], font=font, fill=text_color)
+
     else:  # 团队封面
         url='team_cover'
         while font.getlength(text) > 960:
@@ -60,27 +85,20 @@ def generate_cover(type, text, id):
         x_start = (image_width - font.getlength(text)) // 2
         y_start = -2
         text_color = "#FFFFFF"  # 白色文字
-    font = ImageFont.truetype(font_path, font_size)
-    draw.text((x_start, y_start), text, font=font, fill=text_color)
+        font = ImageFont.truetype(font_path, font_size)
+        draw.text((x_start, y_start), text, font=font, fill=text_color)
 
     # 创建临时文件并将图像保存在其中
     output_path = f"./random_{id}.png"
     background.save(output_path, format="png")
-    # background.show()
+    background.show()
     background.close()
     url=upload_cover_method(id,url)
     os.remove(output_path)
+    # print(url)
     return url
-# for i in range(1,6):
 
-# id_list=[1,5,6,7,8,9,10,15,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36]
-#
-# text_list=['傻逼之家','aaaaaaa','a2','缅北分部3群','缅北分部4群','哈哈哈哈哈','呜呜呜呜'
-#            '傻逼之家 (Copy)','傻逼之家 (Copy)','新建项目1','新建项目2','新建项目3',
-#            '缅北分部4群','缅北分部4群','缅北分部4群','缅北分部4群','缅北分部4群','缅北分部4群',
-#            '傻逼之家 (Copy)','缅北分部4群','傻逼之家 (Copy)','傻逼之家 (Copy)','傻逼之家 (Copy)',
-#            '缅北分部4群 (Copy)','缅北分部4群 (Copy) (Copy)','bbbbbbb','ll'
-# ]
-#
-# for i in range(27):
-# generate_cover(1,"ll",36)
+# user_names_list=['ni','你好','什么','aaya ','希望','啊啊啊啊','什么是是是是','我不开思南县啊啊啊','uidsnd','后打开打开']
+# first_characters = [name[0] for name in user_names_list]
+# text = "、".join(first_characters)
+# generate_cover(3,text,2)
