@@ -101,6 +101,21 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                     'message': await self.to_dict(chatMessage),
                 }
             )
+        elif 'forward_single' in text_data_json:
+            message_ids = text_data_json['message_ids']
+            group_id = text_data_json.get('group_id', '')
+            group_name = f"chat_{group_id}"
+            replyMessage = text_data_json.get('replyMessage', {})
+            await self.handle_foward_single(message_ids,group_id)
+            await self.channel_layer.group_send(
+                group_name,
+                {
+                    'type': 'chat_message',
+                    'team_id': group_id,
+                    'message': await self.to_dict(await self.get_latest_message()),
+                }
+            )
+
         elif 'clean' in text_data_json:
             await self.mark_messages_as_read(self.user_id)
         else:
@@ -166,13 +181,17 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
 
     @database_sync_to_async
     def get_recent_messages(self):
-        return ChatMessage.objects.filter(team_id=self.team_id).order_by('timestamp')
+        #获取最近10条
+        return ChatMessage.objects.filter(team_id=self.team_id).order_by('timestamp')[:10]
 
     async def build_message_array(self):
         recent_messages = await self.get_recent_messages()
         messages_array = []
 
         for msg in recent_messages:
+            forwarded_messages = []
+            if msg.is_forwarded:
+                forwarded_messages.append(await self.to_dict(msg))
             message_data = {
                 'message_id': msg.id,
                 'message': msg.message,
@@ -183,6 +202,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 'replyMessage': msg.reply_message,
                 'avatar_url': await self.get_avatar_url(msg.user_id),
                 'time': msg.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
+                'forwarded_messages': forwarded_messages,
             }
             messages_array.append(message_data)
 
@@ -561,7 +581,20 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         return ChatMessage.objects.filter(team_id=self.team_id).order_by('-timestamp').first().id
     @database_sync_to_async
     def to_dict(self, chatMessage):
-        return chatMessage.to_dict(3) if chatMessage else None
+        return chatMessage.to_dict(5) if chatMessage else None
+    @database_sync_to_async
+    def handle_foward_single(self, message_ids, group_id):
+        #获取message_ids中的每一个id，然后复制一遍，但修改其team_id为group_id存进数据库
+        for message_id in message_ids:
+            message=ChatMessage.objects.get(id=message_id)
+            new_message=ChatMessage.objects.create(team_id=group_id, message=message.message, user_id=message.user_id,
+                                   reply_message=message.reply_message, date=message.date,files=message.files)
+            new_message.save()
+            if message.files:
+                new_message.files.chat_message=new_message
+                new_message.files.save()
+            new_message.save()
+            #将消息通过群聊转发发给群聊所有人
 
 
 
