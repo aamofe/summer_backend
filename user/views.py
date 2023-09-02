@@ -183,7 +183,7 @@ def update_info(request):
             else:
                 user.avatar_url = avatar_url
         user.save()
-        return JsonResponse({'errno': 0, 'msg': "修改信息成功"})
+        return JsonResponse({'errno': 0, 'msg': "修改信息成功",'user':user.to_dict()})
     else:
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
 
@@ -232,7 +232,6 @@ def delete_video_method(video_id):
         Bucket=bucket_name,
         Key=video_key
     )
-    pprint.pprint(response)
 
 
 def upload_video_method(video_file, video_id, ):
@@ -241,7 +240,6 @@ def upload_video_method(video_file, video_id, ):
         video_id = str(uuid.uuid4())
     file_name = video_file.name
     file_extension = file_name.split('.')[-1]  # 获取文件后缀
-    print("ex :", file_extension)
     if file_extension != 'mp4':
         return 1
     video_key = "video_file/{}".format(f'{video_id}.mp4')
@@ -291,7 +289,6 @@ def show_info(request, id):
         is_login = False
     else :
         is_login=True
-    print("is_login : ",is_login)
     if id==0 and not is_login:
         return JsonResponse({'errno': 1, 'msg': "未登录"})
     if id!=0:
@@ -299,9 +296,7 @@ def show_info(request, id):
             user = User.objects.get(id=id, is_active=True)
         except User.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "查看对象不存在"})
-    # print('isLogin :',is_login)
     user_info = user.to_dict()
-    # pprint.pprint(user_info)
     return JsonResponse({'errno': 0, 'msg': "查看信息成功", 'user_info': user_info})
 @validate_login
 def personal_info(request):
@@ -309,7 +304,6 @@ def personal_info(request):
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user=request.user
     user_info = user.to_dict()
-    # pprint.pprint(user_info)
     return JsonResponse({'errno': 0, 'msg': "查看信息成功", 'user_info': user_info})
 
 

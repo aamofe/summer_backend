@@ -70,7 +70,6 @@ def generate_cover(type, text, id):
     background.close()
     url=upload_cover_method(id,url)
     os.remove(output_path)
-    print(url)
     return url
 # for i in range(1,6):
 

@@ -135,7 +135,6 @@ def get_invitation(request):
         ChatMember.objects.get(team=group,user=user)
 
     except Member.DoesNotExist:
-        print("team_user : ",team.user.id,"当前用户 ： ",user.id)
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
     if member.role == 'MB':
         return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
@@ -183,19 +182,14 @@ def accept_invitation(request,token):
         return JsonResponse({'errno': 0, 'msg': "加入成功"})
 @validate_login
 def all_teams(request):
-    print(1)
     if request.method != 'GET':
-        print(2)
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
-    print(3)
     user = request.user
-    # print('user_id : ',user.id)
     try:
         user=User.objects.get(id=user.id,is_active=True)
     except User.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户id不存在"})
     member_list = Member.objects.filter(user=user)
-    # print(4)
     teams = []
     for member in member_list:
         team_info = member.team.to_dict()
@@ -221,7 +215,6 @@ def all_members(request):
         member=Member.objects.get(team=team,user=user)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "当前用户不属于该团队"})
-    print('all_members 我在获取所有成员 : ',team_id)
     members = []
     member_list = Member.objects.filter(team=team,role="CR")
     for member in member_list:
@@ -325,7 +318,6 @@ def delete_one_project(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     project_id=request.POST.get('project_id')
-    print('project_id : ',project_id)
     try:
         project = Project.objects.get(id=project_id,is_deleted=False)
     except Project.DoesNotExist:
@@ -407,7 +399,6 @@ def checkout_team(request):
     
 @validate_login
 def get_current_team(request):
-    # print("get_current_team : begin")
     if request.method != 'GET':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user=request.user
@@ -420,7 +411,6 @@ def get_current_team(request):
             return JsonResponse({'errno': 1, 'msg': "个人空间不存在"})
         user.current_team_id=team.id
         user.save()
-    print('get_current_team 我在获取所有成员 : ',team.id)
     team_list=team.to_dict()
     team_list['team_num']= Member.objects.filter(user=user).count()
     project_list=Project.objects.filter(team=team)
@@ -430,7 +420,6 @@ def get_current_team(request):
     member=Member.objects.filter(user=user,team=team)[0]
     team_list['role']=member.get_role_display()
     team_list['role_string']=member.role
-    # pprint.pprint(team_list)
     return JsonResponse({'errno': 0,'team':team_list, 'msg': "请求成功"})
 
 @validate_login
@@ -448,7 +437,6 @@ def all_projects(request):
         member = Member.objects.get(user=user, team=team)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
-    # print('all_projects 我在获取所有成员 : ', team_id)
     valid_sort_fields = ['created_at', 'name']
     if sort_by.startswith('-'):
         sort_field = sort_by[1:]

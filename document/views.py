@@ -57,7 +57,6 @@ def update_document_permisson(request):
         return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
     document.editable=True if editable==1 else False
     document.save()
-    print(document.editable)
     return JsonResponse({'errno': 0, 'msg': "修改权限成功"})
 @validate_all
 def view_document(request,token):
@@ -280,7 +279,6 @@ def save(request):
     if not file_type or not file_id :
         return JsonResponse({'errno': 1, 'msg': "参数不全"})
     if not(file_type=='document' or file_type=='prototype' or file_type=='folder') or not file_id.isdigit() :
-        print('错误 ： ',file_type,file_id)
         return JsonResponse({'errno': 1, 'msg': "参数值错误"})
     if file_type=='folder':
         try:
@@ -291,7 +289,6 @@ def save(request):
             return JsonResponse({'errno': 1, 'msg': "顶级文件夹不可改名"})
         if not title:
             return JsonResponse({'errno': 1, 'msg': "请输入文件夹名称"})
-        print('tile :',title)
         folder.name=title
         folder.save()
         return JsonResponse({'errno': 0, 'msg': "名称修改成功"})
@@ -433,8 +430,6 @@ def view_folder(request):
         return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
     user=request.user
     project=parent_folder.project
-    pprint.pprint(project.to_dict())
-    print(project.is_deleted)
     if project.is_deleted:
         return JsonResponse({'errno': 1, 'msg': "项目不存在"})
     try:
