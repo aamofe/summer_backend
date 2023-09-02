@@ -658,24 +658,24 @@ class DocumentConsumer(AsyncWebsocketConsumer):
         # 获取在线用户的ID列表
         online_user_ids = online_users.get(self.room_name, [])
 
-        # 使用User模型查询头像URL
+        # 使用User模型查询用户ID和头像URL
         online_user_profiles = await self.get_online_user_profiles(online_user_ids)
 
-        # 提取头像URL
-        avatar_urls = [user['avatar_url'] for user in online_user_profiles]
+        # 提取头像URL和用户ID的配对
+        user_data = [{'id': user['id'], 'avatar_url': user['avatar_url']} for user in online_user_profiles]
 
-        # 广播头像URL
+        # 广播用户数据
         await self.channel_layer.group_send(
             self.room_group_name,
             {
                 'type': 'users_update',
-                'online_users': avatar_urls
+                'online_users': user_data
             }
         )
 
     @database_sync_to_async
     def get_online_user_profiles(self, online_user_ids):
-        return list(User.objects.filter(id__in=online_user_ids).values('avatar_url'))
+        return list(User.objects.filter(id__in=online_user_ids).values('id', 'avatar_url'))
 
     async def users_update(self, event):
         await self.send(text_data=json.dumps(event))
