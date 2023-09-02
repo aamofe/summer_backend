@@ -222,7 +222,7 @@ def delete(request,):#删除/彻底 一个/多个 文档/原型
         return JsonResponse({'errno': 1, 'msg': "参数值错误"})
     if file_type=='folder':
         try:
-            folder=Folder.objects.get(id=file_id,is_deleted=False)
+            folder=Folder.objects.get(id=file_id)
         except Folder.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
         try:
@@ -242,12 +242,12 @@ def delete(request,):#删除/彻底 一个/多个 文档/原型
     #我是文档/原型
     if file_type == 'document':
         try:
-            file=Document.objects.get(id=file_id,is_deleted=False,parent_folder__is_deleted=False)
+            file=Document.objects.get(id=file_id,parent_folder__is_deleted=False)
         except Document.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "文档不存在"})
     elif file_type=='prototype':
         try:
-            file = Prototype.objects.get(id=file_id,is_deleted=False,parent_folder__is_deleted=False)
+            file = Prototype.objects.get(id=file_id,parent_folder__is_deleted=False)
         except Project.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "原型不存在"})
     if not file.is_private:
