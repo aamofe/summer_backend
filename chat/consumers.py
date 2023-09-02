@@ -9,6 +9,7 @@ from channels.db import database_sync_to_async
 from asgiref.sync import sync_to_async
 from chat.models import ChatMessage, Notice, UserTeamChatStatus, UserChatChannel, UserNoticeChannel, File
 from user.models import User
+from . import online_users
 from .models import ChatMember, Group
 
 
@@ -615,4 +616,62 @@ class NotificationConsumer(AsyncWebsocketConsumer):
     def upload_file_notice(self, url, file_id):
         Notice.objects.create(receiver_id=self.user_id, notice_type='document_mention', url=url,
                               associated_resource_id=file_id)
+
+
+
+
+from .online_users import online_users
+
+class DocumentConsumer(AsyncWebsocketConsumer):
+    async def connect(self):
+        self.room_name = self.scope['url_route']['kwargs']['document_id']
+        self.user_id = int(self.scope['url_route']['kwargs']['user_id'])
+        self.room_group_name = 'document_%s' % self.room_name
+
+        await self.channel_layer.group_add(self.room_group_name, self.channel_name)
+        await self.accept()
+
+        # 初始化文档的在线用户列表
+        if self.room_name not in online_users:
+            online_users[self.room_name] = []
+
+        if self.user_id not in online_users[self.room_name]:
+            online_users[self.room_name].append(self.user_id)
+
+        await self.send_updated_users()
+
+    async def disconnect(self, close_code):
+        if self.room_name in online_users and self.user_id in online_users[self.room_name]:
+            online_users[self.room_name].remove(self.user_id)
+            await self.send_updated_users()
+
+        await self.channel_layer.group_discard(self.room_group_name, self.channel_name)
+
+    async def send_updated_users(self):
+        # 获取在线用户的ID列表
+        online_user_ids = online_users.get(self.room_name, [])
+
+        # 使用User模型查询头像URL
+        online_user_profiles = await self.get_online_user_profiles(online_user_ids)
+
+        # 提取头像URL
+        avatar_urls = [user['avatar_url'] for user in online_user_profiles]
+
+        # 广播头像URL
+        await self.channel_layer.group_send(
+            self.room_group_name,
+            {
+                'type': 'users_update',
+                'online_users': avatar_urls
+            }
+        )
+
+    @database_sync_to_async
+    def get_online_user_profiles(self, online_user_ids):
+        return list(User.objects.filter(id__in=online_user_ids).values('avatar_url'))
+
+    async def users_update(self, event):
+        await self.send(text_data=json.dumps(event))
+
+
 

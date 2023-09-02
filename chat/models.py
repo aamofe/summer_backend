@@ -64,6 +64,9 @@ class Group(models.Model):
     created_at = models.DateTimeField(verbose_name='创建时间', auto_now_add=True)
     cover_url=models.URLField(verbose_name="团队封面",default="https://summer-1315620690.cos.ap-beijing.myqcloud.com/team_cover/default.png")
     type=models.CharField(verbose_name="团队类型",choices=Chat_Choices,max_length=10,default='team')
+    user1 = models.ForeignKey(User, related_name="chat_group_as_user1", on_delete=models.CASCADE, null=True, blank=True)
+    user2 = models.ForeignKey(User, related_name="chat_group_as_user2", on_delete=models.CASCADE, null=True, blank=True)
+
     def to_dict(self):
         return {
             'id': self.id,
