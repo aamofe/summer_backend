@@ -83,9 +83,12 @@ def update_team(request):  # 修改团队描述 上传头像
         team_id=user.current_team_id
         try:
             team=Team.objects.get(id=team_id)
-            group=Group.objects.get(actual_team=team_id)
         except Team.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
+        try:
+            group=Group.objects.get(actual_team=team_id)
+        except Group.DoesNotExist:
+            group=Group.objects.create(name=team.name, user=team.user,actual_team=team.id,type='team')
         if not team.user == user:
             return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
         if team.name=='个人空间' or team_name=='个人空间':
@@ -127,15 +130,20 @@ def get_invitation(request):
         return JsonResponse({'errno': 1, 'msg': "请输入team_id"})
     try:
         team=Team.objects.get(id=team_id)
-        group=Group.objects.get(actual_team=team_id)
     except Team.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
     try:
+        group=Group.objects.get(actual_team=team_id)
+    except Group.DoesNotExist:
+        group=Group.objects.create(name=team.name, user=team.user,actual_team=team.id,type='team')
+    try:
         member=Member.objects.get(team=team,user=user)
-        ChatMember.objects.get(team=group,user=user)
-
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
+    try:
+        ChatMember.objects.get(team=group,user=user)
+    except ChatMember.DoesNotExist:
+        ChatMember.objects.create(role='CR',user=team.user,team=group)  
     if member.role == 'MB':
         return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
     if team.name=='个人空间':
@@ -168,13 +176,19 @@ def accept_invitation(request,token):
     team_id = payload.get('team_id')
     try:
         team = Team.objects.get(id=team_id)
-        group = Group.objects.get(actual_team=team_id)
     except Team.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "团队不存在"})
+    try:
+        group = Group.objects.get(actual_team=team_id)
+    except Group.DoesNotExist:
+        group=Group.objects.create(name=team.name, user=team.user,actual_team=team.id,type='team')
     user=request.user
     try:
         member=Member.objects.get(team=team,user=user)
-        chat_member=ChatMember.objects.get(team=group,user=user)
+        try:
+            chat_member=ChatMember.objects.get(team=group,user=user)
+        except ChatMember.DoesNotExist:
+            chat_member=ChatMember.objects.create(user=user,team=group)
         return JsonResponse({'errno': 0, 'msg': "您已加入该团队"})
     except Member.DoesNotExist:
         member = Member.objects.create(user=user, team=team)
@@ -249,9 +263,12 @@ def update_permisson(request, team_id):
     editor = request.user
     try:
         team=Team.objects.get(id=team_id)
-        group=Group.objects.get(actual_team=team_id)
     except Team.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
+    try:
+        group=Group.objects.get(actual_team=team_id)
+    except Group.DoesNotExist:
+        group=Group.objects.create(name=team.name, user=team.user,actual_team=team.id,type='team')
     try:
         medtor=Member.objects.get(team=team,user=editor)
     except Member.DoesNotExist:
@@ -262,9 +279,12 @@ def update_permisson(request, team_id):
         return JsonResponse({'errno': 1, 'msg': "该用户不存在"})
     try:
         medted=Member.objects.get(team=team,user=edited)
-        Medted=ChatMember.objects.get(team=group,user=edited)
     except Member.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "用户不属于该团队"})
+    try:
+        Medted=ChatMember.objects.get(team=group,user=edited)
+    except ChatMember.DoesNotExist:
+        Medted=ChatMember.objects.create(team=group,user=edited)
     if edited.id == editor.id:
         return JsonResponse({'errno': 1, 'msg': "无法修改自身权限"})
     if medtor.role == 'MB' or (medtor.role == 'MG' and medted.role == 'CR'):
@@ -491,9 +511,13 @@ def quit_team(request):
     team_id=request.POST.get("team_id")
     try:
         team=Team.objects.get(id=team_id)
-        group=Group.objects.get(actual_team=team_id)
+        
     except Team.DoesNotExist:
         return JsonResponse({'errno': 1, 'msg': "该团队不存在"})
+    try:
+        group=Group.objects.get(actual_team=team_id)
+    except Group.DoesNotExist:
+        group=Group.objects.create(name=team.name, user=team.user,actual_team=team.id,type='team')
     try:
         member=Member.objects.get(user=user,team=team)
     except Member.DoesNotExist:
@@ -502,7 +526,7 @@ def quit_team(request):
         member_list=Member.objects.get(team=team)
         member_list.delete()
         team.delete()
-        chat_member_list=ChatMember.objects.get(team=group)
+        chat_member_list=ChatMember.objects.filter(team=group)
         chat_member_list.delete()
         group.delete()
     else:
