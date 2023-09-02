@@ -68,7 +68,7 @@ def create_team(request):
         group.save()
         member = Member.objects.create(role='CR', user=user, team=team)
         chat_member=ChatMember.objects.create(role='CR',user=user,team=group)
-        return JsonResponse({'errno': 0, 'msg': "创建团队成功"})
+        return JsonResponse({'errno': 0, 'team':team.to_dict(),'msg': "创建团队成功"})
     else:
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
 
