@@ -98,26 +98,6 @@ def get_token(request):
     token = jwt.encode(payload, app_secret, algorithm='HS256')
     return JsonResponse({'errno':0,'msg':'密钥返回成功','token':token})
 
-# @validate_all
-# def change_lock(request):
-#     if request.method!='POST':
-#         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
-#     document_id=request.POST.get("document_id")
-#     type=request.POST.get('type')# + -
-#     try :
-#         document=Document.objects.get(id=document_id,parent_folder__is_deleted=False)
-#     except Document.DoesNotExist:
-#         return JsonResponse({'errno': 1, 'msg': "文档不存在"})
-#     if type=='+':
-#         document.is_locked+=1
-#     elif type=='-':
-#         if document.is_locked==0:
-#             return JsonResponse({'errno': 1, 'msg': "锁为0，不可再减"})
-#         document.is_locked-=1
-#     else:
-#         return JsonResponse({'errno': 1, 'msg': "操作符号错误"})
-#     document.save()
-#     return JsonResponse({'errno': 0, 'document':document.to_dict(),'msg': "文档上锁状态修改成功"})
 @validate_login
 def share_prototype(request):
     if request.method!='POST':

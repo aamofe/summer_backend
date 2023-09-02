@@ -46,15 +46,12 @@ class Folder(models.Model):
 class Document(models.Model):
     title=models.CharField(verbose_name="标题",max_length=20)
     content=models.TextField(verbose_name="文档内容",null=True)
-    # url=models.URLField(verbose_name="不可编辑文档链接",null=True)
-    # url_editable=models.URLField(verbose_name="可编辑链接",null=True)
     created_at=models.DateTimeField(verbose_name="创建时间",auto_now_add=True)
     modified_at=models.DateTimeField(verbose_name="最近修改时间",auto_now=True)
     deleted_at = models.DateTimeField(verbose_name='被删除时间', null=True)
     editable=models.BooleanField(verbose_name='是否可编辑',default=True)
     parent_folder=models.ForeignKey(Folder,null=True,verbose_name="所属文件夹",on_delete=models.CASCADE)
     user=models.ForeignKey(User,null=True,verbose_name="创建者",on_delete=models.CASCADE)
-    # is_locked=models.IntegerField(verbose_name="文件锁",default=False)
     is_deleted=models.BooleanField(verbose_name="是否被删除",default=False)
     
     is_template=models.BooleanField(verbose_name='是否为模板',default=False)
