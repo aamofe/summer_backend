@@ -1,4 +1,5 @@
 import asyncio
+from datetime import datetime
 import json
 import re
 
@@ -8,6 +9,7 @@ from channels.generic.websocket import AsyncWebsocketConsumer
 from channels.db import database_sync_to_async
 from asgiref.sync import sync_to_async
 from chat.models import ChatMessage, Notice, UserTeamChatStatus, UserChatChannel, UserNoticeChannel, File
+from team.models import Member
 from user.models import User
 from . import online_users
 from .models import ChatMember, Group
@@ -87,7 +89,18 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
             )
         elif 'forward_all'in text_data_json:
             message_ids = text_data_json['message_ids']
-            await self.forward_messages_as_combined(message_ids)
+            group_id = text_data_json.get('group_id', '')
+            group_name = f"chat_{group_id}"
+            replyMessage = text_data_json.get('replyMessage', {})  # 如果'reply_message'不存在，返回空字典
+            chatMessage=await self.forward_messages_as_combined(message_ids,replyMessage,group_id)
+            await self.channel_layer.group_send(
+                group_name,
+                {
+                    'type': 'chat_forward_message',
+                    'team_id': group_id,
+                    'message': await self.to_dict(chatMessage),
+                }
+            )
         elif 'clean' in text_data_json:
             await self.mark_messages_as_read(self.user_id)
         else:
@@ -199,6 +212,14 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
             'username': username,
             'avatar_url': avatar_url,
             'time': time
+        }))
+    async def chat_forward_message(self, event):
+        message = event['message']
+        team_id = event['team_id']
+        await self.send(text_data=json.dumps({
+            'type': 'chat_forward_message',
+            'team_id': team_id,
+            'message': message,
         }))
 
     @database_sync_to_async
@@ -415,18 +436,22 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                 'cover_url': await self.get_cover_url(self.team_id),
             })
     @database_sync_to_async
-    def forward_messages_as_combined(self, message_ids):
+    def forward_messages_as_combined(self, message_ids, replyMessage,group_id):
         # 获取所有要合并的消息
         messages = ChatMessage.objects.filter(id__in=message_ids)
-
         # 创建新的内容，可能包括每个原始消息的发送者、内容和头像
-        new_content = ""
-        for message in messages:
-            username=User.objects.get(id=message.user_id).username
-            new_content += f"{username}: {message.message}\n\n"
 
+        # 获取当前日期
+        now = datetime.now()
+
+        # 获取日期的天和月份
+        day = now.day
+        month = now.strftime('%B')  # %B 是完整的月份名称
+
+        # 格式化日期
+        date = f"{day} {month}"
         # 创建新消息
-        new_message = ChatMessage(user_id=self.user_id, message=new_content, is_forwarded=True, team_id=self.team_id,reply_message={},date=None,files=None)
+        new_message = ChatMessage(user_id=self.user_id, message='群聊的聊天记录', is_forwarded=True, team_id=group_id,reply_message=replyMessage,date=date,files=None)
         new_message.save()
 
         # 添加被合并的消息到forwarded_from字段
@@ -534,6 +559,13 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
     @database_sync_to_async
     def get_latest_message_id(self):
         return ChatMessage.objects.filter(team_id=self.team_id).order_by('-timestamp').first().id
+    @database_sync_to_async
+    def to_dict(self, chatMessage):
+        return chatMessage.to_dict(3) if chatMessage else None
+
+
+
+
 
 
 class NotificationConsumer(AsyncWebsocketConsumer):
@@ -553,13 +585,14 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         data = json.loads(text_data)
         if data['type'] == 'chat':
             if data['range'] == 'all':
+                roomID=data['roomID']
                 # 广播消息给所有人
                 await self.channel_layer.group_send("notification_group", {
                     "type": "chat_notice",
                     "url": data['url'],
-                    "roomID": data['roomID']
+                    "roomID": roomID
                 })
-                await self.upload_chat_notice(data['url'], data['roomID'])
+                await self.upload_all_chat_notice(data['url'], roomID)
             elif data['range'] == 'individual':
                 # 发送消息给指定用户
                 user_id = data['user_id']  # 假设传来的数据里有目标用户的ID
@@ -571,7 +604,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
                         "url": data['url'],
                         "roomID": data['roomID']
                     })
-                await self.upload_chat_notice(data['url'], data['roomID'])
+                await self.upload_chat_notice(data['url'], data['roomID'],user_id)
         elif data['type'] == 'file':
             user_id = data['user_id']  # 假设传来的数据里有目标用户的ID
             file_id = data['file_id']
@@ -582,10 +615,14 @@ class NotificationConsumer(AsyncWebsocketConsumer):
                     "type": "file_notice",
                     "url": data['url'],
                 })
-            await self.upload_file_notice(data['url'], file_id)
+            await self.upload_file_notice(data['url'], file_id,user_id)
 
-
-
+    @database_sync_to_async
+    def upload_all_chat_notice(self, url,roomID):
+        members=Member.objects.filter(team_id=roomID)
+        for member in members:
+            Notice.objects.create(receiver_id=member.user_id, notice_type='chat_mention', url=url,
+                                  associated_resource_id=roomID)
 
     @database_sync_to_async
     def get_channel_name_for_user(self, user_id):
@@ -598,7 +635,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         # 实际发送消息给WebSocket客户端
         await self.send(text_data=json.dumps({
             'type': 'chat_notice',
-            'url': '/chat',
+            'url': event["url"],
             'roomID': event["roomID"]
         }))
     async def file_notice(self, event):
@@ -639,14 +676,13 @@ class NotificationConsumer(AsyncWebsocketConsumer):
     def save_user_notice_channel(self):
         UserNoticeChannel.objects.update_or_create(user_id=self.user_id, defaults={'channel_name': self.channel_name})
     @database_sync_to_async
-    def upload_chat_notice(self, url, roomID):
-        Notice.objects.create(receiver_id=self.user_id, notice_type='chat_mention', url=url,
+    def upload_chat_notice(self, url, roomID,user_id):
+        Notice.objects.create(receiver_id=user_id, notice_type='chat_mention', url=url,
                               associated_resource_id=roomID)
     @database_sync_to_async
-    def upload_file_notice(self, url, file_id):
-        Notice.objects.create(receiver_id=self.user_id, notice_type='document_mention', url=url,
+    def upload_file_notice(self, url, file_id,user_id):
+        Notice.objects.create(receiver_id=user_id, notice_type='document_mention', url=url,
                               associated_resource_id=file_id)
-
 
 
 

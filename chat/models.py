@@ -12,8 +12,49 @@ class ChatMessage(models.Model):
     user_id = models.IntegerField(default=0)
     timestamp = models.DateTimeField(auto_now_add=True)
     date = models.TextField(default=None, blank=True, null=True)
-    forwarded_from = models.ManyToManyField("self", blank=True)
+    forwarded_from = models.ManyToManyField("self", blank=True,symmetrical=False)
     is_forwarded = models.BooleanField(default=False)
+
+    def to_dict(self, depth_limit=5):
+        if depth_limit <= 0:
+            # 返回一个简化版本的消息或者其它内容
+            return {'message_id': self.id, 'message': 'Recursion limit reached'}
+
+        message_data = {
+            'message_id': self.id,
+            'message': self.message,
+            'user_id': self.user_id,
+            'user_name': User.objects.get(id=self.user_id).username,
+            'date': self.date,
+            'reply_message': self.reply_message,
+            'files': [],
+            'time': self.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
+            'avatar_url': User.objects.get(id=self.user_id).avatar_url,
+        }
+
+        if self.files:
+            message_data['files'] = {
+                'url': self.files.url,
+                'name': self.files.name,
+                'type': self.files.type,
+                'audio': self.files.audio,
+                'duration': self.files.duration,
+                'size': self.files.size,
+                'preview': self.files.preview,
+            }
+
+        # 减少递归深度限制
+        message_data['forwarded_messages'] = [msg.to_dict(depth_limit=depth_limit - 1) for msg in
+                                              self.forwarded_from.all()]
+
+        return message_data
+
+    def get_forwarded_messages(self):
+        messages = [self.to_dict()]  # Start with the current message
+        for forwarded_msg in self.forwarded_from.all():
+            messages.extend(forwarded_msg.get_forwarded_messages())
+        return messages
+
 
 
 class Notice(models.Model):
