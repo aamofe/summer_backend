@@ -95,7 +95,7 @@ def generate_cover(type, text, id):
     background.close()
     url=upload_cover_method(id,url)
     os.remove(output_path)
-    # print(url)
+    print("generate_method : ",url)
     return url
 
 # user_names_list=['ni','你好','什么','aaya ','希望','啊啊啊啊','什么是是是是','我不开思南县啊啊啊','uidsnd','后打开打开']

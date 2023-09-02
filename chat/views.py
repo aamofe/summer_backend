@@ -310,7 +310,7 @@ def make_group(request):
         )
         group.save()
         cover_url = generate_cover(3, text, group.id)
-        group.cover_url=cover_url,
+        group.cover_url=cover_url
         group.save()
 
         ChatMember(user=creator, team=group, role='CR').save()
@@ -357,7 +357,7 @@ def make_group(request):
                 'room': room,
             }
         )
-        return JsonResponse({'group_id': group.id})
+        return JsonResponse({'group': group.to_dict()})
 
     else:
         return JsonResponse({"error": "Invalid request method"}, status=400)
