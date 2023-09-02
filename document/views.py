@@ -56,7 +56,7 @@ def update_document_permisson(request):
         return JsonResponse({'errno': 1, 'msg': "用户权限不足"})
     document.editable=True if editable==1 else False
     document.save()
-    return JsonResponse({'errno': 0, 'msg': "修改权限成功"})
+    return JsonResponse({'errno': 0, 'msg': "修改权限成功",'editable':document.editable})
 @validate_all
 def view_document(request,token):
     if request.method!='GET':
@@ -222,7 +222,7 @@ def delete(request,):#删除/彻底 一个/多个 文档/原型
         return JsonResponse({'errno': 1, 'msg': "参数值错误"})
     if file_type=='folder':
         try:
-            folder=Folder.objects.get(id=file_id,is_deleted=False)
+            folder=Folder.objects.get(id=file_id)
         except Folder.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "文件夹不存在"})
         try:
@@ -242,12 +242,12 @@ def delete(request,):#删除/彻底 一个/多个 文档/原型
     #我是文档/原型
     if file_type == 'document':
         try:
-            file=Document.objects.get(id=file_id,is_deleted=False,parent_folder__is_deleted=False)
+            file=Document.objects.get(id=file_id,parent_folder__is_deleted=False)
         except Document.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "文档不存在"})
     elif file_type=='prototype':
         try:
-            file = Prototype.objects.get(id=file_id,is_deleted=False,parent_folder__is_deleted=False)
+            file = Prototype.objects.get(id=file_id,parent_folder__is_deleted=False)
         except Project.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "原型不存在"})
     if not file.is_private:
@@ -512,7 +512,7 @@ def delete_permanently(request):
     if request.method != 'POST':
         return JsonResponse({'errno': 1, 'msg': "请求方法错误"})
     user = request.user
-    project_id = request.GET.get('project_id')
+    project_id = request.POST.get('project_id')
     try:
         project = Project.objects.get(id=project_id)
     except Project.DoesNotExist:
@@ -655,7 +655,7 @@ def import_from_template(request):
             template = Prototype.objects.get(id=file_id, is_template=True)
         except Prototype.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "模板不存在或不可用"})
-        if template.project!=project:
+        if template.is_private and template.project!=project:
             return JsonResponse({'errno': 1, 'msg': "模板不存在或不属于当前项目"})
         prototype =Prototype.objects.create(
             title='未命名原型',
@@ -669,7 +669,7 @@ def import_from_template(request):
             template = Document.objects.get(id=file_id, is_template=True,)
         except Document.DoesNotExist:
             return JsonResponse({'errno': 1, 'msg': "模板不存在或不可用"})
-        if template.project!=project:
+        if template.is_private and template.project!=project:
             return JsonResponse({'errno': 1, 'msg': "模板不属于当前项目"})
         document =Document.objects.create(
             title='未命名文档',
