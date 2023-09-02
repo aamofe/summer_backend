@@ -446,7 +446,15 @@ def all_projects(request):
     else:
         sort_field = sort_by if sort_by in valid_sort_fields else '-created_at'
     project_list = Project.objects.filter(team=team,is_deleted=False).order_by(sort_field)
-    projects = [project.to_dict() for project in project_list]
+    projects=[]
+    for p in project_list:
+        try:
+            folder=Folder.objects.get(parent_folder=None,project=p)
+        except Folder.DoesNotExist:
+            return JsonResponse({'errno': 1, 'msg': "项目无父文件夹"})
+        pp=p.to_dict()
+        pp['folder_id']=folder.id
+        projects.append(pp)
     return JsonResponse({'errno': 0, 'projects': projects, 'msg': "获取项目列表成功"})
 
 
