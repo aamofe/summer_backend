@@ -660,3 +660,38 @@ def import_from_template(request):
         return JsonResponse({'errno': 0, 'msg': "成功导入模板！",'document':document.to_dict("name")})
 #编辑自己模板
 
+
+@validate_login
+def move(request):
+    if request.method != 'POST':
+        return JsonResponse({'errno': 1, 'msg': "请求方法错误！"})
+    user = request.user
+    file_id = request.POST.get('file_id')#文件id
+    file_type = request.POST.get('file_type')  # 文件类型
+    parent_folder_id= request.POST.get("parent_folder_id")#文件夹
+    try:
+        parent_folder=Folder.objects.get(id=parent_folder_id)
+    except Folder.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "父文件夹不存在"})
+    if not file_type in {'prototype','document'}:
+        return JsonResponse({'errno': 1, 'msg': "文件类型错误"})
+    try:
+        member=Member.objects.get(user=user,team=parent_folder.project.team)
+    except Member.DoesNotExist:
+        return JsonResponse({'errno': 1, 'msg': "当前用户不属于该团队"})
+    if file_type == 'prototype':
+        try:
+            file = Prototype.objects.get(id=file_id, is_deleted=False)
+        except Prototype.DoesNotExist:
+            return JsonResponse({'errno': 1, 'msg': "文件不存在"})
+    else:
+        try:
+            file = Document.objects.get(id=file_id, is_deleted=False)
+        except Document.DoesNotExist:
+            return JsonResponse({'errno': 1, 'msg': "文件不存在"})
+    if file.parent_folder.project!=parent_folder.project:
+        return JsonResponse({'errno': 1, 'msg': "文件和文件夹不属于同一团队"})
+    file.parent_folder=parent_folder
+    file.save()
+    return JsonResponse({'errno': 1, 'msg': "移动成功",'file':file.to_dict('name')})
+    
