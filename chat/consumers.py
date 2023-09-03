@@ -702,7 +702,6 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         if data['type'] == 'chat':
             if data['range'] == 'all':
                 roomID=data['roomID']
-                message_id=data['message_id']
                 # 广播消息给所有人
                 await self.upload_all_chat_notice(data['url'], roomID)
             elif data['range'] == 'individual':
