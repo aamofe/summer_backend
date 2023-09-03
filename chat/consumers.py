@@ -702,7 +702,6 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         if data['type'] == 'chat':
             if data['range'] == 'all':
                 roomID=data['roomID']
-                message_id=data['message_id']
                 # 广播消息给所有人
                 await self.upload_all_chat_notice(data['url'], roomID)
             elif data['range'] == 'individual':
@@ -710,7 +709,6 @@ class NotificationConsumer(AsyncWebsocketConsumer):
                 user_id = data['user_id']  # 假设传来的数据里有目标用户的ID
                 url=data['url']
                 roomID=data['roomID']
-                message_id=data['message_id']
                 notice_id=await self.upload_chat_notice(url, roomID, user_id)
                 channel_name = await self.get_channel_name_for_user(user_id)
                 if channel_name:
@@ -721,7 +719,6 @@ class NotificationConsumer(AsyncWebsocketConsumer):
                         "roomID": roomID,
                         "is_read": False,
                         "id":notice_id,
-                        "message_id":message_id,
                     })
 
         elif data['type'] == 'file':
@@ -777,7 +774,6 @@ class NotificationConsumer(AsyncWebsocketConsumer):
             'roomID': event["roomID"],
             'is_read': event["is_read"],
             'id': event["id"],
-            'message_id': event["message_id"],
         }))
     async def file_notice(self, event):
         # 实际发送消息给WebSocket客户端
