@@ -102,7 +102,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                     'message': await self.to_dict(chatMessage),
                 }
             )
-            await self.notify(self.user_id)
+            await self.notify2(self.user_id,group_id)
         elif 'forward_single' in text_data_json:
             message_ids = text_data_json['message_ids']
             group_id = text_data_json.get('group_id', '')
@@ -116,7 +116,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                         'type': 'chat_message',
                         'user_id': self.user_id,
                         'team_id': group_id,
-                        'message_id': await self.get_latest_message_id(),
+                        'message_id': await self.get_latest_message_id2(group_id),
                         'message': '群聊的聊天记录',
                         'files': await self.get_files(chatMessage),
                         'date': chatMessage.date,
@@ -127,7 +127,7 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
                     }
                 )
                 print('single before')
-                await self.notify(self.user_id)
+                await self.notify2(self.user_id, group_id)
                 print('single after')
         elif 'clean' in text_data_json:
             await self.mark_messages_as_read(self.user_id)
@@ -422,19 +422,6 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         return user_ids
 
     @database_sync_to_async
-    def increase_index(self, user_id, team_id):
-        print('进入index')
-        # 获取最大index值
-        max_index = UserTeamChatStatus.objects.filter(user_id=user_id).aggregate(Max('index'))['index__max'] or 0
-        print('max_index', max_index)
-        # 使用get_or_create获取或创建对象
-        user_team_chat_status, created = UserTeamChatStatus.objects.get_or_create(user_id=user_id, team_id=team_id)
-
-        # 设置index为最大值加1
-        user_team_chat_status.index = max_index + 1
-        user_team_chat_status.save()
-
-    @database_sync_to_async
     def get_user_ids(self, user_ids_query):
         return list(user_ids_query)
     # This method can be used to send messages using channel_layer
@@ -593,7 +580,22 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         print('添加用户成功')
     @database_sync_to_async
     def get_latest_message_id(self):
-        return ChatMessage.objects.filter(team_id=self.team_id).order_by('-timestamp').first().id
+        latest_message = ChatMessage.objects.filter(team_id=self.team_id).order_by('-timestamp').first()
+        if latest_message:
+            return latest_message.id
+        else:
+            # 处理没有找到消息的情况，例如返回None或其他默认值
+            return None
+
+    @database_sync_to_async
+    def get_latest_message_id2(self,group_id):
+        latest_message = ChatMessage.objects.filter(team_id=group_id).order_by('-timestamp').first()
+        if latest_message:
+            return latest_message.id
+        else:
+            # 处理没有找到消息的情况，例如返回None或其他默认值
+            return None
+
     @database_sync_to_async
     def to_dict(self, chatMessage):
         return chatMessage.to_dict(5) if chatMessage else None
@@ -610,11 +612,76 @@ class TeamChatConsumer(AsyncWebsocketConsumer):
         new_message.save()
         return new_message
 
+    async def notify2(self, user_id, group_id):
+        print('notify2')
+        user_ids = await self.increment_unread_count_and_index_in_db2(user_id,group_id)
+        print('notify2',user_ids)
+        await self.notify_users_of_unread_count2(user_ids,group_id)
+    @database_sync_to_async
+    def increment_unread_count_and_index_in_db2(self, user_id, group_id):
+        user_ids = ChatMember.objects.filter(team_id=group_id).values_list('user_id', flat=True)
+        new_user_ids = user_ids.exclude(user_id=user_id)
+        print(user_ids)
+        print(new_user_ids)
+        for uid in user_ids:
+            status, created = UserTeamChatStatus.objects.get_or_create(user_id=uid, team_id=group_id,
+                                                                       defaults={'unread_count': 0})
+            print('status', status, 'created', created)
+            if created:
+                # 如果创建了新的记录, 设置unread_count为1
+                if uid != user_id:
+                    status.unread_count = 1
+                print('创建了新的记录')
+            else:
+                # 否则增加unread_count
+                print('进入index')
+                if uid != user_id:
+                    status.unread_count += 1
 
+            # 获取最大index值
+            max_index = UserTeamChatStatus.objects.filter(user_id=uid).aggregate(Max('index'))[
+                                'index__max'] or 0
+            print('max_index', max_index)
 
+            # 设置index为最大值加1
+            status.index = max_index + 1
 
+            print('增加了unread_count')
+            status.save()
+        return user_ids
 
-
+    async def notify_users_of_unread_count2(self, user_ids, group_id):
+        user_ids_list = await self.get_user_ids(user_ids)
+        print('notify_users_of_unread_count2',user_ids_list)
+        for uid in user_ids_list:
+            channel_name = await self.get_channel_name_for_user(uid, group_id)
+            if not channel_name:
+                print(f'No channel name for user {uid}')
+                continue
+            await self.channel_layer.send(channel_name, {
+                'type': 'chat_status',
+                'unread_count': await self.get_unread_count2(uid, group_id),
+                'index': await self.get_index2(uid, group_id),
+                'username': await self.return_username(await self.get_latest_message2(group_id)),
+                'time': await self.return_time(await self.get_latest_message2(group_id)),
+                'latest_message':  self.return_message(await self.get_latest_message2(group_id)),
+                'team_name': await self.get_team_name(group_id),
+                'cover_url': await self.get_cover_url(group_id),
+            })
+    @database_sync_to_async
+    def get_unread_count2(self, uid, group_id):
+        status = UserTeamChatStatus.objects.filter(user_id=uid, team_id=group_id).first()
+        return status.unread_count if status else 0
+    @database_sync_to_async
+    def get_index2(self, uid, group_id):
+        return UserTeamChatStatus.objects.get(user_id=uid, team_id=group_id).index
+    @database_sync_to_async
+    def get_latest_message2(self, group_id):
+        message = ChatMessage.objects.filter(team_id=group_id).order_by('-timestamp').first()
+        if message:
+            return message
+        else:
+            return None
 
 
 class NotificationConsumer(AsyncWebsocketConsumer):
@@ -635,6 +702,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
         if data['type'] == 'chat':
             if data['range'] == 'all':
                 roomID=data['roomID']
+                message_id=data['message_id']
                 # 广播消息给所有人
                 await self.upload_all_chat_notice(data['url'], roomID)
             elif data['range'] == 'individual':
@@ -642,6 +710,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
                 user_id = data['user_id']  # 假设传来的数据里有目标用户的ID
                 url=data['url']
                 roomID=data['roomID']
+                message_id=data['message_id']
                 notice_id=await self.upload_chat_notice(url, roomID, user_id)
                 channel_name = await self.get_channel_name_for_user(user_id)
                 if channel_name:
@@ -652,6 +721,7 @@ class NotificationConsumer(AsyncWebsocketConsumer):
                         "roomID": roomID,
                         "is_read": False,
                         "id":notice_id,
+                        "message_id":message_id,
                     })
 
         elif data['type'] == 'file':
@@ -707,11 +777,12 @@ class NotificationConsumer(AsyncWebsocketConsumer):
             'roomID': event["roomID"],
             'is_read': event["is_read"],
             'id': event["id"],
+            'message_id': event["message_id"],
         }))
     async def file_notice(self, event):
         # 实际发送消息给WebSocket客户端
         await self.send(text_data=json.dumps({
-            'type': 'file_notice',
+            'type': 'document_mention',
             'url': event["url"],
             'is_read': event["is_read"],
             'id': event["id"],
